@@ -43,7 +43,7 @@ public abstract class AbstractQueryTest
 {
     protected void logQuery( SQLVendor vendor, SQLStatement query )
     {
-        Logger.getLogger( this.getClass().getName() ).info( "Query:" + "\n" + query.toString( vendor ) + "\n" );
+        Logger.getLogger( this.getClass().getName() ).info( "Query:" + "\n" + vendor.toString( query ) + "\n" );
     }
 
     protected abstract SQLVendor getVendor()

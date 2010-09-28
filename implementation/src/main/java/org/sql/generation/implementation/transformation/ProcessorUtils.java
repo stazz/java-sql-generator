@@ -12,7 +12,7 @@
  *
  */
 
-package org.sql.generation.implementation.transformation.processing;
+package org.sql.generation.implementation.transformation;
 
 import java.util.List;
 import java.util.Map;

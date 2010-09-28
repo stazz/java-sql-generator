@@ -12,7 +12,7 @@
  *
  */
 
-package org.sql.generation.implementation.transformation.processing.pgsql;
+package org.sql.generation.implementation.transformation.pgsql;
 
 import java.util.logging.Logger;
 
@@ -22,8 +22,8 @@ import org.sql.generation.api.grammar.query.pgsql.LimitByNumber;
 import org.sql.generation.api.grammar.query.pgsql.LimitClause;
 import org.sql.generation.api.grammar.query.pgsql.OffsetClause;
 import org.sql.generation.api.grammar.query.pgsql.PgSQLQuerySpecification;
-import org.sql.generation.implementation.transformation.processing.QueryProcessing.QuerySpecificationProcessor;
-import org.sql.generation.implementation.transformation.processing.general.SQLProcessorAggregator;
+import org.sql.generation.implementation.transformation.QueryProcessing.QuerySpecificationProcessor;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 

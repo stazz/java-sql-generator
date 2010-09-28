@@ -12,7 +12,7 @@
  *
  */
 
-package org.sql.generation.implementation.transformation.processing.pgsql;
+package org.sql.generation.implementation.transformation.pgsql;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,10 +22,10 @@ import org.sql.generation.api.grammar.booleans.BinaryPredicate;
 import org.sql.generation.api.grammar.booleans.NotRegexpPredicate;
 import org.sql.generation.api.grammar.booleans.RegexpPredicate;
 import org.sql.generation.api.grammar.query.pgsql.PgSQLQuerySpecification;
-import org.sql.generation.implementation.transformation.processing.BooleanExpressionProcessing.BinaryPredicateProcessor;
-import org.sql.generation.implementation.transformation.processing.SQLStatementProcessor;
-import org.sql.generation.implementation.transformation.processing.general.SQLProcessor;
-import org.sql.generation.implementation.transformation.processing.pgsql.QueryProcessing.PgSQLQuerySpecificationProcessor;
+import org.sql.generation.implementation.transformation.SQLStatementProcessor;
+import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.BinaryPredicateProcessor;
+import org.sql.generation.implementation.transformation.pgsql.QueryProcessing.PgSQLQuerySpecificationProcessor;
+import org.sql.generation.implementation.transformation.spi.SQLProcessor;
 
 /**
  * 

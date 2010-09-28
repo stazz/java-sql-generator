@@ -31,4 +31,4 @@ builder.getWhere().reset( b.eq( c.colName( "column"), l.s("test") ) );
 
 // Get textual query
 QueryExpression query = q.createQuery( q.queryBuilder( builder.createExpression() ).createExpression() );
-String sqlString = query.toString( vendor );
+String sqlString = vendor.toString( query );

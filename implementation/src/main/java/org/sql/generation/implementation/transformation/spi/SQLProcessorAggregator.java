@@ -12,27 +12,15 @@
  *
  */
 
-
 package org.sql.generation.implementation.transformation.spi;
 
-import org.sql.generation.api.common.NullArgumentException;
-import org.sql.generation.api.transformation.SQLVendorInfo;
-import org.sql.generation.api.vendor.SQLVendor;
+import org.lwdci.api.context.single.Typeable;
 
-public class SQLVendorInfoImpl
-    implements SQLVendorInfo
+/**
+ * 
+ * @author Stanislav Muhametsin
+ */
+public interface SQLProcessorAggregator
 {
-    private final Class<? extends SQLVendor> _vendorType;
-
-    public SQLVendorInfoImpl( Class<? extends SQLVendor> vendorType )
-    {
-        NullArgumentException.validateNotNull( "Vendor type", vendorType );
-
-        this._vendorType = vendorType;
-    }
-
-    public Class<? extends SQLVendor> getImplementedVendorType()
-    {
-        return this._vendorType;
-    }
+    public void process( Typeable<?> object, StringBuilder builder );
 }

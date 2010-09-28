@@ -17,9 +17,7 @@ package org.sql.generation.implementation.grammar.query;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.grammar.query.QueryExpressionBody;
-import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.grammar.common.NonBooleanExpressionImpl;
-import org.sql.generation.implementation.grammar.common.SQLStatementImpl;
 
 /**
  * 
@@ -47,10 +45,5 @@ public class QueryExpressionImpl extends NonBooleanExpressionImpl<QueryExpressio
     public QueryExpressionBody getQueryExpressionBody()
     {
         return this._body;
-    }
-
-    public String toString( SQLVendor vendor )
-    {
-        return SQLStatementImpl.toString( vendor, this );
     }
 }

@@ -12,28 +12,23 @@
  *
  */
 
-package org.sql.generation.implementation.vendor;
+package org.sql.generation.implementation;
 
+import org.sql.generation.api.vendor.MySQLVendor;
 import org.sql.generation.api.vendor.SQLVendor;
-import org.sql.generation.implementation.transformation.spi.SQLTransformationContextCreationArgs;
-import org.sql.generation.implementation.transformation.spi.SQLTransformationContextCreator;
+import org.sql.generation.api.vendor.SQLVendorProvider;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class DefaultVendorContextCreator extends SQLTransformationContextCreator<DefaultVendorContext>
+public class MySQLQueryTest extends AbstractQueryTest
 {
 
-    public DefaultVendorContextCreator( Class<? extends SQLVendor> vendorClass )
-    {
-        super( vendorClass );
-    }
-
     @Override
-    protected DefaultVendorContext doCreateContext( SQLTransformationContextCreationArgs args )
+    protected SQLVendor getVendor()
+        throws Exception
     {
-        return new DefaultVendorContext( args );
+        return SQLVendorProvider.createVendor( MySQLVendor.class );
     }
-
 }

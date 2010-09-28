@@ -14,6 +14,8 @@
 
 package org.sql.generation.implementation.vendor;
 
+import org.lwdci.api.context.single.Typeable;
+import org.sql.generation.api.grammar.common.SQLStatement;
 import org.sql.generation.api.grammar.factories.BooleanFactory;
 import org.sql.generation.api.grammar.factories.ColumnsFactory;
 import org.sql.generation.api.grammar.factories.LiteralFactory;
@@ -27,19 +29,16 @@ import org.sql.generation.implementation.grammar.factories.DefaultLiteralFactory
 import org.sql.generation.implementation.grammar.factories.DefaultModificationFactory;
 import org.sql.generation.implementation.grammar.factories.DefaultQueryFactory;
 import org.sql.generation.implementation.grammar.factories.DefaultTableRefFactory;
-import org.sql.generation.implementation.transformation.spi.SQLTransformationContextCreator;
-import org.sql.generation.implementation.transformation.spi.SQLTransformationProvider;
-import org.sql.generation.implementation.transformation.spi.SQLVendorInfoImpl;
+import org.sql.generation.implementation.transformation.SQLStatementProcessor;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class DefaultVendor extends SQLVendorInfoImpl
+public class DefaultVendor
     implements SQLVendor
 {
-
-    public static final Class<? extends SQLVendor> VENDOR_CLASS = SQLVendor.class;
 
     private QueryFactory _queryFactory;
 
@@ -55,20 +54,25 @@ public class DefaultVendor extends SQLVendorInfoImpl
 
     public DefaultVendor()
     {
-        this( new DefaultVendorContextCreator( VENDOR_CLASS ) );
-    }
-
-    protected DefaultVendor( SQLTransformationContextCreator<?> contextCreator )
-    {
-        super( contextCreator.getImplementedVendorType() );
-
         this._booleanFactory = new DefaultBooleanFactory();
         this._columnsFactory = new DefaultColumnsFactory();
         this._fromFactory = new DefaultTableRefFactory( this );
         this._literalFactory = new DefaultLiteralFactory();
         this._queryFactory = new DefaultQueryFactory( this );
         this._modificationFactory = new DefaultModificationFactory( this );
-        SQLTransformationProvider.getTransformation().registerContextCreator( contextCreator );
+    }
+
+    @Override
+    public String toString( SQLStatement statement )
+    {
+        StringBuilder builder = new StringBuilder();
+        this.getProcessor().process( (Typeable<?>) statement, builder );
+        return builder.toString();
+    }
+
+    protected SQLProcessorAggregator getProcessor()
+    {
+        return new SQLStatementProcessor();
     }
 
     public QueryFactory getQueryFactory()

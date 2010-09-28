@@ -12,35 +12,25 @@
  *
  */
 
-package org.sql.generation.implementation.transformation.spi;
+package org.sql.generation.implementation.transformation.mysql;
 
-import org.sql.generation.implementation.transformation.SQLTransformationImpl;
-
+import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.implementation.transformation.TableReferenceProcessing.TableNameProcessor;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class SQLTransformationProvider
+public class MySQLTableProcessing
 {
-    private static SQLTransformation _singleton;
-
-    private static Object _lock;
-
-    static
+    public static class MySQLTableNameProcessor extends TableNameProcessor
     {
-        _lock = new Object();
-    }
-
-    public static SQLTransformation getTransformation()
-    {
-        synchronized( _lock )
+        @Override
+        protected void doProcess( SQLProcessorAggregator processor, TableName object, StringBuilder builder )
         {
-            if( _singleton == null )
-            {
-                _singleton = new SQLTransformationImpl();
-            }
-            return _singleton;
+            // MySQL does not understand schema-qualified table names
+            builder.append( object.getTableName() );
         }
     }
 }

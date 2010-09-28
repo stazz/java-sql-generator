@@ -12,17 +12,19 @@
  *
  */
 
-package org.sql.generation.implementation.transformation.spi;
+package org.sql.generation.implementation.transformation;
 
-import org.lwdci.api.context.ContextCreationServiceRoot;
+import org.lwdci.api.context.single.Typeable;
+import org.sql.generation.implementation.transformation.spi.SQLProcessor;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
-/**
- * 
- * @author Stanislav Muhametsin
- */
-public interface SQLTransformation
-    extends
-    ContextCreationServiceRoot<SQLTransformationContext, SQLTransformationContextCreationArgs, SQLTransformationContextCreator<?>>
+public class NoOpProcessor
+    implements SQLProcessor
 {
+
+    public void process( SQLProcessorAggregator processor, Typeable<?> object, StringBuilder builder )
+    {
+        // No-op
+    }
 
 }

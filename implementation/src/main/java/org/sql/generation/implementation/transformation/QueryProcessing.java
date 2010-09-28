@@ -12,7 +12,7 @@
  *
  */
 
-package org.sql.generation.implementation.transformation.processing;
+package org.sql.generation.implementation.transformation;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -41,7 +41,7 @@ import org.sql.generation.api.grammar.query.SetOperation;
 import org.sql.generation.api.grammar.query.SortSpecification;
 import org.sql.generation.api.grammar.query.TableReference;
 import org.sql.generation.implementation.grammar.booleans.BooleanUtils;
-import org.sql.generation.implementation.transformation.processing.general.SQLProcessorAggregator;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 

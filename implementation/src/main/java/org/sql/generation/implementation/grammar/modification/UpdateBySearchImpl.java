@@ -18,19 +18,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.lwdci.spi.context.single.skeletons.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.modification.SetClause;
 import org.sql.generation.api.grammar.modification.TargetTable;
 import org.sql.generation.api.grammar.modification.UpdateBySearch;
 import org.sql.generation.api.grammar.modification.UpdateStatement;
-import org.sql.generation.implementation.grammar.common.SQLStatementImpl;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class UpdateBySearchImpl extends SQLStatementImpl<UpdateStatement, UpdateBySearch>
+public class UpdateBySearchImpl extends TypeableImpl<UpdateStatement, UpdateBySearch>
     implements UpdateBySearch
 {
 

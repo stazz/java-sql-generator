@@ -12,12 +12,12 @@
  *
  */
 
-package org.sql.generation.implementation.transformation.processing;
+package org.sql.generation.implementation.transformation;
 
 import org.lwdci.api.context.single.Typeable;
 import org.lwdci.spi.context.single.skeletons.TypeableImpl;
-import org.sql.generation.implementation.transformation.processing.general.SQLProcessor;
-import org.sql.generation.implementation.transformation.processing.general.SQLProcessorAggregator;
+import org.sql.generation.implementation.transformation.spi.SQLProcessor;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 

@@ -12,7 +12,7 @@
  *
  */
 
-package org.sql.generation.implementation.transformation.processing;
+package org.sql.generation.implementation.transformation;
 
 import java.util.Iterator;
 
@@ -21,7 +21,7 @@ import org.sql.generation.api.grammar.common.SQLConstants;
 import org.sql.generation.api.grammar.query.ColumnReference;
 import org.sql.generation.api.grammar.query.ColumnReferenceByExpression;
 import org.sql.generation.api.grammar.query.ColumnReferenceByName;
-import org.sql.generation.implementation.transformation.processing.general.SQLProcessorAggregator;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * Currently not thread-safe.

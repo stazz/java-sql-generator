@@ -12,7 +12,7 @@
  *
  */
 
-package org.sql.generation.implementation.transformation.processing;
+package org.sql.generation.implementation.transformation;
 
 import java.util.Iterator;
 
@@ -30,7 +30,7 @@ import org.sql.generation.api.grammar.booleans.UnaryPredicate;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.api.grammar.common.SQLConstants;
 import org.sql.generation.api.grammar.query.QueryExpression;
-import org.sql.generation.implementation.transformation.processing.general.SQLProcessorAggregator;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * Currently not thread-safe.

@@ -12,7 +12,7 @@
  *
  */
 
-package org.sql.generation.implementation.transformation.processing;
+package org.sql.generation.implementation.transformation;
 
 import org.sql.generation.api.grammar.common.SQLConstants;
 import org.sql.generation.api.grammar.common.TableName;
@@ -29,7 +29,7 @@ import org.sql.generation.api.grammar.query.joins.NamedColumnsJoin;
 import org.sql.generation.api.grammar.query.joins.NaturalJoinedTable;
 import org.sql.generation.api.grammar.query.joins.QualifiedJoinedTable;
 import org.sql.generation.api.grammar.query.joins.UnionJoinedTable;
-import org.sql.generation.implementation.transformation.processing.general.SQLProcessorAggregator;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 

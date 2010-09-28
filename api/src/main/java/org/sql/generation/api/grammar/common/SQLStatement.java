@@ -14,8 +14,6 @@
 
 package org.sql.generation.api.grammar.common;
 
-import org.sql.generation.api.vendor.SQLVendor;
-
 /**
  * 
  * @author Stanislav Muhametsin
@@ -23,5 +21,4 @@ import org.sql.generation.api.vendor.SQLVendor;
 public interface SQLStatement
 {
 
-    public String toString( SQLVendor vendor );
 }

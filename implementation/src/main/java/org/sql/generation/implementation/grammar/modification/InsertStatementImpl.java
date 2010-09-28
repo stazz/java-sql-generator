@@ -14,17 +14,17 @@
 
 package org.sql.generation.implementation.grammar.modification;
 
+import org.lwdci.spi.context.single.skeletons.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.TableName;
 import org.sql.generation.api.grammar.modification.ColumnSource;
 import org.sql.generation.api.grammar.modification.InsertStatement;
-import org.sql.generation.implementation.grammar.common.SQLStatementImpl;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class InsertStatementImpl extends SQLStatementImpl<InsertStatement, InsertStatement>
+public class InsertStatementImpl extends TypeableImpl<InsertStatement, InsertStatement>
     implements InsertStatement
 {
 

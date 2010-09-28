@@ -12,7 +12,7 @@
  *
  */
 
-package org.sql.generation.implementation.transformation.processing.general;
+package org.sql.generation.implementation.transformation.spi;
 
 import org.lwdci.api.context.single.Typeable;
 

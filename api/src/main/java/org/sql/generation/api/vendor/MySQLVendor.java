@@ -12,15 +12,14 @@
  *
  */
 
-package org.sql.generation.api.transformation;
-
-import org.sql.generation.api.vendor.SQLVendor;
+package org.sql.generation.api.vendor;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public interface SQLVendorInfo
+public interface MySQLVendor
+    extends SQLVendor
 {
-    public Class<? extends SQLVendor> getImplementedVendorType();
+
 }

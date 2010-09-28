@@ -14,18 +14,18 @@
 
 package org.sql.generation.implementation.grammar.modification;
 
+import org.lwdci.spi.context.single.skeletons.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.modification.DeleteBySearch;
 import org.sql.generation.api.grammar.modification.DeleteStatement;
 import org.sql.generation.api.grammar.modification.TargetTable;
-import org.sql.generation.implementation.grammar.common.SQLStatementImpl;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class DeleteBySearchImpl extends SQLStatementImpl<DeleteStatement, DeleteBySearch>
+public class DeleteBySearchImpl extends TypeableImpl<DeleteStatement, DeleteBySearch>
     implements DeleteBySearch
 {
 

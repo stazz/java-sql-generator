@@ -12,7 +12,7 @@
  *
  */
 
-package org.sql.generation.implementation.transformation.processing;
+package org.sql.generation.implementation.transformation;
 
 import java.text.DateFormat;
 import java.util.Iterator;
@@ -25,7 +25,7 @@ import org.sql.generation.api.grammar.literals.LiteralExpression;
 import org.sql.generation.api.grammar.literals.NumericLiteral;
 import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
 import org.sql.generation.api.grammar.literals.StringLiteral;
-import org.sql.generation.implementation.transformation.processing.general.SQLProcessorAggregator;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * Currently not thread-safe.

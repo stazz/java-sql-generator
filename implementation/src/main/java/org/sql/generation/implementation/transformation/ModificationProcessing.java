@@ -12,7 +12,7 @@
  *
  */
 
-package org.sql.generation.implementation.transformation.processing;
+package org.sql.generation.implementation.transformation;
 
 import java.util.Iterator;
 
@@ -34,7 +34,7 @@ import org.sql.generation.api.grammar.modification.UpdateSource.Default;
 import org.sql.generation.api.grammar.modification.UpdateSource.Null;
 import org.sql.generation.api.grammar.modification.UpdateSourceByExpression;
 import org.sql.generation.api.grammar.modification.UpdateStatement;
-import org.sql.generation.implementation.transformation.processing.general.SQLProcessorAggregator;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 

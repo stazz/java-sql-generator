@@ -14,20 +14,19 @@
 
 package org.sql.generation.api.vendor;
 
+import org.sql.generation.api.grammar.common.SQLStatement;
 import org.sql.generation.api.grammar.factories.BooleanFactory;
 import org.sql.generation.api.grammar.factories.ColumnsFactory;
 import org.sql.generation.api.grammar.factories.LiteralFactory;
 import org.sql.generation.api.grammar.factories.ModificationFactory;
 import org.sql.generation.api.grammar.factories.QueryFactory;
 import org.sql.generation.api.grammar.factories.TableReferenceFactory;
-import org.sql.generation.api.transformation.SQLVendorInfo;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
 public interface SQLVendor
-    extends SQLVendorInfo
 {
 
     public QueryFactory getQueryFactory();
@@ -41,4 +40,6 @@ public interface SQLVendor
     public ColumnsFactory getColumnsFactory();
 
     public ModificationFactory getModificationFactory();
+
+    public String toString( SQLStatement statement );
 }

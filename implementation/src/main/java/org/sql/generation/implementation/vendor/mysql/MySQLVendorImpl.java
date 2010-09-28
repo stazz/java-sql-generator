@@ -12,19 +12,25 @@
  *
  */
 
-package org.sql.generation.implementation.transformation.processing;
+package org.sql.generation.implementation.vendor.mysql;
 
-import org.lwdci.api.context.single.Typeable;
-import org.sql.generation.implementation.transformation.processing.general.SQLProcessor;
-import org.sql.generation.implementation.transformation.processing.general.SQLProcessorAggregator;
+import org.sql.generation.api.vendor.MySQLVendor;
+import org.sql.generation.implementation.transformation.mysql.MySQLStatementProcessor;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
+import org.sql.generation.implementation.vendor.DefaultVendor;
 
-public class NoOpProcessor
-    implements SQLProcessor
+/**
+ * 
+ * @author Stanislav Muhametsin
+ */
+public class MySQLVendorImpl extends DefaultVendor
+    implements MySQLVendor
 {
 
-    public void process( SQLProcessorAggregator processor, Typeable<?> object, StringBuilder builder )
+    @Override
+    protected SQLProcessorAggregator getProcessor()
     {
-        // No-op
+        return new MySQLStatementProcessor();
     }
 
 }
