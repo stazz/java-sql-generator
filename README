@@ -1,5 +1,9 @@
 The java-sql-generator is a framework to generate syntactically correct SQL statements with Java language. It provides uniform, typesafe, and (reasonably) easy way to create SQL statements using provided API's. It is specifically designed to handle even really complex SQL clauses. In fact, the API's were designed by looking at SQL 99 BNF ( http://savage.net.au/SQL/sql-99.bnf.html ) in one monitor, and creating the corresponding Java API in another monitor. However, there are many things omitted from automated BNF conversion, so that API would remain usable and simple.
 
+Please notice that this framework is still in very early development stage, and API changes are possible, and very likely.
+
+Currently there is support for data querying (SELECT) and modification (INSERT, UPDATE, DELETE). The support for CREATE clauses is still missing.
+
 Please see the tests of the implementation project on how to use the java-sql-generator framework. Typical usecase would be:
 
 // Create or acquire vendor
