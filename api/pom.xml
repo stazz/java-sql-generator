@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.java-sql-generator</groupId>
+    <artifactId>java-sql-generator</artifactId>
+    <version>0.1-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.java-sql-generator.api</groupId>
+  <artifactId>java-sql-generator-api</artifactId>
+  <version>0.1-SNAPSHOT</version>
+
+  <name>Java SQL Generator API</name>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.lwdci</groupId>
+  		<artifactId>lwdci-api</artifactId>
+  		<scope>compile</scope>
+  	</dependency>
+  </dependencies>
+  
+  <licenses>
+    <license>
+      <name>Apache 2</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+    
+  <developers>
+    <developer>
+      <id>stas.dev+jsg@gmail.com</id>
+      <name>Stanislav Muhametsin</name>
+      <email>stas.dev+jsg@gmail.com</email>
+      <timezone>UTC+2</timezone>
+    </developer>
+  </developers>
+  
+  <inceptionYear>2010</inceptionYear>
+
+</project>

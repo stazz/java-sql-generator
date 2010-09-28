@@ -1,0 +1,130 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>5</version>
+  </parent>
+  
+  <groupId>org.java-sql-generator</groupId>
+  <artifactId>java-sql-generator</artifactId>
+  <version>0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  
+  <name>SQL Generator for Java</name>  
+  <description>
+    A library for building SQL clauses with Java in a uniform, easy, and safe way. It only understands SQL on syntax level, not semantic level.
+  </description>
+  
+  <url>http://github.com/stazz/java-sql-generator</url>
+  
+  <licenses>
+    <license>
+      <name>Apache 2</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  
+  <scm>
+    <connection>scm:git:git://github.com/stazz/java-sql-generator.git</connection>
+    <developerConnection>scm:git:git@github.com:stazz/java-sql-generator.git</developerConnection>
+    <url>https://github.com/stazz/java-sql-generator</url>
+  </scm>
+  
+  <developers>
+    <developer>
+      <id>stas.dev+jsg@gmail.com</id>
+      <name>Stanislav Muhametsin</name>
+      <email>stas.dev+jsg@gmail.com</email>
+      <timezone>UTC+2</timezone>
+    </developer>
+  </developers>
+
+  <!-- This POM is ONLY to initiate the modules to be built. -->
+  <modules>
+    <module>api</module>
+    <module>implementation</module>
+  </modules>
+
+  <properties>
+    <version.jdk.compiler>1.5</version.jdk.compiler>
+    <version.maven.compiler>2.3.2</version.maven.compiler>
+    <version.maven.licence>1.4.0</version.maven.licence>
+    <version.maven.gpg>1.1</version.maven.gpg>
+    <version.junit>4.8.1</version.junit>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <version.lwdci>0.6-SNAPSHOT</version.lwdci>
+  </properties>
+
+  <inceptionYear>2010</inceptionYear>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${version.junit}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.lwdci</groupId>
+        <artifactId>lwdci-api</artifactId>
+        <version>${version.lwdci}</version>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.lwdci</groupId>
+        <artifactId>lwdci-spi</artifactId>
+        <version>${version.lwdci}</version>
+        <scope>compile</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${version.maven.compiler}</version>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
+  <profiles>
+    <profile>
+      <id>release-sign-artifacts</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+</project>
