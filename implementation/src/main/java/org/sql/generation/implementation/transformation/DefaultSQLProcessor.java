@@ -128,7 +128,7 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
  * 
  * @author Stanislav Muhametsin
  */
-public class SQLStatementProcessor extends ThreadSafeInteractionMapper<Typeable<?>, SQLProcessor>
+public class DefaultSQLProcessor extends ThreadSafeInteractionMapper<Typeable<?>, SQLProcessor>
     implements SQLProcessorAggregator
 {
 
@@ -305,12 +305,12 @@ public class SQLStatementProcessor extends ThreadSafeInteractionMapper<Typeable<
         _defaultProcessors = Collections.unmodifiableMap( processors );
     }
 
-    public SQLStatementProcessor()
+    public DefaultSQLProcessor()
     {
         this( _defaultProcessors );
     }
 
-    public SQLStatementProcessor( Map<Class<? extends Typeable<?>>, SQLProcessor> processors )
+    public DefaultSQLProcessor( Map<Class<? extends Typeable<?>>, SQLProcessor> processors )
     {
         super( processors );
     }

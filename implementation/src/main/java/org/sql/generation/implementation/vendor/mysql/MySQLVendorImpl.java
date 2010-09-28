@@ -15,8 +15,7 @@
 package org.sql.generation.implementation.vendor.mysql;
 
 import org.sql.generation.api.vendor.MySQLVendor;
-import org.sql.generation.implementation.transformation.mysql.MySQLStatementProcessor;
-import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
+import org.sql.generation.implementation.transformation.mysql.MySQLProcessor;
 import org.sql.generation.implementation.vendor.DefaultVendor;
 
 /**
@@ -27,10 +26,9 @@ public class MySQLVendorImpl extends DefaultVendor
     implements MySQLVendor
 {
 
-    @Override
-    protected SQLProcessorAggregator getProcessor()
+    public MySQLVendorImpl()
     {
-        return new MySQLStatementProcessor();
+        super( new MySQLProcessor() );
     }
 
 }

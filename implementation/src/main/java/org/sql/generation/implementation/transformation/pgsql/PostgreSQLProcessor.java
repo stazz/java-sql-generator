@@ -22,7 +22,7 @@ import org.sql.generation.api.grammar.booleans.BinaryPredicate;
 import org.sql.generation.api.grammar.booleans.NotRegexpPredicate;
 import org.sql.generation.api.grammar.booleans.RegexpPredicate;
 import org.sql.generation.api.grammar.query.pgsql.PgSQLQuerySpecification;
-import org.sql.generation.implementation.transformation.SQLStatementProcessor;
+import org.sql.generation.implementation.transformation.DefaultSQLProcessor;
 import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.BinaryPredicateProcessor;
 import org.sql.generation.implementation.transformation.pgsql.QueryProcessing.PgSQLQuerySpecificationProcessor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessor;
@@ -31,7 +31,7 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessor;
  * 
  * @author Stanislav Muhametsin
  */
-public class PostgreSQLStatementProcessor extends SQLStatementProcessor
+public class PostgreSQLProcessor extends DefaultSQLProcessor
 {
 
     private static final Map<Class<? extends Typeable<?>>, SQLProcessor> _defaultProcessors;
@@ -41,13 +41,13 @@ public class PostgreSQLStatementProcessor extends SQLStatementProcessor
     static
     {
         Map<Class<? extends BinaryPredicate>, String> binaryOperators = new HashMap<Class<? extends BinaryPredicate>, String>(
-            SQLStatementProcessor.getDefaultBinaryOperators() );
+            DefaultSQLProcessor.getDefaultBinaryOperators() );
         binaryOperators.put( RegexpPredicate.class, "~" );
         binaryOperators.put( NotRegexpPredicate.class, "!~" );
         _defaultPgSQLBinaryOperators = binaryOperators;
 
         Map<Class<? extends Typeable<?>>, SQLProcessor> processors = new HashMap<Class<? extends Typeable<?>>, SQLProcessor>(
-            SQLStatementProcessor.getDefaultProcessors() );
+            DefaultSQLProcessor.getDefaultProcessors() );
         processors.put( RegexpPredicate.class,
             new BinaryPredicateProcessor( _defaultPgSQLBinaryOperators.get( RegexpPredicate.class ) ) );
         processors.put( NotRegexpPredicate.class,
@@ -56,7 +56,7 @@ public class PostgreSQLStatementProcessor extends SQLStatementProcessor
         _defaultProcessors = processors;
     }
 
-    public PostgreSQLStatementProcessor()
+    public PostgreSQLProcessor()
     {
         super( _defaultProcessors );
     }

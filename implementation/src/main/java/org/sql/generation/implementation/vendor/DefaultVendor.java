@@ -15,6 +15,7 @@
 package org.sql.generation.implementation.vendor;
 
 import org.lwdci.api.context.single.Typeable;
+import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.SQLStatement;
 import org.sql.generation.api.grammar.factories.BooleanFactory;
 import org.sql.generation.api.grammar.factories.ColumnsFactory;
@@ -29,7 +30,7 @@ import org.sql.generation.implementation.grammar.factories.DefaultLiteralFactory
 import org.sql.generation.implementation.grammar.factories.DefaultModificationFactory;
 import org.sql.generation.implementation.grammar.factories.DefaultQueryFactory;
 import org.sql.generation.implementation.grammar.factories.DefaultTableRefFactory;
-import org.sql.generation.implementation.transformation.SQLStatementProcessor;
+import org.sql.generation.implementation.transformation.DefaultSQLProcessor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
@@ -52,8 +53,18 @@ public class DefaultVendor
 
     private ModificationFactory _modificationFactory;
 
+    private final SQLProcessorAggregator _processor;
+
     public DefaultVendor()
     {
+        this( new DefaultSQLProcessor() );
+    }
+
+    protected DefaultVendor( SQLProcessorAggregator processor )
+    {
+        NullArgumentException.validateNotNull( "processor", processor );
+
+        this._processor = processor;
         this._booleanFactory = new DefaultBooleanFactory();
         this._columnsFactory = new DefaultColumnsFactory();
         this._fromFactory = new DefaultTableRefFactory( this );
@@ -66,13 +77,8 @@ public class DefaultVendor
     public String toString( SQLStatement statement )
     {
         StringBuilder builder = new StringBuilder();
-        this.getProcessor().process( (Typeable<?>) statement, builder );
+        this._processor.process( (Typeable<?>) statement, builder );
         return builder.toString();
-    }
-
-    protected SQLProcessorAggregator getProcessor()
-    {
-        return new SQLStatementProcessor();
     }
 
     public QueryFactory getQueryFactory()

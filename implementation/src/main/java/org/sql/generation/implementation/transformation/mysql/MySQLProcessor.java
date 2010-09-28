@@ -19,7 +19,7 @@ import java.util.Map;
 
 import org.lwdci.api.context.single.Typeable;
 import org.sql.generation.api.grammar.common.TableName;
-import org.sql.generation.implementation.transformation.SQLStatementProcessor;
+import org.sql.generation.implementation.transformation.DefaultSQLProcessor;
 import org.sql.generation.implementation.transformation.mysql.MySQLTableProcessing.MySQLTableNameProcessor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessor;
 
@@ -27,7 +27,7 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessor;
  * 
  * @author Stanislav Muhametsin
  */
-public class MySQLStatementProcessor extends SQLStatementProcessor
+public class MySQLProcessor extends DefaultSQLProcessor
 {
 
     private static final Map<Class<? extends Typeable<?>>, SQLProcessor> _defaultProcessors;
@@ -35,14 +35,14 @@ public class MySQLStatementProcessor extends SQLStatementProcessor
     static
     {
         Map<Class<? extends Typeable<?>>, SQLProcessor> processors = new HashMap<Class<? extends Typeable<?>>, SQLProcessor>(
-            SQLStatementProcessor.getDefaultProcessors() );
+            DefaultSQLProcessor.getDefaultProcessors() );
         // MySQL does not understand schema-qualified table names
         processors.put( TableName.class, new MySQLTableNameProcessor() );
 
         _defaultProcessors = processors;
     }
 
-    public MySQLStatementProcessor()
+    public MySQLProcessor()
     {
         super( _defaultProcessors );
     }
