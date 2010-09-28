@@ -73,7 +73,6 @@ public class DefaultVendor
         this._modificationFactory = new DefaultModificationFactory( this );
     }
 
-    @Override
     public String toString( SQLStatement statement )
     {
         StringBuilder builder = new StringBuilder();
