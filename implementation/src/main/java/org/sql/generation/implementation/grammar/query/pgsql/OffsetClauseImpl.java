@@ -36,4 +36,11 @@ public class OffsetClauseImpl
     {
         return this._offset;
     }
+
+    @Override
+    public boolean equals( Object obj )
+    {
+        return super.equals( obj ) || obj instanceof OffsetClause
+            && this._offset.equals( ((OffsetClause) obj).getOffset() );
+    }
 }

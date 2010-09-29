@@ -14,10 +14,12 @@
 
 package org.sql.generation.implementation.grammar.query.pgsql;
 
+import org.lwdci.spi.context.single.skeletons.TypeableImpl;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.query.FromClause;
 import org.sql.generation.api.grammar.query.GroupByClause;
 import org.sql.generation.api.grammar.query.OrderByClause;
+import org.sql.generation.api.grammar.query.QuerySpecification;
 import org.sql.generation.api.grammar.query.SelectColumnClause;
 import org.sql.generation.api.grammar.query.pgsql.LimitClause;
 import org.sql.generation.api.grammar.query.pgsql.OffsetClause;
@@ -53,5 +55,22 @@ public class PgSQLQuerySpecificationImpl extends QuerySpecificationImpl
     public OffsetClause getOffset()
     {
         return this._offset;
+    }
+
+    @Override
+    protected boolean doesEqual( QuerySpecification another )
+    {
+        // We can be certain that here another will be PgSQLQuerySpecification, since Typeable.doesEqual method
+        // documentation says that this method is invoked only when implemented type of this object is same as
+        // implemented type of another.
+        PgSQLQuerySpecification anotherSpec = (PgSQLQuerySpecification) another;
+        boolean result = TypeableImpl.bothNullOrEquals( this._limit, anotherSpec.getLimit() )
+            && TypeableImpl.bothNullOrEquals( this._offset, anotherSpec.getOffset() );
+        if( result )
+        {
+            result = super.doesEqual( another );
+        }
+
+        return result;
     }
 }

@@ -37,4 +37,11 @@ public class LimitByNumberImpl
     {
         return this._limit;
     }
+
+    @Override
+    public boolean equals( Object obj )
+    {
+        return super.equals( obj ) || obj instanceof LimitByNumber
+            && this._limit.equals( ((LimitByNumber) obj).getLimit() );
+    }
 }
