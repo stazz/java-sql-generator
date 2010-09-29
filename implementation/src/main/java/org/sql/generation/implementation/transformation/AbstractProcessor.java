@@ -15,7 +15,7 @@
 package org.sql.generation.implementation.transformation;
 
 import org.lwdci.api.context.single.Typeable;
-import org.lwdci.spi.context.single.skeletons.TypeableImpl;
+import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.implementation.transformation.spi.SQLProcessor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
@@ -23,30 +23,26 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
  * 
  * @author Stanislav Muhametsin
  */
-public abstract class AbstractProcessor<BaseType extends Typeable<?>, ObjectType extends BaseType> extends
-    TypeableImpl<BaseType, ObjectType>
+public abstract class AbstractProcessor<ProcessableType extends Typeable<?>>
     implements SQLProcessor
 {
-    public AbstractProcessor( Class<? extends ObjectType> realType )
+
+    private final Class<? extends ProcessableType> _type;
+
+    public AbstractProcessor( Class<? extends ProcessableType> realType )
     {
-        super( realType );
+        NullArgumentException.validateNotNull( "Processable type", realType );
+
+        this._type = realType;
     }
 
     public void process( SQLProcessorAggregator aggregator, Typeable<?> object, StringBuilder builder )
     {
         if( object != null )
         {
-            this.doProcess( aggregator, this.getImplementedType().cast( object ), builder );
+            this.doProcess( aggregator, this._type.cast( object ), builder );
         }
     }
 
-    /**
-     * By default, always returns false.
-     */
-    protected boolean doesEqual( ObjectType another )
-    {
-        return false;
-    }
-
-    protected abstract void doProcess( SQLProcessorAggregator aggregator, ObjectType object, StringBuilder builder );
+    protected abstract void doProcess( SQLProcessorAggregator aggregator, ProcessableType object, StringBuilder builder );
 }

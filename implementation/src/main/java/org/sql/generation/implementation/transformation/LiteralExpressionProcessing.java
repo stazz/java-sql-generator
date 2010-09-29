@@ -21,7 +21,6 @@ import org.sql.generation.api.grammar.common.SQLConstants;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.literals.DateTimeLiteral;
 import org.sql.generation.api.grammar.literals.DirectLiteral;
-import org.sql.generation.api.grammar.literals.LiteralExpression;
 import org.sql.generation.api.grammar.literals.NumericLiteral;
 import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
 import org.sql.generation.api.grammar.literals.StringLiteral;
@@ -35,7 +34,7 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
 public class LiteralExpressionProcessing
 {
 
-    public static class StringLiteralExpressionProcessor extends AbstractProcessor<LiteralExpression, StringLiteral>
+    public static class StringLiteralExpressionProcessor extends AbstractProcessor<StringLiteral>
     {
         public StringLiteralExpressionProcessor()
         {
@@ -50,7 +49,7 @@ public class LiteralExpressionProcessing
         }
     }
 
-    public static class DirectLiteralProcessor extends AbstractProcessor<LiteralExpression, DirectLiteral>
+    public static class DirectLiteralProcessor extends AbstractProcessor<DirectLiteral>
     {
         public DirectLiteralProcessor()
         {
@@ -65,7 +64,7 @@ public class LiteralExpressionProcessing
         }
     }
 
-    public static class DateTimeLiteralProcessor extends AbstractProcessor<LiteralExpression, DateTimeLiteral>
+    public static class DateTimeLiteralProcessor extends AbstractProcessor<DateTimeLiteral>
     {
         public DateTimeLiteralProcessor()
         {
@@ -79,7 +78,7 @@ public class LiteralExpressionProcessing
         }
     }
 
-    public static class SQLFunctionLiteralProcessor extends AbstractProcessor<LiteralExpression, SQLFunctionLiteral>
+    public static class SQLFunctionLiteralProcessor extends AbstractProcessor<SQLFunctionLiteral>
     {
         public SQLFunctionLiteralProcessor()
         {
@@ -103,7 +102,7 @@ public class LiteralExpressionProcessing
         }
     }
 
-    public static class NumericLiteralProcessor extends AbstractProcessor<LiteralExpression, NumericLiteral>
+    public static class NumericLiteralProcessor extends AbstractProcessor<NumericLiteral>
     {
 
         public NumericLiteralProcessor()

@@ -40,17 +40,7 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
 public class BooleanExpressionProcessing
 {
 
-    public static abstract class AbstractBooleanProcessor<RealType extends BooleanExpression> extends
-        AbstractProcessor<BooleanExpression, RealType>
-    {
-        public AbstractBooleanProcessor( Class<RealType> realType )
-        {
-            super( realType );
-        }
-
-    }
-
-    public static class UnaryPredicateProcessor extends AbstractBooleanProcessor<UnaryPredicate>
+    public static class UnaryPredicateProcessor extends AbstractProcessor<UnaryPredicate>
     {
 
         public static enum UnaryOperatorOrientation
@@ -108,7 +98,7 @@ public class BooleanExpressionProcessing
         }
     }
 
-    public static class BinaryPredicateProcessor extends AbstractBooleanProcessor<BinaryPredicate>
+    public static class BinaryPredicateProcessor extends AbstractProcessor<BinaryPredicate>
     {
         private final String _operator;
 
@@ -131,7 +121,7 @@ public class BooleanExpressionProcessing
         }
     }
 
-    public static class MultiPredicateProcessor extends AbstractBooleanProcessor<MultiPredicate>
+    public static class MultiPredicateProcessor extends AbstractProcessor<MultiPredicate>
     {
         private final String _operator;
         private final String _separator;
@@ -191,7 +181,7 @@ public class BooleanExpressionProcessing
         }
     }
 
-    public static class ComposedExpressionProcessor extends AbstractBooleanProcessor<ComposedBooleanExpression>
+    public static class ComposedExpressionProcessor extends AbstractProcessor<ComposedBooleanExpression>
     {
         public ComposedExpressionProcessor()
         {

@@ -18,22 +18,18 @@ import java.util.Iterator;
 
 import org.sql.generation.api.grammar.common.SQLConstants;
 import org.sql.generation.api.grammar.common.ValueExpression;
-import org.sql.generation.api.grammar.modification.ColumnSource;
 import org.sql.generation.api.grammar.modification.ColumnSource.Defaults;
 import org.sql.generation.api.grammar.modification.ColumnSourceByQuery;
 import org.sql.generation.api.grammar.modification.ColumnSourceByValues;
 import org.sql.generation.api.grammar.modification.DeleteBySearch;
-import org.sql.generation.api.grammar.modification.DeleteStatement;
 import org.sql.generation.api.grammar.modification.DynamicColumnSource;
 import org.sql.generation.api.grammar.modification.InsertStatement;
 import org.sql.generation.api.grammar.modification.SetClause;
 import org.sql.generation.api.grammar.modification.TargetTable;
 import org.sql.generation.api.grammar.modification.UpdateBySearch;
-import org.sql.generation.api.grammar.modification.UpdateSource;
 import org.sql.generation.api.grammar.modification.UpdateSource.Default;
 import org.sql.generation.api.grammar.modification.UpdateSource.Null;
 import org.sql.generation.api.grammar.modification.UpdateSourceByExpression;
-import org.sql.generation.api.grammar.modification.UpdateStatement;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
@@ -44,7 +40,7 @@ public class ModificationProcessing
 {
 
     public static abstract class DynamicColumnSourceProcessor<SourceType extends DynamicColumnSource> extends
-        AbstractProcessor<ColumnSource, SourceType>
+        AbstractProcessor<SourceType>
     {
         public DynamicColumnSourceProcessor( Class<? extends SourceType> realType )
         {
@@ -121,7 +117,7 @@ public class ModificationProcessing
         }
     }
 
-    public static class ColumnSourceDefaultsProcessor extends AbstractProcessor<ColumnSource, Defaults>
+    public static class ColumnSourceDefaultsProcessor extends AbstractProcessor<Defaults>
     {
 
         public ColumnSourceDefaultsProcessor()
@@ -142,7 +138,7 @@ public class ModificationProcessing
 
     }
 
-    public static class DeleteBySearchProcessor extends AbstractProcessor<DeleteStatement, DeleteBySearch>
+    public static class DeleteBySearchProcessor extends AbstractProcessor<DeleteBySearch>
     {
         public DeleteBySearchProcessor()
         {
@@ -164,7 +160,7 @@ public class ModificationProcessing
 
     }
 
-    public static class InsertStatementProcessor extends AbstractProcessor<InsertStatement, InsertStatement>
+    public static class InsertStatementProcessor extends AbstractProcessor<InsertStatement>
     {
         public InsertStatementProcessor()
         {
@@ -186,7 +182,7 @@ public class ModificationProcessing
         }
     }
 
-    public static class SetClauseProcessor extends AbstractProcessor<SetClause, SetClause>
+    public static class SetClauseProcessor extends AbstractProcessor<SetClause>
     {
         public SetClauseProcessor()
         {
@@ -207,7 +203,7 @@ public class ModificationProcessing
         }
     }
 
-    public static class TargetTableProcessor extends AbstractProcessor<TargetTable, TargetTable>
+    public static class TargetTableProcessor extends AbstractProcessor<TargetTable>
     {
         public TargetTableProcessor()
         {
@@ -235,7 +231,7 @@ public class ModificationProcessing
         }
     }
 
-    public static class UpdateBySearchProcessor extends AbstractProcessor<UpdateStatement, UpdateBySearch>
+    public static class UpdateBySearchProcessor extends AbstractProcessor<UpdateBySearch>
     {
         public UpdateBySearchProcessor()
         {
@@ -266,8 +262,7 @@ public class ModificationProcessing
         }
     }
 
-    public static class UpdateSourceByExpressionProcessor extends
-        AbstractProcessor<UpdateSource, UpdateSourceByExpression>
+    public static class UpdateSourceByExpressionProcessor extends AbstractProcessor<UpdateSourceByExpression>
     {
         public UpdateSourceByExpressionProcessor()
         {
@@ -287,7 +282,7 @@ public class ModificationProcessing
         }
     }
 
-    public static class UpdateSourceDefaultProcessor extends AbstractProcessor<UpdateSource, Default>
+    public static class UpdateSourceDefaultProcessor extends AbstractProcessor<Default>
     {
         public UpdateSourceDefaultProcessor()
         {
@@ -301,7 +296,7 @@ public class ModificationProcessing
         }
     }
 
-    public static class UpdateSourceNullProcessor extends AbstractProcessor<Null, Null>
+    public static class UpdateSourceNullProcessor extends AbstractProcessor<Null>
     {
         public UpdateSourceNullProcessor()
         {

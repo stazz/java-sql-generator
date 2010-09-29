@@ -18,7 +18,6 @@ import java.util.Iterator;
 
 import org.sql.generation.api.grammar.common.ColumnNameList;
 import org.sql.generation.api.grammar.common.SQLConstants;
-import org.sql.generation.api.grammar.query.ColumnReference;
 import org.sql.generation.api.grammar.query.ColumnReferenceByExpression;
 import org.sql.generation.api.grammar.query.ColumnReferenceByName;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
@@ -31,8 +30,7 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
 public class ColumnProcessor
 {
 
-    public static class ColumnReferenceByNameProcessor extends
-        AbstractProcessor<ColumnReference, ColumnReferenceByName>
+    public static class ColumnReferenceByNameProcessor extends AbstractProcessor<ColumnReferenceByName>
     {
         public ColumnReferenceByNameProcessor()
         {
@@ -53,8 +51,7 @@ public class ColumnProcessor
         }
     }
 
-    public static class ColumnReferenceByExpressionProcessor extends
-        AbstractProcessor<ColumnReference, ColumnReferenceByExpression>
+    public static class ColumnReferenceByExpressionProcessor extends AbstractProcessor<ColumnReferenceByExpression>
     {
 
         public ColumnReferenceByExpressionProcessor()
@@ -70,7 +67,7 @@ public class ColumnProcessor
         }
     }
 
-    public static class ColumnNamesProcessor extends AbstractProcessor<ColumnNameList, ColumnNameList>
+    public static class ColumnNamesProcessor extends AbstractProcessor<ColumnNameList>
     {
         public ColumnNamesProcessor()
         {

@@ -22,7 +22,6 @@ import org.sql.generation.api.grammar.query.TableReferenceByName;
 import org.sql.generation.api.grammar.query.TableReferencePrimary;
 import org.sql.generation.api.grammar.query.joins.CrossJoinedTable;
 import org.sql.generation.api.grammar.query.joins.JoinCondition;
-import org.sql.generation.api.grammar.query.joins.JoinSpecification;
 import org.sql.generation.api.grammar.query.joins.JoinType;
 import org.sql.generation.api.grammar.query.joins.JoinedTable;
 import org.sql.generation.api.grammar.query.joins.NamedColumnsJoin;
@@ -38,7 +37,7 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
 public class TableReferenceProcessing
 {
 
-    public static class TableNameProcessor extends AbstractProcessor<TableName, TableName>
+    public static class TableNameProcessor extends AbstractProcessor<TableName>
     {
 
         public TableNameProcessor()
@@ -65,7 +64,7 @@ public class TableReferenceProcessing
     }
 
     public static abstract class TableReferencePrimaryProcessor<TableReferenceType extends TableReferencePrimary>
-        extends AbstractProcessor<TableReferenceType, TableReferenceType>
+        extends AbstractProcessor<TableReferenceType>
     {
         public TableReferencePrimaryProcessor( Class<TableReferenceType> realType )
         {
@@ -146,7 +145,7 @@ public class TableReferenceProcessing
     }
 
     public static abstract class JoinedTableProcessor<JoinedTableType extends JoinedTable> extends
-        AbstractProcessor<JoinedTable, JoinedTableType>
+        AbstractProcessor<JoinedTableType>
     {
 
         public JoinedTableProcessor( Class<JoinedTableType> realType )
@@ -260,7 +259,7 @@ public class TableReferenceProcessing
         }
     }
 
-    public static class JoinConditionProcessor extends AbstractProcessor<JoinSpecification, JoinCondition>
+    public static class JoinConditionProcessor extends AbstractProcessor<JoinCondition>
     {
         public JoinConditionProcessor()
         {
@@ -275,7 +274,7 @@ public class TableReferenceProcessing
         }
     }
 
-    public static class NamedColumnsJoinProcessor extends AbstractProcessor<JoinSpecification, NamedColumnsJoin>
+    public static class NamedColumnsJoinProcessor extends AbstractProcessor<NamedColumnsJoin>
     {
         public NamedColumnsJoinProcessor()
         {

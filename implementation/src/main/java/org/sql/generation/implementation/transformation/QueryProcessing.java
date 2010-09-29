@@ -60,8 +60,7 @@ public class QueryProcessing
         }
     }
 
-    public static class QueryExpressionBinaryProcessor extends
-        AbstractProcessor<QueryExpressionBody, QueryExpressionBodyBinary>
+    public static class QueryExpressionBinaryProcessor extends AbstractProcessor<QueryExpressionBodyBinary>
     {
         private static final Map<SetOperation, String> _defaultSetOperations;
 
@@ -126,7 +125,7 @@ public class QueryProcessing
         }
     }
 
-    public static class QuerySpecificationProcessor extends AbstractProcessor<QuerySpecification, QuerySpecification>
+    public static class QuerySpecificationProcessor extends AbstractProcessor<QuerySpecification>
     {
         public QuerySpecificationProcessor()
         {
@@ -293,7 +292,7 @@ public class QueryProcessing
 
     }
 
-    public static class QueryExpressionProcessor extends AbstractProcessor<QueryExpression, QueryExpression>
+    public static class QueryExpressionProcessor extends AbstractProcessor<QueryExpression>
     {
         public QueryExpressionProcessor()
         {
@@ -307,7 +306,7 @@ public class QueryProcessing
         }
     }
 
-    public static class CorrespondingSpecProcessor extends AbstractProcessor<CorrespondingSpec, CorrespondingSpec>
+    public static class CorrespondingSpecProcessor extends AbstractProcessor<CorrespondingSpec>
     {
         public CorrespondingSpecProcessor()
         {
@@ -327,7 +326,7 @@ public class QueryProcessing
         }
     }
 
-    public static class SortSpecificationProcessor extends AbstractProcessor<SortSpecification, SortSpecification>
+    public static class SortSpecificationProcessor extends AbstractProcessor<SortSpecification>
     {
         private static final Map<Ordering, String> _defaultOrderingStrings;
 
@@ -362,7 +361,7 @@ public class QueryProcessing
         }
     }
 
-    public static class GrandTotalProcessor extends AbstractProcessor<GroupingElement, GrandTotal>
+    public static class GrandTotalProcessor extends AbstractProcessor<GrandTotal>
     {
         public GrandTotalProcessor()
         {
@@ -376,7 +375,7 @@ public class QueryProcessing
         }
     }
 
-    public static class OrdinaryGroupingSetProcessor extends AbstractProcessor<GroupingElement, OrdinaryGroupingSet>
+    public static class OrdinaryGroupingSetProcessor extends AbstractProcessor<OrdinaryGroupingSet>
     {
         public OrdinaryGroupingSetProcessor()
         {
