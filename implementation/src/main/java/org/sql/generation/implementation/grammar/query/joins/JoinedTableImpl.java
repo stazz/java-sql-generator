@@ -44,4 +44,10 @@ public abstract class JoinedTableImpl<TableReferenceType extends JoinedTable> ex
         return this._left;
     }
 
+    @Override
+    protected boolean doesEqual( TableReferenceType another )
+    {
+        return this._left.equals( another.getLeft() );
+    }
+
 }

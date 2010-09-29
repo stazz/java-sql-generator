@@ -50,4 +50,16 @@ public class NaturalJoinedTableImpl extends JoinedTablePrimary<NaturalJoinedTabl
         return this._joinType;
     }
 
+    @Override
+    protected boolean doesEqual( NaturalJoinedTable another )
+    {
+        boolean result = this._joinType.equals( another.getJoinType() ) && this.getRight().equals( another.getRight() );
+        if( result )
+        {
+            result = super.doesEqual( another );
+        }
+
+        return result;
+    }
+
 }

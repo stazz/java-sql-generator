@@ -51,4 +51,10 @@ public class OrderByClauseImpl extends TypeableImpl<OrderByClause, OrderByClause
         return this._sortSpecs;
     }
 
+    @Override
+    protected boolean doesEqual( OrderByClause another )
+    {
+        return this._sortSpecs.equals( another.getOrderingColumns() );
+    }
+
 }

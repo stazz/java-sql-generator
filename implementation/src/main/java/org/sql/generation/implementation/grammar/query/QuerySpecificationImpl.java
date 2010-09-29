@@ -14,6 +14,7 @@
 
 package org.sql.generation.implementation.grammar.query;
 
+import org.lwdci.spi.context.single.skeletons.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.query.FromClause;
@@ -91,5 +92,16 @@ public class QuerySpecificationImpl extends QueryExpressionBodyImpl<QuerySpecifi
     public OrderByClause getOrderBy()
     {
         return this._orderBy;
+    }
+
+    @Override
+    protected boolean doesEqual( QuerySpecification another )
+    {
+        return this._select.equals( another.getColumns() )
+            && TypeableImpl.bothNullOrEquals( this._from, another.getFrom() )
+            && TypeableImpl.bothNullOrEquals( this._where, another.getWhere() )
+            && TypeableImpl.bothNullOrEquals( this._groupBy, another.getGroupBy() )
+            && TypeableImpl.bothNullOrEquals( this._having, another.getHaving() )
+            && TypeableImpl.bothNullOrEquals( this._orderBy, another.getOrderBy() );
     }
 }

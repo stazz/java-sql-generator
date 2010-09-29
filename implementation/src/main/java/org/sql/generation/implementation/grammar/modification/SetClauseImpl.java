@@ -56,4 +56,10 @@ public class SetClauseImpl extends TypeableImpl<SetClause, SetClause>
         return this._target;
     }
 
+    @Override
+    protected boolean doesEqual( SetClause another )
+    {
+        return this._target.equals( another.getUpdateTarget() ) && this._source.equals( another.getUpdateSource() );
+    }
+
 }

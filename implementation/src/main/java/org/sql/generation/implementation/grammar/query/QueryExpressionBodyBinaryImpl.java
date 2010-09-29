@@ -14,6 +14,7 @@
 
 package org.sql.generation.implementation.grammar.query;
 
+import org.lwdci.spi.context.single.skeletons.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.SetQuantifier;
 import org.sql.generation.api.grammar.query.CorrespondingSpec;
@@ -85,5 +86,14 @@ public class QueryExpressionBodyBinaryImpl extends QueryExpressionBodyImpl<Query
     public SetQuantifier getSetQuantifier()
     {
         return this._setQuantifier;
+    }
+
+    @Override
+    protected boolean doesEqual( QueryExpressionBodyBinary another )
+    {
+        return this._setOperation.equals( another.getSetOperation() )
+            && this._setQuantifier.equals( another.getSetQuantifier() )
+            && TypeableImpl.bothNullOrEquals( this._correspondingColumns, another.getCorrespondingColumns() )
+            && this._left.equals( another.getLeft() ) && this._right.equals( another.getRight() );
     }
 }

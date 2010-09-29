@@ -60,4 +60,16 @@ public class QualifiedJoinedTableImpl extends JoinedTableRef<QualifiedJoinedTabl
         return this._joinSpec;
     }
 
+    @Override
+    protected boolean doesEqual( QualifiedJoinedTable another )
+    {
+        boolean result = this._joinType.equals( another.getJoinType() )
+            && this._joinSpec.equals( another.getJoinSpecification() ) && this.getRight().equals( another.getRight() );
+        if( result )
+        {
+            result = super.doesEqual( another );
+        }
+        return result;
+    }
+
 }

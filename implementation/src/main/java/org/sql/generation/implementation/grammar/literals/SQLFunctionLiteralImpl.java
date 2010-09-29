@@ -70,4 +70,10 @@ public class SQLFunctionLiteralImpl extends NonBooleanExpressionImpl<SQLFunction
     {
         return this._parameters;
     }
+
+    @Override
+    protected boolean doesEqual( SQLFunctionLiteral another )
+    {
+        return this._name.equals( another.getFunctionName() ) && this._parameters.equals( another.getParameters() );
+    }
 }

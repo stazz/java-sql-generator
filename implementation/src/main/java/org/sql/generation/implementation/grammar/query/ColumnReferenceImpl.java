@@ -29,4 +29,5 @@ public abstract class ColumnReferenceImpl<ColumnReferenceType extends ColumnRefe
     {
         super( columnReferenceClass );
     }
+
 }

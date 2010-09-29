@@ -48,4 +48,10 @@ public class UpdateSourceByExpressionImpl extends TypeableImpl<UpdateSource, Upd
     {
         return this._valueExpression;
     }
+
+    @Override
+    protected boolean doesEqual( UpdateSourceByExpression another )
+    {
+        return this._valueExpression.equals( another.getValueExpression() );
+    }
 }

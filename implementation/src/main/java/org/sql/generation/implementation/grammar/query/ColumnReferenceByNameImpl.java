@@ -14,6 +14,7 @@
 
 package org.sql.generation.implementation.grammar.query;
 
+import org.lwdci.spi.context.single.skeletons.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.query.ColumnReferenceByName;
 
@@ -53,5 +54,12 @@ public class ColumnReferenceByNameImpl extends ColumnReferenceImpl<ColumnReferen
     public String getTableName()
     {
         return this._tableName;
+    }
+
+    @Override
+    protected boolean doesEqual( ColumnReferenceByName another )
+    {
+        return this._columnName.equals( another.getColumnName() )
+            && TypeableImpl.bothNullOrEquals( this._tableName, another.getTableName() );
     }
 }

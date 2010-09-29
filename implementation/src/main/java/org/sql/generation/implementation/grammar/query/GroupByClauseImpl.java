@@ -51,4 +51,10 @@ public class GroupByClauseImpl extends TypeableImpl<GroupByClause, GroupByClause
         return this._groupingElements;
     }
 
+    @Override
+    protected boolean doesEqual( GroupByClause another )
+    {
+        return this._groupingElements.equals( another.getGroupingElements() );
+    }
+
 }

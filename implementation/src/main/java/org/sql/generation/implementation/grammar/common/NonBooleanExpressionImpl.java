@@ -22,7 +22,7 @@ import org.sql.generation.api.grammar.common.ValueExpression;
  * 
  * @author Stanislav Muhametsin
  */
-public class NonBooleanExpressionImpl<ExpressionType extends NonBooleanExpression> extends
+public abstract class NonBooleanExpressionImpl<ExpressionType extends NonBooleanExpression> extends
     TypeableImpl<ValueExpression, ExpressionType>
 {
 

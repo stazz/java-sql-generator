@@ -60,4 +60,10 @@ public class TargetTableImpl extends TypeableImpl<TargetTable, TargetTable>
         return this._tableName;
     }
 
+    @Override
+    protected boolean doesEqual( TargetTable another )
+    {
+        return this._tableName.equals( another.getTableName() ) && this._isOnly.equals( another.isOnly() );
+    }
+
 }

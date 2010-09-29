@@ -42,4 +42,11 @@ public abstract class DynamicColumnSourceImpl<ColumnSourceType extends DynamicCo
         return this._columnNames;
     }
 
+    @Override
+    protected boolean doesEqual( ColumnSourceType another )
+    {
+        return (this._columnNames != null && this._columnNames.equals( another.getColumnNames() ))
+            || (this._columnNames == null && another.getColumnNames() == null);
+    }
+
 }

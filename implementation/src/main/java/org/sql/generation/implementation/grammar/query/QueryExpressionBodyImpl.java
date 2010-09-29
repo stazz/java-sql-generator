@@ -21,7 +21,7 @@ import org.sql.generation.api.grammar.query.QueryExpressionBody;
  * 
  * @author Stanislav Muhametsin
  */
-public class QueryExpressionBodyImpl<ExpressionType extends QueryExpressionBody> extends
+public abstract class QueryExpressionBodyImpl<ExpressionType extends QueryExpressionBody> extends
     TypeableImpl<QueryExpressionBody, ExpressionType>
 {
 

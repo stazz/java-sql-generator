@@ -57,4 +57,11 @@ public class SortSpecificationImpl extends TypeableImpl<SortSpecification, SortS
     {
         return this._expression;
     }
+
+    @Override
+    protected boolean doesEqual( SortSpecification another )
+    {
+        return this._ordering.equals( another.getOrderingSpecification() )
+            && this._expression.equals( another.getOrderingSpecification() );
+    }
 }

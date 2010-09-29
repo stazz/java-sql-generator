@@ -44,4 +44,10 @@ public class CorrespondingSpecImpl extends TypeableImpl<CorrespondingSpec, Corre
     {
         return this._columnList;
     }
+
+    @Override
+    protected boolean doesEqual( CorrespondingSpec another )
+    {
+        return TypeableImpl.bothNullOrEquals( this._columnList, another.getColumnList() );
+    }
 }

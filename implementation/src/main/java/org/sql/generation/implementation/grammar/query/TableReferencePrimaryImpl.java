@@ -14,6 +14,7 @@
 
 package org.sql.generation.implementation.grammar.query;
 
+import org.lwdci.spi.context.single.skeletons.TypeableImpl;
 import org.sql.generation.api.grammar.query.TableAlias;
 import org.sql.generation.api.grammar.query.TableReferencePrimary;
 
@@ -37,5 +38,11 @@ public class TableReferencePrimaryImpl<TableReferenceType extends TableReference
     public TableAlias getTableAlias()
     {
         return this._tableAlias;
+    }
+
+    @Override
+    protected boolean doesEqual( TableReferenceType another )
+    {
+        return TypeableImpl.bothNullOrEquals( this._tableAlias, another.getTableAlias() );
     }
 }

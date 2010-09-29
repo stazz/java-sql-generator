@@ -46,4 +46,10 @@ public class NamedColumnsJoinImpl extends JoinSpecificationImpl<NamedColumnsJoin
     {
         return this._columnNames;
     }
+
+    @Override
+    protected boolean doesEqual( NamedColumnsJoin another )
+    {
+        return this._columnNames.equals( another.getColumnNames() );
+    }
 }

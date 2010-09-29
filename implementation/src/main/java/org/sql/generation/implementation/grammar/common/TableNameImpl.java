@@ -53,4 +53,11 @@ public class TableNameImpl extends TypeableImpl<TableName, TableName>
     {
         return this._tableName;
     }
+
+    @Override
+    protected boolean doesEqual( TableName another )
+    {
+        return this._tableName.equals( another.getSchemaName() )
+            && TypeableImpl.bothNullOrEquals( this._schemaName, another.getSchemaName() );
+    }
 }

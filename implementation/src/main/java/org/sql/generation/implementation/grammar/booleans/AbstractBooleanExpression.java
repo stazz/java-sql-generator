@@ -32,4 +32,11 @@ public abstract class AbstractBooleanExpression<ExpressionType extends BooleanEx
         super( expressionClass );
     }
 
+    @Override
+    protected boolean doesEqual( ExpressionType another )
+    {
+        // TODO add doesEqual methods to subclasses
+        return false;
+    }
+
 }

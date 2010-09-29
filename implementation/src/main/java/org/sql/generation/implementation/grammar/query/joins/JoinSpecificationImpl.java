@@ -21,7 +21,7 @@ import org.sql.generation.api.grammar.query.joins.JoinSpecification;
  * 
  * @author Stanislav Muhametsin
  */
-public class JoinSpecificationImpl<JoinSpecificationType extends JoinSpecification> extends
+public abstract class JoinSpecificationImpl<JoinSpecificationType extends JoinSpecification> extends
     TypeableImpl<JoinSpecification, JoinSpecificationType>
     implements JoinSpecification
 {

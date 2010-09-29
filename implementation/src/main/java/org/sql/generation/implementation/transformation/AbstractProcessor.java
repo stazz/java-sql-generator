@@ -40,5 +40,13 @@ public abstract class AbstractProcessor<BaseType extends Typeable<?>, ObjectType
         }
     }
 
+    /**
+     * By default, always returns false.
+     */
+    protected boolean doesEqual( ObjectType another )
+    {
+        return false;
+    }
+
     protected abstract void doProcess( SQLProcessorAggregator aggregator, ObjectType object, StringBuilder builder );
 }

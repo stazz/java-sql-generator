@@ -57,4 +57,11 @@ public class DeleteBySearchImpl extends TypeableImpl<DeleteStatement, DeleteBySe
     {
         return this._where;
     }
+
+    @Override
+    protected boolean doesEqual( DeleteBySearch another )
+    {
+        return this._targetTable.equals( another.getTargetTable() )
+            && TypeableImpl.bothNullOrEquals( this._where, another.getWhere() );
+    }
 }

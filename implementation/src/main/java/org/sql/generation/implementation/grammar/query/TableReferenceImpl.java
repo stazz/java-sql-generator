@@ -36,4 +36,5 @@ public abstract class TableReferenceImpl<TypeableType extends Typeable<TypeableT
     {
         return this;
     }
+
 }

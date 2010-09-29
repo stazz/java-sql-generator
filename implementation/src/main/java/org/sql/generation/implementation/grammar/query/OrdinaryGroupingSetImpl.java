@@ -63,4 +63,10 @@ public class OrdinaryGroupingSetImpl extends TypeableImpl<GroupingElement, Ordin
     {
         return this._columns;
     }
+
+    @Override
+    protected boolean doesEqual( OrdinaryGroupingSet another )
+    {
+        return this._columns.equals( another.getColumns() );
+    }
 }

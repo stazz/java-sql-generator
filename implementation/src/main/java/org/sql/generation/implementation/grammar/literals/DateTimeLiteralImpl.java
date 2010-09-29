@@ -47,4 +47,10 @@ public class DateTimeLiteralImpl extends NonBooleanExpressionImpl<DateTimeLitera
     {
         return this._date;
     }
+
+    @Override
+    protected boolean doesEqual( DateTimeLiteral another )
+    {
+        return this._date.equals( another.getDate() );
+    }
 }

@@ -77,4 +77,12 @@ public class UpdateBySearchImpl extends TypeableImpl<UpdateStatement, UpdateBySe
         return this._setClauses;
     }
 
+    @Override
+    protected boolean doesEqual( UpdateBySearch another )
+    {
+        return this._targetTable.equals( another.getTargetTable() )
+            && this._setClauses.equals( another.getSetClauses() )
+            && TypeableImpl.bothNullOrEquals( this._where, another.getWhere() );
+    }
+
 }

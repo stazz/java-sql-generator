@@ -14,6 +14,7 @@
 
 package org.sql.generation.implementation.grammar.literals;
 
+import org.lwdci.spi.context.single.skeletons.TypeableImpl;
 import org.sql.generation.api.grammar.literals.DirectLiteral;
 import org.sql.generation.implementation.grammar.common.NonBooleanExpressionImpl;
 
@@ -42,6 +43,12 @@ public class DirectLiteralImpl extends NonBooleanExpressionImpl<DirectLiteral>
     public String getDirectLiteral()
     {
         return this._literal;
+    }
+
+    @Override
+    protected boolean doesEqual( DirectLiteral another )
+    {
+        return TypeableImpl.bothNullOrEquals( this._literal, another.getDirectLiteral() );
     }
 
 }

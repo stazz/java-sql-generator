@@ -58,4 +58,10 @@ public class InsertStatementImpl extends TypeableImpl<InsertStatement, InsertSta
         return this._columnSource;
     }
 
+    @Override
+    protected boolean doesEqual( InsertStatement another )
+    {
+        return this._tableName.equals( another.getTableName() )
+            && this._columnSource.equals( another.getColumnSource() );
+    }
 }

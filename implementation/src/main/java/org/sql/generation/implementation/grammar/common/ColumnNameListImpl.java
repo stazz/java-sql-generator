@@ -66,4 +66,10 @@ public class ColumnNameListImpl extends TypeableImpl<ColumnNameList, ColumnNameL
         return this._columnNames;
     }
 
+    @Override
+    protected boolean doesEqual( ColumnNameList another )
+    {
+        return this._columnNames.equals( another.getColumnNames() );
+    }
+
 }

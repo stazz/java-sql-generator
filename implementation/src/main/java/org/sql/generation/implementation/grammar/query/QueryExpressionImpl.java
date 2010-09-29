@@ -46,4 +46,10 @@ public class QueryExpressionImpl extends NonBooleanExpressionImpl<QueryExpressio
     {
         return this._body;
     }
+
+    @Override
+    protected boolean doesEqual( QueryExpression another )
+    {
+        return this._body.equals( another.getQueryExpressionBody() );
+    }
 }

@@ -46,4 +46,10 @@ public class ColumnReferenceByExpressionImpl extends ColumnReferenceImpl<ColumnR
     {
         return this._expression;
     }
+
+    @Override
+    protected boolean doesEqual( ColumnReferenceByExpression another )
+    {
+        return this._expression.equals( another.getExpression() );
+    }
 }

@@ -37,4 +37,15 @@ public class CrossJoinedTableImpl extends JoinedTablePrimary<CrossJoinedTable>
         super( implClass, left, right );
     }
 
+    @Override
+    protected boolean doesEqual( CrossJoinedTable another )
+    {
+        boolean result = this.getRight().equals( another.getRight() );
+        if( result )
+        {
+            result = super.doesEqual( another );
+        }
+
+        return result;
+    }
 }

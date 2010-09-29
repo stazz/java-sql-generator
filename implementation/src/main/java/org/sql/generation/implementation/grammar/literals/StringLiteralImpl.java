@@ -45,4 +45,10 @@ public class StringLiteralImpl extends NonBooleanExpressionImpl<StringLiteral>
     {
         return this._literal;
     }
+
+    @Override
+    protected boolean doesEqual( StringLiteral another )
+    {
+        return this._literal.equals( another.getString() );
+    }
 }

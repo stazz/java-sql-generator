@@ -45,4 +45,10 @@ public class JoinConditionImpl extends JoinSpecificationImpl<JoinCondition>
     {
         return this._searchCondition;
     }
+
+    @Override
+    protected boolean doesEqual( JoinCondition another )
+    {
+        return this._searchCondition.equals( another.getSearchConidition() );
+    }
 }

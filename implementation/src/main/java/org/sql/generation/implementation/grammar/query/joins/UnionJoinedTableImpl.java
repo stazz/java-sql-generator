@@ -37,4 +37,15 @@ public class UnionJoinedTableImpl extends JoinedTablePrimary<UnionJoinedTable>
         super( implClass, left, right );
     }
 
+    @Override
+    protected boolean doesEqual( UnionJoinedTable another )
+    {
+        boolean result = this.getRight().equals( another.getRight() );
+        if( result )
+        {
+            result = super.doesEqual( another );
+        }
+
+        return result;
+    }
 }
