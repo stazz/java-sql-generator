@@ -25,7 +25,7 @@ import org.sql.generation.api.grammar.booleans.Disjunction;
  * 
  * @author Stanislav Muhametsin
  */
-public class DisjunctionImpl extends AbstractBooleanExpression<Disjunction>
+public class DisjunctionImpl extends ComposedBooleanExpressionImpl<Disjunction>
     implements Disjunction
 {
 

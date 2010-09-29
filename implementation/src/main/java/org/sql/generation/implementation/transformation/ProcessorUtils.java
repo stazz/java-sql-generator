@@ -14,9 +14,6 @@
 
 package org.sql.generation.implementation.transformation;
 
-import java.util.List;
-import java.util.Map;
-
 import org.sql.generation.api.grammar.common.SetQuantifier;
 
 /**
@@ -28,22 +25,6 @@ public class ProcessorUtils
     public static Boolean notNullAndNotEmpty( String str )
     {
         return str != null && str.trim().length() > 0;
-    }
-
-    public static <K, V> Map<K, V> mapFromValues( List<K> keys, List<V> values, Map<K, V> map )
-    {
-        for( Integer x = 0; x < keys.size(); ++x )
-        {
-            map.put( keys.get( x ), values.get( x ) );
-        }
-
-        return map;
-    }
-
-    public static void unknownType( Object type, String typeKind )
-    {
-        throw new IllegalArgumentException( "Could not process " + typeKind + ":" + (type == null ? "[null]" : type)
-            + "." );
     }
 
     public static void processSetQuantifier( SetQuantifier quantifier, StringBuilder builder )

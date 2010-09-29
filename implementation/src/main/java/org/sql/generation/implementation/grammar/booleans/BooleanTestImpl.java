@@ -25,7 +25,7 @@ import org.sql.generation.api.grammar.booleans.BooleanTest;
  * 
  * @author Stanislav Muhametsin
  */
-public class BooleanTestImpl extends AbstractBooleanExpression<BooleanTest>
+public class BooleanTestImpl extends ComposedBooleanExpressionImpl<BooleanTest>
     implements BooleanTest
 {
 
@@ -44,6 +44,11 @@ public class BooleanTestImpl extends AbstractBooleanExpression<BooleanTest>
         super( expressionClass );
 
         NullArgumentException.validateNotNull( "expression", expression );
+
+        if( BooleanUtils.isEmpty( expression ) )
+        {
+            throw new IllegalArgumentException( "Boolean test must be on something." );
+        }
 
         this._booleanExpression = expression;
         this._testType = testType;

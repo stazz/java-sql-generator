@@ -14,37 +14,36 @@
 
 package org.sql.generation.implementation.grammar.booleans;
 
-import org.sql.generation.api.common.NullArgumentException;
-import org.sql.generation.api.grammar.booleans.UnaryPredicate;
-import org.sql.generation.api.grammar.common.NonBooleanExpression;
+import java.util.Iterator;
+
+import org.sql.generation.api.grammar.booleans.BooleanExpression;
+import org.sql.generation.api.grammar.booleans.ComposedBooleanExpression;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public abstract class UnaryPredicateImpl<ExpressionType extends UnaryPredicate> extends
+public abstract class ComposedBooleanExpressionImpl<ExpressionType extends ComposedBooleanExpression> extends
     AbstractBooleanExpression<ExpressionType>
-    implements UnaryPredicate
+    implements ComposedBooleanExpression
 {
 
-    private final NonBooleanExpression _expression;
-
-    public UnaryPredicateImpl( Class<? extends ExpressionType> expressionClass, NonBooleanExpression expression )
+    protected ComposedBooleanExpressionImpl( Class<? extends ExpressionType> expressionClass )
     {
         super( expressionClass );
-        NullArgumentException.validateNotNull( "expression", expression );
-
-        this._expression = expression;
-    }
-
-    public NonBooleanExpression getValueExpression()
-    {
-        return this._expression;
     }
 
     @Override
     protected boolean doesEqual( ExpressionType another )
     {
-        return this._expression.equals( another.getValueExpression() );
+        Iterator<BooleanExpression> thisIter = this.iterator();
+        Iterator<BooleanExpression> anotherIter = another.iterator();
+        Boolean prevResult = true;
+        while( thisIter.hasNext() && anotherIter.hasNext() && prevResult )
+        {
+            prevResult = thisIter.next().equals( anotherIter.next() );
+        }
+
+        return !thisIter.hasNext() && !anotherIter.hasNext() && prevResult;
     }
 }

@@ -21,7 +21,6 @@ import org.sql.generation.api.grammar.booleans.BinaryPredicate;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.booleans.BooleanTest;
 import org.sql.generation.api.grammar.booleans.BooleanTest.TestType;
-import org.sql.generation.api.grammar.booleans.ComposedBooleanExpression;
 import org.sql.generation.api.grammar.booleans.Conjunction;
 import org.sql.generation.api.grammar.booleans.Disjunction;
 import org.sql.generation.api.grammar.booleans.MultiPredicate;
@@ -30,6 +29,7 @@ import org.sql.generation.api.grammar.booleans.UnaryPredicate;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.api.grammar.common.SQLConstants;
 import org.sql.generation.api.grammar.query.QueryExpression;
+import org.sql.generation.implementation.grammar.booleans.BooleanUtils;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
@@ -45,12 +45,12 @@ public class BooleanExpressionProcessing
 
         public static enum UnaryOperatorOrientation
         {
-            BEFORE, // After expression
-            AFTER
+            BEFORE_EXPRESSION, // After expression
+            AFTER_EXPRESSION
             // Before expression
         }
 
-        public static final UnaryOperatorOrientation DEFAULT_ORIENTATION = UnaryOperatorOrientation.AFTER;
+        public static final UnaryOperatorOrientation DEFAULT_ORIENTATION = UnaryOperatorOrientation.AFTER_EXPRESSION;
 
         private final UnaryOperatorOrientation _orientation;
         private final String _operator;
@@ -73,7 +73,7 @@ public class BooleanExpressionProcessing
         protected void doProcess( SQLProcessorAggregator processor, UnaryPredicate predicate, StringBuilder builder )
         {
             UnaryOperatorOrientation orientation = this._orientation;
-            if( orientation == UnaryOperatorOrientation.BEFORE )
+            if( orientation == UnaryOperatorOrientation.BEFORE_EXPRESSION )
             {
                 builder.append( this._operator ).append( SQLConstants.TOKEN_SEPARATOR );
             }
@@ -90,7 +90,7 @@ public class BooleanExpressionProcessing
                 builder.append( SQLConstants.CLOSE_PARENTHESIS );
             }
 
-            if( orientation == UnaryOperatorOrientation.AFTER )
+            if( orientation == UnaryOperatorOrientation.AFTER_EXPRESSION )
             {
                 builder.append( SQLConstants.TOKEN_SEPARATOR ).append( this._operator );
             }
@@ -181,126 +181,109 @@ public class BooleanExpressionProcessing
         }
     }
 
-    public static class ComposedExpressionProcessor extends AbstractProcessor<ComposedBooleanExpression>
+    public static class NegationProcessor extends AbstractProcessor<Negation>
     {
-        public ComposedExpressionProcessor()
+        public NegationProcessor()
         {
-            super( ComposedBooleanExpression.class );
+            super( Negation.class );
         }
 
         @Override
-        public void doProcess( SQLProcessorAggregator processor, ComposedBooleanExpression expression,
-            StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator aggregator, Negation object, StringBuilder builder )
         {
-            if( expression instanceof Negation )
+            BooleanExpression negated = object.getNegated();
+            if( !BooleanUtils.isEmpty( negated ) )
             {
-                Negation negation = (Negation) expression;
-                StringBuilder negationBuilder = new StringBuilder();
-                processor.process( negation.getNegated(), negationBuilder );
-                String negationString = negationBuilder.toString();
-                if( negationString.trim().length() > 0 )
-                {
-                    builder.append( SQLConstants.NOT ).append( SQLConstants.TOKEN_SEPARATOR )
-                        .append( SQLConstants.OPEN_PARENTHESIS ).append( negationString )
-                        .append( SQLConstants.CLOSE_PARENTHESIS );
-                }
-            }
-            else if( expression instanceof BooleanTest )
-            {
-                BooleanTest test = (BooleanTest) expression;
-                StringBuilder testBuilder = new StringBuilder();
-                processor.process( test.getBooleanExpression(), testBuilder );
-                String testString = testBuilder.toString();
-                if( testString.trim().length() > 0 )
-                {
-                    TestType testType = test.getTestType();
-                    Boolean hasTest = testType != null;
-                    if( hasTest )
-                    {
-                        builder.append( SQLConstants.OPEN_PARENTHESIS );
-                    }
-                    builder.append( testString );
-                    if( hasTest )
-                    {
-                        builder.append( SQLConstants.CLOSE_PARENTHESIS ).append( "IS" )
-                            .append( SQLConstants.TOKEN_SEPARATOR );
-                        if( testType == TestType.IS_NOT )
-                        {
-                            builder.append( "NOT" ).append( SQLConstants.TOKEN_SEPARATOR );
-                        }
-
-                        builder.append( test.getTruthValue().toString() );
-                    }
-                }
-            }
-            else
-            {
-                if( expression instanceof Conjunction )
-                {
-                    Conjunction conjunction = (Conjunction) expression;
-                    this.processBinaryExpression( processor, conjunction.getLeft(), conjunction.getRight(), builder,
-                        SQLConstants.AND );
-                }
-                else if( expression instanceof Disjunction )
-                {
-                    Disjunction disjunction = (Disjunction) expression;
-                    this.processBinaryExpression( processor, disjunction.getLeft(), disjunction.getRight(), builder,
-                        SQLConstants.OR );
-                }
+                builder.append( SQLConstants.NOT ).append( SQLConstants.TOKEN_SEPARATOR );
+                aggregator.process( negated, builder );
             }
         }
+    }
 
-        protected void processBinaryExpression( SQLProcessorAggregator processor, BooleanExpression left,
-            BooleanExpression right, StringBuilder builder, String operator )
+    public static void processBinaryComposedObject( SQLProcessorAggregator aggregator, BooleanExpression left,
+        BooleanExpression right, StringBuilder builder, String operator )
+    {
+        Boolean leftEmpty = BooleanUtils.isEmpty( left );
+        Boolean rightEmpty = BooleanUtils.isEmpty( right );
+        if( !leftEmpty || !rightEmpty )
         {
-            StringBuilder leftBuilder = new StringBuilder();
-            StringBuilder rightBuilder = new StringBuilder();
-            processor.process( left, leftBuilder );
-            processor.process( right, rightBuilder );
-            String leftStr = leftBuilder.toString();
-            String rightStr = rightBuilder.toString();
-            Boolean leftOK = ProcessorUtils.notNullAndNotEmpty( leftStr );
-            Boolean rightOK = ProcessorUtils.notNullAndNotEmpty( rightStr );
-            Boolean leftNegation = left instanceof Negation;
-            Boolean rightNegation = right instanceof Negation;
-
-            if( leftOK && rightOK )
+            Boolean oneEmpty = leftEmpty || rightEmpty;
+            if( !oneEmpty )
             {
                 builder.append( SQLConstants.OPEN_PARENTHESIS );
             }
-            if( leftOK )
+            aggregator.process( left, builder );
+
+            if( !oneEmpty )
             {
-                if( leftNegation )
+                if( !leftEmpty )
                 {
-                    builder.append( SQLConstants.OPEN_PARENTHESIS );
+                    builder.append( SQLConstants.TOKEN_SEPARATOR );
                 }
-                builder.append( leftStr );
-                if( leftNegation )
+                builder.append( operator );
+                if( !rightEmpty )
                 {
-                    builder.append( SQLConstants.CLOSE_PARENTHESIS );
-                }
-            }
-            if( leftOK && rightOK )
-            {
-                builder.append( SQLConstants.TOKEN_SEPARATOR ).append( operator ).append( SQLConstants.TOKEN_SEPARATOR );
-            }
-            if( rightOK )
-            {
-                if( rightNegation )
-                {
-                    builder.append( SQLConstants.OPEN_PARENTHESIS );
-                }
-                builder.append( rightStr );
-                if( rightNegation )
-                {
-                    builder.append( SQLConstants.CLOSE_PARENTHESIS );
+                    builder.append( SQLConstants.TOKEN_SEPARATOR );
                 }
             }
 
-            if( leftOK && rightOK )
+            aggregator.process( right, builder );
+            if( !oneEmpty )
             {
                 builder.append( SQLConstants.CLOSE_PARENTHESIS );
             }
+        }
+    }
+
+    public static class ConjunctionProcessor extends AbstractProcessor<Conjunction>
+    {
+
+        public ConjunctionProcessor()
+        {
+            super( Conjunction.class );
+        }
+
+        @Override
+        protected void doProcess( SQLProcessorAggregator aggregator, Conjunction object, StringBuilder builder )
+        {
+            processBinaryComposedObject( aggregator, object.getLeft(), object.getRight(), builder, "AND" );
+        }
+    }
+
+    public static class DisjunctionProcessor extends AbstractProcessor<Disjunction>
+    {
+        public DisjunctionProcessor()
+        {
+            super( Disjunction.class );
+        }
+
+        @Override
+        protected void doProcess( SQLProcessorAggregator aggregator, Disjunction object, StringBuilder builder )
+        {
+            processBinaryComposedObject( aggregator, object.getLeft(), object.getRight(), builder, "OR" );
+        }
+    }
+
+    public static class BooleanTestProcessor extends AbstractProcessor<BooleanTest>
+    {
+        public BooleanTestProcessor()
+        {
+            super( BooleanTest.class );
+        }
+
+        @Override
+        protected void doProcess( SQLProcessorAggregator aggregator, BooleanTest object, StringBuilder builder )
+        {
+            BooleanExpression testable = object.getBooleanExpression();
+            builder.append( SQLConstants.OPEN_PARENTHESIS );
+            aggregator.process( testable, builder );
+            builder.append( SQLConstants.CLOSE_PARENTHESIS ).append( "IS" ).append( SQLConstants.TOKEN_SEPARATOR );
+            if( object.getTestType() == TestType.IS_NOT )
+            {
+                builder.append( "NOT" ).append( SQLConstants.TOKEN_SEPARATOR );
+            }
+
+            builder.append( object.getTruthValue().toString() );
         }
     }
 

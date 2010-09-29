@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.lwdci.spi.context.single.skeletons.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.query.FromClause;
 import org.sql.generation.api.grammar.query.TableReference;
@@ -26,7 +27,7 @@ import org.sql.generation.api.grammar.query.TableReference;
  * 
  * @author Stanislav Muhametsin
  */
-public class FromClauseImpl
+public class FromClauseImpl extends TypeableImpl<FromClause, FromClause>
     implements FromClause
 {
 
@@ -39,6 +40,13 @@ public class FromClauseImpl
 
     public FromClauseImpl( List<TableReference> tableReferences )
     {
+        this( FromClause.class, tableReferences );
+    }
+
+    protected FromClauseImpl( Class<? extends FromClause> type, List<TableReference> tableReferences )
+    {
+        super( type );
+
         NullArgumentException.validateNotNull( "table references", tableReferences );
 
         for( TableReference ref : tableReferences )
@@ -52,5 +60,11 @@ public class FromClauseImpl
     public List<TableReference> getTableReferences()
     {
         return this._tableReferences;
+    }
+
+    @Override
+    protected boolean doesEqual( FromClause another )
+    {
+        return this._tableReferences.equals( another.getTableReferences() );
     }
 }

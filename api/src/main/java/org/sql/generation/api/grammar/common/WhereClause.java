@@ -12,24 +12,19 @@
  *
  */
 
-package org.sql.generation.implementation.grammar.booleans;
+package org.sql.generation.api.grammar.common;
 
-import org.lwdci.spi.context.single.skeletons.TypeableImpl;
+import org.lwdci.api.context.single.Typeable;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
-import org.sql.generation.api.grammar.common.ValueExpression;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public abstract class AbstractBooleanExpression<ExpressionType extends BooleanExpression> extends
-    TypeableImpl<ValueExpression, ExpressionType>
-    implements BooleanExpression
+public interface WhereClause
+    extends Typeable<WhereClause>
 {
 
-    protected AbstractBooleanExpression( Class<? extends ExpressionType> expressionClass )
-    {
-        super( expressionClass );
-    }
+    public BooleanExpression getWhere();
 
 }

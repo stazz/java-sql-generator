@@ -12,25 +12,27 @@
  *
  */
 
-
 package org.sql.generation.implementation.grammar.query;
 
+import org.lwdci.spi.context.single.skeletons.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.SetQuantifier;
 import org.sql.generation.api.grammar.query.SelectColumnClause;
 
 /**
- *
+ * 
  * @author Stanislav Muhametsin
  */
-public class SelectColumnClauseImpl
+public abstract class SelectColumnClauseImpl<SelectType extends SelectColumnClause> extends
+    TypeableImpl<SelectColumnClause, SelectType>
     implements SelectColumnClause
 {
 
     private final SetQuantifier _setQuantifier;
 
-    public SelectColumnClauseImpl( SetQuantifier quantifier )
+    protected SelectColumnClauseImpl( Class<? extends SelectType> type, SetQuantifier quantifier )
     {
+        super( type );
         NullArgumentException.validateNotNull( "set quantifier", quantifier );
 
         this._setQuantifier = quantifier;
@@ -39,5 +41,11 @@ public class SelectColumnClauseImpl
     public SetQuantifier getSetQuantifier()
     {
         return this._setQuantifier;
+    }
+
+    @Override
+    protected boolean doesEqual( SelectType another )
+    {
+        return this._setQuantifier.equals( another.getSetQuantifier() );
     }
 }

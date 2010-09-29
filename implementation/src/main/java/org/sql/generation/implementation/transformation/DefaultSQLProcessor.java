@@ -63,10 +63,15 @@ import org.sql.generation.api.grammar.modification.UpdateBySearch;
 import org.sql.generation.api.grammar.modification.UpdateSource.Default;
 import org.sql.generation.api.grammar.modification.UpdateSource.Null;
 import org.sql.generation.api.grammar.modification.UpdateSourceByExpression;
+import org.sql.generation.api.grammar.query.AsteriskSelect;
 import org.sql.generation.api.grammar.query.ColumnReferenceByExpression;
 import org.sql.generation.api.grammar.query.ColumnReferenceByName;
+import org.sql.generation.api.grammar.query.ColumnReferences;
 import org.sql.generation.api.grammar.query.CorrespondingSpec;
+import org.sql.generation.api.grammar.query.FromClause;
+import org.sql.generation.api.grammar.query.GroupByClause;
 import org.sql.generation.api.grammar.query.GroupingElement.GrandTotal;
+import org.sql.generation.api.grammar.query.OrderByClause;
 import org.sql.generation.api.grammar.query.OrdinaryGroupingSet;
 import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.grammar.query.QueryExpressionBody.EmptyQueryExpressionBody;
@@ -82,8 +87,11 @@ import org.sql.generation.api.grammar.query.joins.NaturalJoinedTable;
 import org.sql.generation.api.grammar.query.joins.QualifiedJoinedTable;
 import org.sql.generation.api.grammar.query.joins.UnionJoinedTable;
 import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.BinaryPredicateProcessor;
-import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.ComposedExpressionProcessor;
+import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.BooleanTestProcessor;
+import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.ConjunctionProcessor;
+import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.DisjunctionProcessor;
 import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.MultiPredicateProcessor;
+import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.NegationProcessor;
 import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.UnaryPredicateProcessor;
 import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.UnaryPredicateProcessor.UnaryOperatorOrientation;
 import org.sql.generation.implementation.transformation.ColumnProcessor.ColumnNamesProcessor;
@@ -106,11 +114,15 @@ import org.sql.generation.implementation.transformation.ModificationProcessing.U
 import org.sql.generation.implementation.transformation.ModificationProcessing.UpdateSourceDefaultProcessor;
 import org.sql.generation.implementation.transformation.ModificationProcessing.UpdateSourceNullProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.CorrespondingSpecProcessor;
+import org.sql.generation.implementation.transformation.QueryProcessing.FromProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.GrandTotalProcessor;
+import org.sql.generation.implementation.transformation.QueryProcessing.GroupByProcessor;
+import org.sql.generation.implementation.transformation.QueryProcessing.OrderByProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.OrdinaryGroupingSetProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.QueryExpressionBinaryProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.QueryExpressionProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.QuerySpecificationProcessor;
+import org.sql.generation.implementation.transformation.QueryProcessing.SelectColumnsProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.SortSpecificationProcessor;
 import org.sql.generation.implementation.transformation.TableReferenceProcessing.CrossJoinedTableProcessor;
 import org.sql.generation.implementation.transformation.TableReferenceProcessing.JoinConditionProcessor;
@@ -149,10 +161,10 @@ public class DefaultSQLProcessor extends ThreadSafeInteractionMapper<Typeable<?>
     static
     {
         Map<Class<? extends UnaryPredicate>, UnaryOperatorOrientation> unaryOrientations = new HashMap<Class<? extends UnaryPredicate>, UnaryOperatorOrientation>();
-        unaryOrientations.put( IsNullPredicate.class, UnaryOperatorOrientation.AFTER );
-        unaryOrientations.put( IsNotNullPredicate.class, UnaryOperatorOrientation.AFTER );
-        unaryOrientations.put( ExistsPredicate.class, UnaryOperatorOrientation.BEFORE );
-        unaryOrientations.put( UniquePredicate.class, UnaryOperatorOrientation.BEFORE );
+        unaryOrientations.put( IsNullPredicate.class, UnaryOperatorOrientation.AFTER_EXPRESSION );
+        unaryOrientations.put( IsNotNullPredicate.class, UnaryOperatorOrientation.AFTER_EXPRESSION );
+        unaryOrientations.put( ExistsPredicate.class, UnaryOperatorOrientation.BEFORE_EXPRESSION );
+        unaryOrientations.put( UniquePredicate.class, UnaryOperatorOrientation.BEFORE_EXPRESSION );
         _defaultUnaryOrientations = Collections.unmodifiableMap( unaryOrientations );
 
         Map<Class<? extends UnaryPredicate>, String> unaryOperators = new HashMap<Class<? extends UnaryPredicate>, String>();
@@ -248,11 +260,10 @@ public class DefaultSQLProcessor extends ThreadSafeInteractionMapper<Typeable<?>
             new MultiPredicateProcessor( _defaultMultiOperators.get( NotInPredicate.class ), _defaultMultiSeparators
                 .get( NotInPredicate.class ), _defaultParenthesisPolicies.get( NotInPredicate.class ) ) );
         // Composed
-        ComposedExpressionProcessor composedProcessor = new ComposedExpressionProcessor();
-        processors.put( Conjunction.class, composedProcessor );
-        processors.put( Disjunction.class, composedProcessor );
-        processors.put( Negation.class, composedProcessor );
-        processors.put( BooleanTest.class, composedProcessor );
+        processors.put( Conjunction.class, new ConjunctionProcessor() );
+        processors.put( Disjunction.class, new DisjunctionProcessor() );
+        processors.put( Negation.class, new NegationProcessor() );
+        processors.put( BooleanTest.class, new BooleanTestProcessor() );
         // Empty
         processors.put( EmptyPredicate.class, new NoOpProcessor() );
 
@@ -277,6 +288,12 @@ public class DefaultSQLProcessor extends ThreadSafeInteractionMapper<Typeable<?>
         processors.put( GrandTotal.class, new GrandTotalProcessor() );
         processors.put( OrdinaryGroupingSet.class, new OrdinaryGroupingSetProcessor() );
         processors.put( SortSpecification.class, new SortSpecificationProcessor() );
+        processors.put( GroupByClause.class, new GroupByProcessor() );
+        processors.put( OrderByClause.class, new OrderByProcessor() );
+        processors.put( FromClause.class, new FromProcessor() );
+        SelectColumnsProcessor selectProcessor = new SelectColumnsProcessor();
+        processors.put( AsteriskSelect.class, selectProcessor );
+        processors.put( ColumnReferences.class, selectProcessor );
 
         // Table references
         processors.put( TableName.class, new TableNameProcessor() );

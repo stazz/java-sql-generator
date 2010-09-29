@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.lwdci.api.context.single.Typeable;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
@@ -50,13 +51,22 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
 public class QueryProcessing
 {
 
-    public static void processWhere( SQLProcessorAggregator processor, BooleanExpression where, StringBuilder builder,
-        String prefix )
+    public static void processOptionalBooleanExpression( SQLProcessorAggregator processor, StringBuilder builder,
+        BooleanExpression expression, String prefix, String name )
     {
-        if( where != null && !BooleanUtils.isEmpty( where ) )
+        if( expression != null && !BooleanUtils.isEmpty( expression ) )
         {
-            builder.append( prefix ).append( SQLConstants.WHERE ).append( SQLConstants.TOKEN_SEPARATOR );
-            processor.process( where, builder );
+            processOptional( processor, builder, expression, prefix, name );
+        }
+    }
+
+    public static void processOptional( SQLProcessorAggregator processor, StringBuilder builder, Typeable<?> element,
+        String prefix, String name )
+    {
+        if( element != null )
+        {
+            builder.append( prefix ).append( name ).append( SQLConstants.TOKEN_SEPARATOR );
+            processor.process( element, builder );
         }
     }
 
@@ -140,41 +150,29 @@ public class QueryProcessing
         @Override
         protected void doProcess( SQLProcessorAggregator processor, QuerySpecification query, StringBuilder builder )
         {
+            processor.process( query.getColumns(), builder );
+            processor.process( query.getFrom(), builder );
+            QueryProcessing.processOptionalBooleanExpression( processor, builder, query.getWhere(),
+                SQLConstants.NEWLINE, SQLConstants.WHERE );
+            processor.process( query.getGroupBy(), builder );
+            QueryProcessing.processOptionalBooleanExpression( processor, builder, query.getHaving(),
+                SQLConstants.NEWLINE, SQLConstants.HAVING );
+            processor.process( query.getOrderBy(), builder );
+        }
+
+    }
+
+    public static class SelectColumnsProcessor extends AbstractProcessor<SelectColumnClause>
+    {
+        public SelectColumnsProcessor()
+        {
+            super( SelectColumnClause.class );
+        }
+
+        @Override
+        protected void doProcess( SQLProcessorAggregator aggregator, SelectColumnClause select, StringBuilder builder )
+        {
             builder.append( SQLConstants.SELECT ).append( SQLConstants.TOKEN_SEPARATOR );
-            this.processSelectColumns( processor, query.getColumns(), builder );
-
-            StringBuilder tmp = new StringBuilder();
-            this.processFromClause( processor, query.getFrom(), tmp );
-            this.appendIfOK( tmp, builder );
-
-            tmp = new StringBuilder();
-            QueryProcessing.processWhere( processor, query.getWhere(), builder, SQLConstants.NEWLINE );
-
-            tmp = new StringBuilder();
-            this.processGroupByClause( processor, query.getGroupBy(), tmp );
-            this.appendIfOK( tmp, builder );
-
-            tmp = new StringBuilder();
-            this.processHavingClause( processor, query.getHaving(), tmp );
-            this.appendIfOK( tmp, builder );
-
-            tmp = new StringBuilder();
-            this.processOrderByClause( processor, query.getOrderBy(), tmp );
-            this.appendIfOK( tmp, builder );
-        }
-
-        protected void appendIfOK( StringBuilder tmp, StringBuilder builder )
-        {
-            String str = tmp.toString();
-            if( ProcessorUtils.notNullAndNotEmpty( str ) )
-            {
-                builder.append( SQLConstants.NEWLINE ).append( str );
-            }
-        }
-
-        protected void processSelectColumns( SQLProcessorAggregator processor, SelectColumnClause select,
-            StringBuilder builder )
-        {
             ProcessorUtils.processSetQuantifier( select.getSetQuantifier(), builder );
             builder.append( SQLConstants.TOKEN_SEPARATOR );
 
@@ -184,7 +182,7 @@ public class QueryProcessing
                 while( iter.hasNext() )
                 {
                     ColumnReferenceInfo info = iter.next();
-                    processor.process( info.getReference(), builder );
+                    aggregator.process( info.getReference(), builder );
                     String alias = info.getAlias();
                     if( ProcessorUtils.notNullAndNotEmpty( alias ) )
                     {
@@ -203,16 +201,26 @@ public class QueryProcessing
                 builder.append( SQLConstants.ASTERISK );
             }
         }
+    }
 
-        protected void processFromClause( SQLProcessorAggregator processor, FromClause from, StringBuilder builder )
+    public static class FromProcessor extends AbstractProcessor<FromClause>
+    {
+        public FromProcessor()
         {
-            if( from != null && !from.getTableReferences().isEmpty() )
+            super( FromClause.class );
+        }
+
+        @Override
+        protected void doProcess( SQLProcessorAggregator aggregator, FromClause from, StringBuilder builder )
+        {
+            if( !from.getTableReferences().isEmpty() )
             {
-                builder.append( SQLConstants.FROM ).append( SQLConstants.TOKEN_SEPARATOR );
+                builder.append( SQLConstants.NEWLINE ).append( SQLConstants.FROM )
+                    .append( SQLConstants.TOKEN_SEPARATOR );
                 Iterator<TableReference> iter = from.getTableReferences().iterator();
                 while( iter.hasNext() )
                 {
-                    processor.process( iter.next().asTypeable(), builder );
+                    aggregator.process( iter.next().asTypeable(), builder );
                     if( iter.hasNext() )
                     {
                         builder.append( SQLConstants.COMMA ).append( SQLConstants.TOKEN_SEPARATOR );
@@ -220,76 +228,6 @@ public class QueryProcessing
                 }
             }
         }
-
-        protected void processWhereClause( SQLProcessorAggregator processor, BooleanExpression where,
-            StringBuilder builder )
-        {
-            QueryProcessing.processWhere( processor, where, builder, "" );
-        }
-
-        protected void processGroupByClause( SQLProcessorAggregator processor, GroupByClause groupBy,
-            StringBuilder builder )
-        {
-            if( groupBy != null )
-            {
-                StringBuilder groupByBuilder = new StringBuilder();
-                Iterator<GroupingElement> iter = groupBy.getGroupingElements().iterator();
-                while( iter.hasNext() )
-                {
-                    processor.process( iter.next(), groupByBuilder );
-                    if( iter.hasNext() )
-                    {
-                        groupByBuilder.append( SQLConstants.COMMA ).append( SQLConstants.TOKEN_SEPARATOR );
-                    }
-                }
-                String groupByString = groupByBuilder.toString();
-                if( ProcessorUtils.notNullAndNotEmpty( groupByString ) )
-                {
-                    builder.append( SQLConstants.GROUP_BY ).append( SQLConstants.TOKEN_SEPARATOR )
-                        .append( groupByString );
-                }
-            }
-        }
-
-        protected void processHavingClause( SQLProcessorAggregator processor, BooleanExpression having,
-            StringBuilder builder )
-        {
-            if( having != null )
-            {
-                StringBuilder havingBuilder = new StringBuilder();
-                processor.process( having, havingBuilder );
-                String havingString = havingBuilder.toString();
-                if( ProcessorUtils.notNullAndNotEmpty( havingString ) )
-                {
-                    builder.append( SQLConstants.HAVING ).append( SQLConstants.TOKEN_SEPARATOR ).append( havingString );
-                }
-            }
-        }
-
-        protected void processOrderByClause( SQLProcessorAggregator processor, OrderByClause orderBy,
-            StringBuilder builder )
-        {
-            if( orderBy != null )
-            {
-                StringBuilder orderByBuilder = new StringBuilder();
-                Iterator<SortSpecification> iter = orderBy.getOrderingColumns().iterator();
-                while( iter.hasNext() )
-                {
-                    processor.process( iter.next(), orderByBuilder );
-                    if( iter.hasNext() )
-                    {
-                        orderByBuilder.append( SQLConstants.COMMA ).append( SQLConstants.TOKEN_SEPARATOR );
-                    }
-                }
-                String orderByString = orderByBuilder.toString();
-                if( ProcessorUtils.notNullAndNotEmpty( orderByString ) )
-                {
-                    builder.append( SQLConstants.ORDER_BY ).append( SQLConstants.TOKEN_SEPARATOR )
-                        .append( orderByString );
-                }
-            }
-        }
-
     }
 
     public static class QueryExpressionProcessor extends AbstractProcessor<QueryExpression>
@@ -319,6 +257,7 @@ public class QueryProcessing
             builder.append( "CORRESPONDING" );
             if( object.getColumnList() != null )
             {
+                builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "BY" ).append( SQLConstants.TOKEN_SEPARATOR );
                 builder.append( SQLConstants.OPEN_PARENTHESIS );
                 processor.process( object.getColumnList(), builder );
                 builder.append( SQLConstants.CLOSE_PARENTHESIS );
@@ -392,6 +331,60 @@ public class QueryProcessing
                 if( iter.hasNext() )
                 {
                     builder.append( SQLConstants.COMMA ).append( SQLConstants.TOKEN_SEPARATOR );
+                }
+            }
+        }
+    }
+
+    public static class GroupByProcessor extends AbstractProcessor<GroupByClause>
+    {
+        public GroupByProcessor()
+        {
+            super( GroupByClause.class );
+        }
+
+        @Override
+        protected void doProcess( SQLProcessorAggregator aggregator, GroupByClause groupBy, StringBuilder builder )
+        {
+            if( !groupBy.getGroupingElements().isEmpty() )
+            {
+                builder.append( SQLConstants.NEWLINE ).append( SQLConstants.GROUP_BY )
+                    .append( SQLConstants.TOKEN_SEPARATOR );
+                Iterator<GroupingElement> iter = groupBy.getGroupingElements().iterator();
+                while( iter.hasNext() )
+                {
+                    aggregator.process( iter.next(), builder );
+                    if( iter.hasNext() )
+                    {
+                        builder.append( SQLConstants.COMMA ).append( SQLConstants.TOKEN_SEPARATOR );
+                    }
+                }
+            }
+        }
+    }
+
+    public static class OrderByProcessor extends AbstractProcessor<OrderByClause>
+    {
+        public OrderByProcessor()
+        {
+            super( OrderByClause.class );
+        }
+
+        @Override
+        protected void doProcess( SQLProcessorAggregator aggregator, OrderByClause orderBy, StringBuilder builder )
+        {
+            if( !orderBy.getOrderingColumns().isEmpty() )
+            {
+                builder.append( SQLConstants.NEWLINE ).append( SQLConstants.ORDER_BY )
+                    .append( SQLConstants.TOKEN_SEPARATOR );
+                Iterator<SortSpecification> iter = orderBy.getOrderingColumns().iterator();
+                while( iter.hasNext() )
+                {
+                    aggregator.process( iter.next(), builder );
+                    if( iter.hasNext() )
+                    {
+                        builder.append( SQLConstants.COMMA ).append( SQLConstants.TOKEN_SEPARATOR );
+                    }
                 }
             }
         }

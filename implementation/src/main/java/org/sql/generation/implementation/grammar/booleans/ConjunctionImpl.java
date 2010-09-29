@@ -25,7 +25,7 @@ import org.sql.generation.api.grammar.booleans.Conjunction;
  * 
  * @author Stanislav Muhametsin
  */
-public class ConjunctionImpl extends AbstractBooleanExpression<Conjunction>
+public class ConjunctionImpl extends ComposedBooleanExpressionImpl<Conjunction>
     implements Conjunction
 {
 

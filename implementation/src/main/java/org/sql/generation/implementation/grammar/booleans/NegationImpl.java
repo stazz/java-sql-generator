@@ -25,7 +25,7 @@ import org.sql.generation.api.grammar.booleans.Negation;
  * 
  * @author Stanislav Muhametsin
  */
-public class NegationImpl extends AbstractBooleanExpression<Negation>
+public class NegationImpl extends ComposedBooleanExpressionImpl<Negation>
     implements Negation
 {
 

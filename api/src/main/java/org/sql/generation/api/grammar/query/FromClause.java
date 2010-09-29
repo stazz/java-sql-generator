@@ -16,11 +16,14 @@ package org.sql.generation.api.grammar.query;
 
 import java.util.List;
 
+import org.lwdci.api.context.single.Typeable;
+
 /**
  * 
  * @author Stanislav Muhametsin
  */
 public interface FromClause
+    extends Typeable<FromClause>
 {
     public List<TableReference> getTableReferences();
 

@@ -44,4 +44,5 @@ public class BetweenPredicateImpl extends MultiPredicateImpl<BetweenPredicate>
     {
         return this.getRights().get( 0 );
     }
+
 }

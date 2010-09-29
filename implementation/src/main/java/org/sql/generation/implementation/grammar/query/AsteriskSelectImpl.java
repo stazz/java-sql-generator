@@ -21,13 +21,17 @@ import org.sql.generation.api.grammar.query.AsteriskSelect;
  * 
  * @author Stanislav Muhametsin
  */
-public class AsteriskSelectImpl extends SelectColumnClauseImpl
+public class AsteriskSelectImpl extends SelectColumnClauseImpl<AsteriskSelect>
     implements AsteriskSelect
 {
-
     public AsteriskSelectImpl( SetQuantifier quantifier )
     {
-        super( quantifier );
+        this( AsteriskSelect.class, quantifier );
+    }
+
+    public AsteriskSelectImpl( Class<? extends AsteriskSelect> type, SetQuantifier quantifier )
+    {
+        super( type, quantifier );
     }
 
 }

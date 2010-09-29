@@ -41,17 +41,69 @@ public class DefaultVendor
     implements SQLVendor
 {
 
-    private QueryFactory _queryFactory;
+    protected static interface Callback<T>
+    {
+        public T get( SQLVendor vendor );
+    }
 
-    private BooleanFactory _booleanFactory;
+    protected static final Callback<BooleanFactory> BOOLEAN_FACTORY = new Callback<BooleanFactory>()
+    {
+        public BooleanFactory get( SQLVendor vendor )
+        {
+            return new DefaultBooleanFactory();
+        }
+    };
 
-    private TableReferenceFactory _fromFactory;
+    protected static final Callback<ColumnsFactory> COLUMNS_FACTORY = new Callback<ColumnsFactory>()
+    {
+        public ColumnsFactory get( SQLVendor vendor )
+        {
+            return new DefaultColumnsFactory();
+        }
+    };
+    protected static final Callback<LiteralFactory> LITERAL_FACTORY = new Callback<LiteralFactory>()
+    {
+        public LiteralFactory get( SQLVendor vendor )
+        {
+            return new DefaultLiteralFactory();
+        }
+    };
 
-    private LiteralFactory _literalFactory;
+    protected static final Callback<ModificationFactory> MODIFICATION_FACTORY = new Callback<ModificationFactory>()
+    {
+        public ModificationFactory get( SQLVendor vendor )
+        {
+            return new DefaultModificationFactory( vendor );
+        }
+    };
 
-    private ColumnsFactory _columnsFactory;
+    protected static final Callback<QueryFactory> QUERY_FACTORY = new Callback<QueryFactory>()
+    {
+        public QueryFactory get( SQLVendor vendor )
+        {
+            return new DefaultQueryFactory( vendor );
+        }
+    };
 
-    private ModificationFactory _modificationFactory;
+    protected static final Callback<TableReferenceFactory> TABLE_REFERENCE_FACTORY = new Callback<TableReferenceFactory>()
+    {
+        public TableReferenceFactory get( SQLVendor vendor )
+        {
+            return new DefaultTableRefFactory( vendor );
+        }
+    };
+
+    private final QueryFactory _queryFactory;
+
+    private final BooleanFactory _booleanFactory;
+
+    private final TableReferenceFactory _fromFactory;
+
+    private final LiteralFactory _literalFactory;
+
+    private final ColumnsFactory _columnsFactory;
+
+    private final ModificationFactory _modificationFactory;
 
     private final SQLProcessorAggregator _processor;
 
@@ -62,15 +114,24 @@ public class DefaultVendor
 
     protected DefaultVendor( SQLProcessorAggregator processor )
     {
+        this( processor, BOOLEAN_FACTORY, COLUMNS_FACTORY, LITERAL_FACTORY, MODIFICATION_FACTORY, QUERY_FACTORY,
+            TABLE_REFERENCE_FACTORY );
+    }
+
+    protected DefaultVendor( SQLProcessorAggregator processor, Callback<? extends BooleanFactory> booleanFactory,
+        Callback<? extends ColumnsFactory> columnsFactory, Callback<? extends LiteralFactory> literalFactory,
+        Callback<? extends ModificationFactory> modificationFactory, Callback<? extends QueryFactory> queryFactory,
+        Callback<? extends TableReferenceFactory> tableReferenceFactory )
+    {
         NullArgumentException.validateNotNull( "processor", processor );
 
         this._processor = processor;
-        this._booleanFactory = new DefaultBooleanFactory();
-        this._columnsFactory = new DefaultColumnsFactory();
-        this._fromFactory = new DefaultTableRefFactory( this );
-        this._literalFactory = new DefaultLiteralFactory();
-        this._queryFactory = new DefaultQueryFactory( this );
-        this._modificationFactory = new DefaultModificationFactory( this );
+        this._booleanFactory = booleanFactory.get( this );
+        this._columnsFactory = columnsFactory.get( this );
+        this._literalFactory = literalFactory.get( this );
+        this._queryFactory = queryFactory.get( this );
+        this._modificationFactory = modificationFactory.get( this );
+        this._fromFactory = tableReferenceFactory.get( this );
     }
 
     public String toString( SQLStatement statement )
@@ -108,35 +169,5 @@ public class DefaultVendor
     public ModificationFactory getModificationFactory()
     {
         return this._modificationFactory;
-    }
-
-    protected void setQueryFactory( QueryFactory queryFactory )
-    {
-        this._queryFactory = queryFactory;
-    }
-
-    protected void setBooleanFactory( BooleanFactory booleanFactory )
-    {
-        this._booleanFactory = booleanFactory;
-    }
-
-    protected void setFromFactory( TableReferenceFactory fromFactory )
-    {
-        this._fromFactory = fromFactory;
-    }
-
-    protected void setLiteralFactory( LiteralFactory literalFactory )
-    {
-        this._literalFactory = literalFactory;
-    }
-
-    protected void setColumnsFactory( ColumnsFactory columnsFactory )
-    {
-        this._columnsFactory = columnsFactory;
-    }
-
-    protected void setModificationFactory( ModificationFactory modificationFactory )
-    {
-        this._modificationFactory = modificationFactory;
     }
 }

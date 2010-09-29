@@ -155,7 +155,8 @@ public class ModificationProcessing
         {
             builder.append( "DELETE FROM" ).append( SQLConstants.TOKEN_SEPARATOR );
             processor.process( object.getTargetTable(), builder );
-            QueryProcessing.processWhere( processor, object.getWhere(), builder, SQLConstants.NEWLINE );
+            QueryProcessing.processOptionalBooleanExpression( processor, builder, object.getWhere(),
+                SQLConstants.NEWLINE, SQLConstants.WHERE );
         }
 
     }
@@ -258,7 +259,8 @@ public class ModificationProcessing
                     builder.append( SQLConstants.COMMA ).append( SQLConstants.TOKEN_SEPARATOR );
                 }
             }
-            QueryProcessing.processWhere( processor, object.getWhere(), builder, SQLConstants.NEWLINE );
+            QueryProcessing.processOptionalBooleanExpression( processor, builder, object.getWhere(),
+                SQLConstants.NEWLINE, SQLConstants.WHERE );
         }
     }
 

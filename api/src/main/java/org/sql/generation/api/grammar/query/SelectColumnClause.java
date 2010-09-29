@@ -14,13 +14,15 @@
 
 package org.sql.generation.api.grammar.query;
 
+import org.lwdci.api.context.single.Typeable;
 import org.sql.generation.api.grammar.common.SetQuantifier;
 
 /**
- *
+ * 
  * @author Stanislav Muhametsin
  */
 public interface SelectColumnClause
+    extends Typeable<SelectColumnClause>
 {
     public SetQuantifier getSetQuantifier();
 }

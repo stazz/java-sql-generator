@@ -26,7 +26,7 @@ import org.sql.generation.api.grammar.query.ColumnReferences;
  * 
  * @author Stanislav Muhametsin
  */
-public class ColumnReferencesImpl extends SelectColumnClauseImpl
+public class ColumnReferencesImpl extends SelectColumnClauseImpl<ColumnReferences>
     implements ColumnReferences
 {
 
@@ -39,7 +39,13 @@ public class ColumnReferencesImpl extends SelectColumnClauseImpl
 
     public ColumnReferencesImpl( SetQuantifier quantifier, List<ColumnReferenceInfo> columns )
     {
-        super( quantifier );
+        this( ColumnReferences.class, quantifier, columns );
+    }
+
+    public ColumnReferencesImpl( Class<? extends ColumnReferences> type, SetQuantifier quantifier,
+        List<ColumnReferenceInfo> columns )
+    {
+        super( type, quantifier );
 
         NullArgumentException.validateNotNull( "columns", columns );
 
@@ -59,5 +65,11 @@ public class ColumnReferencesImpl extends SelectColumnClauseImpl
     public List<ColumnReferenceInfo> getColumns()
     {
         return this._columns;
+    }
+
+    @Override
+    protected boolean doesEqual( ColumnReferences another )
+    {
+        return super.doesEqual( another ) && this._columns.equals( another.getColumns() );
     }
 }

@@ -66,4 +66,10 @@ public abstract class MultiPredicateImpl<ExpressionType extends MultiPredicate> 
     {
         return this._rights;
     }
+
+    @Override
+    protected boolean doesEqual( ExpressionType another )
+    {
+        return this._left.equals( another.getLeft() ) && this._rights.equals( another.getRights() );
+    }
 }

@@ -16,6 +16,7 @@ package org.sql.generation.implementation.vendor.pgsql;
 
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLQueryFactory;
 import org.sql.generation.api.vendor.PostgreSQLVendor;
+import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.grammar.factories.pgsql.PgSQLQueryFactoryImpl;
 import org.sql.generation.implementation.transformation.pgsql.PostgreSQLProcessor;
 import org.sql.generation.implementation.vendor.DefaultVendor;
@@ -27,10 +28,19 @@ import org.sql.generation.implementation.vendor.DefaultVendor;
 public class PostgreSQLVendorImpl extends DefaultVendor
     implements PostgreSQLVendor
 {
+    protected static final Callback<PgSQLQueryFactory> PG_QUERY_FACTORY = new Callback<PgSQLQueryFactory>()
+    {
+        public PgSQLQueryFactory get( SQLVendor vendor )
+        {
+            return new PgSQLQueryFactoryImpl( (PostgreSQLVendor) vendor );
+        }
+    };
+
     public PostgreSQLVendorImpl()
     {
-        super( new PostgreSQLProcessor() );
-        this.setQueryFactory( new PgSQLQueryFactoryImpl( this ) );
+        super( new PostgreSQLProcessor(), BOOLEAN_FACTORY, COLUMNS_FACTORY, LITERAL_FACTORY, MODIFICATION_FACTORY,
+            PG_QUERY_FACTORY, TABLE_REFERENCE_FACTORY );
+
     }
 
     @Override

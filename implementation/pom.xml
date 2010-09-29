@@ -12,7 +12,7 @@
   <artifactId>java-sql-generator-implementation</artifactId>
   <version>0.1-SNAPSHOT</version>
 
-  <name>Java SQL Emulator API</name>
+  <name>Java SQL Generator Implementation</name>
   <dependencies>
   	<dependency>
   		<groupId>org.java-sql-generator.api</groupId>

@@ -52,4 +52,10 @@ public abstract class BinaryPredicateImpl<ExpressionType extends BinaryPredicate
         return this._right;
     }
 
+    @Override
+    protected boolean doesEqual( ExpressionType another )
+    {
+        return this._left.equals( another.getLeft() ) && this._right.equals( another.getRight() );
+    }
+
 }
