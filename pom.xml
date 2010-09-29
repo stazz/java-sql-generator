@@ -70,14 +70,14 @@
         <scope>test</scope>
       </dependency>
       <dependency>
-        <groupId>org.lwdci</groupId>
-        <artifactId>lwdci-api</artifactId>
+        <groupId>org.api-typeable-pojos</groupId>
+        <artifactId>apt-api</artifactId>
         <version>${version.lwdci}</version>
         <scope>compile</scope>
       </dependency>
       <dependency>
-        <groupId>org.lwdci</groupId>
-        <artifactId>lwdci-spi</artifactId>
+        <groupId>org.api-typeable-pojos</groupId>
+        <artifactId>apt-spi</artifactId>
         <version>${version.lwdci}</version>
         <scope>compile</scope>
       </dependency>

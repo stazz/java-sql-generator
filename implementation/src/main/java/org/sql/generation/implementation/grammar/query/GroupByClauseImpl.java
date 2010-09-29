@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.lwdci.spi.context.single.skeletons.TypeableImpl;
+import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.query.GroupByClause;
 import org.sql.generation.api.grammar.query.GroupingElement;

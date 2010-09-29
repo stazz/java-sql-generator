@@ -14,8 +14,8 @@
 
 package org.sql.generation.implementation.grammar.query;
 
-import org.lwdci.api.context.single.Typeable;
-import org.lwdci.spi.context.single.skeletons.TypeableImpl;
+import org.atp.api.Typeable;
+import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.grammar.query.TableReference;
 
 /**

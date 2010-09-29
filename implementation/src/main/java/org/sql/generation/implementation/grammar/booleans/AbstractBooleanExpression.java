@@ -14,7 +14,7 @@
 
 package org.sql.generation.implementation.grammar.booleans;
 
-import org.lwdci.spi.context.single.skeletons.TypeableImpl;
+import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.common.ValueExpression;
 

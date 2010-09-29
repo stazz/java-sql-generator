@@ -1,6 +1,6 @@
 The java-sql-generator is a framework to generate syntactically correct SQL statements with Java language. It provides uniform, typesafe, and (reasonably) easy way to create SQL statements using provided API's. It is specifically designed to handle even really complex SQL clauses. In fact, the API's were designed by looking at SQL 99 BNF ( http://savage.net.au/SQL/sql-99.bnf.html ) in one monitor, and creating the corresponding Java API in another monitor. However, there are many things omitted from automated BNF conversion, so that API would remain usable and simple.
 
-Please notice that this framework depends on LWDCI project ( http://github.com/stazz/lwdci ). Currently LWDCI is not in public maven repo, so you will need to download it manually. However, I am working on this issue, and already have ticket for importing LWDCI to Maven repo.
+Please notice that this framework depends on API Typeable POJOs (APT) project ( http://github.com/stazz/api-typeable-pojos ). Currently APT is not in public maven repo, so you will need to download it manually. However, I am working on this issue, and already have ticket for importing APT to Maven repo.
 
 Please notice that this framework is still in very early development stage, and thus has no documentation (at all). Also, API changes are possible, and very likely.
 

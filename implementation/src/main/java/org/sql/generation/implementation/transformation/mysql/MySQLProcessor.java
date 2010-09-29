@@ -17,7 +17,7 @@ package org.sql.generation.implementation.transformation.mysql;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.lwdci.api.context.single.Typeable;
+import org.atp.api.Typeable;
 import org.sql.generation.api.grammar.common.TableName;
 import org.sql.generation.implementation.transformation.DefaultSQLProcessor;
 import org.sql.generation.implementation.transformation.mysql.MySQLTableProcessing.MySQLTableNameProcessor;

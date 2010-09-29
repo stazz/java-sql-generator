@@ -27,8 +27,8 @@
   		<scope>compile</scope>
   	</dependency>
   	<dependency>
-  		<groupId>org.lwdci</groupId>
-  		<artifactId>lwdci-spi</artifactId>
+  		<groupId>org.api-typeable-pojos</groupId>
+  		<artifactId>apt-spi</artifactId>
   		<scope>compile</scope>
   	</dependency>
   </dependencies>

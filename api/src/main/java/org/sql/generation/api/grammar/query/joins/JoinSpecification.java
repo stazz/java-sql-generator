@@ -14,7 +14,7 @@
 
 package org.sql.generation.api.grammar.query.joins;
 
-import org.lwdci.api.context.single.Typeable;
+import org.atp.api.Typeable;
 
 /**
  * 

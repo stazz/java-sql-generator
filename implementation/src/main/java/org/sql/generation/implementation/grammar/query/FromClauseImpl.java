@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.lwdci.spi.context.single.skeletons.TypeableImpl;
+import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.query.FromClause;
 import org.sql.generation.api.grammar.query.TableReference;

@@ -14,7 +14,7 @@
 
 package org.sql.generation.implementation.grammar.literals;
 
-import org.lwdci.spi.context.single.skeletons.TypeableImpl;
+import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.grammar.literals.NumericLiteral;
 import org.sql.generation.implementation.grammar.common.NonBooleanExpressionImpl;
 

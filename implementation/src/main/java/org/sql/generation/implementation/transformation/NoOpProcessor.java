@@ -14,7 +14,7 @@
 
 package org.sql.generation.implementation.transformation;
 
-import org.lwdci.api.context.single.Typeable;
+import org.atp.api.Typeable;
 import org.sql.generation.implementation.transformation.spi.SQLProcessor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 

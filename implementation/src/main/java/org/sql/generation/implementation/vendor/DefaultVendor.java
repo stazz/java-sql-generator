@@ -14,7 +14,7 @@
 
 package org.sql.generation.implementation.vendor;
 
-import org.lwdci.api.context.single.Typeable;
+import org.atp.api.Typeable;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.SQLStatement;
 import org.sql.generation.api.grammar.factories.BooleanFactory;

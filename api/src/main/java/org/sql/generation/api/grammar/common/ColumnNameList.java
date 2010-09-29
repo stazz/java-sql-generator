@@ -16,7 +16,7 @@ package org.sql.generation.api.grammar.common;
 
 import java.util.List;
 
-import org.lwdci.api.context.single.Typeable;
+import org.atp.api.Typeable;
 
 /**
  * 

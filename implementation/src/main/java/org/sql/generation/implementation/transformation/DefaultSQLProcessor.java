@@ -18,8 +18,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.lwdci.api.context.single.Typeable;
-import org.lwdci.spi.context.single.skeletons.ThreadSafeInteractionMapper;
+import org.atp.api.Typeable;
+import org.atp.spi.ThreadSafeInteractionMapper;
 import org.sql.generation.api.grammar.booleans.BetweenPredicate;
 import org.sql.generation.api.grammar.booleans.BinaryPredicate;
 import org.sql.generation.api.grammar.booleans.BooleanTest;

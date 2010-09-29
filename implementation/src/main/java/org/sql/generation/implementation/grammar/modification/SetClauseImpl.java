@@ -14,7 +14,7 @@
 
 package org.sql.generation.implementation.grammar.modification;
 
-import org.lwdci.spi.context.single.skeletons.TypeableImpl;
+import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.modification.SetClause;
 import org.sql.generation.api.grammar.modification.UpdateSource;

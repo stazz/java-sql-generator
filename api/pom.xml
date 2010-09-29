@@ -15,8 +15,8 @@
   <name>Java SQL Generator API</name>
   <dependencies>
   	<dependency>
-  		<groupId>org.lwdci</groupId>
-  		<artifactId>lwdci-api</artifactId>
+  		<groupId>org.api-typeable-pojos</groupId>
+  		<artifactId>apt-api</artifactId>
   		<scope>compile</scope>
   	</dependency>
   </dependencies>
