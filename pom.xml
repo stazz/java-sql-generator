@@ -71,13 +71,13 @@
       </dependency>
       <dependency>
         <groupId>org.api-typeable-pojos</groupId>
-        <artifactId>apt-api</artifactId>
+        <artifactId>atp-api</artifactId>
         <version>${version.lwdci}</version>
         <scope>compile</scope>
       </dependency>
       <dependency>
         <groupId>org.api-typeable-pojos</groupId>
-        <artifactId>apt-spi</artifactId>
+        <artifactId>atp-spi</artifactId>
         <version>${version.lwdci}</version>
         <scope>compile</scope>
       </dependency>

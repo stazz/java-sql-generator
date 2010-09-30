@@ -16,7 +16,7 @@
   <dependencies>
   	<dependency>
   		<groupId>org.api-typeable-pojos</groupId>
-  		<artifactId>apt-api</artifactId>
+  		<artifactId>atp-api</artifactId>
   		<scope>compile</scope>
   	</dependency>
   </dependencies>
