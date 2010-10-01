@@ -56,7 +56,7 @@
     <version.maven.gpg>1.1</version.maven.gpg>
     <version.junit>4.8.1</version.junit>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <version.lwdci>0.6-SNAPSHOT</version.lwdci>
+    <version.lwdci>0.6</version.lwdci>
   </properties>
 
   <inceptionYear>2010</inceptionYear>
