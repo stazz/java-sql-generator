@@ -20,15 +20,36 @@ import org.sql.generation.api.grammar.modification.DeleteBySearch;
 import org.sql.generation.api.grammar.modification.TargetTable;
 
 /**
+ * This builder builds statements deleting rows matching search condition ({@code DELETE FROM} table {@code [WHERE}
+ * searchCondition {@code ]}).
  * 
+ * @see TargetTable
+ * @see BooleanBuilder
  * @author Stanislav Muhametsin
  */
 public interface DeleteBySearchBuilder
     extends AbstractBuilder<DeleteBySearch>
 {
+    /**
+     * Sets the target table for this {@code DELETE} statement.
+     * 
+     * @param table The target table for this {@code DELETE} statement.
+     * @return This builder.
+     */
     public DeleteBySearchBuilder setTargetTable( TargetTable table );
 
+    /**
+     * Retrieves the target table for this {@code DELETE} statement.
+     * 
+     * @return The target table for this {@code DELETE} statement.
+     */
     public TargetTable getTargetTable();
 
+    /**
+     * Returns the builder for search condition for this {@code DELETE} statement (boolean expression after
+     * {@code WHERE}). The search condition is optional.
+     * 
+     * @return The builder for search condition for this {@code DELETE} statement.
+     */
     public BooleanBuilder getWhere();
 }

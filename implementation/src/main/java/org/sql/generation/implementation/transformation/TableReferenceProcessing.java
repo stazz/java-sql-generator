@@ -204,7 +204,7 @@ public class TableReferenceProcessing
             StringBuilder builder )
         {
             builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "CROSS JOIN" ).append( SQLConstants.TOKEN_SEPARATOR );
-            processor.process( table.getRight(), builder );
+            processor.process( table.getRight().asTypeable(), builder );
         }
     }
 
@@ -222,7 +222,7 @@ public class TableReferenceProcessing
             builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "NATURAL" ).append( SQLConstants.TOKEN_SEPARATOR );
             this.processJoinType( table.getJoinType(), builder );
             builder.append( SQLConstants.TOKEN_SEPARATOR );
-            processor.process( table.getRight(), builder );
+            processor.process( table.getRight().asTypeable(), builder );
         }
     }
 
@@ -255,7 +255,7 @@ public class TableReferenceProcessing
             StringBuilder builder )
         {
             builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "UNION JOIN" ).append( SQLConstants.TOKEN_SEPARATOR );
-            processor.process( table.getRight(), builder );
+            processor.process( table.getRight().asTypeable(), builder );
         }
     }
 

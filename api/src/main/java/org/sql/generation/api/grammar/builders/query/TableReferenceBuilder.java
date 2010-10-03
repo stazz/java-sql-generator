@@ -16,19 +16,56 @@ package org.sql.generation.api.grammar.builders.query;
 
 import org.sql.generation.api.grammar.builders.AbstractBuilder;
 import org.sql.generation.api.grammar.query.TableReference;
-import org.sql.generation.api.grammar.query.TableReferencePrimary;
 import org.sql.generation.api.grammar.query.joins.JoinSpecification;
 import org.sql.generation.api.grammar.query.joins.JoinType;
 
+/**
+ * The builder to build joined tables. A joined table contains 0 or more joins.
+ * 
+ * @author Stanislav Muhametsin
+ * @see TableReference
+ */
 public interface TableReferenceBuilder
     extends AbstractBuilder<TableReference>
 {
-    public TableReferenceBuilder addQualifiedJoin( JoinType joinType, TableReference right,
-        JoinSpecification joinSpec );
+    /**
+     * Adds a qualified join ({@code JOIN}) to whatever current table of builder, and overwrites the current table with
+     * the result.
+     * 
+     * @param joinType The join type.
+     * @param right The table on the right side of the join.
+     * @param joinSpec The join specification.
+     * @return This builder
+     * @see JoinType
+     * @see JoinSpecification
+     */
+    public TableReferenceBuilder addQualifiedJoin( JoinType joinType, TableReference right, JoinSpecification joinSpec );
 
-    public TableReferenceBuilder addCrossJoin( TableReferencePrimary right );
+    /**
+     * Adds a cross join ({@code CROSS JOIN}) to whatever current table of builder, and overwrites the current table
+     * with the result.
+     * 
+     * @param right The table on the right side of the join.
+     * @return This builder.
+     */
+    public TableReferenceBuilder addCrossJoin( TableReference right );
 
-    public TableReferenceBuilder addNaturalJoin( JoinType joinType, TableReferencePrimary right );
+    /**
+     * Adds a natural join ({@code NATURAL JOIN}) to whatever current table of builder, and overwrites the current table
+     * with the result.
+     * 
+     * @param joinType The join type.
+     * @param right The table on the right side of the join.
+     * @return This builder.
+     */
+    public TableReferenceBuilder addNaturalJoin( JoinType joinType, TableReference right );
 
-    public TableReferenceBuilder addUnionJoin( TableReferencePrimary right );
+    /**
+     * Adds an union join ({@code UNION JOIN}) to whatever current table of builder, and overwrites the current table
+     * with the result.
+     * 
+     * @param right The table on the right side of the join.
+     * @return This builder
+     */
+    public TableReferenceBuilder addUnionJoin( TableReference right );
 }

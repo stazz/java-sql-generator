@@ -20,18 +20,44 @@ import org.sql.generation.api.grammar.modification.ColumnSource;
 import org.sql.generation.api.grammar.modification.InsertStatement;
 
 /**
+ * This builder builds statements inserting rows to tables ({@code INSERT INTO } tableName {@code [(} column names
+ * {@code )]} expression).
  * 
+ * @see TableName
+ * @see ColumnSource
  * @author Stanislav Muhametsin
  */
 public interface InsertStatementBuilder
     extends AbstractBuilder<InsertStatement>
 {
 
+    /**
+     * Sets the table name for this {@code INSERT} statement.
+     * 
+     * @param tableName The table name for this {@code INSERT} statement.
+     * @return This builder.
+     */
     public InsertStatementBuilder setTableName( TableName tableName );
 
+    /**
+     * Returns the table name for this {@code INSERT} statement.
+     * 
+     * @return The table name for this {@code INSERT} statement.
+     */
     public TableName getTableName();
 
+    /**
+     * Sets the source for the columns for this {@code INSERT} statement.
+     * 
+     * @param source The source for columns for this {@code INSERT} statement.
+     * @return This builder.
+     */
     public InsertStatementBuilder setColumnSource( ColumnSource source );
 
+    /**
+     * Returns the source for the columns for this {@code INSERT} statement.
+     * 
+     * @return The source for the columns for this {@code INSERT} statement.
+     */
     public ColumnSource getColumnSource();
 }

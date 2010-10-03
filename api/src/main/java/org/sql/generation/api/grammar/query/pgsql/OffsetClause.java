@@ -15,10 +15,17 @@
 package org.sql.generation.api.grammar.query.pgsql;
 
 /**
+ * This syntax element represents the {@code OFFSET} clause in PostgreSQL queries.
  * 
  * @author Stanislav Muhametsin
  */
 public interface OffsetClause
 {
+    /**
+     * Returns the value of {@code OFFSET} clause, that is, how many result rows should be skipped before starting to
+     * include them into query result.
+     * 
+     * @return The value of {@code OFFSET} clause.
+     */
     public Integer getOffset();
 }

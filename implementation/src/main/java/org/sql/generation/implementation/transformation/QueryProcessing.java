@@ -29,7 +29,6 @@ import org.sql.generation.api.grammar.query.CorrespondingSpec;
 import org.sql.generation.api.grammar.query.FromClause;
 import org.sql.generation.api.grammar.query.GroupByClause;
 import org.sql.generation.api.grammar.query.GroupingElement;
-import org.sql.generation.api.grammar.query.GroupingElement.GrandTotal;
 import org.sql.generation.api.grammar.query.OrderByClause;
 import org.sql.generation.api.grammar.query.Ordering;
 import org.sql.generation.api.grammar.query.OrdinaryGroupingSet;
@@ -297,20 +296,6 @@ public class QueryProcessing
             processor.process( object.getValueExpression(), builder );
             builder.append( SQLConstants.TOKEN_SEPARATOR ).append(
                 this._orderingStrings.get( object.getOrderingSpecification() ) );
-        }
-    }
-
-    public static class GrandTotalProcessor extends AbstractProcessor<GrandTotal>
-    {
-        public GrandTotalProcessor()
-        {
-            super( GrandTotal.class );
-        }
-
-        @Override
-        protected void doProcess( SQLProcessorAggregator processor, GrandTotal object, StringBuilder builder )
-        {
-            builder.append( SQLConstants.OPEN_PARENTHESIS ).append( SQLConstants.CLOSE_PARENTHESIS );
         }
     }
 

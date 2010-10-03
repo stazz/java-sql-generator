@@ -15,6 +15,7 @@
 package org.sql.generation.api.grammar.booleans;
 
 /**
+ * A negation ({@code NOT} x) of a boolean expression.
  * 
  * @author Stanislav Muhametsin
  */
@@ -22,5 +23,10 @@ public interface Negation
     extends ComposedBooleanExpression
 {
 
+    /**
+     * Returns the boolean expression being negated.
+     * 
+     * @return The boolean expression being negated.
+     */
     public BooleanExpression getNegated();
 }

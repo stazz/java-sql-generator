@@ -43,10 +43,10 @@ public class PgSQLQuerySpecificationBuilderImpl extends QuerySpecificationBuilde
 
     private LimitClause _limit;
 
-    public PgSQLQuerySpecificationBuilderImpl( ColumnsBuilder select, FromBuilder from, BooleanBuilder where,
-        GroupByBuilder groupBy, BooleanBuilder having, OrderByBuilder orderBy )
+    public PgSQLQuerySpecificationBuilderImpl( QueryFactory q, ColumnsBuilder select, FromBuilder from,
+        BooleanBuilder where, GroupByBuilder groupBy, BooleanBuilder having, OrderByBuilder orderBy )
     {
-        super( select, from, where, groupBy, having, orderBy );
+        super( q, select, from, where, groupBy, having, orderBy );
     }
 
     @Override
@@ -69,16 +69,18 @@ public class PgSQLQuerySpecificationBuilderImpl extends QuerySpecificationBuilde
         return this;
     }
 
-    public PgSQLQuerySpecificationBuilder setOrderByToFirstColumnIfOffsetOrLimit( QueryFactory q )
+    public PgSQLQuerySpecificationBuilder setOrderByToFirstColumnIfOffsetOrLimit()
     {
-        if( this.getOrderBy().getSortSpecs().isEmpty() && (this._offset != null || this._limit != null) )
+        if( (this._offset != null || this._limit != null) && this.getOrderBy().getSortSpecs().isEmpty()
+            && !this.getSelect().getColumns().isEmpty() )
         {
             // No ORDER BY specified, but we need it anyway since offset or limit was used
             // Solution: sort by the only column that we select, in ascending order.
             Iterator<ColumnReferenceInfo> columnIter = this.getSelect().getColumns().iterator();
             if( columnIter.hasNext() )
             {
-                this.getOrderBy().addSortSpecs( q.sortSpec( columnIter.next().getReference(), Ordering.ASCENDING ) );
+                this.getOrderBy().addSortSpecs(
+                    this.getQueryFactory().sortSpec( columnIter.next().getReference(), Ordering.ASCENDING ) );
             }
         }
 
@@ -86,9 +88,9 @@ public class PgSQLQuerySpecificationBuilderImpl extends QuerySpecificationBuilde
     }
 
     @Override
-    public PgSQLQuerySpecificationBuilder trimGroupBy( QueryFactory q )
+    public PgSQLQuerySpecificationBuilder trimGroupBy()
     {
-        return (PgSQLQuerySpecificationBuilder) super.trimGroupBy( q );
+        return (PgSQLQuerySpecificationBuilder) super.trimGroupBy();
     }
 
     @Override

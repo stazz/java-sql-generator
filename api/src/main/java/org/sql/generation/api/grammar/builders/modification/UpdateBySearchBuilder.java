@@ -23,17 +23,44 @@ import org.sql.generation.api.grammar.modification.TargetTable;
 import org.sql.generation.api.grammar.modification.UpdateBySearch;
 
 /**
+ * This builder builds statements updating rows matching search condition ({@code UPDATE} table {@code SET} set-clauses
+ * {@code [WHERE} searchCondition {@code ]}).
  * 
+ * @see SetClause
+ * @see BooleanBuilder
  * @author Stanislav Muhametsin
  */
 public interface UpdateBySearchBuilder
     extends AbstractBuilder<UpdateBySearch>
 {
+    /**
+     * Sets the target table for this {@code UPDATE} statement.
+     * 
+     * @param table The target table for this {@code UPDATE} statement.
+     * @return This builder.
+     */
     public UpdateBySearchBuilder setTargetTable( TargetTable table );
 
+    /**
+     * Returns the builder for search condition for this {@code UPDATE} statement (boolean expression after
+     * {@code WHERE}). The search condition is optional.
+     * 
+     * @return The builder for search condition for this {@code UPDATE} statement.
+     */
     public BooleanBuilder getWhereBuilder();
 
+    /**
+     * Adds the clause to the set-clause list of this {@code UPDATE} statement.
+     * 
+     * @param clauses The set-clauses for this {@code UPDATE} statement.
+     * @return This builder.
+     */
     public UpdateBySearchBuilder addSetClauses( SetClause... clauses );
 
+    /**
+     * Returns the list of set clauses which has been added to this builder.
+     * 
+     * @return The list of set clauses which has been added to this builder.
+     */
     public List<SetClause> getSetClauses();
 }

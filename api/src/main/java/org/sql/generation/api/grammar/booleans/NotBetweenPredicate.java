@@ -17,13 +17,24 @@ package org.sql.generation.api.grammar.booleans;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 
 /**
+ * The interface for syntax element representing SQL expression {@code NOT BETWEEN} x {@code AND} y.
  * 
  * @author Stanislav Muhametsin
  */
 public interface NotBetweenPredicate
     extends MultiPredicate
 {
+    /**
+     * Returns the minimum value (the expression on the left side of {@code AND}).
+     * 
+     * @return The minimum value.
+     */
     public NonBooleanExpression getMinimum();
 
+    /**
+     * Returns the maxmimum value (the expression on the right side of {@code AND}).
+     * 
+     * @return The maximum value.
+     */
     public NonBooleanExpression getMaximum();
 }

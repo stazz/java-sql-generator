@@ -21,14 +21,28 @@ import org.sql.generation.api.grammar.query.OrderByClause;
 import org.sql.generation.api.grammar.query.SortSpecification;
 
 /**
+ * The builder that builds the {@code ORDER BY} clause in SQL {@code SELECT} query.
  * 
  * @author Stanislav Muhametsin
+ * @see OrderByClause
+ * @see SortSpecification
  */
 public interface OrderByBuilder
     extends AbstractBuilder<OrderByClause>
 {
 
+    /**
+     * Adds sort specifications to this {@code ORDER BY} clause.
+     * 
+     * @param specs The sort specifications for this {@code ORDER BY} clause.
+     * @return This builder.
+     */
     public OrderByBuilder addSortSpecs( SortSpecification... specs );
 
+    /**
+     * Returns the list of added sort specifications.
+     * 
+     * @return The added sort specifications.
+     */
     public List<SortSpecification> getSortSpecs();
 }

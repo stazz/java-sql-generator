@@ -15,12 +15,25 @@
 package org.sql.generation.api.grammar.query;
 
 /**
+ * This enum represents the possible set operations to combine queries with. These set operations are {@link #UNION},
+ * {@link #INTERSECT}, and {@link #EXCEPT}.
  * 
  * @author Stanislav Muhametsin
  */
 public enum SetOperation
 {
+    /**
+     * The {@code UNION} between two queries.
+     */
     UNION,
+
+    /**
+     * The {@code INTERSECT} between two queries.
+     */
     INTERSECT,
+
+    /**
+     * The set difference ({@code EXCEPT}) between two queries.
+     */
     EXCEPT
 }

@@ -12,16 +12,24 @@
  *
  */
 
-
 package org.sql.generation.api.grammar.query;
 
 import org.sql.generation.api.grammar.common.TableName;
 
 /**
- *
+ * This syntax element represents the reference to a table in {@code FROM} clause.
+ * 
  * @author Stanislav Muhametsin
+ * @see TableName
  */
-public interface TableReferenceByName extends TableReferencePrimary
+public interface TableReferenceByName
+    extends TableReferencePrimary
 {
+    /**
+     * Returns the table name.
+     * 
+     * @return The table name.
+     * @see TableName
+     */
     public TableName getTableName();
 }

@@ -12,24 +12,34 @@
  *
  */
 
+package org.sql.generation.implementation.transformation;
 
-package org.sql.generation.implementation.grammar.builders.internal;
-
-import org.sql.generation.api.grammar.query.TableReferencePrimary;
+import org.atp.api.Typeable;
+import org.sql.generation.implementation.transformation.spi.SQLProcessor;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
- *
+ * 
  * @author Stanislav Muhametsin
  */
-public class CrossJoinInfo extends DefaultJoinInfo
+public class ConstantProcessor
+    implements SQLProcessor
 {
 
-    /**
-     * @param table
-     */
-    public CrossJoinInfo( TableReferencePrimary table )
+    private final String _constant;
+
+    public ConstantProcessor( String constant )
     {
-        super( table );
+        if( constant == null )
+        {
+            constant = "";
+        }
+
+        this._constant = constant;
     }
 
+    public void process( SQLProcessorAggregator aggregator, Typeable<?> object, StringBuilder builder )
+    {
+        builder.append( this._constant );
+    }
 }

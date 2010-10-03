@@ -19,11 +19,17 @@ import java.util.List;
 import org.atp.api.Typeable;
 
 /**
+ * This interface presents a non-empty list of plain-text column names.
  * 
  * @author Stanislav Muhametsin
  */
 public interface ColumnNameList
     extends Typeable<ColumnNameList>
 {
+    /**
+     * Returns the list of column names. This list will be always non-empty.
+     * 
+     * @return The non-empty list of column names.
+     */
     public List<String> getColumnNames();
 }

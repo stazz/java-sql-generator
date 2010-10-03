@@ -19,6 +19,7 @@ import java.util.List;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 
 /**
+ * This syntax element represents {@code UPDATE} statement.
  * 
  * @author Stanislav Muhametsin
  */
@@ -26,9 +27,26 @@ public interface UpdateBySearch
     extends UpdateStatement
 {
 
+    /**
+     * Returns the target table of this {@code UPDATE} statement.
+     * 
+     * @return The target table of this {@code UPDATE} statement.
+     * @see TargetTable
+     */
     public TargetTable getTargetTable();
 
+    /**
+     * Returns the search condition for the rows to be updated.
+     * 
+     * @return The search condition for the rows to be updated.
+     */
     public BooleanExpression getWhere();
 
+    /**
+     * Returns the {@code SET} clauses for columns of the target table.
+     * 
+     * @return The {@code SET} clauses for columns of the target table.
+     * @see SetClause
+     */
     public List<SetClause> getSetClauses();
 }

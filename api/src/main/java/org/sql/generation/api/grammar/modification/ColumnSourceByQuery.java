@@ -17,6 +17,7 @@ package org.sql.generation.api.grammar.modification;
 import org.sql.generation.api.grammar.query.QueryExpression;
 
 /**
+ * This syntax element represents column source acquired by some query, for {@code INSERT INTO} statement.
  * 
  * @author Stanislav Muhametsin
  */
@@ -24,5 +25,10 @@ public interface ColumnSourceByQuery
     extends DynamicColumnSource
 {
 
+    /**
+     * Returns the query to use as column source.
+     * 
+     * @return The query to use as column source.
+     */
     public QueryExpression getQuery();
 }

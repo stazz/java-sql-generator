@@ -40,7 +40,7 @@ public class DefaultLiteralFactory
 
     private static final DirectLiteral _param = new DirectLiteralImpl( SQLConstants.QUESTION_MARK );
 
-    public DirectLiteral d( String literalContents )
+    public DirectLiteral l( String literalContents )
     {
         return new DirectLiteralImpl( literalContents );
     }

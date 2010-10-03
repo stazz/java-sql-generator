@@ -14,13 +14,12 @@
 
 package org.sql.generation.api.grammar.common;
 
-
 /**
+ * A common interface for all expressions, which return non-boolean value.
  * 
  * @author Stanislav Muhametsin
  */
 public interface NonBooleanExpression
-    // extends Typeable<NonBooleanExpression>
     extends ValueExpression
 {
 

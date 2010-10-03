@@ -14,20 +14,31 @@
 
 package org.sql.generation.api.grammar.booleans;
 
-
 /**
+ * The interface for syntax element representing {@code <X> IS [NOT] (TRUE | FALSE | UNKNOWN)} expression (boolean
+ * test), where {@code <X>} is some boolean expression.
  * 
  * @author Stanislav Muhametsin
  */
 public interface BooleanTest
     extends ComposedBooleanExpression
 {
+    /**
+     * The type of the test.
+     * 
+     * @author Stanislav Muhametsin
+     */
     public enum TestType
     {
         IS,
         IS_NOT
     }
 
+    /**
+     * The tested truth value.
+     * 
+     * @author Stanislav Muhametsin
+     */
     public enum TruthValue
     {
         TRUE,
@@ -35,9 +46,24 @@ public interface BooleanTest
         UNKNOWN
     }
 
+    /**
+     * Returns the boolean expression to be tested.
+     * 
+     * @return The boolean expression to be tested.
+     */
     public BooleanExpression getBooleanExpression();
 
+    /**
+     * Returns the test type - whether it should, or should not, be something.
+     * 
+     * @return The test type.
+     */
     public TestType getTestType();
 
+    /**
+     * The truth value which must evaluate from the expression.
+     * 
+     * @return The truth value which must evaluate from the expression.
+     */
     public TruthValue getTruthValue();
 }

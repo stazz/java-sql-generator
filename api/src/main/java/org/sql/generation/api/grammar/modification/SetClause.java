@@ -17,6 +17,7 @@ package org.sql.generation.api.grammar.modification;
 import org.atp.api.Typeable;
 
 /**
+ * This syntax element represents a single {@code SET} element of {@code UPDATE} statement.
  * 
  * @author Stanislav Muhametsin
  */
@@ -24,7 +25,17 @@ public interface SetClause
     extends Typeable<SetClause>
 {
 
+    /**
+     * Returns the update target, typically a name of the column.
+     * 
+     * @return The update target, typically a name of the column.
+     */
     public String getUpdateTarget();
 
+    /**
+     * Returns the update source, that is, data, for the columns.
+     * 
+     * @return The data for the columns.
+     */
     public UpdateSource getUpdateSource();
 }

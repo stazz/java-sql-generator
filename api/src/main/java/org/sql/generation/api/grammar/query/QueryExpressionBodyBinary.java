@@ -17,19 +17,50 @@ package org.sql.generation.api.grammar.query;
 import org.sql.generation.api.grammar.common.SetQuantifier;
 
 /**
+ * This syntax element represents two queries which have a set operation ({@code UNION}, {@code INTERSECT}, or
+ * {@code EXCEPT}) between them.
  * 
  * @author Stanislav Muhametsin
+ * @see SetOperation
  */
 public interface QueryExpressionBodyBinary
     extends QueryExpressionBodyActual
 {
+    /**
+     * Returns the set operation to put between queries.
+     * 
+     * @return The set operation to put between queries.
+     * @see SetOperation
+     */
     public SetOperation getSetOperation();
 
+    /**
+     * Returns the correspondence columns.
+     * 
+     * @return The correspondence columns.
+     * @see CorrespondingSpec
+     */
     public CorrespondingSpec getCorrespondingColumns();
 
+    /**
+     * Returns the query on the left side of the set operation.
+     * 
+     * @return The query on the left side of the set operation.
+     */
     public QueryExpressionBody getLeft();
 
+    /**
+     * Returns the query on the right side of the set operation.
+     * 
+     * @return The query on the right side of the set operation.
+     */
     public QueryExpressionBody getRight();
 
+    /**
+     * Returns the set quantifier for the set operation.
+     * 
+     * @return The set quantifier for the set operation.
+     * @see SetQuantifier
+     */
     public SetQuantifier getSetQuantifier();
 }

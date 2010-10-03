@@ -15,24 +15,23 @@
 package org.sql.generation.implementation.grammar.query.joins;
 
 import org.sql.generation.api.grammar.query.TableReference;
-import org.sql.generation.api.grammar.query.TableReferencePrimary;
 import org.sql.generation.api.grammar.query.joins.CrossJoinedTable;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class CrossJoinedTableImpl extends JoinedTablePrimary<CrossJoinedTable>
+public class CrossJoinedTableImpl extends JoinedTableImpl<CrossJoinedTable>
     implements CrossJoinedTable
 {
 
-    public CrossJoinedTableImpl( TableReference left, TableReferencePrimary right )
+    public CrossJoinedTableImpl( TableReference left, TableReference right )
     {
         this( CrossJoinedTable.class, left, right );
     }
 
     protected CrossJoinedTableImpl( Class<? extends CrossJoinedTable> implClass, TableReference left,
-        TableReferencePrimary right )
+        TableReference right )
     {
         super( implClass, left, right );
     }

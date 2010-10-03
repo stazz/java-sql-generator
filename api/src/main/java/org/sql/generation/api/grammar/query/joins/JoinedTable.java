@@ -12,18 +12,35 @@
  *
  */
 
-
 package org.sql.generation.api.grammar.query.joins;
 
 import org.sql.generation.api.grammar.query.QueryExpressionBody;
 import org.sql.generation.api.grammar.query.TableReference;
 
 /**
- *
+ * This is common interface for joined tables.
+ * 
  * @author Stanislav Muhametsin
+ * @see CrossJoinedTable
+ * @see NaturalJoinedTable
+ * @see QualifiedJoinedTable
+ * @see UnionJoinedTable
  */
-public interface JoinedTable extends QueryExpressionBody, TableReference
+public interface JoinedTable
+    extends QueryExpressionBody, TableReference
 {
+    /**
+     * Returns the table on the left side of the join.
+     * 
+     * @return The table on the left side of the join.
+     */
     public TableReference getLeft();
+
+    /**
+     * Gets the table on the right side of the join.
+     * 
+     * @return The table on the right side of the join.
+     */
+    public TableReference getRight();
 
 }

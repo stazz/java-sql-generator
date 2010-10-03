@@ -18,11 +18,18 @@ import org.atp.api.Typeable;
 import org.sql.generation.api.grammar.common.SetQuantifier;
 
 /**
+ * This is common interface for columns of {@code SELECT} statement.
  * 
  * @author Stanislav Muhametsin
  */
 public interface SelectColumnClause
     extends Typeable<SelectColumnClause>
 {
+    /**
+     * Returns the set quantifier for the columns of {@code SELECT} statement.
+     * 
+     * @return The set quantifier for the columns of {@code SELECT} statement.
+     * @see SetQuantifier
+     */
     public SetQuantifier getSetQuantifier();
 }

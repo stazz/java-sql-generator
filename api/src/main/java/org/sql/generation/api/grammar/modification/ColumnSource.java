@@ -17,12 +17,20 @@ package org.sql.generation.api.grammar.modification;
 import org.atp.api.Typeable;
 
 /**
+ * This is common interface for syntax elements representing the data source for columns in {@code INSERT INTO}
+ * statement.
  * 
  * @author Stanislav Muhametsin
+ * @see InsertStatement
  */
 public interface ColumnSource
     extends Typeable<ColumnSource>
 {
+    /**
+     * This syntax element represents when default values of columns are wanted to be inserted into table.
+     * 
+     * @author Stanislav Muhametsin
+     */
     public static final class Defaults
         implements ColumnSource
     {
@@ -31,11 +39,17 @@ public interface ColumnSource
 
         }
 
+        /**
+         * Returns {@link Defaults}.
+         */
         public Class<? extends ColumnSource> getImplementedType()
         {
             return Defaults.class;
         }
 
+        /**
+         * The singleton reference to object of this class.
+         */
         public static final Defaults INSTANCE = new Defaults();
     }
 }

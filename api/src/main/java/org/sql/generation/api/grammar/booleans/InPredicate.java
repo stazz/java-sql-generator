@@ -12,12 +12,12 @@
  *
  */
 
-
 package org.sql.generation.api.grammar.booleans;
 
-
 /**
- *
+ * The interface for syntax element representing the test of something being one of the specified set of values (x
+ * {@code IN (}y, z, {@code ...)}).
+ * 
  * @author Stanislav Muhametsin
  */
 public interface InPredicate

@@ -176,7 +176,7 @@ public class BooleanExpressionProcessing
 
             if( this._needParenthesis )
             {
-                builder.append( ")" );
+                builder.append( SQLConstants.CLOSE_PARENTHESIS );
             }
         }
     }
@@ -246,7 +246,7 @@ public class BooleanExpressionProcessing
         @Override
         protected void doProcess( SQLProcessorAggregator aggregator, Conjunction object, StringBuilder builder )
         {
-            processBinaryComposedObject( aggregator, object.getLeft(), object.getRight(), builder, "AND" );
+            processBinaryComposedObject( aggregator, object.getLeft(), object.getRight(), builder, SQLConstants.AND );
         }
     }
 
@@ -260,7 +260,7 @@ public class BooleanExpressionProcessing
         @Override
         protected void doProcess( SQLProcessorAggregator aggregator, Disjunction object, StringBuilder builder )
         {
-            processBinaryComposedObject( aggregator, object.getLeft(), object.getRight(), builder, "OR" );
+            processBinaryComposedObject( aggregator, object.getLeft(), object.getRight(), builder, SQLConstants.OR );
         }
     }
 
@@ -277,10 +277,11 @@ public class BooleanExpressionProcessing
             BooleanExpression testable = object.getBooleanExpression();
             builder.append( SQLConstants.OPEN_PARENTHESIS );
             aggregator.process( testable, builder );
-            builder.append( SQLConstants.CLOSE_PARENTHESIS ).append( "IS" ).append( SQLConstants.TOKEN_SEPARATOR );
+            builder.append( SQLConstants.CLOSE_PARENTHESIS ).append( SQLConstants.IS )
+                .append( SQLConstants.TOKEN_SEPARATOR );
             if( object.getTestType() == TestType.IS_NOT )
             {
-                builder.append( "NOT" ).append( SQLConstants.TOKEN_SEPARATOR );
+                builder.append( SQLConstants.NOT ).append( SQLConstants.TOKEN_SEPARATOR );
             }
 
             builder.append( object.getTruthValue().toString() );

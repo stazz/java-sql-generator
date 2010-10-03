@@ -15,6 +15,8 @@
 package org.sql.generation.api.grammar.literals;
 
 /**
+ * This syntax element encapsulates reference to SQL string, that is, some element between {@code '} and {@code '}
+ * characters.
  * 
  * @author Stanislav Muhametsin
  */
@@ -22,5 +24,10 @@ public interface StringLiteral
     extends LiteralExpression
 {
 
+    /**
+     * Returns the contents of the string literal, that is, the string to be put between {@code '} and {@code '}.
+     * 
+     * @return The contents of the string literal.
+     */
     public String getString();
 }

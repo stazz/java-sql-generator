@@ -22,24 +22,64 @@ import org.sql.generation.api.grammar.literals.DirectLiteral;
 import org.sql.generation.api.grammar.literals.NumericLiteral;
 import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
 import org.sql.generation.api.grammar.literals.StringLiteral;
+import org.sql.generation.api.vendor.SQLVendor;
 
 /**
+ * A factory to create various literal expressions. This factory is obtainable from {@link SQLVendor}.
  * 
  * @author Stanislav Muhametsin
+ * @see SQLVendor
  */
 public interface LiteralFactory
 {
 
+    /**
+     * Creates new string literal, that is, a string to be enclosed in {@code '} -characters.
+     * 
+     * @param stringContents The contents of string literal.
+     * @return The new {@link StringLiteral}
+     */
     public StringLiteral s( String stringContents );
 
+    /**
+     * Returns literal, representing a parameter ({@code ?}) in parameterized SQL statement.
+     * 
+     * @return The expression representing parameter ({@code ?}) in parameterized SQL statement.
+     */
     public DirectLiteral param();
 
-    public DirectLiteral d( String literalContents );
+    /**
+     * Creates a literal, which has some textual content. This content will be used <b>directly</b> when processing SQL
+     * statement.
+     * 
+     * @param literalContents The contents to be used.
+     * @return The new {@link DirectLiteral}.
+     */
+    public DirectLiteral l( String literalContents );
 
+    /**
+     * Creates a literal, which has some date as content.
+     * 
+     * @param date The date to use.
+     * @return The new {@link DateTimeLiteral}.
+     */
     public DateTimeLiteral dt( Date date );
 
+    /**
+     * Creates a literal, which has some number as contents.
+     * 
+     * @param number The number to use.
+     * @return The new {@link NumericLiteral}.
+     */
     public NumericLiteral n( Number number );
 
+    /**
+     * Creates a literal, which represents a use of SQL function.
+     * 
+     * @param name The name of function.
+     * @param parameters The parameters for function.
+     * @return The new {@link SQLFunctionLiteral}.
+     */
     public SQLFunctionLiteral func( String name, ValueExpression... parameters );
 
 }

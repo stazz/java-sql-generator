@@ -20,25 +20,65 @@ import org.sql.generation.api.grammar.builders.AbstractBuilder;
 import org.sql.generation.api.grammar.common.SetQuantifier;
 import org.sql.generation.api.grammar.query.ColumnReference;
 import org.sql.generation.api.grammar.query.ColumnReferences.ColumnReferenceInfo;
+import org.sql.generation.api.grammar.query.QuerySpecification;
 import org.sql.generation.api.grammar.query.SelectColumnClause;
 
 /**
+ * This builder builds the columns for {@code SELECT} statement.
  * 
+ * @see SelectColumnClause
+ * @see QuerySpecification
+ * @see ColumnReference
  * @author Stanislav Muhametsin
  */
 public interface ColumnsBuilder
     extends AbstractBuilder<SelectColumnClause>
 {
+    /**
+     * Adds columns without aliases to this {@code SELECT} statement.
+     * 
+     * @param columns Columns without aliases to add to this {@code SELECT} statement.
+     * @return This builder.
+     */
     public ColumnsBuilder addUnnamedColumns( ColumnReference... columns );
 
+    /**
+     * Add columns with aliases to this {@code SELECT} statement.
+     * 
+     * @param namedColumns Columns with aliases to add to this {@code SELECT} statement.
+     * @return
+     */
     public ColumnsBuilder addNamedColumns( ColumnReferenceInfo... namedColumns );
 
+    /**
+     * Sets the set quantifier ({@code ALL} or {@code DISTINCT}) for this {@code SELECT} statement.
+     * 
+     * @param newSetQuantifier The new set quantifier.
+     * @return This builder.
+     * @see SetQuantifier
+     */
     public ColumnsBuilder setSetQuantifier( SetQuantifier newSetQuantifier );
 
+    /**
+     * Marks that all columns should be selected ({@literal SELECT} *). This will empty a list of columns to select.
+     * 
+     * @return This builder.
+     */
     public ColumnsBuilder selectAll();
 
+    /**
+     * Returns the columns of this {@code SELECT} statement. It returns empty by default, or after calling
+     * {@link #selectAll()} method.
+     * 
+     * @return A list of columns of this {@code SELECT} statement. Might be empty.
+     */
     public List<ColumnReferenceInfo> getColumns();
 
+    /**
+     * Returns the set quantifier ({@code ALL} or {@code DISTINCT}) of this {@code SELECT} statement.
+     * 
+     * @return The set quantifier of this {@code SELECT} statement.
+     */
     public SetQuantifier getSetQuantifier();
 
 }

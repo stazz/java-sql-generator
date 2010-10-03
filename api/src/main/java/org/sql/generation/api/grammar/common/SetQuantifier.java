@@ -12,7 +12,21 @@
  *
  */
 
-
 package org.sql.generation.api.grammar.common;
 
-public enum SetQuantifier { DISTINCT, ALL }
+/**
+ * Set quantifer, can be either {@link #ALL} or {@link #DISTINCT}.
+ * 
+ * @author Stanislav Muhametsin
+ */
+public enum SetQuantifier
+{
+    /**
+     * Set quantifier for {@code DISTINCT} element.
+     */
+    DISTINCT,
+    /**
+     * Set quantifier for {@code ALL} element.
+     */
+    ALL
+}

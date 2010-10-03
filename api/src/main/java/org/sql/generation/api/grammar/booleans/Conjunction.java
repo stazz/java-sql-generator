@@ -15,6 +15,7 @@
 package org.sql.generation.api.grammar.booleans;
 
 /**
+ * A conjunction ({@code AND}) of two boolean expressions.
  * 
  * @author Stanislav Muhametsin
  */
@@ -22,8 +23,18 @@ public interface Conjunction
     extends ComposedBooleanExpression
 {
 
+    /**
+     * Returns the boolean expression on the left side of {@code AND}.
+     * 
+     * @return The boolean expression on the left side of {@code AND}.
+     */
     public BooleanExpression getLeft();
 
+    /**
+     * Returns the boolean expression on the right side of {@code AND}.
+     * 
+     * @return The boolean expression on the right side of {@code AND}.
+     */
     public BooleanExpression getRight();
 
 }

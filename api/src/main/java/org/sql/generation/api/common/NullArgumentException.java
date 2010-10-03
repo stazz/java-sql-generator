@@ -12,13 +12,10 @@
  *
  */
 
-
 package org.sql.generation.api.common;
 
 /**
  * Pretty much copy of org.qi4j.api.util.NullArgumentException.
- *
- * @author Stanislav Muhametsin
  */
 public class NullArgumentException extends RuntimeException
 {
@@ -29,6 +26,13 @@ public class NullArgumentException extends RuntimeException
         super( message );
     }
 
+    /**
+     * Validates that passed object is not null.
+     * 
+     * @param parameterName The name of the parameter.
+     * @param object The parameter.
+     * @throws NullArgumentException If {@code object} is {@code null}.
+     */
     public static void validateNotNull( String parameterName, Object object )
     {
         if( object == null )

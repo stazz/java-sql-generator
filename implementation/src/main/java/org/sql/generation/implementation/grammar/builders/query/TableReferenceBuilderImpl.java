@@ -14,21 +14,12 @@
 
 package org.sql.generation.implementation.grammar.builders.query;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.builders.query.TableReferenceBuilder;
 import org.sql.generation.api.grammar.query.TableReference;
 import org.sql.generation.api.grammar.query.TableReferencePrimary;
 import org.sql.generation.api.grammar.query.joins.JoinSpecification;
 import org.sql.generation.api.grammar.query.joins.JoinType;
-import org.sql.generation.api.grammar.query.joins.JoinedTable;
-import org.sql.generation.implementation.grammar.builders.internal.AbstractJoinInfo;
-import org.sql.generation.implementation.grammar.builders.internal.CrossJoinInfo;
-import org.sql.generation.implementation.grammar.builders.internal.NaturalJoinInfo;
-import org.sql.generation.implementation.grammar.builders.internal.QualifiedJoinInfo;
-import org.sql.generation.implementation.grammar.builders.internal.UnionJoinInfo;
 import org.sql.generation.implementation.grammar.query.joins.CrossJoinedTableImpl;
 import org.sql.generation.implementation.grammar.query.joins.NaturalJoinedTableImpl;
 import org.sql.generation.implementation.grammar.query.joins.QualifiedJoinedTableImpl;
@@ -38,81 +29,41 @@ public class TableReferenceBuilderImpl
     implements TableReferenceBuilder
 {
 
-    private final TableReferencePrimary _startingTable;
-
-    private final List<AbstractJoinInfo> _joinInfos;
+    private TableReference _currentTable;
 
     public TableReferenceBuilderImpl( TableReferencePrimary startingTable )
     {
         NullArgumentException.validateNotNull( "starting table", startingTable );
 
-        this._startingTable = startingTable;
-        this._joinInfos = new ArrayList<AbstractJoinInfo>();
+        this._currentTable = startingTable;
     }
 
-    public TableReferenceBuilder addQualifiedJoin( JoinType joinType, TableReference right,
-        JoinSpecification joinSpec )
+    public TableReferenceBuilder addQualifiedJoin( JoinType joinType, TableReference right, JoinSpecification joinSpec )
     {
-        this._joinInfos.add( new QualifiedJoinInfo( right, joinType, joinSpec ) );
+        this._currentTable = new QualifiedJoinedTableImpl( this._currentTable, right, joinType, joinSpec );
         return this;
     }
 
-    public TableReferenceBuilder addCrossJoin( TableReferencePrimary right )
+    public TableReferenceBuilder addCrossJoin( TableReference right )
     {
-        this._joinInfos.add( new CrossJoinInfo( right ) );
+        this._currentTable = new CrossJoinedTableImpl( this._currentTable, right );
         return this;
     }
 
-    public TableReferenceBuilder addNaturalJoin( JoinType joinType, TableReferencePrimary right )
+    public TableReferenceBuilder addNaturalJoin( JoinType joinType, TableReference right )
     {
-        this._joinInfos.add( new NaturalJoinInfo( right, joinType ) );
+        this._currentTable = new NaturalJoinedTableImpl( this._currentTable, right, joinType );
         return this;
     }
 
-    public TableReferenceBuilder addUnionJoin( TableReferencePrimary right )
+    public TableReferenceBuilder addUnionJoin( TableReference right )
     {
-        this._joinInfos.add( new UnionJoinInfo( right ) );
+        this._currentTable = new UnionJoinedTableImpl( this._currentTable, right );
         return this;
     }
 
     public TableReference createExpression()
     {
-        TableReference result = this._startingTable;
-        for( Integer x = 0; x < this._joinInfos.size(); ++x )
-        {
-            result = this.createJoinedTable( result, this._joinInfos.get( x ) );
-        }
-
-        return result;
+        return this._currentTable;
     }
-
-    private JoinedTable createJoinedTable( TableReference left, AbstractJoinInfo info )
-    {
-        JoinedTable result = null;
-        if( info instanceof CrossJoinInfo )
-        {
-            result = new CrossJoinedTableImpl( left, ((CrossJoinInfo) info).getTable() );
-        }
-        else if( info instanceof NaturalJoinInfo )
-        {
-            NaturalJoinInfo nInfo = (NaturalJoinInfo) info;
-            result = new NaturalJoinedTableImpl( left, nInfo.getTable(), nInfo.getJoinType() );
-        }
-        else if( info instanceof QualifiedJoinInfo )
-        {
-            QualifiedJoinInfo qInfo = (QualifiedJoinInfo) info;
-            result = new QualifiedJoinedTableImpl( left, qInfo.getTable(), qInfo.getJoinType(), qInfo.getJoinSpec() );
-        }
-        else if( info instanceof UnionJoinInfo )
-        {
-            result = new UnionJoinedTableImpl( left, ((UnionJoinInfo) info).getTable() );
-        }
-        else
-        {
-            throw new IllegalArgumentException( "Don't know what to do with " + info + "." );
-        }
-
-        return result;
-    }
-
 }

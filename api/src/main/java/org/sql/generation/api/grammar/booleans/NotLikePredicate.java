@@ -12,11 +12,12 @@
  *
  */
 
-
 package org.sql.generation.api.grammar.booleans;
 
 /**
- *
+ * The interface for syntax element representing the test of left expression not matching the supplied pattern using
+ * basic SQL match (x {@code NOT LIKE} y).
+ * 
  * @author Stanislav Muhametsin
  */
 public interface NotLikePredicate

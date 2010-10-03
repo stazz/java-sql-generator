@@ -17,6 +17,7 @@ package org.sql.generation.api.grammar.common;
 import org.atp.api.Typeable;
 
 /**
+ * A table name may be just table name, or schema-qualified table name.
  * 
  * @author Stanislav Muhametsin
  */
@@ -24,7 +25,18 @@ public interface TableName
     extends Typeable<TableName>
 {
 
+    /**
+     * Gets the schema name. Returns {@code null} if this is not schema-qualified table name.
+     * 
+     * @return Schema name of the schema-qualified table name, or {@code null} if this is not a schema-qualified table
+     *         name.
+     */
     public String getSchemaName();
 
+    /**
+     * Gets name of the table. Returns always non-{@code null}.
+     * 
+     * @return The name of the table. Always non-{@code null}.
+     */
     public String getTableName();
 }

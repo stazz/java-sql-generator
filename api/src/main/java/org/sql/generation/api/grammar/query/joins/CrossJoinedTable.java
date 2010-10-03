@@ -14,15 +14,12 @@
 
 package org.sql.generation.api.grammar.query.joins;
 
-import org.sql.generation.api.grammar.query.TableReferencePrimary;
-
 /**
- *
+ * This syntax element represents the cross join ({@code CROSS JOIN} between two tables.
+ * 
  * @author Stanislav Muhametsin
  */
 public interface CrossJoinedTable
     extends JoinedTable
 {
-
-    public TableReferencePrimary getRight();
 }

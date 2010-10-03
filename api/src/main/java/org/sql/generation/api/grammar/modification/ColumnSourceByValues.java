@@ -19,11 +19,17 @@ import java.util.List;
 import org.sql.generation.api.grammar.common.ValueExpression;
 
 /**
+ * This syntax element represents explicitly defined values for column source in {@code INSERT INTO} statement.
  * 
  * @author Stanislav Muhametsin
  */
 public interface ColumnSourceByValues
     extends DynamicColumnSource
 {
+    /**
+     * Returns the values to use as column source.
+     * 
+     * @return The values to use as column source.
+     */
     public List<ValueExpression> getValues();
 }

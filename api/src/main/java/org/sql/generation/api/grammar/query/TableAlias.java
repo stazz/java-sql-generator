@@ -17,13 +17,24 @@ package org.sql.generation.api.grammar.query;
 import org.sql.generation.api.grammar.common.ColumnNameList;
 
 /**
+ * This syntax element represents the alias for a table. Table alias may have additional list of column aliases.
  * 
  * @author Stanislav Muhametsin
  */
 public interface TableAlias
 {
 
+    /**
+     * Returns an alias for a table name.
+     * 
+     * @return The alias for the table name.
+     */
     public String getTableAlias();
 
+    /**
+     * Returns aliases for columns in the original table.
+     * 
+     * @return Aliases for columns in the original table. May be {@code null}.
+     */
     public ColumnNameList getColumnAliases();
 }

@@ -17,6 +17,7 @@ package org.sql.generation.api.grammar.booleans;
 import org.sql.generation.api.grammar.query.QueryExpression;
 
 /**
+ * The interface for syntax element representing the test for uniqueness ({@code UNIQUE} sub-query).
  * 
  * @author Stanislav Muhametsin
  */
@@ -24,5 +25,8 @@ public interface UniquePredicate
     extends UnaryPredicate
 {
 
+    /**
+     * Gets the query on which {@code UNIQUE} operates on.
+     */
     public QueryExpression getValueExpression();
 }

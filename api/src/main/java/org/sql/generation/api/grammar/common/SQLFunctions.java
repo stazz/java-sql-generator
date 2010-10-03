@@ -15,6 +15,7 @@
 package org.sql.generation.api.grammar.common;
 
 /**
+ * A container for textual names of default SQL functions.
  * 
  * @author Stanislav Muhametsin
  */

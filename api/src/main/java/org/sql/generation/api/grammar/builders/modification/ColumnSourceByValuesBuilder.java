@@ -21,17 +21,40 @@ import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.modification.ColumnSourceByValues;
 
 /**
+ * This builder builds the {@link ColumnSourceByValues} syntax element.
  * 
  * @author Stanislav Muhametsin
  */
 public interface ColumnSourceByValuesBuilder
     extends AbstractBuilder<ColumnSourceByValues>
 {
-    public ColumnSourceByValuesBuilder addValues( ValueExpression... value );
+    /**
+     * Adds the expressions as values to columns.
+     * 
+     * @param values The value expressions to add.
+     * @return This builder.
+     */
+    public ColumnSourceByValuesBuilder addValues( ValueExpression... values );
 
+    /**
+     * Returns the value expressions for the columns.
+     * 
+     * @return The value expressions for the columns.
+     */
     public List<ValueExpression> getValues();
 
+    /**
+     * Adds the names for the columns.
+     * 
+     * @param columnNames The names for columns.
+     * @return This builder.
+     */
     public ColumnSourceByValuesBuilder addColumnNames( String... columnNames );
 
+    /**
+     * Returns the names for the columns.
+     * 
+     * @return The names for the columns.
+     */
     public List<String> getColumnNames();
 }

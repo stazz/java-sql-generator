@@ -14,16 +14,27 @@
 
 package org.sql.generation.api.grammar.query;
 
-
 /**
+ * This syntax element represents the column reference in {@code SELECT <column reference>} clause, where the column
+ * reference is column name, either with table name or without.
  * 
  * @author Stanislav Muhametsin
  */
 public interface ColumnReferenceByName
     extends ColumnReference
 {
+    /**
+     * Gets the table name of this column. Might be {@code null}.
+     * 
+     * @return The table name of this column. Might be {@code null}.
+     */
     public String getTableName();
 
+    /**
+     * Gets the column name of this column.
+     * 
+     * @return The column name of this column.
+     */
     public String getColumnName();
 
 }

@@ -15,6 +15,7 @@
 package org.sql.generation.api.grammar.booleans;
 
 /**
+ * A common interface for all boolean expressions composing of other boolean expressions.
  * 
  * @author Stanislav Muhametsin
  */

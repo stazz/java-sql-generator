@@ -17,6 +17,8 @@ package org.sql.generation.api.grammar.builders;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 
 /**
+ * A builder-pattern interface to build boolean expressions. It holds the current expression, modifying it as per user's
+ * instructions, and returns it once the {@link #createExpression()} method is called.
  * 
  * @author Stanislav Muhametsin
  */
@@ -24,11 +26,34 @@ public interface BooleanBuilder
     extends AbstractBuilder<BooleanExpression>
 {
 
+    /**
+     * Sets current expression as current expression {@code AND next}.
+     * 
+     * @param next The expression on a right hand of {@code AND}.
+     * @return This builder.
+     */
     public BooleanBuilder and( BooleanExpression next );
 
+    /**
+     * Sets current expression as current expression {@code OR next}
+     * 
+     * @param next The expression on a right hand of {@code OR}
+     * @return This builder.
+     */
     public BooleanBuilder or( BooleanExpression next );
 
+    /**
+     * Sets current expression as {@code NOT} current expression.
+     * 
+     * @return This builder.
+     */
     public BooleanBuilder not();
 
+    /**
+     * Sets current expression as given parameter.
+     * 
+     * @param newExpression The new expression.
+     * @return This builder.
+     */
     public BooleanBuilder reset( BooleanExpression newExpression );
 }

@@ -15,13 +15,22 @@
 package org.sql.generation.api.grammar.query;
 
 import org.atp.api.Typeable;
+import org.sql.generation.api.grammar.query.joins.JoinedTable;
 
 /**
+ * This is common interface for all table references in {@code FROM} clause.
  * 
  * @author Stanislav Muhametsin
+ * @see FromClause
+ * @see TableReferencePrimary
+ * @see JoinedTable
  */
 public interface TableReference
-// extends Typeable<TableReference>
 {
+    /**
+     * Helper method to cast this object into {@link Typeable}.
+     * 
+     * @return This object.
+     */
     public Typeable<?> asTypeable();
 }

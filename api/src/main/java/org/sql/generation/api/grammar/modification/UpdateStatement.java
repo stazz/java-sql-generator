@@ -18,8 +18,10 @@ import org.atp.api.Typeable;
 import org.sql.generation.api.grammar.common.SQLStatement;
 
 /**
+ * This is common interface for all statements doing updates.
  * 
  * @author Stanislav Muhametsin
+ * @see UpdateBySearch
  */
 public interface UpdateStatement
     extends SQLStatement, Typeable<UpdateStatement>

@@ -19,11 +19,18 @@ import java.util.List;
 import org.atp.api.Typeable;
 
 /**
+ * This syntax element represents the {@code GROUP BY} clause in {@code SELECT} statement.
  * 
  * @author Stanislav Muhametsin
  */
 public interface GroupByClause
     extends Typeable<GroupByClause>
 {
+    /**
+     * Returns the grouping elements of this {@code GROUP BY} clause.
+     * 
+     * @return The grouping elements of this {@code GROUP BY} clause.
+     * @see GroupingElement
+     */
     public List<GroupingElement> getGroupingElements();
 }

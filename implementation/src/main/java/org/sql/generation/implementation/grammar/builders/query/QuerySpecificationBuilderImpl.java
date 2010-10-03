@@ -53,9 +53,12 @@ public class QuerySpecificationBuilderImpl
 
     private OrderByBuilder _orderBy;
 
-    public QuerySpecificationBuilderImpl( ColumnsBuilder select, FromBuilder from, BooleanBuilder where,
-        GroupByBuilder groupBy, BooleanBuilder having, OrderByBuilder orderBy )
+    private final QueryFactory _queryFactory;
+
+    public QuerySpecificationBuilderImpl( QueryFactory q, ColumnsBuilder select, FromBuilder from,
+        BooleanBuilder where, GroupByBuilder groupBy, BooleanBuilder having, OrderByBuilder orderBy )
     {
+        NullArgumentException.validateNotNull( "Query factory", q );
         NullArgumentException.validateNotNull( "select", select );
         NullArgumentException.validateNotNull( "from", from );
         NullArgumentException.validateNotNull( "where", where );
@@ -63,6 +66,7 @@ public class QuerySpecificationBuilderImpl
         NullArgumentException.validateNotNull( "having", having );
         NullArgumentException.validateNotNull( "order by", orderBy );
 
+        this._queryFactory = q;
         this._select = select;
         this._from = from;
         this._where = where;
@@ -101,7 +105,7 @@ public class QuerySpecificationBuilderImpl
         return this._orderBy;
     }
 
-    public QuerySpecificationBuilder trimGroupBy( QueryFactory q )
+    public QuerySpecificationBuilder trimGroupBy()
     {
         if( this._having.createExpression() != org.sql.generation.api.grammar.booleans.Predicate.EmptyPredicate.INSTANCE )
         {
@@ -133,7 +137,7 @@ public class QuerySpecificationBuilderImpl
 
                 if( noColumn )
                 {
-                    this._groupBy.addGroupingElements( q.groupingElement( column.getReference() ) );
+                    this._groupBy.addGroupingElements( this._queryFactory.groupingElement( column.getReference() ) );
                 }
             }
 
@@ -189,5 +193,10 @@ public class QuerySpecificationBuilderImpl
         NullArgumentException.validateNotNull( "builder", builder );
         this._orderBy = builder;
         return this;
+    }
+
+    protected QueryFactory getQueryFactory()
+    {
+        return this._queryFactory;
     }
 }

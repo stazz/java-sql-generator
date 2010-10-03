@@ -12,11 +12,11 @@
  *
  */
 
-
 package org.sql.generation.api.grammar.booleans;
 
 /**
- *
+ * The interface for syntax element representing test for something being not {@code NULL} (x {@code IS NOT NULL}).
+ * 
  * @author Stanislav Muhametsin
  */
 public interface IsNotNullPredicate

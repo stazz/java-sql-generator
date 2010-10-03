@@ -19,6 +19,7 @@ import java.util.List;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 
 /**
+ * A common interface for all predicates accepting more than two expressions.
  * 
  * @author Stanislav Muhametsin
  */
@@ -26,7 +27,17 @@ public interface MultiPredicate
     extends Predicate
 {
 
+    /**
+     * Returns the expression on the left side (the first expression).
+     * 
+     * @return The first expression.
+     */
     public NonBooleanExpression getLeft();
 
+    /**
+     * Returns the remaining expressions after the first one.
+     * 
+     * @return The remaining expressions after the first one.
+     */
     public List<NonBooleanExpression> getRights();
 }

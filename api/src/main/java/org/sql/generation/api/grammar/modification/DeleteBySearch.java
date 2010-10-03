@@ -17,13 +17,24 @@ package org.sql.generation.api.grammar.modification;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 
 /**
+ * This syntax element represents a {@code DELETE FROM} statement.
  * 
  * @author Stanislav Muhametsin
  */
 public interface DeleteBySearch
     extends DeleteStatement
 {
+    /**
+     * Returns the target table for this {@code DELETE FROM} statement.
+     * 
+     * @return The target table for this {@code DELETE FROM} statement.
+     */
     public TargetTable getTargetTable();
 
+    /**
+     * Returns the search condition for rows to delete.
+     * 
+     * @return The search condition for rows to delete.
+     */
     public BooleanExpression getWhere();
 }

@@ -15,11 +15,19 @@
 package org.sql.generation.api.grammar.query.pgsql;
 
 /**
+ * This is common interface for {@code LIMIT} clauses used in PostgreSQL queries.
  * 
  * @author Stanislav Muhametsin
+ * @see LimitAll
+ * @see LimitByNumber
  */
 public interface LimitClause
 {
+    /**
+     * This syntax element represents the {@code LIMIT ALL} clause in PostgreSQL queries.
+     * 
+     * @author Stanislav Muhametsin
+     */
     public static final class LimitAll
         implements LimitClause
     {
@@ -28,6 +36,9 @@ public interface LimitClause
 
         }
 
+        /**
+         * The singleton instance of {@link LimitAll}.
+         */
         public static final LimitAll INSTANCE = new LimitAll();
     }
 }

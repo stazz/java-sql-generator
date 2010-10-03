@@ -15,6 +15,7 @@
 package org.sql.generation.api.grammar.common;
 
 /**
+ * A container for common textual constants of SQL language.
  * 
  * @author Stanislav Muhametsin
  */
@@ -61,4 +62,6 @@ public interface SQLConstants
     public static final String NEWLINE = "\n";
 
     public static final String NULL = "NULL";
+
+    public static final String IS = "IS";
 }

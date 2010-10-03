@@ -17,6 +17,7 @@ package org.sql.generation.api.grammar.literals;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 
 /**
+ * This is common interface for all literal expressions.
  * 
  * @author Stanislav Muhametsin
  */

@@ -22,37 +22,122 @@ import org.sql.generation.api.grammar.common.ColumnNameList;
 import org.sql.generation.api.grammar.common.TableName;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.modification.ColumnSourceByQuery;
+import org.sql.generation.api.grammar.modification.ColumnSourceByValues;
+import org.sql.generation.api.grammar.modification.DeleteBySearch;
+import org.sql.generation.api.grammar.modification.InsertStatement;
 import org.sql.generation.api.grammar.modification.SetClause;
 import org.sql.generation.api.grammar.modification.TargetTable;
+import org.sql.generation.api.grammar.modification.UpdateBySearch;
 import org.sql.generation.api.grammar.modification.UpdateSource;
 import org.sql.generation.api.grammar.modification.UpdateSourceByExpression;
 import org.sql.generation.api.grammar.query.QueryExpression;
+import org.sql.generation.api.vendor.SQLVendor;
 
 /**
+ * A factory, which creates SQL syntax elements related to modification statements ({@code INSERT INTO},
+ * {@code DELETE FROM}, and {@code UPDATE}). This factory is obtainable from {@link SQLVendor}.
  * 
  * @author Stanislav Muhametsin
+ * @see SQLVendor
  */
 public interface ModificationFactory
 {
 
+    /**
+     * Creates a builder to add values as column sources in {@code INSERT INTO} statement.
+     * 
+     * @return The new {@link ColumnSourceByValuesBuilder} for {@link ColumnSourceByValues}.
+     */
     public ColumnSourceByValuesBuilder columnSourceByValues();
 
+    /**
+     * <p>
+     * Creates a column source, which uses a query as a source for columns in {@code INSERT INTO} statement.
+     * </p>
+     * <p>
+     * Calling this method is equivalent in calling {@link #columnSourceByQuery(ColumnNameList, QueryExpression)} and
+     * passing {@code null} as first argument.
+     * </p>
+     * 
+     * @param query The query to use as source for columns in {@code INSERT INTO} statement.
+     * @return The new {@link ColumnSourceByQuery}.
+     */
     public ColumnSourceByQuery columnSourceByQuery( QueryExpression query );
 
+    /**
+     * Creates a column source, which uses specified target table column names and query as source columns in
+     * {@code INSERT INTO} statement.
+     * 
+     * @param columnNames The column names to use in target table.
+     * @param query The query to use to populate target table.
+     * @return The new {@link ColumnSourceByQuery}.
+     */
     public ColumnSourceByQuery columnSourceByQuery( ColumnNameList columnNames, QueryExpression query );
 
+    /**
+     * Creates builder to create {@link DeleteBySearch} statements.
+     * 
+     * @return The new builder for {@link DeleteBySearch}.
+     * @see DeleteBySearchBuilder
+     */
     public DeleteBySearchBuilder deleteBySearch();
 
+    /**
+     * Creates builder to create {@link InsertStatement}s.
+     * 
+     * @return The new builder for {@link InsertStatement}.
+     * @see InsertStatementBuilder
+     */
     public InsertStatementBuilder insert();
 
+    /**
+     * Creates builder to create {@link UpdateBySearch} statements.
+     * 
+     * @return The new builder for {@link UpdateBySearch} statements.
+     * @see UpdateBySearchBuilder
+     */
     public UpdateBySearchBuilder updateBySearch();
 
+    /**
+     * <p>
+     * Creates new target table to use in modification statements.
+     * </p>
+     * <p>
+     * Calling this method is equivalent for calling {@link #createTargetTable(TableName, Boolean)} and passing
+     * {@code false} as second parameter.
+     * 
+     * @param tableName The name of the table.
+     * @return The new {@link TargetTable}.
+     */
     public TargetTable createTargetTable( TableName tableName );
 
+    /**
+     * Creates new target table to use in modification statements.
+     * 
+     * @param tableName The name of the table.
+     * @param isOnly Whether modification should affect child-tables too.
+     * @return The new {@link TargetTable}.
+     */
     public TargetTable createTargetTable( TableName tableName, Boolean isOnly );
 
+    /**
+     * Creates a new source for {@code UPDATE} statement. This source will use specified expression as a source for
+     * values.
+     * 
+     * @param expression The expression to use.
+     * @return The new {@link UpdateSourceByExpression}.
+     * @see UpdateBySearch
+     */
     public UpdateSourceByExpression updateSourceByExp( ValueExpression expression );
 
+    /**
+     * Creates a new set clause for {@code UPDATE} statement.
+     * 
+     * @param updateTarget The target of the update, typically name of the column.
+     * @param updateSource The source for data to be put into that column.
+     * @return The new {@link SetClause}.
+     * @see UpdateBySearch
+     */
     public SetClause setClause( String updateTarget, UpdateSource updateSource );
 
 }

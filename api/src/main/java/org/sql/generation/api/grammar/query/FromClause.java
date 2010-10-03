@@ -17,14 +17,24 @@ package org.sql.generation.api.grammar.query;
 import java.util.List;
 
 import org.atp.api.Typeable;
+import org.sql.generation.api.grammar.query.joins.JoinedTable;
 
 /**
+ * This syntax element represents the {@code FROM} clause in {@code SELECT} statement.
  * 
  * @author Stanislav Muhametsin
  */
 public interface FromClause
     extends Typeable<FromClause>
 {
+    /**
+     * Gets all the table references. Each table reference may be a simple reference to table name, sub-query, or a
+     * joined table.
+     * 
+     * @return The table references for this {@code FROM} clause.
+     * @see TableReference
+     * @see JoinedTable
+     */
     public List<TableReference> getTableReferences();
 
 }

@@ -17,6 +17,7 @@ package org.sql.generation.api.grammar.modification;
 import org.sql.generation.api.grammar.common.ValueExpression;
 
 /**
+ * This syntax element represents the update source having value of whatever expression it holds.
  * 
  * @author Stanislav Muhametsin
  */
@@ -24,5 +25,10 @@ public interface UpdateSourceByExpression
     extends UpdateSource
 {
 
+    /**
+     * Returns the value expression to use as value for update source.
+     * 
+     * @return The value expression to use as value for update source.
+     */
     public ValueExpression getValueExpression();
 }

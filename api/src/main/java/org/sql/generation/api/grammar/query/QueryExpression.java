@@ -18,12 +18,19 @@ import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.api.grammar.common.SQLStatement;
 
 /**
+ * This syntax element represents the {@link QueryExpressionBody} and, in future, the WithClause ({@code WITH}) to be
+ * used with query.
  * 
  * @author Stanislav Muhametsin
  */
 public interface QueryExpression
     extends NonBooleanExpression, SQLStatement
 {
+    /**
+     * Returns the body of this query.
+     * 
+     * @return The body of this query.
+     */
     public QueryExpressionBody getQueryExpressionBody();
 
     // public WithClause getWithClause();

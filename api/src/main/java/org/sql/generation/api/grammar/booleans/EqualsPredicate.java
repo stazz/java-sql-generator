@@ -12,11 +12,11 @@
  *
  */
 
-
 package org.sql.generation.api.grammar.booleans;
 
 /**
- *
+ * The interface for syntax element representing equality test (x {@code =} y).
+ * 
  * @author Stanislav Muhametsin
  */
 public interface EqualsPredicate

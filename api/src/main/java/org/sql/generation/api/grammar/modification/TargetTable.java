@@ -18,6 +18,7 @@ import org.atp.api.Typeable;
 import org.sql.generation.api.grammar.common.TableName;
 
 /**
+ * This syntax element represents the target table of {@code DELETE FROM} and {@code UPDATE} statements.
  * 
  * @author Stanislav Muhametsin
  */
@@ -25,7 +26,18 @@ public interface TargetTable
     extends Typeable<TargetTable>
 {
 
+    /**
+     * Returns whether only this table should be updated (and not, for example, inheriting tables).
+     * 
+     * @return {@code true} if only this table should be updated; {@code false} otherwise.
+     */
     public Boolean isOnly();
 
+    /**
+     * Returns the table name of the target table.
+     * 
+     * @return The table name of the target table.
+     * @see TableName
+     */
     public TableName getTableName();
 }

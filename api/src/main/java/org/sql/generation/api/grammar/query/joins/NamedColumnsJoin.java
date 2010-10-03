@@ -17,6 +17,8 @@ package org.sql.generation.api.grammar.query.joins;
 import org.sql.generation.api.grammar.common.ColumnNameList;
 
 /**
+ * This syntax element represents the join based on same-named columns in two tables having same value. Used in
+ * {@link QualifiedJoinedTable}.
  * 
  * @author Stanislav Muhametsin
  */
@@ -24,5 +26,10 @@ public interface NamedColumnsJoin
     extends JoinSpecification
 {
 
+    /**
+     * Returns the column names. Might be {@code null}.
+     * 
+     * @return The column names. Might be {@code null}.
+     */
     public ColumnNameList getColumnNames();
 }

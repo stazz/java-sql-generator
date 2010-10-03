@@ -20,30 +20,49 @@ import org.sql.generation.api.grammar.builders.query.FromBuilder;
 import org.sql.generation.api.grammar.builders.query.GroupByBuilder;
 import org.sql.generation.api.grammar.builders.query.OrderByBuilder;
 import org.sql.generation.api.grammar.builders.query.QuerySpecificationBuilder;
-import org.sql.generation.api.grammar.factories.QueryFactory;
 import org.sql.generation.api.grammar.query.pgsql.LimitClause;
 import org.sql.generation.api.grammar.query.pgsql.OffsetClause;
 import org.sql.generation.api.grammar.query.pgsql.PgSQLQuerySpecification;
 
 /**
+ * Builder to build query specifications with extra elements that are added by PostgreSQL.
  * 
  * @author Stanislav Muhametsin
+ * @see QuerySpecificationBuilder
  */
 public interface PgSQLQuerySpecificationBuilder
     extends QuerySpecificationBuilder
 {
+    /**
+     * Sets the {@code OFFSET} value of this {@code SELECT} statement.
+     * 
+     * @param offset The offset for this {@code SELECT} statement.
+     * @return This builder.
+     */
     public PgSQLQuerySpecificationBuilder offset( OffsetClause offset );
 
+    /**
+     * Sets the {@code LIMIT} value of this {@code SELECT} statement
+     * 
+     * @param limit The limit (maximum amount of results) for this {@code SELECT} statement.
+     * @return This builder.
+     */
     public PgSQLQuerySpecificationBuilder limit( LimitClause limit );
 
-    public PgSQLQuerySpecificationBuilder setOrderByToFirstColumnIfOffsetOrLimit( QueryFactory q );
+    /**
+     * Helper method to add the first column of this {@code SELECT} statement to {@code ORDER BY} clause, if
+     * {@code LIMIT} or {@code OFFSET} clause is present. Calling this method on a {@code SELECT} * query has no effect.
+     * 
+     * @return This builder.
+     */
+    public PgSQLQuerySpecificationBuilder setOrderByToFirstColumnIfOffsetOrLimit();
 
     // The rest are from QuerySpecificationBuilder , overridden here with different return type in order to properly
     // sustain builder-pattern.
 
     public PgSQLQuerySpecification createExpression();
 
-    public PgSQLQuerySpecificationBuilder trimGroupBy( QueryFactory q );
+    public PgSQLQuerySpecificationBuilder trimGroupBy();
 
     public PgSQLQuerySpecificationBuilder setSelect( ColumnsBuilder builder );
 

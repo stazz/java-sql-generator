@@ -19,12 +19,19 @@ import java.util.List;
 import org.sql.generation.api.common.NullArgumentException;
 
 /**
+ * This syntax element represents the whole {@code SELECT <column1>, <column2>, ...} clause, up until {@code FROM}. Each
+ * column might have an alias.
  * 
  * @author Stanislav Muhametsin
  */
 public interface ColumnReferences
     extends SelectColumnClause
 {
+    /**
+     * A helper class to encapsulate column reference along with its alias.
+     * 
+     * @author Stanislav Muhametsin
+     */
     public static class ColumnReferenceInfo
     {
         private final String _alias;
@@ -38,17 +45,32 @@ public interface ColumnReferences
             this._reference = reference;
         }
 
+        /**
+         * Returns the alias of this column reference. May be {@code null.}
+         * 
+         * @return The alias of this column reference. May be {@code null.}
+         */
         public String getAlias()
         {
             return this._alias;
         }
 
+        /**
+         * Returns the column reference.
+         * 
+         * @return The column reference.
+         */
         public ColumnReference getReference()
         {
             return this._reference;
         }
     }
 
+    /**
+     * Returns the list of column references, along with their aliases.
+     * 
+     * @return The list of column references, along with their aliases.
+     */
     public List<ColumnReferenceInfo> getColumns();
 
 }

@@ -20,15 +20,31 @@ import org.sql.generation.api.grammar.query.pgsql.LimitByNumber;
 import org.sql.generation.api.grammar.query.pgsql.OffsetClause;
 
 /**
+ * The query factory, which is able to create PostgreSQL-specific syntax elements.
  * 
  * @author Stanislav Muhametsin
  */
 public interface PgSQLQueryFactory
     extends QueryFactory
 {
+    /**
+     * Returns query builder, which is capable of accepting PostgreSQL-specific syntax elements.
+     */
     public PgSQLQuerySpecificationBuilder querySpecificationBuilder();
 
+    /**
+     * Creates new limit clause, which limits result by number.
+     * 
+     * @param limit The maximum amount of results for query.
+     * @return The limit clause.
+     */
     public LimitByNumber limit( Integer limit );
 
+    /**
+     * Creates new offset clause, which sets the offset for query.
+     * 
+     * @param offset Offset for query.
+     * @return The offset clause.
+     */
     public OffsetClause offset( Integer offset );
 }

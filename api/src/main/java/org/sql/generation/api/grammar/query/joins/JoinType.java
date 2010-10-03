@@ -12,7 +12,33 @@
  *
  */
 
-
 package org.sql.generation.api.grammar.query.joins;
 
-public enum JoinType { INNER, LEFT_OUTER, RIGHT_OUTER, FULL_OUTER }
+/**
+ * This enum represents the join type, used in {@link QualifiedJoinedTable} and {@link NaturalJoinedTable}. Is one of
+ * {@link #INNER}, {@link #LEFT_OUTER}, {@link #RIGHT_OUTER}, or {@link #FULL_OUTER}.
+ * 
+ * @author Stanislav Muhametsin
+ */
+public enum JoinType
+{
+    /**
+     * The {@code INNER} join, typically default.
+     */
+    INNER,
+
+    /**
+     * The {@code LEFT OUTER} join.
+     */
+    LEFT_OUTER,
+
+    /**
+     * The {@code RIGHT OUTER} join.
+     */
+    RIGHT_OUTER,
+
+    /**
+     * The {@code FULL OUTER} join.
+     */
+    FULL_OUTER
+}

@@ -15,11 +15,21 @@
 package org.sql.generation.api.grammar.query;
 
 /**
+ * This is enum for what kind of order will be applied to each ordering column. Can be either {@link #ASCENDING} or
+ * {@link #DESCENDING}.
  * 
  * @author Stanislav Muhametsin
+ * @see SortSpecification
  */
 public enum Ordering
 {
+    /**
+     * The ordering will be ascending ({@code ASC}).
+     */
     ASCENDING,
+
+    /**
+     * The ordering will be descending ({@code DESC}).
+     */
     DESCENDING
 }

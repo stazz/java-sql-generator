@@ -18,7 +18,9 @@ import org.sql.generation.api.grammar.booleans.InPredicate;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 
 /**
+ * The builder to build {@code IN} expressions
  * 
+ * @see InPredicate
  * @author Stanislav Muhametsin
  */
 public interface InBuilder

@@ -17,6 +17,7 @@ package org.sql.generation.api.grammar.modification;
 import org.sql.generation.api.grammar.common.ColumnNameList;
 
 /**
+ * A common interface for column sources with named columns for {@code INSERT INTO} statement.
  * 
  * @author Stanislav Muhametsin
  */
@@ -24,5 +25,10 @@ public interface DynamicColumnSource
     extends ColumnSource
 {
 
+    /**
+     * Returns the named columns of this column source. May be null if no column names are specified.
+     * 
+     * @return The named columns of this column source.
+     */
     public ColumnNameList getColumnNames();
 }

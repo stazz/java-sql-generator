@@ -17,6 +17,7 @@ package org.sql.generation.api.grammar.literals;
 import java.sql.Date;
 
 /**
+ * This syntax element encapsulates reference to some date to be inserted into SQL statement.
  * 
  * @author Stanislav Muhametsin
  */
@@ -24,5 +25,10 @@ public interface DateTimeLiteral
     extends LiteralExpression
 {
 
+    /**
+     * Returns the date to be inserted into SQL statement.
+     * 
+     * @return The date to be inserted into SQL statement.
+     */
     public Date getDate();
 }

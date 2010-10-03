@@ -15,12 +15,20 @@
 package org.sql.generation.api.grammar.booleans;
 
 /**
+ * A common interfaces for predicates (boolean expressions not containing other boolean expressions).
  * 
  * @author Stanislav Muhametsin
  */
 public interface Predicate
     extends BooleanExpression
 {
+    /**
+     * A class representing empty predicate. The result of empty predicate is empty string. If empty predicate is
+     * encountered inside {@link Conjunction} or {@link Disjunction}, their operator is omitted. So, <i>empty
+     * expression</i> {@code AND} <i>something</i> becomes just <i>something</i>.
+     * 
+     * @author Stanislav Muhametsin
+     */
     public static final class EmptyPredicate
         implements Predicate
     {
@@ -28,11 +36,17 @@ public interface Predicate
         {
         }
 
+        /**
+         * Returns {@link EmptyPredicate}.
+         */
         public Class<? extends BooleanExpression> getImplementedType()
         {
             return EmptyPredicate.class;
         }
 
+        /**
+         * Singleton instance of {@link EmptyPredicate}.
+         */
         public static final EmptyPredicate INSTANCE = new EmptyPredicate();
     }
 }

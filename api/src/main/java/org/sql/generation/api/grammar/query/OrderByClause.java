@@ -19,6 +19,7 @@ import java.util.List;
 import org.atp.api.Typeable;
 
 /**
+ * This syntax element represents the {@code ORDER BY} clause of {@code SELECT} statement.
  * 
  * @author Stanislav Muhametsin
  */
@@ -26,5 +27,10 @@ public interface OrderByClause
     extends Typeable<OrderByClause>
 {
 
+    /**
+     * Returns the ordering columns of this {@code ORDER BY} clause.
+     * 
+     * @return The ordering columns of this {@code ORDER BY} clause.
+     */
     public List<SortSpecification> getOrderingColumns();
 }

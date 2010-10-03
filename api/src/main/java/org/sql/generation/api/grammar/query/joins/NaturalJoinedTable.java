@@ -12,18 +12,21 @@
  *
  */
 
-
 package org.sql.generation.api.grammar.query.joins;
 
-import org.sql.generation.api.grammar.query.TableReferencePrimary;
-
 /**
- *
+ * This syntax element represents the {@code NATURAL JOIN} between two tables.
+ * 
  * @author Stanislav Muhametsin
  */
-public interface NaturalJoinedTable extends JoinedTable
+public interface NaturalJoinedTable
+    extends JoinedTable
 {
-    public TableReferencePrimary getRight();
 
+    /**
+     * Returns the join type for this {@code NATURAL JOIN}.
+     * 
+     * @return The join type for this {@code NATURAL JOIN}.
+     */
     public JoinType getJoinType();
 }

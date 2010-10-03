@@ -17,12 +17,19 @@ package org.sql.generation.api.grammar.modification;
 import org.atp.api.Typeable;
 
 /**
+ * This syntax element represents the data source for column in {@code SET} clause of {@code UPDATE} statement.
  * 
  * @author Stanislav Muhametsin
  */
 public interface UpdateSource
     extends Typeable<UpdateSource>
 {
+    /**
+     * This syntax element represents the {@code DEFAULT} keyword as data source for column, meaning to use the default
+     * value for the column.
+     * 
+     * @author Stanislav Muhametsin
+     */
     public static final class Default
         implements UpdateSource
     {
@@ -31,14 +38,26 @@ public interface UpdateSource
 
         }
 
+        /**
+         * Returns {@link Default}.
+         */
         public Class<? extends UpdateSource> getImplementedType()
         {
             return Default.class;
         }
 
+        /**
+         * Singleton instance of {@link Default}.
+         */
         public static final Default INSTANCE = new Default();
     }
 
+    /**
+     * This syntax element represents the {@code NULL} keyword as data source for column, meaning to use the
+     * {@code NULL} value for the column.
+     * 
+     * @author Stanislav Muhametsin
+     */
     public static final class Null
         implements UpdateSource
     {
@@ -47,11 +66,17 @@ public interface UpdateSource
 
         }
 
+        /**
+         * Returns {@link Null}.
+         */
         public Class<? extends UpdateSource> getImplementedType()
         {
             return Null.class;
         }
 
+        /**
+         * The singleton instance of {@link Null}.
+         */
         public static final Null INSTANCE = new Null();
     }
 }

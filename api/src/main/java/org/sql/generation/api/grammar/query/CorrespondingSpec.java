@@ -18,11 +18,18 @@ import org.atp.api.Typeable;
 import org.sql.generation.api.grammar.common.ColumnNameList;
 
 /**
+ * This syntax element represents the {@code CORRESPONDING BY} clause in {@code UNION}, {@code INTERSECT}, and
+ * {@code EXCEPT} operations on queries.
  * 
  * @author Stanislav Muhametsin
  */
 public interface CorrespondingSpec
     extends Typeable<CorrespondingSpec>
 {
+    /**
+     * Gets the column name correspondence list.
+     * 
+     * @return The column name correspondence list.
+     */
     public ColumnNameList getColumnList();
 }

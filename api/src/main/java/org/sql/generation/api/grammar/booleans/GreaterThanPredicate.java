@@ -12,11 +12,11 @@
  *
  */
 
-
 package org.sql.generation.api.grammar.booleans;
 
 /**
- *
+ * The interface for syntax element representing the test of left value being greater than right value (x {@code >} y).
+ * 
  * @author Stanislav Muhametsin
  */
 public interface GreaterThanPredicate

@@ -17,6 +17,7 @@ package org.sql.generation.api.grammar.booleans;
 import org.sql.generation.api.grammar.common.ValueExpression;
 
 /**
+ * A common interface for all boolean expressions in SQL language.
  * 
  * @author Stanislav Muhametsin
  */
@@ -24,4 +25,57 @@ public interface BooleanExpression
     extends ValueExpression
 {
 
+    /**
+     * This class represents a boolean expression which always evaluates to true ({@code TRUE}).
+     * 
+     * @author Stanislav Muhametsin
+     */
+    public static final class True
+        implements BooleanExpression
+    {
+        private True()
+        {
+
+        }
+
+        /**
+         * Returns {@link True}.
+         */
+        public Class<? extends ValueExpression> getImplementedType()
+        {
+            return True.class;
+        }
+
+        /**
+         * Returns the singleton instance representing {@code TRUE}.
+         */
+        public static final True INSTANCE = new True();
+    }
+
+    /**
+     * This class represents a boolean expression which always evaluates to false ({@code FALSE}.
+     * 
+     * @author Stanislav Muhametsin
+     */
+    public static final class False
+        implements BooleanExpression
+    {
+        private False()
+        {
+
+        }
+
+        /**
+         * Returns {@link False}.
+         */
+        public Class<? extends ValueExpression> getImplementedType()
+        {
+            return False.class;
+        }
+
+        /**
+         * Returns the singleton instance representing {@code FALSE}.
+         */
+        public static final False INSTANCE = new False();
+    }
 }

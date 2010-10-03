@@ -12,22 +12,30 @@
  *
  */
 
-
 package org.sql.generation.api.grammar.query.joins;
 
-import org.sql.generation.api.grammar.query.TableReference;
-
-
 /**
- *
+ * This syntax element represents the qualified join ({@code JOIN} between two tables.
+ * 
  * @author Stanislav Muhametsin
  */
-public interface QualifiedJoinedTable extends JoinedTable
+public interface QualifiedJoinedTable
+    extends JoinedTable
 {
-    public TableReference getRight();
-
+    /**
+     * Returns the join type for this {@code JOIN}.
+     * 
+     * @return The join type for this {@code JOIN}.
+     * @see JoinType
+     */
     public JoinType getJoinType();
 
+    /**
+     * Returns the join specification for this {@code JOIN}.
+     * 
+     * @return The join specification for this {@code JOIN}.
+     * @see JoinSpecification
+     */
     public JoinSpecification getJoinSpecification();
 
 }

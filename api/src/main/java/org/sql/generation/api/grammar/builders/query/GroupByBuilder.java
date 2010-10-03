@@ -21,14 +21,28 @@ import org.sql.generation.api.grammar.query.GroupByClause;
 import org.sql.generation.api.grammar.query.GroupingElement;
 
 /**
+ * The builder that builds the {@code GROUP BY} clause in SQL {@code SELECT} query.
  * 
  * @author Stanislav Muhametsin
+ * @see GroupByClause
+ * @see GroupingElement
  */
 public interface GroupByBuilder
     extends AbstractBuilder<GroupByClause>
 {
 
-    public GroupByBuilder addGroupingElements( GroupingElement... element );
+    /**
+     * Adds grouping elements to this {@code GROUP BY} clause.
+     * 
+     * @param elements The grouping elements for this {@code GROUP BY} clause.
+     * @return This builder.
+     */
+    public GroupByBuilder addGroupingElements( GroupingElement... elements );
 
+    /**
+     * Returns the list of added grouping elements.
+     * 
+     * @return The list of added grouping elements.
+     */
     public List<GroupingElement> getGroupingElements();
 }

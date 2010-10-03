@@ -17,12 +17,20 @@ package org.sql.generation.api.grammar.query;
 import org.atp.api.Typeable;
 
 /**
+ * This is a common interface for a grouping element of the {@code GROUP BY} clause.
  * 
  * @author Stanislav Muhametsin
+ * @see GroupByClause
  */
 public interface GroupingElement
     extends Typeable<GroupingElement>
 {
+    /**
+     * This syntax element represents the grand total grouping element. It is open parenthesis followed by close
+     * parenthesis.
+     * 
+     * @author Stanislav Muhametsin
+     */
     public static final class GrandTotal
         implements GroupingElement
     {
@@ -30,11 +38,17 @@ public interface GroupingElement
         {
         }
 
+        /**
+         * Returns {@link GrandTotal}
+         */
         public Class<? extends GroupingElement> getImplementedType()
         {
             return GrandTotal.class;
         }
 
+        /**
+         * The singleton instance of {@link GrandTotal}.
+         */
         public static final GrandTotal INSTANCE = new GrandTotal();
     }
 }

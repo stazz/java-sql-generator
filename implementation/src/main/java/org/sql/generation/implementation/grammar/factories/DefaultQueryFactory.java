@@ -24,7 +24,6 @@ import org.sql.generation.api.grammar.builders.query.QuerySpecificationBuilder;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.api.grammar.common.SetQuantifier;
 import org.sql.generation.api.grammar.common.ValueExpression;
-import org.sql.generation.api.grammar.query.AsteriskSelect;
 import org.sql.generation.api.grammar.query.Ordering;
 import org.sql.generation.api.grammar.query.OrdinaryGroupingSet;
 import org.sql.generation.api.grammar.query.QueryExpression;
@@ -37,7 +36,6 @@ import org.sql.generation.implementation.grammar.builders.query.GroupByBuilderIm
 import org.sql.generation.implementation.grammar.builders.query.OrderByBuilderImpl;
 import org.sql.generation.implementation.grammar.builders.query.QueryBuilderImpl;
 import org.sql.generation.implementation.grammar.builders.query.QuerySpecificationBuilderImpl;
-import org.sql.generation.implementation.grammar.query.AsteriskSelectImpl;
 import org.sql.generation.implementation.grammar.query.OrdinaryGroupingSetImpl;
 import org.sql.generation.implementation.grammar.query.QueryExpressionImpl;
 import org.sql.generation.implementation.grammar.query.SortSpecificationImpl;
@@ -69,14 +67,9 @@ public class DefaultQueryFactory extends AbstractQueryFactory
 
     public QuerySpecificationBuilder querySpecificationBuilder()
     {
-        return new QuerySpecificationBuilderImpl( this.columnsBuilder(), this.fromBuilder(), this._vendor
+        return new QuerySpecificationBuilderImpl( this, this.columnsBuilder(), this.fromBuilder(), this._vendor
             .getBooleanFactory().booleanBuilder(), this.groupByBuilder(), this._vendor.getBooleanFactory()
             .booleanBuilder(), this.orderByBuilder() );
-    }
-
-    public AsteriskSelect selectAll( SetQuantifier quantifier )
-    {
-        return new AsteriskSelectImpl( quantifier );
     }
 
     public ColumnsBuilder columnsBuilder( SetQuantifier setQuantifier )

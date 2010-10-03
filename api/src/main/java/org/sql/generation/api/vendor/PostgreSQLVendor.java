@@ -15,14 +15,25 @@
 package org.sql.generation.api.vendor;
 
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLQueryFactory;
+import org.sql.generation.api.grammar.query.pgsql.LimitClause;
+import org.sql.generation.api.grammar.query.pgsql.OffsetClause;
 
 /**
+ * This is vendor for PostgreSQL database. PostgreSQL provides some extra SQL syntax elements for queries (notably
+ * {@code LIMIT} and {@code OFFSET} clauses), and this vendor gives access to factory, which enables the creation of
+ * these elements.
  * 
  * @author Stanislav Muhametsin
+ * @see PgSQLQueryFactory
+ * @see LimitClause
+ * @see OffsetClause
  */
 public interface PostgreSQLVendor
     extends SQLVendor
 {
 
+    /**
+     * Returns the query factory, which knows to create PostgreSQL-specific query elements.
+     */
     public PgSQLQueryFactory getQueryFactory();
 }

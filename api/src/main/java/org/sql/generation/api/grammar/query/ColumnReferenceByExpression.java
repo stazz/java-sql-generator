@@ -17,6 +17,8 @@ package org.sql.generation.api.grammar.query;
 import org.sql.generation.api.grammar.common.ValueExpression;
 
 /**
+ * This syntax element represents the column reference in {@code SELECT <column reference>} clause, where the column
+ * reference is some kind of expression (for example, a constant, or a query).
  * 
  * @author Stanislav Muhametsin
  */
@@ -24,5 +26,10 @@ public interface ColumnReferenceByExpression
     extends ColumnReference
 {
 
+    /**
+     * Gets the expression for this column reference.
+     * 
+     * @return The expression for this column reference.
+     */
     public ValueExpression getExpression();
 }

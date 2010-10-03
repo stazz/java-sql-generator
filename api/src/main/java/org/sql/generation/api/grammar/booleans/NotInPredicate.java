@@ -12,11 +12,12 @@
  *
  */
 
-
 package org.sql.generation.api.grammar.booleans;
 
 /**
- *
+ * The interface for syntax element representing the test of something not being one of the specified set of values (x
+ * {@code NOT IN (}y, z, {@code ...)}).
+ * 
  * @author Stanislav Muhametsin
  */
 public interface NotInPredicate

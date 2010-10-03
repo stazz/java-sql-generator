@@ -19,11 +19,26 @@ import java.io.IOException;
 import org.sql.generation.api.vendor.internal.ServiceLoader;
 
 /**
+ * This class provides easy way of acquiring vendors for specific databases.
  * 
  * @author Stanislav Muhametsin
  */
 public class SQLVendorProvider
 {
+    /**
+     * <p>
+     * Creates a new vendor. If one passes {@link SQLVendor} as a parameter, it will return the default vendor-neutral
+     * implementation.
+     * </p>
+     * <p>
+     * Invoking this statement is equivalent to calling {@code new ServiceLoader().firstProvider( vendorClass); }.
+     * 
+     * @param <VendorType> The type of the vendor.
+     * @param vendorClass The class of the vendor.
+     * @return The vendor of a given class.
+     * @throws IOException If {@link ServiceLoader} throws {@link IOException}.
+     * @see ServiceLoader
+     */
     public static <VendorType extends SQLVendor> VendorType createVendor( Class<VendorType> vendorClass )
         throws IOException
     {

@@ -18,8 +18,10 @@ import org.atp.api.Typeable;
 import org.sql.generation.api.grammar.common.SQLStatement;
 
 /**
+ * A common interface for all statements deleting data from tables.
  * 
  * @author Stanislav Muhametsin
+ * @see DeleteBySearch
  */
 public interface DeleteStatement
     extends SQLStatement, Typeable<DeleteStatement>

@@ -15,10 +15,17 @@
 package org.sql.generation.api.grammar.builders;
 
 /**
+ * A common interface for all builders.
  * 
  * @author Stanislav Muhametsin
+ * @param <ExpressionType> The type of the expression being built.
  */
 public interface AbstractBuilder<ExpressionType>
 {
+    /**
+     * Returns the expression which was being built by this builder.
+     * 
+     * @return The expression built by this builder.
+     */
     public ExpressionType createExpression();
 }

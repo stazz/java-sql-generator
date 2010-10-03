@@ -15,14 +15,24 @@
 package org.sql.generation.api.grammar.query;
 
 import org.atp.api.Typeable;
+import org.sql.generation.api.grammar.query.joins.JoinedTable;
 
 /**
+ * This is common interface for a queries and joined tables.
  * 
  * @author Stanislav Muhametsin
+ * @see QueryExpressionBodyActual
+ * @see JoinedTable
  */
 public interface QueryExpressionBody
     extends Typeable<QueryExpressionBody>
 {
+    /**
+     * This syntax element represents the empty query expression body. It is defined for convenience. For example, an
+     * {@code UNION} (or any other set operation) between empty query and another query is always just another query.
+     * 
+     * @author Stanislav Muhametsin
+     */
     public static final class EmptyQueryExpressionBody
         implements QueryExpressionBody
     {
@@ -30,11 +40,17 @@ public interface QueryExpressionBody
         {
         }
 
+        /**
+         * Returns {@link EmptyQueryExpressionBody}.
+         */
         public Class<? extends QueryExpressionBody> getImplementedType()
         {
             return EmptyQueryExpressionBody.class;
         }
 
+        /**
+         * The singleton instance of {@link EmptyQueryExpressionBody}.
+         */
         public static final EmptyQueryExpressionBody INSTANCE = new EmptyQueryExpressionBody();
     }
 

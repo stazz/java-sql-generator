@@ -10,11 +10,17 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
- * Have to copy code from Qi4j's bootstrap, since there is no java.util.ServiceLoader in Java 1.5. This is from
- * org.qi4j.bootstrap.internal package.
+ * <p>
+ * This is a copy from file located Qi4j's bootstrap project, since there is no java.util.ServiceLoader in Java 1.5.
+ * This is from org.qi4j.bootstrap.internal package.
+ * </p>
  * 
- * 27.9.2010 - I (Stanislav Muhametsin) made a small syntactical change to private/protected methods in order to remove
- * compile warnings.
+ * <p>
+ * Update 27.9.2010 - I (Stanislav Muhametsin) made a small syntactical change to private/protected methods in order to
+ * remove compile warnings.
+ * </p>
+ * 
+ * @see http://download.oracle.com/javase/6/docs/api/java/util/ServiceLoader.html
  */
 public final class ServiceLoader
 {

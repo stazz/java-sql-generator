@@ -30,18 +30,27 @@ public abstract class JoinedTableImpl<TableReferenceType extends JoinedTable> ex
 {
 
     private final TableReference _left;
+    private final TableReference _right;
 
-    protected JoinedTableImpl( Class<? extends TableReferenceType> tableReferenceClass, TableReference left )
+    protected JoinedTableImpl( Class<? extends TableReferenceType> tableReferenceClass, TableReference left,
+        TableReference right )
     {
         super( tableReferenceClass );
         NullArgumentException.validateNotNull( "left", left );
+        NullArgumentException.validateNotNull( "right", right );
 
         this._left = left;
+        this._right = right;
     }
 
     public TableReference getLeft()
     {
         return this._left;
+    }
+
+    public TableReference getRight()
+    {
+        return this._right;
     }
 
     @Override

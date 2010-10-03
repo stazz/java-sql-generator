@@ -14,9 +14,19 @@
 
 package org.sql.generation.api.grammar.common;
 
+import org.sql.generation.api.grammar.modification.DeleteStatement;
+import org.sql.generation.api.grammar.modification.InsertStatement;
+import org.sql.generation.api.grammar.modification.UpdateStatement;
+import org.sql.generation.api.grammar.query.QueryExpression;
+
 /**
+ * A single SQL statement, which is to be sent to database.
  * 
  * @author Stanislav Muhametsin
+ * @see QueryExpression
+ * @see DeleteStatement
+ * @see UpdateStatement
+ * @see InsertStatement
  */
 public interface SQLStatement
 {

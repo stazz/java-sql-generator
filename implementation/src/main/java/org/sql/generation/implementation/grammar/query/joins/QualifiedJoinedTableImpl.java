@@ -24,7 +24,7 @@ import org.sql.generation.api.grammar.query.joins.QualifiedJoinedTable;
  * 
  * @author Stanislav Muhametsin
  */
-public class QualifiedJoinedTableImpl extends JoinedTableRef<QualifiedJoinedTable>
+public class QualifiedJoinedTableImpl extends JoinedTableImpl<QualifiedJoinedTable>
     implements QualifiedJoinedTable
 {
 

@@ -18,7 +18,6 @@ import org.sql.generation.api.grammar.builders.query.ColumnsBuilder;
 import org.sql.generation.api.grammar.builders.query.QueryBuilder;
 import org.sql.generation.api.grammar.common.SetQuantifier;
 import org.sql.generation.api.grammar.factories.QueryFactory;
-import org.sql.generation.api.grammar.query.AsteriskSelect;
 import org.sql.generation.api.grammar.query.QueryExpressionBody;
 import org.sql.generation.implementation.grammar.builders.query.ColumnsBuilderImpl;
 
@@ -29,11 +28,6 @@ import org.sql.generation.implementation.grammar.builders.query.ColumnsBuilderIm
 public abstract class AbstractQueryFactory
     implements QueryFactory
 {
-
-    public AsteriskSelect selectAll()
-    {
-        return this.selectAll( SetQuantifier.ALL );
-    }
 
     public QueryBuilder queryBuilder()
     {

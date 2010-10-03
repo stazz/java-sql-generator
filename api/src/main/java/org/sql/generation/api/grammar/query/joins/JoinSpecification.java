@@ -17,8 +17,11 @@ package org.sql.generation.api.grammar.query.joins;
 import org.atp.api.Typeable;
 
 /**
+ * This is common interface for join specification used in {@link QualifiedJoinedTable}.
  * 
  * @author Stanislav Muhametsin
+ * @see JoinCondition
+ * @see NamedColumnsJoin
  */
 public interface JoinSpecification
     extends Typeable<JoinSpecification>

@@ -15,24 +15,23 @@
 package org.sql.generation.implementation.grammar.query.joins;
 
 import org.sql.generation.api.grammar.query.TableReference;
-import org.sql.generation.api.grammar.query.TableReferencePrimary;
 import org.sql.generation.api.grammar.query.joins.UnionJoinedTable;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class UnionJoinedTableImpl extends JoinedTablePrimary<UnionJoinedTable>
+public class UnionJoinedTableImpl extends JoinedTableImpl<UnionJoinedTable>
     implements UnionJoinedTable
 {
 
-    public UnionJoinedTableImpl( TableReference left, TableReferencePrimary right )
+    public UnionJoinedTableImpl( TableReference left, TableReference right )
     {
         this( UnionJoinedTable.class, left, right );
     }
 
     protected UnionJoinedTableImpl( Class<? extends UnionJoinedTable> implClass, TableReference left,
-        TableReferencePrimary right )
+        TableReference right )
     {
         super( implClass, left, right );
     }

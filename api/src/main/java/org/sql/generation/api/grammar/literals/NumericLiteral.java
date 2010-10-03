@@ -15,11 +15,17 @@
 package org.sql.generation.api.grammar.literals;
 
 /**
+ * This syntax element encapsulates reference to some number to be inserted into SQL statement.
  * 
  * @author Stanislav Muhametsin
  */
 public interface NumericLiteral
     extends LiteralExpression
 {
+    /**
+     * Returns the number to be inserted into SQL statement.
+     * 
+     * @return The number to be inserted into SQL statement.
+     */
     public Number getNumber();
 }

@@ -40,9 +40,9 @@ public class PgSQLQueryFactoryImpl extends DefaultQueryFactory
     @Override
     public PgSQLQuerySpecificationBuilder querySpecificationBuilder()
     {
-        return new PgSQLQuerySpecificationBuilderImpl( this.columnsBuilder(), this.fromBuilder(), this.getVendor()
-            .getBooleanFactory().booleanBuilder(), this.groupByBuilder(), this.getVendor().getBooleanFactory()
-            .booleanBuilder(), this.orderByBuilder() );
+        return new PgSQLQuerySpecificationBuilderImpl( this, this.columnsBuilder(), this.fromBuilder(), this
+            .getVendor().getBooleanFactory().booleanBuilder(), this.groupByBuilder(), this.getVendor()
+            .getBooleanFactory().booleanBuilder(), this.orderByBuilder() );
     }
 
     public LimitByNumber limit( Integer limit )

@@ -15,6 +15,8 @@
 package org.sql.generation.api.grammar.query;
 
 /**
+ * This syntax element represents the single query (currently only {@code SELECT} statement, represented by
+ * {@link QuerySpecification}.
  * 
  * @author Stanislav Muhametsin
  */

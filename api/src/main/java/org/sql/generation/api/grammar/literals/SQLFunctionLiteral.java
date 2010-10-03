@@ -19,6 +19,7 @@ import java.util.List;
 import org.sql.generation.api.grammar.common.ValueExpression;
 
 /**
+ * This syntax element encapsulates reference to some SQL function to be inserted into SQL statement.
  * 
  * @author Stanislav Muhametsin
  */
@@ -26,7 +27,17 @@ public interface SQLFunctionLiteral
     extends LiteralExpression
 {
 
+    /**
+     * Returns the name of the SQL function.
+     * 
+     * @return The name of the SQL function.
+     */
     public String getFunctionName();
 
+    /**
+     * The parameters for SQL function.
+     * 
+     * @return The parameters for SQL function.
+     */
     public List<ValueExpression> getParameters();
 }

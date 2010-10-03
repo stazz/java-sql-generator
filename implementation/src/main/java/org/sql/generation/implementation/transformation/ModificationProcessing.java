@@ -18,7 +18,6 @@ import java.util.Iterator;
 
 import org.sql.generation.api.grammar.common.SQLConstants;
 import org.sql.generation.api.grammar.common.ValueExpression;
-import org.sql.generation.api.grammar.modification.ColumnSource.Defaults;
 import org.sql.generation.api.grammar.modification.ColumnSourceByQuery;
 import org.sql.generation.api.grammar.modification.ColumnSourceByValues;
 import org.sql.generation.api.grammar.modification.DeleteBySearch;
@@ -27,8 +26,6 @@ import org.sql.generation.api.grammar.modification.InsertStatement;
 import org.sql.generation.api.grammar.modification.SetClause;
 import org.sql.generation.api.grammar.modification.TargetTable;
 import org.sql.generation.api.grammar.modification.UpdateBySearch;
-import org.sql.generation.api.grammar.modification.UpdateSource.Default;
-import org.sql.generation.api.grammar.modification.UpdateSource.Null;
 import org.sql.generation.api.grammar.modification.UpdateSourceByExpression;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
@@ -115,27 +112,6 @@ public class ModificationProcessing
             }
             builder.append( SQLConstants.CLOSE_PARENTHESIS );
         }
-    }
-
-    public static class ColumnSourceDefaultsProcessor extends AbstractProcessor<Defaults>
-    {
-
-        public ColumnSourceDefaultsProcessor()
-        {
-            this( Defaults.class );
-        }
-
-        public ColumnSourceDefaultsProcessor( Class<? extends Defaults> realType )
-        {
-            super( realType );
-        }
-
-        @Override
-        protected void doProcess( SQLProcessorAggregator processor, Defaults object, StringBuilder builder )
-        {
-            builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "DEFAULT VALUES" );
-        }
-
     }
 
     public static class DeleteBySearchProcessor extends AbstractProcessor<DeleteBySearch>
@@ -284,31 +260,4 @@ public class ModificationProcessing
         }
     }
 
-    public static class UpdateSourceDefaultProcessor extends AbstractProcessor<Default>
-    {
-        public UpdateSourceDefaultProcessor()
-        {
-            super( Default.class );
-        }
-
-        @Override
-        protected void doProcess( SQLProcessorAggregator processor, Default object, StringBuilder builder )
-        {
-            builder.append( "DEFAULT" );
-        }
-    }
-
-    public static class UpdateSourceNullProcessor extends AbstractProcessor<Null>
-    {
-        public UpdateSourceNullProcessor()
-        {
-            super( Null.class );
-        }
-
-        @Override
-        protected void doProcess( SQLProcessorAggregator processor, Null object, StringBuilder builder )
-        {
-            builder.append( "NULL" );
-        }
-    }
 }

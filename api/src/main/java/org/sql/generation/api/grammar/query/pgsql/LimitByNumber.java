@@ -15,11 +15,17 @@
 package org.sql.generation.api.grammar.query.pgsql;
 
 /**
+ * This syntax element represents the {@code LIMIT} clause of PostgreSQL {@code SELECT} statement, used with number.
  * 
  * @author Stanislav Muhametsin
  */
 public interface LimitByNumber
     extends LimitClause
 {
+    /**
+     * Gets the value of {@code LIMIT}, that is, the maximum amount of results to be returned.
+     * 
+     * @return The value of {@code LIMIT}.
+     */
     public Integer getLimit();
 }

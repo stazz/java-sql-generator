@@ -17,6 +17,7 @@ package org.sql.generation.api.grammar.booleans;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 
 /**
+ * A common interface for all boolean expressions requiring exactly one value expression.
  * 
  * @author Stanislav Muhametsin
  */
@@ -24,5 +25,10 @@ public interface UnaryPredicate
     extends Predicate
 {
 
+    /**
+     * Returns the value expression for this predicate.
+     * 
+     * @return The value expression for this predicate.
+     */
     public NonBooleanExpression getValueExpression();
 }

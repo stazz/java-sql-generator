@@ -17,6 +17,7 @@ package org.sql.generation.api.grammar.query;
 import org.atp.api.Typeable;
 
 /**
+ * This is common interface for non-joined table references.
  * 
  * @author Stanislav Muhametsin
  */
@@ -24,6 +25,12 @@ public interface TableReferencePrimary
     extends TableReference, Typeable<TableReferencePrimary>
 {
 
+    /**
+     * Returns the alias for this table.
+     * 
+     * @return The alias for this table.
+     * @see TableAlias
+     */
     public TableAlias getTableAlias();
 
 }

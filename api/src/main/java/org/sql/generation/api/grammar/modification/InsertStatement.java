@@ -19,6 +19,7 @@ import org.sql.generation.api.grammar.common.SQLStatement;
 import org.sql.generation.api.grammar.common.TableName;
 
 /**
+ * This syntax element represents a {@code INSERT INTO} statement.
  * 
  * @author Stanislav Muhametsin
  */
@@ -26,7 +27,17 @@ public interface InsertStatement
     extends SQLStatement, Typeable<InsertStatement>
 {
 
+    /**
+     * Returns the table name where to insert.
+     * 
+     * @return The table name where to insert.
+     */
     public TableName getTableName();
 
+    /**
+     * Returns the data source for columns.
+     * 
+     * @return The data source for columns.
+     */
     public ColumnSource getColumnSource();
 }

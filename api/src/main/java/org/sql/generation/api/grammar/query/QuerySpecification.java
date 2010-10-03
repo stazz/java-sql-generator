@@ -15,25 +15,63 @@
 package org.sql.generation.api.grammar.query;
 
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
+import org.sql.generation.api.grammar.builders.query.QuerySpecificationBuilder;
 
 /**
+ * This syntax element represents the single {@code SELECT} statement.
  * 
  * @author Stanislav Muhametsin
+ * @see QuerySpecificationBuilder
+ * @see SelectColumnClause
+ * @see FromClause
+ * @see BooleanExpression
+ * @see GroupByClause
+ * @see OrderByClause
  */
 public interface QuerySpecification
     extends QueryExpressionBodyQuery
 {
 
+    /**
+     * Returns the columns in this {@code SELECT} statement.
+     * 
+     * @return The columns in this {@code SELECT} statement.
+     */
     public SelectColumnClause getColumns();
 
+    /**
+     * Returns the {@code FROM} clause of this {@code SELECT} statement.
+     * 
+     * @return The {@code FROM} clause of this {@code SELECT} statement.
+     */
     public FromClause getFrom();
 
+    /**
+     * Returns the search condition for resulting rows of this {@code SELECT} statement.
+     * 
+     * @return The search condition for resulting rows of this {@code SELECT} statement.
+     */
     public BooleanExpression getWhere();
 
+    /**
+     * Returns the {@code GROUP BY} clause of this {@code SELECT} statement.
+     * 
+     * @return The {@code GROUP BY} clause of this {@code SELECT} statement.
+     */
     public GroupByClause getGroupBy();
 
+    /**
+     * Returns the grouping condition for {@code GROUP BY} clause of this {@code SELECT} statement.
+     * 
+     * @return The grouping condition for {@code GROUP BY} clause of this {@code SELECT} statement.
+     */
     public BooleanExpression getHaving();
 
+    /**
+     * Returns the {@code ORDER BY} clause of this {@code SELECT} statement.
+     * 
+     * @return The {@code ORDER BY} clause of this {@code SELECT} statement.
+     */
     public OrderByClause getOrderBy();
 
 }

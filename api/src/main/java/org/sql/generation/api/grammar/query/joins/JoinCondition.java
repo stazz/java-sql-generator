@@ -12,18 +12,23 @@
  *
  */
 
-
 package org.sql.generation.api.grammar.query.joins;
 
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 
 /**
- *
+ * This syntax element represents the join condition, used in {@link QualifiedJoinedTable}.
+ * 
  * @author Stanislav Muhametsin
  */
 public interface JoinCondition
     extends JoinSpecification
 {
 
+    /**
+     * Returns the join condition for the {@link QualifiedJoinedTable}.
+     * 
+     * @return The join condition for the {@link QualifiedJoinedTable}.
+     */
     public BooleanExpression getSearchConidition();
 }

@@ -15,8 +15,10 @@
 package org.sql.generation.api.grammar.common;
 
 import org.atp.api.Typeable;
+import org.sql.generation.api.grammar.booleans.BooleanExpression;
 
 /**
+ * A common interface for {@link BooleanExpression} and {@link NonBooleanExpression}.
  * 
  * @author Stanislav Muhametsin
  */

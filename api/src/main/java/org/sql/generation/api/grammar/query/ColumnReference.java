@@ -17,8 +17,11 @@ package org.sql.generation.api.grammar.query;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 
 /**
+ * Common interface for columns in expression {@code SELECT <column1>, <column2>, ...}.
  * 
  * @author Stanislav Muhametsin
+ * @see ColumnReferenceByName
+ * @see ColumnReferenceByExpression
  */
 public interface ColumnReference
     extends NonBooleanExpression

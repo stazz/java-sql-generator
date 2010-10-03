@@ -22,6 +22,8 @@ import org.atp.api.Typeable;
 import org.atp.spi.ThreadSafeInteractionMapper;
 import org.sql.generation.api.grammar.booleans.BetweenPredicate;
 import org.sql.generation.api.grammar.booleans.BinaryPredicate;
+import org.sql.generation.api.grammar.booleans.BooleanExpression.False;
+import org.sql.generation.api.grammar.booleans.BooleanExpression.True;
 import org.sql.generation.api.grammar.booleans.BooleanTest;
 import org.sql.generation.api.grammar.booleans.Conjunction;
 import org.sql.generation.api.grammar.booleans.Disjunction;
@@ -45,7 +47,7 @@ import org.sql.generation.api.grammar.booleans.Predicate.EmptyPredicate;
 import org.sql.generation.api.grammar.booleans.UnaryPredicate;
 import org.sql.generation.api.grammar.booleans.UniquePredicate;
 import org.sql.generation.api.grammar.common.ColumnNameList;
-import org.sql.generation.api.grammar.common.SQLStatement;
+import org.sql.generation.api.grammar.common.SQLConstants;
 import org.sql.generation.api.grammar.common.TableName;
 import org.sql.generation.api.grammar.literals.DateTimeLiteral;
 import org.sql.generation.api.grammar.literals.DirectLiteral;
@@ -104,18 +106,14 @@ import org.sql.generation.implementation.transformation.LiteralExpressionProcess
 import org.sql.generation.implementation.transformation.LiteralExpressionProcessing.StringLiteralExpressionProcessor;
 import org.sql.generation.implementation.transformation.ModificationProcessing.ColumnSourceByQueryProcessor;
 import org.sql.generation.implementation.transformation.ModificationProcessing.ColumnSourceByValuesProcessor;
-import org.sql.generation.implementation.transformation.ModificationProcessing.ColumnSourceDefaultsProcessor;
 import org.sql.generation.implementation.transformation.ModificationProcessing.DeleteBySearchProcessor;
 import org.sql.generation.implementation.transformation.ModificationProcessing.InsertStatementProcessor;
 import org.sql.generation.implementation.transformation.ModificationProcessing.SetClauseProcessor;
 import org.sql.generation.implementation.transformation.ModificationProcessing.TargetTableProcessor;
 import org.sql.generation.implementation.transformation.ModificationProcessing.UpdateBySearchProcessor;
 import org.sql.generation.implementation.transformation.ModificationProcessing.UpdateSourceByExpressionProcessor;
-import org.sql.generation.implementation.transformation.ModificationProcessing.UpdateSourceDefaultProcessor;
-import org.sql.generation.implementation.transformation.ModificationProcessing.UpdateSourceNullProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.CorrespondingSpecProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.FromProcessor;
-import org.sql.generation.implementation.transformation.QueryProcessing.GrandTotalProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.GroupByProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.OrderByProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.OrdinaryGroupingSetProcessor;
@@ -137,6 +135,9 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
+ * This is base class for processing the SQL syntax elements defined in API. It contains the default processors for
+ * nearly all default syntax elements, and a way to easily extend this class in order to add custom processors, or
+ * replace default processors with custom ones.
  * 
  * @author Stanislav Muhametsin
  */
@@ -209,6 +210,9 @@ public class DefaultSQLProcessor extends ThreadSafeInteractionMapper<Typeable<?>
         Map<Class<? extends Typeable<?>>, SQLProcessor> processors = new HashMap<Class<? extends Typeable<?>>, SQLProcessor>();
 
         // Boolean expressions
+        // Constants
+        processors.put( True.class, new ConstantProcessor( "TRUE" ) );
+        processors.put( False.class, new ConstantProcessor( "FALSE" ) );
         // Unary
         processors.put(
             IsNullPredicate.class,
@@ -285,7 +289,8 @@ public class DefaultSQLProcessor extends ThreadSafeInteractionMapper<Typeable<?>
         processors.put( QueryExpression.class, new QueryExpressionProcessor() );
         processors.put( EmptyQueryExpressionBody.class, new NoOpProcessor() );
         processors.put( CorrespondingSpec.class, new CorrespondingSpecProcessor() );
-        processors.put( GrandTotal.class, new GrandTotalProcessor() );
+        processors.put( GrandTotal.class, new ConstantProcessor( SQLConstants.OPEN_PARENTHESIS
+            + SQLConstants.CLOSE_PARENTHESIS ) );
         processors.put( OrdinaryGroupingSet.class, new OrdinaryGroupingSetProcessor() );
         processors.put( SortSpecification.class, new SortSpecificationProcessor() );
         processors.put( GroupByClause.class, new GroupByProcessor() );
@@ -315,9 +320,9 @@ public class DefaultSQLProcessor extends ThreadSafeInteractionMapper<Typeable<?>
         processors.put( TargetTable.class, new TargetTableProcessor() );
         processors.put( UpdateBySearch.class, new UpdateBySearchProcessor() );
         processors.put( UpdateSourceByExpression.class, new UpdateSourceByExpressionProcessor() );
-        processors.put( Null.class, new UpdateSourceNullProcessor() );
-        processors.put( Default.class, new UpdateSourceDefaultProcessor() );
-        processors.put( Defaults.class, new ColumnSourceDefaultsProcessor() );
+        processors.put( Null.class, new ConstantProcessor( "NULL" ) );
+        processors.put( Default.class, new ConstantProcessor( "DEFAULT" ) );
+        processors.put( Defaults.class, new ConstantProcessor( SQLConstants.TOKEN_SEPARATOR + "DEFAULT VALUES" ) );
 
         _defaultProcessors = Collections.unmodifiableMap( processors );
     }
@@ -335,11 +340,6 @@ public class DefaultSQLProcessor extends ThreadSafeInteractionMapper<Typeable<?>
     public void process( Typeable<?> object, StringBuilder builder )
     {
         this.getInteraction( object ).process( this, object, builder );
-    }
-
-    public void processStatement( SQLStatement statement, StringBuilder builder )
-    {
-        this.process( (Typeable<?>) statement, builder );
     }
 
     public static Map<Class<? extends Typeable<?>>, SQLProcessor> getDefaultProcessors()

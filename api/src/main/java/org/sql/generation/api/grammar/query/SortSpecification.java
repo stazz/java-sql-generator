@@ -18,13 +18,24 @@ import org.atp.api.Typeable;
 import org.sql.generation.api.grammar.common.ValueExpression;
 
 /**
+ * This syntax element represents the sort specification used in {@code ORDER BY} clause.
  * 
  * @author Stanislav Muhametsin
  */
 public interface SortSpecification
     extends Typeable<SortSpecification>
 {
+    /**
+     * Returns the {@link Ordering} of this sort specification.
+     * 
+     * @return The {@link Ordering} of this sort specification.
+     */
     public Ordering getOrderingSpecification();
 
+    /**
+     * The value expression, which may be a column reference, for example.
+     * 
+     * @return The value expression of this sort specification.
+     */
     public ValueExpression getValueExpression();
 }

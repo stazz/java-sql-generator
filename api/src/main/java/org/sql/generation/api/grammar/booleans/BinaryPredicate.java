@@ -17,6 +17,7 @@ package org.sql.generation.api.grammar.booleans;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 
 /**
+ * A common interface for all boolean expressions taking two value expressions and having some operator between them.
  * 
  * @author Stanislav Muhametsin
  */
@@ -24,7 +25,17 @@ public interface BinaryPredicate
     extends Predicate
 {
 
+    /**
+     * Returns the expression on the left side of the operator.
+     * 
+     * @return The expression on the left side of the operator.
+     */
     public NonBooleanExpression getLeft();
 
+    /**
+     * Returns the expression on the right side of the operator.
+     * 
+     * @return The expression on the right side of the operator.
+     */
     public NonBooleanExpression getRight();
 }

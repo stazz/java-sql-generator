@@ -15,6 +15,7 @@
 package org.sql.generation.api.grammar.literals;
 
 /**
+ * This syntax element encapsulates text to be inserted directly into SQL statement.
  * 
  * @author Stanislav Muhametsin
  */
@@ -22,5 +23,10 @@ public interface DirectLiteral
     extends LiteralExpression
 {
 
+    /**
+     * Returns the text to be inserted directly into SQL statement.
+     * 
+     * @return The text to be inserted directly into SQL statement.
+     */
     public String getDirectLiteral();
 }

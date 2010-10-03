@@ -16,7 +16,6 @@ package org.sql.generation.implementation.grammar.query.joins;
 
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.query.TableReference;
-import org.sql.generation.api.grammar.query.TableReferencePrimary;
 import org.sql.generation.api.grammar.query.joins.JoinType;
 import org.sql.generation.api.grammar.query.joins.NaturalJoinedTable;
 
@@ -24,19 +23,19 @@ import org.sql.generation.api.grammar.query.joins.NaturalJoinedTable;
  * 
  * @author Stanislav Muhametsin
  */
-public class NaturalJoinedTableImpl extends JoinedTablePrimary<NaturalJoinedTable>
+public class NaturalJoinedTableImpl extends JoinedTableImpl<NaturalJoinedTable>
     implements NaturalJoinedTable
 {
 
     private final JoinType _joinType;
 
-    public NaturalJoinedTableImpl( TableReference left, TableReferencePrimary right, JoinType joinType )
+    public NaturalJoinedTableImpl( TableReference left, TableReference right, JoinType joinType )
     {
         this( NaturalJoinedTable.class, left, right, joinType );
     }
 
     protected NaturalJoinedTableImpl( Class<? extends NaturalJoinedTable> implClass, TableReference left,
-        TableReferencePrimary right, JoinType joinType )
+        TableReference right, JoinType joinType )
     {
         super( implClass, left, right );
 

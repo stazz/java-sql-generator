@@ -12,17 +12,15 @@
  *
  */
 
-
 package org.sql.generation.api.grammar.query.joins;
 
-import org.sql.generation.api.grammar.query.TableReferencePrimary;
-
 /**
- *
+ * This syntax element represents the {@code UNION JOIN} between two tables.
+ * 
  * @author Stanislav Muhametsin
  */
-public interface UnionJoinedTable extends JoinedTable
+public interface UnionJoinedTable
+    extends JoinedTable
 {
 
-    public TableReferencePrimary getRight();
 }

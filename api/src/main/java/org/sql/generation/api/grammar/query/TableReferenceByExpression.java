@@ -15,13 +15,21 @@
 package org.sql.generation.api.grammar.query;
 
 /**
+ * This syntax element represents the sub-query which acts as a table in {@code FROM} clause.
  * 
  * @author Stanislav Muhametsin
+ * @see FromClause
+ * @see QueryExpression
  */
 public interface TableReferenceByExpression
     extends TableReferencePrimary
 {
 
+    /**
+     * Returns the query to use.
+     * 
+     * @return The query to use.
+     */
     public QueryExpression getQuery();
 
 }

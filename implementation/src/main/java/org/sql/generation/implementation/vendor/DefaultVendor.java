@@ -134,6 +134,9 @@ public class DefaultVendor
         this._fromFactory = tableReferenceFactory.get( this );
     }
 
+    /**
+     * Note that exactly one string builder is allocated for each statement.
+     */
     public String toString( SQLStatement statement )
     {
         StringBuilder builder = new StringBuilder();

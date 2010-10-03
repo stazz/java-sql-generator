@@ -19,11 +19,18 @@ import java.util.List;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 
 /**
+ * This syntax element represents the ordinary grouping set specification. In future there might be {@code CUBE} or
+ * {@code ROLLUP} grouping sets.
  * 
  * @author Stanislav Muhametsin
  */
 public interface OrdinaryGroupingSet
     extends GroupingElement
 {
-    List<NonBooleanExpression> getColumns();
+    /**
+     * Returns the grouping column reference expressions.
+     * 
+     * @return The grouping column reference expressions.
+     */
+    public List<NonBooleanExpression> getColumns();
 }

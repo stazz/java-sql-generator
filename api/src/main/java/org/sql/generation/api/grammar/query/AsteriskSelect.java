@@ -15,7 +15,8 @@
 package org.sql.generation.api.grammar.query;
 
 /**
- *
+ * This syntax element represents the asterisk in expression {@code SELECT} *.
+ * 
  * @author Stanislav Muhametsin
  */
 public interface AsteriskSelect

@@ -14,16 +14,30 @@
 
 package org.sql.generation.api.grammar.query.pgsql;
 
+import org.sql.generation.api.grammar.builders.query.pgsql.PgSQLQuerySpecificationBuilder;
 import org.sql.generation.api.grammar.query.QuerySpecification;
 
 /**
+ * This syntax element represents the query specification in PostgreSQL. It adds the {@link LimitClause} and
+ * {@link OffsetClause} to standard query components.
  * 
  * @author Stanislav Muhametsin
+ * @see PgSQLQuerySpecificationBuilder
  */
 public interface PgSQLQuerySpecification
     extends QuerySpecification
 {
+    /**
+     * Returns the {@link LimitClause} of this query.
+     * 
+     * @return The {@link LimitClause} of this query.
+     */
     public LimitClause getLimit();
 
+    /**
+     * Returns the {@link OffsetClause} of this query.
+     * 
+     * @return The {@link OffsetClause} of this query.
+     */
     public OffsetClause getOffset();
 }

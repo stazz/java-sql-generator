@@ -15,13 +15,24 @@
 package org.sql.generation.api.grammar.booleans;
 
 /**
+ * A disjunction ({@code OR} of two boolean expressions.
  * 
  * @author Stanislav Muhametsin
  */
 public interface Disjunction
     extends ComposedBooleanExpression
 {
+    /**
+     * Returns the boolean expression on the left side of {@code OR}.
+     * 
+     * @return The boolean expression on the left side of {@code OR}.
+     */
     public BooleanExpression getLeft();
 
+    /**
+     * Returns the boolean expression on the right side of {@code OR}.
+     * 
+     * @return The boolean expression on the right side of {@code OR}.
+     */
     public BooleanExpression getRight();
 }

@@ -23,4 +23,18 @@ import org.atp.api.Typeable;
 public interface SQLProcessorAggregator
 {
     public void process( Typeable<?> object, StringBuilder builder );
+
+    /**
+     * <p>
+     * This provides a way to access current path in a SQL syntax tree. The first element is the root one, then the next
+     * one is its child, etc. This stack is read-only.
+     * </p>
+     * <p>
+     * Currently I'm not sure if there is an efficient way to acquire read-only stacks rather than creating a new one
+     * from contents of another.
+     * </p>
+     * 
+     * @return A current path in SQL syntax tree.
+     */
+    // public Stack<Typeable<?>> getCurrentSyntaxTree();
 }
