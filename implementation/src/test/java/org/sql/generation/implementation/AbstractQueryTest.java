@@ -14,9 +14,8 @@
 
 package org.sql.generation.implementation;
 
-import java.util.logging.Logger;
-
 import org.junit.Test;
+import org.slf4j.LoggerFactory;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.builders.query.ColumnsBuilder;
 import org.sql.generation.api.grammar.builders.query.QuerySpecificationBuilder;
@@ -43,7 +42,7 @@ public abstract class AbstractQueryTest
 {
     protected void logQuery( SQLVendor vendor, SQLStatement query )
     {
-        Logger.getLogger( this.getClass().getName() ).info( "Query:" + "\n" + vendor.toString( query ) + "\n" );
+        LoggerFactory.getLogger( this.getClass().getName() ).info( "Query:" + "\n" + vendor.toString( query ) + "\n" );
     }
 
     protected abstract SQLVendor getVendor()

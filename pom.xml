@@ -57,6 +57,7 @@
     <version.junit>4.8.1</version.junit>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <version.atp>0.6.1</version.atp>
+    <version.slf4j>1.6.1</version.slf4j>
   </properties>
 
   <inceptionYear>2010</inceptionYear>
@@ -80,6 +81,20 @@
         <artifactId>atp-spi</artifactId>
         <version>${version.atp}</version>
         <scope>compile</scope>
+      </dependency>
+      <dependency>
+      	<groupId>org.slf4j</groupId>
+      	<artifactId>slf4j-api</artifactId>
+      	<version>${version.slf4j}</version>
+      	<type>jar</type>
+      	<scope>compile</scope>
+      </dependency>
+      <dependency>
+      	<groupId>org.slf4j</groupId>
+      	<artifactId>slf4j-simple</artifactId>
+      	<version>${version.slf4j}</version>
+      	<type>jar</type>
+      	<scope>test</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>

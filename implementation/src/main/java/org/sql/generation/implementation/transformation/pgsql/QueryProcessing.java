@@ -14,8 +14,7 @@
 
 package org.sql.generation.implementation.transformation.pgsql;
 
-import java.util.logging.Logger;
-
+import org.slf4j.LoggerFactory;
 import org.sql.generation.api.grammar.common.SQLConstants;
 import org.sql.generation.api.grammar.query.QuerySpecification;
 import org.sql.generation.api.grammar.query.pgsql.LimitByNumber;
@@ -83,9 +82,9 @@ public class QueryProcessing
         {
             if( query.getOrderBy() == null )
             {
-                Logger
+                LoggerFactory
                     .getLogger( this.getClass().getName() )
-                    .warning(
+                    .warn(
                         "Spotted query with "
                             + clauseName
                             + " clause, but without ORDER BY. See http://www.postgresql.org/docs/9.0/static/queries-limit.html for more information."
