@@ -5,12 +5,12 @@
   <parent>
     <groupId>org.java-sql-generator</groupId>
     <artifactId>java-sql-generator</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1</version>
   </parent>
 
   <groupId>org.java-sql-generator.api</groupId>
   <artifactId>java-sql-generator-api</artifactId>
-  <version>0.1-SNAPSHOT</version>
+  <version>0.1</version>
 
   <name>Java SQL Generator API</name>
   <dependencies>
