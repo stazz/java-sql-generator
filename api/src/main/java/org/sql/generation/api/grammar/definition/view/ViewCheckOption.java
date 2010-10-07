@@ -12,24 +12,23 @@
  *
  */
 
-package org.sql.generation.api.grammar.query;
+package org.sql.generation.api.grammar.definition.view;
 
 /**
- * This is enum for what kind of order will be applied to each ordering column. Can be either {@link #ASCENDING} or
- * {@link #DESCENDING}.
+ * View check option is typically either {@link #CASCADED} or {@link #LOCAL}.
  * 
  * @author Stanislav Muhametsin
- * @see SortSpecification
  */
-public final class Ordering
+public interface ViewCheckOption
 {
-    /**
-     * The ordering will be ascending ({@code ASC}).
-     */
-    public static final Ordering ASCENDING = new Ordering();
 
     /**
-     * The ordering will be descending ({@code DESC}).
+     * This is the cascaded view check option.
      */
-    public static final Ordering DESCENDING = new Ordering();
+    public static final String CASCADED = "CASCADED";
+
+    /**
+     * This is the local view check option.
+     */
+    public static final String LOCAL = "LOCAL";
 }

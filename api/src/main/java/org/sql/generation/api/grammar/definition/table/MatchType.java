@@ -12,24 +12,29 @@
  *
  */
 
-package org.sql.generation.api.grammar.query;
+package org.sql.generation.api.grammar.definition.table;
 
 /**
- * This is enum for what kind of order will be applied to each ordering column. Can be either {@link #ASCENDING} or
- * {@link #DESCENDING}.
+ * This enum represents the three different ways of matching foreign keys. May be {@link #FULL}, {@link #PARTIAL}, or
+ * {@link #SIMPLE}.
  * 
  * @author Stanislav Muhametsin
- * @see SortSpecification
  */
-public final class Ordering
+public final class MatchType
 {
-    /**
-     * The ordering will be ascending ({@code ASC}).
-     */
-    public static final Ordering ASCENDING = new Ordering();
 
     /**
-     * The ordering will be descending ({@code DESC}).
+     * Represents the full match ({@code MATCH FULL}).
      */
-    public static final Ordering DESCENDING = new Ordering();
+    public static final MatchType FULL = new MatchType();
+
+    /**
+     * Represents the partial match ({@code MATCH PARTIAL}).
+     */
+    public static final MatchType PARTIAL = new MatchType();
+
+    /**
+     * Represents the simple match ({@code MATCH SIMPLE}).
+     */
+    public static final MatchType SIMPLE = new MatchType();
 }

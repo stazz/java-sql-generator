@@ -12,24 +12,24 @@
  *
  */
 
-package org.sql.generation.api.grammar.query;
+package org.sql.generation.api.grammar.definition.view;
+
+import org.sql.generation.api.grammar.common.ColumnNameList;
 
 /**
- * This is enum for what kind of order will be applied to each ordering column. Can be either {@link #ASCENDING} or
- * {@link #DESCENDING}.
+ * This syntax element represents the column name list in view definition.
  * 
  * @author Stanislav Muhametsin
- * @see SortSpecification
+ * @see ViewDefinition
  */
-public final class Ordering
+public interface RegularViewSpecification
+    extends ViewSpecification
 {
-    /**
-     * The ordering will be ascending ({@code ASC}).
-     */
-    public static final Ordering ASCENDING = new Ordering();
 
     /**
-     * The ordering will be descending ({@code DESC}).
+     * Returns the column names of this view.
+     * 
+     * @return The column names of this view.
      */
-    public static final Ordering DESCENDING = new Ordering();
+    public ColumnNameList getColumns();
 }

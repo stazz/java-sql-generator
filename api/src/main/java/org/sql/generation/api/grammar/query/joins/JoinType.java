@@ -20,25 +20,25 @@ package org.sql.generation.api.grammar.query.joins;
  * 
  * @author Stanislav Muhametsin
  */
-public enum JoinType
+public final class JoinType
 {
     /**
      * The {@code INNER} join, typically default.
      */
-    INNER,
+    public static final JoinType INNER = new JoinType();
 
     /**
      * The {@code LEFT OUTER} join.
      */
-    LEFT_OUTER,
+    public static final JoinType LEFT_OUTER = new JoinType();
 
     /**
      * The {@code RIGHT OUTER} join.
      */
-    RIGHT_OUTER,
+    public static final JoinType RIGHT_OUTER = new JoinType();
 
     /**
      * The {@code FULL OUTER} join.
      */
-    FULL_OUTER
+    public static final JoinType FULL_OUTER = new JoinType();
 }

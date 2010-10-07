@@ -12,24 +12,25 @@
  *
  */
 
-package org.sql.generation.api.grammar.query;
+package org.sql.generation.api.grammar.definition.table;
+
+import org.sql.generation.api.grammar.common.TableName;
 
 /**
- * This is enum for what kind of order will be applied to each ordering column. Can be either {@link #ASCENDING} or
- * {@link #DESCENDING}.
+ * This syntax element represents the {@code LIKE
+ * <table name>} clause in table definition.
  * 
  * @author Stanislav Muhametsin
- * @see SortSpecification
+ * @see TableDefinition
  */
-public final class Ordering
+public interface LikeClause
+    extends TableElement
 {
-    /**
-     * The ordering will be ascending ({@code ASC}).
-     */
-    public static final Ordering ASCENDING = new Ordering();
 
     /**
-     * The ordering will be descending ({@code DESC}).
+     * Returns the name of the table for this {@code LIKE} clause.
+     * 
+     * @return The name of the table for this {@code LIKE} clause.
      */
-    public static final Ordering DESCENDING = new Ordering();
+    public TableName getTableName();
 }

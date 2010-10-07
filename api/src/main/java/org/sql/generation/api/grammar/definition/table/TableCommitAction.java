@@ -12,24 +12,25 @@
  *
  */
 
-package org.sql.generation.api.grammar.query;
+package org.sql.generation.api.grammar.definition.table;
 
 /**
- * This is enum for what kind of order will be applied to each ordering column. Can be either {@link #ASCENDING} or
- * {@link #DESCENDING}.
+ * This enum is for table commit action ({@code ON COMMIT} ...) in table definition. The commit action may be either
+ * {@link #ON_COMMIT_PRESERVE_ROWS} or {@link #ON_COMMIT_DELETE_ROWS}.
  * 
  * @author Stanislav Muhametsin
- * @see SortSpecification
+ * @see TableDefinition
  */
-public final class Ordering
+public final class TableCommitAction
 {
-    /**
-     * The ordering will be ascending ({@code ASC}).
-     */
-    public static final Ordering ASCENDING = new Ordering();
 
     /**
-     * The ordering will be descending ({@code DESC}).
+     * The commit action for {@code ON COMMIT PRESERVE ROWS}.
      */
-    public static final Ordering DESCENDING = new Ordering();
+    public static final TableCommitAction ON_COMMIT_PRESERVE_ROWS = new TableCommitAction();
+
+    /**
+     * The commit action for {@code ON COMMIT DELETE ROWS}.
+     */
+    public static final TableCommitAction ON_COMMIT_DELETE_ROWS = new TableCommitAction();
 }

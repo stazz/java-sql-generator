@@ -20,20 +20,20 @@ package org.sql.generation.api.grammar.query;
  * 
  * @author Stanislav Muhametsin
  */
-public enum SetOperation
+public final class SetOperation
 {
     /**
      * The {@code UNION} between two queries.
      */
-    UNION,
+    public static final SetOperation UNION = new SetOperation();
 
     /**
      * The {@code INTERSECT} between two queries.
      */
-    INTERSECT,
+    public static final SetOperation INTERSECT = new SetOperation();
 
     /**
      * The set difference ({@code EXCEPT}) between two queries.
      */
-    EXCEPT
+    public static final SetOperation EXCEPT = new SetOperation();
 }

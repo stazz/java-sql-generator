@@ -12,24 +12,25 @@
  *
  */
 
-package org.sql.generation.api.grammar.query;
+package org.sql.generation.api.grammar.definition.table;
 
 /**
- * This is enum for what kind of order will be applied to each ordering column. Can be either {@link #ASCENDING} or
- * {@link #DESCENDING}.
+ * This enum is for table scope in table definition. The scope may be either {@link #GLOBAL_TEMPORARY} or
+ * {@link #LOCAL_TEMPORARY}.
  * 
  * @author Stanislav Muhametsin
- * @see SortSpecification
+ * @see TableDefinition
  */
-public final class Ordering
+public final class TableScope
 {
-    /**
-     * The ordering will be ascending ({@code ASC}).
-     */
-    public static final Ordering ASCENDING = new Ordering();
 
     /**
-     * The ordering will be descending ({@code DESC}).
+     * This value represents the {@code GLOBAL TEMPORARY} table.
      */
-    public static final Ordering DESCENDING = new Ordering();
+    public static final TableScope GLOBAL_TEMPORARY = new TableScope();
+
+    /**
+     * This value represents the {@code LOCAL TEMPORARY} table.
+     */
+    public static final TableScope LOCAL_TEMPORARY = new TableScope();
 }

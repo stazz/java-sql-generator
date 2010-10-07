@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.atp.api.Typeable;
-import org.atp.spi.ThreadSafeInteractionMapper;
+import org.atp.spi.InteractionMapper;
 import org.sql.generation.api.grammar.booleans.BetweenPredicate;
 import org.sql.generation.api.grammar.booleans.BinaryPredicate;
 import org.sql.generation.api.grammar.booleans.BooleanExpression.False;
@@ -141,7 +141,7 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
  * 
  * @author Stanislav Muhametsin
  */
-public class DefaultSQLProcessor extends ThreadSafeInteractionMapper<Typeable<?>, SQLProcessor>
+public class DefaultSQLProcessor extends InteractionMapper<Typeable<?>, SQLProcessor>
     implements SQLProcessorAggregator
 {
 

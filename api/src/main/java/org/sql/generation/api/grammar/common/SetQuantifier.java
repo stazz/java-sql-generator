@@ -19,14 +19,15 @@ package org.sql.generation.api.grammar.common;
  * 
  * @author Stanislav Muhametsin
  */
-public enum SetQuantifier
+public final class SetQuantifier
 {
     /**
      * Set quantifier for {@code DISTINCT} element.
      */
-    DISTINCT,
+    public static final SetQuantifier DISTINCT = new SetQuantifier();
+
     /**
      * Set quantifier for {@code ALL} element.
      */
-    ALL
+    public static final SetQuantifier ALL = new SetQuantifier();
 }

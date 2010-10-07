@@ -12,24 +12,18 @@
  *
  */
 
-package org.sql.generation.api.grammar.query;
+package org.sql.generation.api.grammar.definition.table;
+
+import org.sql.generation.api.grammar.booleans.BooleanExpression;
 
 /**
- * This is enum for what kind of order will be applied to each ordering column. Can be either {@link #ASCENDING} or
- * {@link #DESCENDING}.
+ * This syntax element represents the {@code CHECK( ... )} constraint in table definition.
  * 
  * @author Stanislav Muhametsin
- * @see SortSpecification
+ * @see TableDefinition
  */
-public final class Ordering
+public interface CheckConstraint
+    extends TableConstraint
 {
-    /**
-     * The ordering will be ascending ({@code ASC}).
-     */
-    public static final Ordering ASCENDING = new Ordering();
-
-    /**
-     * The ordering will be descending ({@code DESC}).
-     */
-    public static final Ordering DESCENDING = new Ordering();
+    public BooleanExpression getCheckCondition();
 }

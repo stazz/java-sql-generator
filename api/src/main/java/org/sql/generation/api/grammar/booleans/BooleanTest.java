@@ -28,10 +28,17 @@ public interface BooleanTest
      * 
      * @author Stanislav Muhametsin
      */
-    public enum TestType
+    public final class TestType
     {
-        IS,
-        IS_NOT
+        /**
+         * The test which tests the expression against the truth value.
+         */
+        public static final TestType IS = new TestType();
+
+        /**
+         * The test which tests the expression against the negation of the truth value.
+         */
+        public static final TestType IS_NOT = new TestType();
     }
 
     /**
@@ -39,11 +46,22 @@ public interface BooleanTest
      * 
      * @author Stanislav Muhametsin
      */
-    public enum TruthValue
+    public final class TruthValue
     {
-        TRUE,
-        FALSE,
-        UNKNOWN
+        /**
+         * The {@code TRUE} truth value.
+         */
+        public static final TruthValue TRUE = new TruthValue();
+
+        /**
+         * The {@code FALSE} truth value.
+         */
+        public static final TruthValue FALSE = new TruthValue();
+
+        /**
+         * The {@code UNKNOWN} truth value.
+         */
+        public static final TruthValue UNKNOWN = new TruthValue();
     }
 
     /**

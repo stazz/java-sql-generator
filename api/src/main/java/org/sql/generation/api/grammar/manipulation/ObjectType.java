@@ -12,24 +12,30 @@
  *
  */
 
-package org.sql.generation.api.grammar.query;
+package org.sql.generation.api.grammar.manipulation;
 
 /**
- * This is enum for what kind of order will be applied to each ordering column. Can be either {@link #ASCENDING} or
- * {@link #DESCENDING}.
+ * Object type is used in generalized {@code DROP} statement to define what to drop. It is usually one of
+ * {@link #SCHEMA}, {@link #TABLE}, or {@link #VIEW}.
  * 
  * @author Stanislav Muhametsin
- * @see SortSpecification
+ * @see DropStatement
  */
-public final class Ordering
+public final class ObjectType
 {
-    /**
-     * The ordering will be ascending ({@code ASC}).
-     */
-    public static final Ordering ASCENDING = new Ordering();
 
     /**
-     * The ordering will be descending ({@code DESC}).
+     * The object type which means to {@code DROP SCHEMA}.
      */
-    public static final Ordering DESCENDING = new Ordering();
+    public static final ObjectType SCHEMA = new ObjectType();
+
+    /**
+     * The object type which means to {@code DROP TABLE}.
+     */
+    public static final ObjectType TABLE = new ObjectType();
+
+    /**
+     * The object type which means to {@code DROP VIEW}.
+     */
+    public static final ObjectType VIEW = new ObjectType();
 }

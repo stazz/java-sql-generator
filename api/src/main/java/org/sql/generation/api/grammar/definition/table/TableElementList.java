@@ -12,24 +12,24 @@
  *
  */
 
-package org.sql.generation.api.grammar.query;
+package org.sql.generation.api.grammar.definition.table;
+
+import java.util.List;
 
 /**
- * This is enum for what kind of order will be applied to each ordering column. Can be either {@link #ASCENDING} or
- * {@link #DESCENDING}.
+ * This syntax element represents the table element list in table definition.
  * 
  * @author Stanislav Muhametsin
- * @see SortSpecification
+ * @see TableDefinition
+ * @see TableElement
  */
-public final class Ordering
+public interface TableElementList
+    extends TableContentsSource
 {
     /**
-     * The ordering will be ascending ({@code ASC}).
+     * Returns a list of table elements. Will be non-empty.
+     * 
+     * @return A list of table elements. Will be non-empty.
      */
-    public static final Ordering ASCENDING = new Ordering();
-
-    /**
-     * The ordering will be descending ({@code DESC}).
-     */
-    public static final Ordering DESCENDING = new Ordering();
+    public List<TableElement> getElementList();
 }

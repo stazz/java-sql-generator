@@ -12,24 +12,15 @@
  *
  */
 
-package org.sql.generation.api.grammar.query;
+package org.sql.generation.api.grammar.definition.schema;
 
 /**
- * This is enum for what kind of order will be applied to each ordering column. Can be either {@link #ASCENDING} or
- * {@link #DESCENDING}.
+ * This is a common interface for all definitions that may be present in schema definition.
  * 
  * @author Stanislav Muhametsin
- * @see SortSpecification
+ * @see SchemaDefinition
  */
-public final class Ordering
+public interface SchemaElement
 {
-    /**
-     * The ordering will be ascending ({@code ASC}).
-     */
-    public static final Ordering ASCENDING = new Ordering();
 
-    /**
-     * The ordering will be descending ({@code DESC}).
-     */
-    public static final Ordering DESCENDING = new Ordering();
 }

@@ -12,24 +12,24 @@
  *
  */
 
-package org.sql.generation.api.grammar.query;
+package org.sql.generation.api.grammar.definition.table;
 
 /**
- * This is enum for what kind of order will be applied to each ordering column. Can be either {@link #ASCENDING} or
- * {@link #DESCENDING}.
+ * This syntax element represents the two kind of uniqueness of a column(s): either that the column(s) are
+ * {@code PRIMARY KEY}, or {@code UNIQUE}.
  * 
  * @author Stanislav Muhametsin
- * @see SortSpecification
  */
-public final class Ordering
+public final class UniqueSpecification
 {
-    /**
-     * The ordering will be ascending ({@code ASC}).
-     */
-    public static final Ordering ASCENDING = new Ordering();
 
     /**
-     * The ordering will be descending ({@code DESC}).
+     * Represents the primary key uniqueness ({@code PRIMARY KEY(col1, col2, ...)}).
      */
-    public static final Ordering DESCENDING = new Ordering();
+    public static final UniqueSpecification PRIMARY_KEY = new UniqueSpecification();
+
+    /**
+     * Represents the normal uniqueness ({@code UNIQUE(col1, col2, ...)}).
+     */
+    public static final UniqueSpecification UNIQUE = new UniqueSpecification();
 }

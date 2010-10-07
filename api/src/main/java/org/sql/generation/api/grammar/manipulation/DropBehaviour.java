@@ -12,24 +12,25 @@
  *
  */
 
-package org.sql.generation.api.grammar.query;
+package org.sql.generation.api.grammar.manipulation;
 
 /**
- * This is enum for what kind of order will be applied to each ordering column. Can be either {@link #ASCENDING} or
- * {@link #DESCENDING}.
+ * The drop behaviour for generalized {@code DROP} statement. Typically one of {@link #CASCADE} or {@link #RESTRICT}.
  * 
  * @author Stanislav Muhametsin
- * @see SortSpecification
+ * @see DropStatement
  */
-public final class Ordering
+public final class DropBehaviour
 {
-    /**
-     * The ordering will be ascending ({@code ASC}).
-     */
-    public static final Ordering ASCENDING = new Ordering();
 
     /**
-     * The ordering will be descending ({@code DESC}).
+     * The drop behaviour which means to {@code CASCADE} the {@code DROP} through all depending elements.
      */
-    public static final Ordering DESCENDING = new Ordering();
+    public static final DropBehaviour CASCADE = new DropBehaviour();
+
+    /**
+     * The drop behaviour which means to {@code RESTRICT} the {@code DROP} if any elements depend on the object to be
+     * dropped.
+     */
+    public static final DropBehaviour RESTRICT = new DropBehaviour();
 }
