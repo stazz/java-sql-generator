@@ -14,23 +14,22 @@
 
 package org.sql.generation.api.grammar.manipulation;
 
-import org.sql.generation.api.grammar.common.SchemaManipulationStatement;
+import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
 
 /**
- * This is a common interface for {@code DROP} statements.
+ * This syntax element represents adding a new column to table.
  * 
  * @author Stanislav Muhametsin
  */
-public interface DropStatement
-    extends SchemaManipulationStatement, DropBehaviourContainer
+public interface AddColumnDefinition
+    extends AlterTableAction
 {
 
     /**
-     * Returns the object type to drop.
+     * Returns the definition for column to be added.
      * 
-     * @return The object type to drop.
-     * @see ObjectType
+     * @return The definition for column to be added.
+     * @see ColumnDefinition
      */
-    public ObjectType whatToDrop();
-
+    public ColumnDefinition getColumnDefinition();
 }

@@ -17,20 +17,12 @@ package org.sql.generation.api.grammar.manipulation;
 import org.sql.generation.api.grammar.common.SchemaManipulationStatement;
 
 /**
- * This is a common interface for {@code DROP} statements.
+ * This is a common interface for all {@code ALTER} statements.
  * 
  * @author Stanislav Muhametsin
  */
-public interface DropStatement
-    extends SchemaManipulationStatement, DropBehaviourContainer
+public interface AlterStatement
+    extends SchemaManipulationStatement
 {
-
-    /**
-     * Returns the object type to drop.
-     * 
-     * @return The object type to drop.
-     * @see ObjectType
-     */
-    public ObjectType whatToDrop();
 
 }

@@ -20,6 +20,7 @@ package org.sql.generation.api.grammar.definition.table;
  * @author Stanislav Muhametsin
  * @see TableElement
  * @see TableDefinition
+ * @see TableConstraint
  */
 public interface TableConstraintDefinition
     extends TableElement
@@ -39,4 +40,11 @@ public interface TableConstraintDefinition
      * @see ConstraintCharacteristics
      */
     public ConstraintCharacteristics getCharacteristics();
+
+    /**
+     * Returns the actual table constraint.
+     * 
+     * @return The actual table constraint.
+     */
+    public TableConstraint getConstraint();
 }

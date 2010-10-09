@@ -14,23 +14,28 @@
 
 package org.sql.generation.api.grammar.manipulation;
 
-import org.sql.generation.api.grammar.common.SchemaManipulationStatement;
-
 /**
- * This is a common interface for {@code DROP} statements.
+ * This syntax element represents the alteration of column.
  * 
  * @author Stanislav Muhametsin
+ * @see AlterTableAction
  */
-public interface DropStatement
-    extends SchemaManipulationStatement, DropBehaviourContainer
+public interface AlterColumnDefinition
+    extends AlterTableAction
 {
 
     /**
-     * Returns the object type to drop.
+     * Returns the name of the column to be altered.
      * 
-     * @return The object type to drop.
-     * @see ObjectType
+     * @return The name of the column to be altered.
      */
-    public ObjectType whatToDrop();
+    public String getColumnName();
 
+    /**
+     * Returns the action to be done on column.
+     * 
+     * @return The action to be done on column.
+     * @see AlterColumnAction
+     */
+    public AlterColumnAction getAction();
 }

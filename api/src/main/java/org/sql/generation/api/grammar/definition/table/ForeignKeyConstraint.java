@@ -43,9 +43,9 @@ public interface ForeignKeyConstraint
     public TableName getTargetTableName();
 
     /**
-     * Returns the list of column names in target table.
+     * Returns the list of column names in target table. Will be {@code null} if none specified.
      * 
-     * @return The list of column names in target table.
+     * @return The list of column names in target table. Will be {@code null} if none specified.
      */
     public ColumnNameList getTargetColumns();
 

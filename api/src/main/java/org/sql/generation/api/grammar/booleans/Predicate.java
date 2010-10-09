@@ -25,7 +25,7 @@ public interface Predicate
     /**
      * A class representing empty predicate. The result of empty predicate is empty string. If empty predicate is
      * encountered inside {@link Conjunction} or {@link Disjunction}, their operator is omitted. So, <i>empty
-     * expression</i> {@code AND} <i>something</i> becomes just <i>something</i>.
+     * predicate</i> {@code AND} <i>something</i> becomes just <i>something</i>.
      * 
      * @author Stanislav Muhametsin
      */

@@ -16,7 +16,7 @@ package org.sql.generation.api.grammar.definition.table;
 
 /**
  * This syntax element represents the two kind of uniqueness of a column(s): either that the column(s) are
- * {@code PRIMARY KEY}, or {@code UNIQUE}.
+ * {@code PRIMARY KEY} ({@link #PRIMARY_KEY}), or {@code UNIQUE} ({@link #UNIQUE}).
  * 
  * @author Stanislav Muhametsin
  */

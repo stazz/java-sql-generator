@@ -14,23 +14,19 @@
 
 package org.sql.generation.api.grammar.manipulation;
 
-import org.sql.generation.api.grammar.common.SchemaManipulationStatement;
-
 /**
- * This is a common interface for {@code DROP} statements.
+ * This syntax element represents setting a new default for a column in table alteration statement.
  * 
  * @author Stanislav Muhametsin
  */
-public interface DropStatement
-    extends SchemaManipulationStatement, DropBehaviourContainer
+public interface SetColumnDefault
+    extends AlterColumnAction
 {
 
     /**
-     * Returns the object type to drop.
+     * Returns the new default value for this column.
      * 
-     * @return The object type to drop.
-     * @see ObjectType
+     * @return The new default value for this column.
      */
-    public ObjectType whatToDrop();
-
+    public String getDefault();
 }

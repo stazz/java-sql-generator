@@ -14,23 +14,20 @@
 
 package org.sql.generation.api.grammar.manipulation;
 
-import org.sql.generation.api.grammar.common.SchemaManipulationStatement;
-
 /**
- * This is a common interface for {@code DROP} statements.
+ * This syntax element represents dropping a table constraint in table alteration statement.
  * 
  * @author Stanislav Muhametsin
  */
-public interface DropStatement
-    extends SchemaManipulationStatement, DropBehaviourContainer
+public interface DropTableConstraintDefinition
+    extends AlterTableAction, DropBehaviourContainer
 {
 
     /**
-     * Returns the object type to drop.
+     * Returns the constraint name to be dropped.
      * 
-     * @return The object type to drop.
-     * @see ObjectType
+     * @return The constraint name to be dropped.
      */
-    public ObjectType whatToDrop();
+    public String getConstraintName();
 
 }

@@ -58,10 +58,10 @@ public interface ViewDefinition
     public QueryExpression getViewQuery();
 
     /**
-     * Returns the view check option.
+     * Returns the view check option. Will be {@code null} if none defined.
      * 
-     * @return The view check option.
+     * @return The view check option. Will be {@code null} if none defined.
      * @see ViewCheckOption
      */
-    public String getViewCheckOption();
+    public ViewCheckOption getViewCheckOption();
 }
