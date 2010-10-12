@@ -14,7 +14,6 @@
 
 package org.sql.generation.api.grammar.manipulation;
 
-import org.sql.generation.api.grammar.common.SchemaManipulationStatement;
 import org.sql.generation.api.grammar.common.TableName;
 
 /**
@@ -22,7 +21,7 @@ import org.sql.generation.api.grammar.common.TableName;
  * @author Stanislav Muhametsin
  */
 public interface AlterTableStatement
-    extends SchemaManipulationStatement
+    extends AlterStatement
 {
 
     /**

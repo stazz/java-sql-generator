@@ -19,16 +19,16 @@ package org.sql.generation.api.grammar.definition.view;
  * 
  * @author Stanislav Muhametsin
  */
-public interface ViewCheckOption
+public final class ViewCheckOption
 {
 
     /**
      * This is the cascaded view check option.
      */
-    public static final String CASCADED = "CASCADED";
+    public static final ViewCheckOption CASCADED = new ViewCheckOption();
 
     /**
      * This is the local view check option.
      */
-    public static final String LOCAL = "LOCAL";
+    public static final ViewCheckOption LOCAL = new ViewCheckOption();
 }

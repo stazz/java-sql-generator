@@ -26,7 +26,8 @@ public interface DropStatement
 {
 
     /**
-     * Returns the object type to drop.
+     * Returns the object type to drop. Typically either {@link ObjectType#SCHEMA}, {@link ObjectType#TABLE}, or
+     * {@link ObjectType#VIEW}.
      * 
      * @return The object type to drop.
      * @see ObjectType
