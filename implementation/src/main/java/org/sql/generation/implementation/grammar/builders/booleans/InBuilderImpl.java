@@ -12,7 +12,7 @@
  *
  */
 
-package org.sql.generation.implementation.grammar.builders;
+package org.sql.generation.implementation.grammar.builders.booleans;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.InPredicate;
-import org.sql.generation.api.grammar.builders.InBuilder;
+import org.sql.generation.api.grammar.builders.booleans.InBuilder;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.implementation.grammar.booleans.InPredicateImpl;
 

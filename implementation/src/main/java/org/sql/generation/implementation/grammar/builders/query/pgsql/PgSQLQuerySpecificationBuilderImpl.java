@@ -16,7 +16,7 @@ package org.sql.generation.implementation.grammar.builders.query.pgsql;
 
 import java.util.Iterator;
 
-import org.sql.generation.api.grammar.builders.BooleanBuilder;
+import org.sql.generation.api.grammar.builders.booleans.BooleanBuilder;
 import org.sql.generation.api.grammar.builders.query.ColumnsBuilder;
 import org.sql.generation.api.grammar.builders.query.FromBuilder;
 import org.sql.generation.api.grammar.builders.query.GroupByBuilder;

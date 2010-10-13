@@ -29,9 +29,9 @@ public class DropSchemaStatementImpl extends DropStatementImpl<DropSchemaStateme
 
     private final String _schemaName;
 
-    public DropSchemaStatementImpl( ObjectType whatToDrop, DropBehaviour dropBehaviour, String schemaName )
+    public DropSchemaStatementImpl( DropBehaviour dropBehaviour, String schemaName )
     {
-        this( DropSchemaStatement.class, whatToDrop, dropBehaviour, schemaName );
+        this( DropSchemaStatement.class, ObjectType.SCHEMA, dropBehaviour, schemaName );
     }
 
     protected DropSchemaStatementImpl( Class<? extends DropSchemaStatement> realImplementingType,

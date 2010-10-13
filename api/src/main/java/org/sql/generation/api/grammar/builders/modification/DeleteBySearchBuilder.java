@@ -15,7 +15,7 @@
 package org.sql.generation.api.grammar.builders.modification;
 
 import org.sql.generation.api.grammar.builders.AbstractBuilder;
-import org.sql.generation.api.grammar.builders.BooleanBuilder;
+import org.sql.generation.api.grammar.builders.booleans.BooleanBuilder;
 import org.sql.generation.api.grammar.modification.DeleteBySearch;
 import org.sql.generation.api.grammar.modification.TargetTable;
 

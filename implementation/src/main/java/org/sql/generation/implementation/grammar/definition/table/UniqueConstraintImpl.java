@@ -32,6 +32,11 @@ public class UniqueConstraintImpl extends TypeableImpl<TableConstraint, UniqueCo
     private final ColumnNameList _columns;
     private final UniqueSpecification _uniqueness;
 
+    public UniqueConstraintImpl( ColumnNameList columns, UniqueSpecification uniqueness )
+    {
+        this( UniqueConstraint.class, columns, uniqueness );
+    }
+
     protected UniqueConstraintImpl( Class<? extends UniqueConstraint> realImplementingType, ColumnNameList columns,
         UniqueSpecification uniqueness )
     {

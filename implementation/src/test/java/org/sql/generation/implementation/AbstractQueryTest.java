@@ -15,12 +15,10 @@
 package org.sql.generation.implementation;
 
 import org.junit.Test;
-import org.slf4j.LoggerFactory;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.builders.query.ColumnsBuilder;
 import org.sql.generation.api.grammar.builders.query.QuerySpecificationBuilder;
 import org.sql.generation.api.grammar.builders.query.TableReferenceBuilder;
-import org.sql.generation.api.grammar.common.SQLStatement;
 import org.sql.generation.api.grammar.common.SetQuantifier;
 import org.sql.generation.api.grammar.factories.BooleanFactory;
 import org.sql.generation.api.grammar.factories.ColumnsFactory;
@@ -38,15 +36,12 @@ import org.sql.generation.api.vendor.SQLVendor;
  * 
  * @author Stanislav Muhametsin
  */
-public abstract class AbstractQueryTest
+public abstract class AbstractQueryTest extends AbstractSQLSyntaxTest
 {
-    protected void logQuery( SQLVendor vendor, SQLStatement query )
+    protected void logQuery( SQLVendor vendor, QueryExpression query )
     {
-        LoggerFactory.getLogger( this.getClass().getName() ).info( "Query:" + "\n" + vendor.toString( query ) + "\n" );
+        this.logStatement( "Query", vendor, query );
     }
-
-    protected abstract SQLVendor getVendor()
-        throws Exception;
 
     @Test
     public void query1()

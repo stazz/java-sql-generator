@@ -12,12 +12,12 @@
  *
  */
 
-package org.sql.generation.implementation.grammar.builders;
+package org.sql.generation.implementation.grammar.builders.booleans;
 
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.booleans.Predicate;
-import org.sql.generation.api.grammar.builders.BooleanBuilder;
+import org.sql.generation.api.grammar.builders.booleans.BooleanBuilder;
 import org.sql.generation.api.grammar.factories.BooleanFactory;
 
 /**

@@ -12,28 +12,22 @@
  *
  */
 
-package org.sql.generation.implementation.grammar.factories;
+package org.sql.generation.api.grammar.builders.booleans;
 
 import org.sql.generation.api.grammar.booleans.InPredicate;
-import org.sql.generation.api.grammar.builders.booleans.BooleanBuilder;
+import org.sql.generation.api.grammar.builders.AbstractBuilder;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
-import org.sql.generation.api.grammar.factories.BooleanFactory;
 
 /**
+ * The builder to build {@code IN} expressions
  * 
+ * @see InPredicate
  * @author Stanislav Muhametsin
  */
-public abstract class AbstractBooleanFactory
-    implements BooleanFactory
+public interface InBuilder
+    extends AbstractBuilder<InPredicate>
 {
 
-    public BooleanBuilder booleanBuilder()
-    {
-        return this.booleanBuilder( null );
-    }
+    public InBuilder addValues( NonBooleanExpression... expressions );
 
-    public InPredicate in( NonBooleanExpression what, NonBooleanExpression... values )
-    {
-        return this.inBuilder( what ).addValues( values ).createExpression();
-    }
 }

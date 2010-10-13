@@ -33,7 +33,7 @@ public class TableElementListImpl extends TypeableImpl<TableContentsSource, Tabl
 
     private final List<TableElement> _elements;
 
-    protected TableElementListImpl( List<TableElement> elements )
+    public TableElementListImpl( List<TableElement> elements )
     {
         this( TableElementList.class, elements );
     }

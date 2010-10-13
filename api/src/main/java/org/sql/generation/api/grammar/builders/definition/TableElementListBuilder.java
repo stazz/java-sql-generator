@@ -42,5 +42,5 @@ public interface TableElementListBuilder
      * 
      * @return All the elements that this builder has.
      */
-    public List<TableElementListBuilder> getTableElements();
+    public List<TableElement> getTableElements();
 }

@@ -16,8 +16,10 @@ package org.sql.generation.api.grammar.builders.definition;
 
 import org.sql.generation.api.grammar.builders.AbstractBuilder;
 import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.definition.view.RegularViewSpecification;
 import org.sql.generation.api.grammar.definition.view.ViewCheckOption;
 import org.sql.generation.api.grammar.definition.view.ViewDefinition;
+import org.sql.generation.api.grammar.definition.view.ViewSpecification;
 import org.sql.generation.api.grammar.query.QueryExpression;
 
 /**
@@ -64,6 +66,15 @@ public interface ViewDefinitionBuilder
     public ViewDefinitionBuilder setViewCheckOption( ViewCheckOption viewCheck );
 
     /**
+     * Sets the view specification for this view. Typically is a list of columns (via {@link RegularViewSpecification}).
+     * 
+     * @param spec The view specification.
+     * @return This builder.
+     * @see ViewSpecification
+     */
+    public ViewDefinitionBuilder setViewSpecification( ViewSpecification spec );
+
+    /**
      * Returns whether this view is to be {@code RECURSIVE}.
      * 
      * @return True if this view is to be {@code RECURSIVE}; false otherwise.
@@ -91,4 +102,12 @@ public interface ViewDefinitionBuilder
      * @see ViewCheckOption
      */
     public ViewCheckOption getViewCheckOption();
+
+    /**
+     * Returns the view specification. Typically is a list of columns (via {@link RegularViewSpecification}).
+     * 
+     * @return The view specification.
+     */
+    public ViewSpecification getViewSpecification();
+
 }

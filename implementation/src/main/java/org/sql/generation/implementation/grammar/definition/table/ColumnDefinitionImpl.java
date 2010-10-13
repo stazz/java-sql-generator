@@ -32,6 +32,11 @@ public class ColumnDefinitionImpl extends TypeableImpl<TableElement, ColumnDefin
     private final String _default;
     private final Boolean _mayBeNull;
 
+    public ColumnDefinitionImpl( String name, String dataType, String defaultStr, Boolean mayBeNull )
+    {
+        this( ColumnDefinition.class, name, dataType, defaultStr, mayBeNull );
+    }
+
     protected ColumnDefinitionImpl( Class<? extends ColumnDefinition> realImplementingType, String name,
         String dataType, String defaultStr, Boolean mayBeNull )
     {

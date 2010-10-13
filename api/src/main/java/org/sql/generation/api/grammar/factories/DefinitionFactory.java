@@ -30,6 +30,7 @@ import org.sql.generation.api.grammar.definition.table.LikeClause;
 import org.sql.generation.api.grammar.definition.table.TableConstraint;
 import org.sql.generation.api.grammar.definition.table.TableConstraintDefinition;
 import org.sql.generation.api.grammar.definition.table.TableDefinition;
+import org.sql.generation.api.grammar.definition.view.RegularViewSpecification;
 import org.sql.generation.api.grammar.definition.view.ViewDefinition;
 
 /**
@@ -130,8 +131,8 @@ public interface DefinitionFactory
     /**
      * Creates a new unnamed table constraint without any {@link ConstraintCharacteristics}. Invoking this method is
      * equivalent to invoking
-     * {@link #createTableConstraintDefinition(TableConstraint, String, ConstraintCharacteristics)} and passing
-     * {@code null}s as last two parameters.
+     * {@link #createTableConstraintDefinition(String, TableConstraint, ConstraintCharacteristics)} and passing
+     * {@code null}s as first and last parameters.
      * 
      * @param constraint The constraint for the table.
      * @return The syntax element for unnamed table constraint without any {@link ConstraintCharacteristics}.
@@ -142,21 +143,21 @@ public interface DefinitionFactory
     /**
      * Creates a new, named table constraint without any {@link ConstraintCharacteristics}. Invoking this method is
      * equivalent to invoking
-     * {@link #createTableConstraintDefinition(TableConstraint, String, ConstraintCharacteristics)} and passing
+     * {@link #createTableConstraintDefinition(String, TableConstraint, ConstraintCharacteristics)} and passing
      * {@code null} as last parameter.
      * 
-     * @param constraint The constraint for the table.
      * @param name The name for the constraint.
+     * @param constraint The constraint for the table.
      * @return The syntax element for named table constraint without any {@link ConstraintCharacteristics}.
      * @see #createColumnDefinition(String, String, String, Boolean)
      */
-    public TableConstraintDefinition createTableConstraintDefinition( TableConstraint constraint, String name );
+    public TableConstraintDefinition createTableConstraintDefinition( String name, TableConstraint constraint );
 
     /**
      * Creates a new unnamed table constraint with specified {@link ConstraintCharacteristics}. Invoking this method is
      * equivalent to invoking
-     * {@link #createTableConstraintDefinition(TableConstraint, String, ConstraintCharacteristics)} and passing
-     * {@code null} as second parameter.
+     * {@link #createTableConstraintDefinition(String, TableConstraint, ConstraintCharacteristics)} and passing
+     * {@code null} as first parameter.
      * 
      * @param constraint The constraint for the table.
      * @param characteristics The constraint characteristics for the constraint.
@@ -170,13 +171,13 @@ public interface DefinitionFactory
     /**
      * Creates a new named table constraint with specified {@link ConstraintCharacteristics}.
      * 
-     * @param constraint The constraint for the table.
      * @param name The name for the constraint.
+     * @param constraint The constraint for the table.
      * @param characteristics The characteristics for the constraint.
      * @return The syntax element for named table constraint with specified {@link ConstraintCharacteristics}.
      * @see ConstraintCharacteristics
      */
-    public TableConstraintDefinition createTableConstraintDefinition( TableConstraint constraint, String name,
+    public TableConstraintDefinition createTableConstraintDefinition( String name, TableConstraint constraint,
         ConstraintCharacteristics characteristics );
 
     /**
@@ -213,5 +214,14 @@ public interface DefinitionFactory
      * @see ViewDefinition
      */
     public ViewDefinitionBuilder createViewDefinitionBuilder();
+
+    /**
+     * Creates a new view specification with given columns. Must have at least one column.
+     * 
+     * @param columnNames The names of the columns.
+     * @return A new {@link RegularViewSpecification}.
+     * @see RegularViewSpecification
+     */
+    public RegularViewSpecification createRegularViewSpecification( String... columnNames );
 
 }

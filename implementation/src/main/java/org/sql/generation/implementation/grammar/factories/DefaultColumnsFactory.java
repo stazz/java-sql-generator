@@ -14,6 +14,8 @@
 
 package org.sql.generation.implementation.grammar.factories;
 
+import java.util.List;
+
 import org.sql.generation.api.grammar.builders.query.ColumnsBuilder;
 import org.sql.generation.api.grammar.common.ColumnNameList;
 import org.sql.generation.api.grammar.common.SetQuantifier;
@@ -47,6 +49,11 @@ public class DefaultColumnsFactory extends AbstractColumnsFactory
     }
 
     public ColumnNameList colNames( String... names )
+    {
+        return new ColumnNameListImpl( names );
+    }
+
+    public ColumnNameList colNames( List<String> names )
     {
         return new ColumnNameListImpl( names );
     }

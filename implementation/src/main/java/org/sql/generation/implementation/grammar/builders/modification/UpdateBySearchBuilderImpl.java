@@ -19,7 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.sql.generation.api.common.NullArgumentException;
-import org.sql.generation.api.grammar.builders.BooleanBuilder;
+import org.sql.generation.api.grammar.builders.booleans.BooleanBuilder;
 import org.sql.generation.api.grammar.builders.modification.UpdateBySearchBuilder;
 import org.sql.generation.api.grammar.modification.SetClause;
 import org.sql.generation.api.grammar.modification.TargetTable;

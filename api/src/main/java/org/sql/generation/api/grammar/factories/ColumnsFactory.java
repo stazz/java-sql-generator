@@ -14,6 +14,8 @@
 
 package org.sql.generation.api.grammar.factories;
 
+import java.util.List;
+
 import org.sql.generation.api.grammar.common.ColumnNameList;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.query.ColumnReferenceByExpression;
@@ -67,5 +69,14 @@ public interface ColumnsFactory
      * @return The new {@link ColumnNameList}.
      */
     public ColumnNameList colNames( String... names );
+
+    /**
+     * Constructs new {@link ColumnNameList} using specified column names. A new copy of List will be allocated for the
+     * {@link ColumnNameList}.
+     * 
+     * @param names The column names. Must contain at least one name.
+     * @return The new {@link ColumnNameList}.
+     */
+    public ColumnNameList colNames( List<String> names );
 
 }

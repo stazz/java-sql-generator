@@ -46,13 +46,13 @@ public interface SchemaDefinitionBuilder
     public SchemaDefinitionBuilder setSchemaCharset( String charset );
 
     /**
-     * Adds schema element for the schema to be created.
+     * Adds schema elements for the schema to be created.
      * 
-     * @param element The schema element for the schema to be created.
+     * @param elements The schema elements for the schema to be created.
      * @return This builder.
      * @see SchemaElement
      */
-    public SchemaDefinitionBuilder addSchemaElement( SchemaElement element );
+    public SchemaDefinitionBuilder addSchemaElements( SchemaElement... elements );
 
     /**
      * Returns the name of the schema to be created.
@@ -73,5 +73,5 @@ public interface SchemaDefinitionBuilder
      * 
      * @return All the schema elements for the schema to be created.
      */
-    public List<String> getSchemaElements();
+    public List<SchemaElement> getSchemaElements();
 }

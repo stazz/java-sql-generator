@@ -12,9 +12,10 @@
  *
  */
 
-package org.sql.generation.api.grammar.builders;
+package org.sql.generation.api.grammar.builders.booleans;
 
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
+import org.sql.generation.api.grammar.builders.AbstractBuilder;
 
 /**
  * A builder-pattern interface to build boolean expressions. It holds the current expression, modifying it as per user's

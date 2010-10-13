@@ -14,6 +14,7 @@
 
 package org.sql.generation.implementation.grammar.definition.schema;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class SchemaDefinitionImpl extends TypeableImpl<SchemaStatement, SchemaDe
 
         this._name = name;
         this._charset = charset;
-        this._elements = Collections.unmodifiableList( elements );
+        this._elements = Collections.unmodifiableList( new ArrayList<SchemaElement>( elements ) );
     }
 
     @Override

@@ -39,8 +39,8 @@ import org.sql.generation.api.grammar.booleans.NotRegexpPredicate;
 import org.sql.generation.api.grammar.booleans.Predicate;
 import org.sql.generation.api.grammar.booleans.RegexpPredicate;
 import org.sql.generation.api.grammar.booleans.UniquePredicate;
-import org.sql.generation.api.grammar.builders.BooleanBuilder;
-import org.sql.generation.api.grammar.builders.InBuilder;
+import org.sql.generation.api.grammar.builders.booleans.BooleanBuilder;
+import org.sql.generation.api.grammar.builders.booleans.InBuilder;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.implementation.grammar.booleans.BetweenPredicateImpl;
@@ -64,8 +64,8 @@ import org.sql.generation.implementation.grammar.booleans.NotLikePredicateImpl;
 import org.sql.generation.implementation.grammar.booleans.NotRegexpPredicateImpl;
 import org.sql.generation.implementation.grammar.booleans.RegexpPredicateImpl;
 import org.sql.generation.implementation.grammar.booleans.UniquePredicateImpl;
-import org.sql.generation.implementation.grammar.builders.BooleanBuilderImpl;
-import org.sql.generation.implementation.grammar.builders.InBuilderImpl;
+import org.sql.generation.implementation.grammar.builders.booleans.BooleanBuilderImpl;
+import org.sql.generation.implementation.grammar.builders.booleans.InBuilderImpl;
 
 /**
  * 

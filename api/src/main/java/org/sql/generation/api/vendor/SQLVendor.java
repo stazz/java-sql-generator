@@ -17,7 +17,9 @@ package org.sql.generation.api.vendor;
 import org.sql.generation.api.grammar.common.SQLStatement;
 import org.sql.generation.api.grammar.factories.BooleanFactory;
 import org.sql.generation.api.grammar.factories.ColumnsFactory;
+import org.sql.generation.api.grammar.factories.DefinitionFactory;
 import org.sql.generation.api.grammar.factories.LiteralFactory;
+import org.sql.generation.api.grammar.factories.ManipulationFactory;
 import org.sql.generation.api.grammar.factories.ModificationFactory;
 import org.sql.generation.api.grammar.factories.QueryFactory;
 import org.sql.generation.api.grammar.factories.TableReferenceFactory;
@@ -90,6 +92,22 @@ public interface SQLVendor
      * @see ModificationFactory
      */
     public ModificationFactory getModificationFactory();
+
+    /**
+     * Returns the factory to create definition statements ({@code CREATE SCHEMA/TABLE/VIEW/etc}) for this vendor.
+     * 
+     * @return The factory to create definition statements for this vendor.
+     * @see DefinitionFactory
+     */
+    public DefinitionFactory getDefinitionFactory();
+
+    /**
+     * Returns the factory to create manipulation statements ({@code DROP/ALTER SCHEMA/TABLE/etc}) for this vendor.
+     * 
+     * @return The factory to create manipulation statements.
+     * @see ManipulationFactory
+     */
+    public ManipulationFactory getManipulationFactory();
 
     /**
      * Takes the {@link SQLStatement} (typically either a query, or a modification statement) and produces a textual SQL

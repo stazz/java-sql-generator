@@ -31,7 +31,7 @@ public class DropColumnDefinitionImpl extends TypeableImpl<AlterTableAction, Dro
     private final String _columnName;
     private final DropBehaviour _dropBehaviour;
 
-    protected DropColumnDefinitionImpl( String columnName, DropBehaviour dropBehaviour )
+    public DropColumnDefinitionImpl( String columnName, DropBehaviour dropBehaviour )
     {
         this( DropColumnDefinition.class, columnName, dropBehaviour );
     }

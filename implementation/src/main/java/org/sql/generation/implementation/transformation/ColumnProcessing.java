@@ -23,11 +23,10 @@ import org.sql.generation.api.grammar.query.ColumnReferenceByName;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
- * Currently not thread-safe.
  * 
  * @author Stanislav Muhametsin
  */
-public class ColumnProcessor
+public class ColumnProcessing
 {
 
     public static class ColumnReferenceByNameProcessor extends AbstractProcessor<ColumnReferenceByName>

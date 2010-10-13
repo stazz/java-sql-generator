@@ -19,14 +19,18 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.SQLStatement;
 import org.sql.generation.api.grammar.factories.BooleanFactory;
 import org.sql.generation.api.grammar.factories.ColumnsFactory;
+import org.sql.generation.api.grammar.factories.DefinitionFactory;
 import org.sql.generation.api.grammar.factories.LiteralFactory;
+import org.sql.generation.api.grammar.factories.ManipulationFactory;
 import org.sql.generation.api.grammar.factories.ModificationFactory;
 import org.sql.generation.api.grammar.factories.QueryFactory;
 import org.sql.generation.api.grammar.factories.TableReferenceFactory;
 import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.grammar.factories.DefaultBooleanFactory;
 import org.sql.generation.implementation.grammar.factories.DefaultColumnsFactory;
+import org.sql.generation.implementation.grammar.factories.DefaultDefinitionFactory;
 import org.sql.generation.implementation.grammar.factories.DefaultLiteralFactory;
+import org.sql.generation.implementation.grammar.factories.DefaultManipulationFactory;
 import org.sql.generation.implementation.grammar.factories.DefaultModificationFactory;
 import org.sql.generation.implementation.grammar.factories.DefaultQueryFactory;
 import org.sql.generation.implementation.grammar.factories.DefaultTableRefFactory;
@@ -93,6 +97,22 @@ public class DefaultVendor
         }
     };
 
+    protected static final Callback<DefinitionFactory> DEFINITION_FACTORY = new Callback<DefinitionFactory>()
+    {
+        public DefinitionFactory get( SQLVendor vendor )
+        {
+            return new DefaultDefinitionFactory( vendor );
+        }
+    };
+
+    protected static final Callback<ManipulationFactory> MANIPULATION_FACTORY = new Callback<ManipulationFactory>()
+    {
+        public ManipulationFactory get( SQLVendor vendor )
+        {
+            return new DefaultManipulationFactory();
+        }
+    };
+
     private final QueryFactory _queryFactory;
 
     private final BooleanFactory _booleanFactory;
@@ -105,6 +125,10 @@ public class DefaultVendor
 
     private final ModificationFactory _modificationFactory;
 
+    private final DefinitionFactory _definitionFactory;
+
+    private final ManipulationFactory _manipulationFactory;
+
     private final SQLProcessorAggregator _processor;
 
     public DefaultVendor()
@@ -115,13 +139,15 @@ public class DefaultVendor
     protected DefaultVendor( SQLProcessorAggregator processor )
     {
         this( processor, BOOLEAN_FACTORY, COLUMNS_FACTORY, LITERAL_FACTORY, MODIFICATION_FACTORY, QUERY_FACTORY,
-            TABLE_REFERENCE_FACTORY );
+            TABLE_REFERENCE_FACTORY, DEFINITION_FACTORY, MANIPULATION_FACTORY );
     }
 
     protected DefaultVendor( SQLProcessorAggregator processor, Callback<? extends BooleanFactory> booleanFactory,
         Callback<? extends ColumnsFactory> columnsFactory, Callback<? extends LiteralFactory> literalFactory,
         Callback<? extends ModificationFactory> modificationFactory, Callback<? extends QueryFactory> queryFactory,
-        Callback<? extends TableReferenceFactory> tableReferenceFactory )
+        Callback<? extends TableReferenceFactory> tableReferenceFactory,
+        Callback<? extends DefinitionFactory> definitionFactory,
+        Callback<? extends ManipulationFactory> manipulationFactory )
     {
         NullArgumentException.validateNotNull( "processor", processor );
 
@@ -132,6 +158,8 @@ public class DefaultVendor
         this._queryFactory = queryFactory.get( this );
         this._modificationFactory = modificationFactory.get( this );
         this._fromFactory = tableReferenceFactory.get( this );
+        this._definitionFactory = definitionFactory.get( this );
+        this._manipulationFactory = manipulationFactory.get( this );
     }
 
     /**
@@ -172,5 +200,15 @@ public class DefaultVendor
     public ModificationFactory getModificationFactory()
     {
         return this._modificationFactory;
+    }
+
+    public DefinitionFactory getDefinitionFactory()
+    {
+        return this._definitionFactory;
+    }
+
+    public ManipulationFactory getManipulationFactory()
+    {
+        return this._manipulationFactory;
     }
 }

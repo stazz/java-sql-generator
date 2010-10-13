@@ -12,21 +12,25 @@
  *
  */
 
-package org.sql.generation.api.grammar.builders;
+package org.sql.generation.implementation;
 
-import org.sql.generation.api.grammar.booleans.InPredicate;
-import org.sql.generation.api.grammar.common.NonBooleanExpression;
+import org.slf4j.LoggerFactory;
+import org.sql.generation.api.grammar.common.SQLStatement;
+import org.sql.generation.api.vendor.SQLVendor;
 
 /**
- * The builder to build {@code IN} expressions
  * 
- * @see InPredicate
  * @author Stanislav Muhametsin
  */
-public interface InBuilder
-    extends AbstractBuilder<InPredicate>
+public abstract class AbstractSQLSyntaxTest
 {
 
-    public InBuilder addValues( NonBooleanExpression... expressions );
+    protected void logStatement( String statementType, SQLVendor vendor, SQLStatement statement )
+    {
+        LoggerFactory.getLogger( this.getClass().getName() ).info(
+            statementType + ":" + "\n" + vendor.toString( statement ) + "\n" );
+    }
 
+    protected abstract SQLVendor getVendor()
+        throws Exception;
 }

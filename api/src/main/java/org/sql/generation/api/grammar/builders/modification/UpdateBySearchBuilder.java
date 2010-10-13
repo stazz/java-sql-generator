@@ -17,7 +17,7 @@ package org.sql.generation.api.grammar.builders.modification;
 import java.util.List;
 
 import org.sql.generation.api.grammar.builders.AbstractBuilder;
-import org.sql.generation.api.grammar.builders.BooleanBuilder;
+import org.sql.generation.api.grammar.builders.booleans.BooleanBuilder;
 import org.sql.generation.api.grammar.modification.SetClause;
 import org.sql.generation.api.grammar.modification.TargetTable;
 import org.sql.generation.api.grammar.modification.UpdateBySearch;
