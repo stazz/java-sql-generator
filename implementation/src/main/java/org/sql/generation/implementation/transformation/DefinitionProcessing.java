@@ -67,7 +67,11 @@ public class DefinitionProcessing
             }
 
             builder.append( SQLConstants.NEWLINE );
+        }
 
+        protected void processSchemaElements( SQLProcessorAggregator aggregator, SchemaDefinition object,
+            StringBuilder builder )
+        {
             for( SchemaElement el : object.getSchemaElements() )
             {
                 aggregator.process( el.asTypeable(), builder );
@@ -173,8 +177,10 @@ public class DefinitionProcessing
         @Override
         protected void doProcess( SQLProcessorAggregator aggregator, ColumnDefinition object, StringBuilder builder )
         {
-            builder.append( object.getColumnName() ).append( SQLConstants.TOKEN_SEPARATOR )
-                .append( object.getDataType() );
+            builder.append( object.getColumnName() ).append( SQLConstants.TOKEN_SEPARATOR );
+
+            aggregator.process( object.getDataType(), builder );
+
             if( object.getDefault() != null )
             {
                 builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "DEFAULT" )

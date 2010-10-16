@@ -14,6 +14,7 @@
 
 package org.sql.generation.api.grammar.definition.table;
 
+import org.sql.generation.api.grammar.common.datatypes.SQLDataType;
 
 /**
  * This syntax element represents the column definition of the table definition statement.
@@ -37,7 +38,7 @@ public interface ColumnDefinition
      * 
      * @return The data type of this column.
      */
-    public String getDataType();
+    public SQLDataType getDataType();
 
     /**
      * Returns the default clause for this column. May be {@code null} if no default value is defined.

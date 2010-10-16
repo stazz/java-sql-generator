@@ -14,6 +14,7 @@
 
 package org.sql.generation.implementation.grammar.factories;
 
+import org.sql.generation.api.grammar.common.datatypes.SQLDataType;
 import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
 import org.sql.generation.api.grammar.definition.table.ConstraintCharacteristics;
 import org.sql.generation.api.grammar.definition.table.TableConstraint;
@@ -28,17 +29,17 @@ public abstract class AbstractDefinitionFactory
     implements DefinitionFactory
 {
 
-    public ColumnDefinition createColumnDefinition( String columnName, String columnDataType )
+    public ColumnDefinition createColumnDefinition( String columnName, SQLDataType columnDataType )
     {
         return this.createColumnDefinition( columnName, columnDataType, null, true );
     }
 
-    public ColumnDefinition createColumnDefinition( String columnName, String columnDataType, Boolean mayBeNull )
+    public ColumnDefinition createColumnDefinition( String columnName, SQLDataType columnDataType, Boolean mayBeNull )
     {
         return this.createColumnDefinition( columnName, columnDataType, null, mayBeNull );
     }
 
-    public ColumnDefinition createColumnDefinition( String columnName, String columnDataType, String columnDefault )
+    public ColumnDefinition createColumnDefinition( String columnName, SQLDataType columnDataType, String columnDefault )
     {
         return this.createColumnDefinition( columnName, columnDataType, columnDefault, true );
     }

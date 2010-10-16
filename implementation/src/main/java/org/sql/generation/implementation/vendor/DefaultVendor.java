@@ -19,6 +19,7 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.SQLStatement;
 import org.sql.generation.api.grammar.factories.BooleanFactory;
 import org.sql.generation.api.grammar.factories.ColumnsFactory;
+import org.sql.generation.api.grammar.factories.DataTypeFactory;
 import org.sql.generation.api.grammar.factories.DefinitionFactory;
 import org.sql.generation.api.grammar.factories.LiteralFactory;
 import org.sql.generation.api.grammar.factories.ManipulationFactory;
@@ -28,6 +29,7 @@ import org.sql.generation.api.grammar.factories.TableReferenceFactory;
 import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.grammar.factories.DefaultBooleanFactory;
 import org.sql.generation.implementation.grammar.factories.DefaultColumnsFactory;
+import org.sql.generation.implementation.grammar.factories.DefaultDataTypeFactory;
 import org.sql.generation.implementation.grammar.factories.DefaultDefinitionFactory;
 import org.sql.generation.implementation.grammar.factories.DefaultLiteralFactory;
 import org.sql.generation.implementation.grammar.factories.DefaultManipulationFactory;
@@ -113,6 +115,14 @@ public class DefaultVendor
         }
     };
 
+    protected static final Callback<DataTypeFactory> DATA_TYPE_FACTORY = new Callback<DataTypeFactory>()
+    {
+        public DataTypeFactory get( SQLVendor vendor )
+        {
+            return new DefaultDataTypeFactory();
+        }
+    };
+
     private final QueryFactory _queryFactory;
 
     private final BooleanFactory _booleanFactory;
@@ -129,6 +139,8 @@ public class DefaultVendor
 
     private final ManipulationFactory _manipulationFactory;
 
+    private final DataTypeFactory _dataTypeFactory;
+
     private final SQLProcessorAggregator _processor;
 
     public DefaultVendor()
@@ -139,7 +151,7 @@ public class DefaultVendor
     protected DefaultVendor( SQLProcessorAggregator processor )
     {
         this( processor, BOOLEAN_FACTORY, COLUMNS_FACTORY, LITERAL_FACTORY, MODIFICATION_FACTORY, QUERY_FACTORY,
-            TABLE_REFERENCE_FACTORY, DEFINITION_FACTORY, MANIPULATION_FACTORY );
+            TABLE_REFERENCE_FACTORY, DEFINITION_FACTORY, MANIPULATION_FACTORY, DATA_TYPE_FACTORY );
     }
 
     protected DefaultVendor( SQLProcessorAggregator processor, Callback<? extends BooleanFactory> booleanFactory,
@@ -147,7 +159,7 @@ public class DefaultVendor
         Callback<? extends ModificationFactory> modificationFactory, Callback<? extends QueryFactory> queryFactory,
         Callback<? extends TableReferenceFactory> tableReferenceFactory,
         Callback<? extends DefinitionFactory> definitionFactory,
-        Callback<? extends ManipulationFactory> manipulationFactory )
+        Callback<? extends ManipulationFactory> manipulationFactory, Callback<? extends DataTypeFactory> dataTypeFactory )
     {
         NullArgumentException.validateNotNull( "processor", processor );
 
@@ -160,6 +172,7 @@ public class DefaultVendor
         this._fromFactory = tableReferenceFactory.get( this );
         this._definitionFactory = definitionFactory.get( this );
         this._manipulationFactory = manipulationFactory.get( this );
+        this._dataTypeFactory = dataTypeFactory.get( this );
     }
 
     /**
@@ -210,5 +223,10 @@ public class DefaultVendor
     public ManipulationFactory getManipulationFactory()
     {
         return this._manipulationFactory;
+    }
+
+    public DataTypeFactory getDataTypeFactory()
+    {
+        return this._dataTypeFactory;
     }
 }

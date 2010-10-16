@@ -23,6 +23,7 @@ import org.sql.generation.api.grammar.builders.definition.TableElementListBuilde
 import org.sql.generation.api.grammar.builders.definition.UniqueConstraintBuilder;
 import org.sql.generation.api.grammar.builders.definition.ViewDefinitionBuilder;
 import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.datatypes.SQLDataType;
 import org.sql.generation.api.grammar.definition.table.CheckConstraint;
 import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
 import org.sql.generation.api.grammar.definition.table.ConstraintCharacteristics;
@@ -74,8 +75,8 @@ public class DefaultDefinitionFactory extends AbstractDefinitionFactory
         return new TableElementListBuilderImpl();
     }
 
-    public ColumnDefinition createColumnDefinition( String columnName, String columnDataType, String columnDefault,
-        Boolean mayBeNull )
+    public ColumnDefinition createColumnDefinition( String columnName, SQLDataType columnDataType,
+        String columnDefault, Boolean mayBeNull )
     {
         return new ColumnDefinitionImpl( columnName, columnDataType, columnDefault, mayBeNull );
     }

@@ -21,6 +21,7 @@ import org.sql.generation.api.grammar.definition.table.ConstraintCharacteristics
 import org.sql.generation.api.grammar.definition.table.MatchType;
 import org.sql.generation.api.grammar.definition.table.ReferentialAction;
 import org.sql.generation.api.grammar.definition.table.UniqueSpecification;
+import org.sql.generation.api.grammar.factories.DataTypeFactory;
 import org.sql.generation.api.grammar.factories.DefinitionFactory;
 import org.sql.generation.api.grammar.factories.TableReferenceFactory;
 import org.sql.generation.api.vendor.SQLVendor;
@@ -61,6 +62,7 @@ public abstract class AbstractDataDefinitionTest extends AbstractSQLSyntaxTest
         SQLVendor vendor = this.getVendor();
         TableReferenceFactory t = vendor.getTableReferenceFactory();
         DefinitionFactory d = vendor.getDefinitionFactory();
+        DataTypeFactory dt = vendor.getDataTypeFactory();
         String schemaName = "qi4j_schema";
 
         TableDefinitionBuilder builder = d.createTableDefinitionBuilder();
@@ -69,11 +71,11 @@ public abstract class AbstractDataDefinitionTest extends AbstractSQLSyntaxTest
         
         TableElementListBuilder cBuilder = d.createTableElementListBuilder();
         cBuilder
-            .addTableElement( d.createColumnDefinition( "qname_id", "integer", false ) )
-            .addTableElement( d.createColumnDefinition( "entity_pk", "bigint", false ) )
-            .addTableElement( d.createColumnDefinition( "parent_qname", "integer" ) )
-            .addTableElement( d.createColumnDefinition( "collection_path", "ltree", false ) )
-            .addTableElement( d.createColumnDefinition( "qname_value", "integer" ) )
+            .addTableElement( d.createColumnDefinition( "qname_id", dt.integer(), false ) )
+            .addTableElement( d.createColumnDefinition( "entity_pk", dt.bigInt(), false ) )
+            .addTableElement( d.createColumnDefinition( "parent_qname", dt.integer() ) )
+            .addTableElement( d.createColumnDefinition( "collection_path", dt.userDefined( "ltree"), false ) )
+            .addTableElement( d.createColumnDefinition( "qname_value", dt.integer() ) )
             .addTableElement( d.createTableConstraintDefinition(
                 d.createUniqueConstraintBuilder()
                 .setUniqueness( UniqueSpecification.PRIMARY_KEY )

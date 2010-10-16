@@ -17,6 +17,7 @@ package org.sql.generation.api.vendor;
 import org.sql.generation.api.grammar.common.SQLStatement;
 import org.sql.generation.api.grammar.factories.BooleanFactory;
 import org.sql.generation.api.grammar.factories.ColumnsFactory;
+import org.sql.generation.api.grammar.factories.DataTypeFactory;
 import org.sql.generation.api.grammar.factories.DefinitionFactory;
 import org.sql.generation.api.grammar.factories.LiteralFactory;
 import org.sql.generation.api.grammar.factories.ManipulationFactory;
@@ -108,6 +109,14 @@ public interface SQLVendor
      * @see ManipulationFactory
      */
     public ManipulationFactory getManipulationFactory();
+
+    /**
+     * Returns the factory to create syntax elements for SQL data types compatible with this vendor.
+     * 
+     * @return The factory to create syntax elements for SQL data types.
+     * @see DataTypeFactory
+     */
+    public DataTypeFactory getDataTypeFactory();
 
     /**
      * Takes the {@link SQLStatement} (typically either a query, or a modification statement) and produces a textual SQL

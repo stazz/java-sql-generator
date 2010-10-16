@@ -49,6 +49,21 @@ import org.sql.generation.api.grammar.booleans.UniquePredicate;
 import org.sql.generation.api.grammar.common.ColumnNameList;
 import org.sql.generation.api.grammar.common.SQLConstants;
 import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.datatypes.BigInt;
+import org.sql.generation.api.grammar.common.datatypes.Decimal;
+import org.sql.generation.api.grammar.common.datatypes.DoublePrecision;
+import org.sql.generation.api.grammar.common.datatypes.Numeric;
+import org.sql.generation.api.grammar.common.datatypes.Real;
+import org.sql.generation.api.grammar.common.datatypes.SQLBoolean;
+import org.sql.generation.api.grammar.common.datatypes.SQLChar;
+import org.sql.generation.api.grammar.common.datatypes.SQLDate;
+import org.sql.generation.api.grammar.common.datatypes.SQLFloat;
+import org.sql.generation.api.grammar.common.datatypes.SQLInteger;
+import org.sql.generation.api.grammar.common.datatypes.SQLInterval;
+import org.sql.generation.api.grammar.common.datatypes.SQLTime;
+import org.sql.generation.api.grammar.common.datatypes.SQLTimeStamp;
+import org.sql.generation.api.grammar.common.datatypes.SmallInt;
+import org.sql.generation.api.grammar.common.datatypes.UserDefinedType;
 import org.sql.generation.api.grammar.definition.schema.SchemaDefinition;
 import org.sql.generation.api.grammar.definition.table.CheckConstraint;
 import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
@@ -120,6 +135,14 @@ import org.sql.generation.implementation.transformation.BooleanExpressionProcess
 import org.sql.generation.implementation.transformation.ColumnProcessing.ColumnNamesProcessor;
 import org.sql.generation.implementation.transformation.ColumnProcessing.ColumnReferenceByExpressionProcessor;
 import org.sql.generation.implementation.transformation.ColumnProcessing.ColumnReferenceByNameProcessor;
+import org.sql.generation.implementation.transformation.DataTypeProessing.DecimalProcessor;
+import org.sql.generation.implementation.transformation.DataTypeProessing.NumericProcessor;
+import org.sql.generation.implementation.transformation.DataTypeProessing.SQLCharProcessor;
+import org.sql.generation.implementation.transformation.DataTypeProessing.SQLFloatProcessor;
+import org.sql.generation.implementation.transformation.DataTypeProessing.SQLIntervalProcessor;
+import org.sql.generation.implementation.transformation.DataTypeProessing.SQLTimeProcessor;
+import org.sql.generation.implementation.transformation.DataTypeProessing.SQLTimeStampProcessor;
+import org.sql.generation.implementation.transformation.DataTypeProessing.VanillaDataTypeProcessor;
 import org.sql.generation.implementation.transformation.DefinitionProcessing.CheckConstraintProcessor;
 import org.sql.generation.implementation.transformation.DefinitionProcessing.ColumnDefinitionProcessor;
 import org.sql.generation.implementation.transformation.DefinitionProcessing.ForeignKeyConstraintProcessor;
@@ -367,6 +390,24 @@ public class DefaultSQLProcessor extends InteractionMapper<Typeable<?>, SQLProce
         processors.put( Defaults.class, new ConstantProcessor( SQLConstants.TOKEN_SEPARATOR + "DEFAULT VALUES" ) );
 
         // Data definition
+        // First data types
+        VanillaDataTypeProcessor vanilla = new VanillaDataTypeProcessor();
+        processors.put( BigInt.class, vanilla );
+        processors.put( DoublePrecision.class, vanilla );
+        processors.put( Real.class, vanilla );
+        processors.put( SmallInt.class, vanilla );
+        processors.put( SQLBoolean.class, vanilla );
+        processors.put( SQLDate.class, vanilla );
+        processors.put( SQLInteger.class, vanilla );
+        processors.put( UserDefinedType.class, vanilla );
+        processors.put( Decimal.class, new DecimalProcessor() );
+        processors.put( Numeric.class, new NumericProcessor() );
+        processors.put( SQLChar.class, new SQLCharProcessor() );
+        processors.put( SQLFloat.class, new SQLFloatProcessor() );
+        processors.put( SQLInterval.class, new SQLIntervalProcessor() );
+        processors.put( SQLTime.class, new SQLTimeProcessor() );
+        processors.put( SQLTimeStamp.class, new SQLTimeStampProcessor() );
+        // Then statements and clauses
         processors.put( SchemaDefinition.class, new SchemaDefinitionProcessor() );
         processors.put( TableDefinition.class, new TableDefinitionProcessor() );
         processors.put( TableElementList.class, new TableElementListProcessor() );

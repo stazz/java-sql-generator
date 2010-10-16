@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.definition.table;
 
 import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
+import org.sql.generation.api.grammar.common.datatypes.SQLDataType;
 import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
 import org.sql.generation.api.grammar.definition.table.TableElement;
 
@@ -28,17 +29,17 @@ public class ColumnDefinitionImpl extends TypeableImpl<TableElement, ColumnDefin
 {
 
     private final String _name;
-    private final String _dataType;
+    private final SQLDataType _dataType;
     private final String _default;
     private final Boolean _mayBeNull;
 
-    public ColumnDefinitionImpl( String name, String dataType, String defaultStr, Boolean mayBeNull )
+    public ColumnDefinitionImpl( String name, SQLDataType dataType, String defaultStr, Boolean mayBeNull )
     {
         this( ColumnDefinition.class, name, dataType, defaultStr, mayBeNull );
     }
 
     protected ColumnDefinitionImpl( Class<? extends ColumnDefinition> realImplementingType, String name,
-        String dataType, String defaultStr, Boolean mayBeNull )
+        SQLDataType dataType, String defaultStr, Boolean mayBeNull )
     {
         super( realImplementingType );
 
@@ -65,7 +66,7 @@ public class ColumnDefinitionImpl extends TypeableImpl<TableElement, ColumnDefin
         return this._name;
     }
 
-    public String getDataType()
+    public SQLDataType getDataType()
     {
         return this._dataType;
     }

@@ -22,6 +22,7 @@ import org.sql.generation.api.grammar.builders.definition.TableElementListBuilde
 import org.sql.generation.api.grammar.builders.definition.UniqueConstraintBuilder;
 import org.sql.generation.api.grammar.builders.definition.ViewDefinitionBuilder;
 import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.datatypes.SQLDataType;
 import org.sql.generation.api.grammar.definition.table.CheckConstraint;
 import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
 import org.sql.generation.api.grammar.definition.table.ConstraintCharacteristics;
@@ -74,7 +75,7 @@ public interface DefinitionFactory
      * @return The syntax element for definition of column with specified name and data type.
      * @see #createColumnDefinition(String, String, String, Boolean)
      */
-    public ColumnDefinition createColumnDefinition( String columnName, String columnDataType );
+    public ColumnDefinition createColumnDefinition( String columnName, SQLDataType columnDataType );
 
     /**
      * Creates a new definition of column with specified name, data type, and {@code NULL} value policy. Invoking this
@@ -89,7 +90,7 @@ public interface DefinitionFactory
      *         policy.
      * @see #createColumnDefinition(String, String, String, Boolean)
      */
-    public ColumnDefinition createColumnDefinition( String columnName, String columnDataType, Boolean mayBeNull );
+    public ColumnDefinition createColumnDefinition( String columnName, SQLDataType columnDataType, Boolean mayBeNull );
 
     /**
      * Creates a new definition of column with specified name, data type, default value. Invoking this method is
@@ -102,7 +103,7 @@ public interface DefinitionFactory
      * @return The syntax element for definition of column with specified name, data type, default value.
      * @see #createColumnDefinition(String, String, String, Boolean)
      */
-    public ColumnDefinition createColumnDefinition( String columnName, String columnDataType, String columnDefault );
+    public ColumnDefinition createColumnDefinition( String columnName, SQLDataType columnDataType, String columnDefault );
 
     /**
      * Creates a new definition of column with specified name, data type, default value, and {@code NULL} value policy.
@@ -115,8 +116,8 @@ public interface DefinitionFactory
      * @return The syntax element for definition of column with specified name, data type, default value, and
      *         {@code NULL} value policy.
      */
-    public ColumnDefinition createColumnDefinition( String columnName, String columnDataType, String columnDefault,
-        Boolean mayBeNull );
+    public ColumnDefinition createColumnDefinition( String columnName, SQLDataType columnDataType,
+        String columnDefault, Boolean mayBeNull );
 
     /**
      * Creates a new {@code LIKE
