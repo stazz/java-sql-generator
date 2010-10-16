@@ -4,29 +4,31 @@ Please notice that this framework depends on API Typeable POJOs (ATP) project ( 
 
 Currently there is support for data querying (SELECT), modification (INSERT, UPDATE, DELETE), data definition (CREATE), data manipulation (ALTER).
 
-Please see the tests of the implementation project on how to use the java-sql-generator framework. Typical usecase would be:
+Please see the tests of the implementation project on how to use the java-sql-generator framework. Typical usecase for simple queries would be:
 
 // Create or acquire vendor
 SQLVendor vendor = SQLVendorProvider.createVendor( MyVendorClass.class );
 SQLVendor vendor = ...;
 
-// Get factories
-QueryFactory q = vendor.getQueryFactory();
+/*
+  Creating query:
+  SELECT value
+  FROM table
+  WHERE table.value = 5
+  ORDER BY 1 ASC
+*/
+
 BooleanFactory b = vendor.getBooleanFactory();
-TableReferenceFactory t = vendor.getTableReferenceFactory();
-LiteralFactory l = vendor.getLiteralFactory();
 ColumnsFactory c = vendor.getColumnsFactory();
+LiteralFactory l = vendor.getLiteralFactory();
 
-// Use factories and builders to construct SQL statement
-// SELECT column
-// FROM table
-// WHERE column = 'test'
+QueryExpression query = vendor.getQueryFactory().simpleQueryBuilder()
+  .select( "value" )
+  .from( "table" )
+  .where( b.eq( c.colName( "table", "value" ), l.n(5) ) )
+  .orderByAsc( "1" )
+  .limit( 6 )
+  .offset( 3 )
+  .createExpression();
 
-QuerySpecificationBuilder builder = q.querySpecificationBuilder( );
-builder.setSelect( q.columnsBuilder().addUnnamedColumns( c.colName( "column" ) ) );
-builder.getFrom().addTableReferences( t.tableBuilder( t.table( t.tableName( "table" ) ) ) );
-builder.getWhere().reset( b.eq( c.colName( "column"), l.s("test") ) );
-
-// Get textual query
-QueryExpression query = q.createQuery( q.queryBuilder( builder.createExpression() ).createExpression() );
 String sqlString = vendor.toString( query );
