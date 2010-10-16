@@ -135,14 +135,14 @@ import org.sql.generation.implementation.transformation.BooleanExpressionProcess
 import org.sql.generation.implementation.transformation.ColumnProcessing.ColumnNamesProcessor;
 import org.sql.generation.implementation.transformation.ColumnProcessing.ColumnReferenceByExpressionProcessor;
 import org.sql.generation.implementation.transformation.ColumnProcessing.ColumnReferenceByNameProcessor;
-import org.sql.generation.implementation.transformation.DataTypeProessing.DecimalProcessor;
-import org.sql.generation.implementation.transformation.DataTypeProessing.NumericProcessor;
-import org.sql.generation.implementation.transformation.DataTypeProessing.SQLCharProcessor;
-import org.sql.generation.implementation.transformation.DataTypeProessing.SQLFloatProcessor;
-import org.sql.generation.implementation.transformation.DataTypeProessing.SQLIntervalProcessor;
-import org.sql.generation.implementation.transformation.DataTypeProessing.SQLTimeProcessor;
-import org.sql.generation.implementation.transformation.DataTypeProessing.SQLTimeStampProcessor;
-import org.sql.generation.implementation.transformation.DataTypeProessing.VanillaDataTypeProcessor;
+import org.sql.generation.implementation.transformation.DataTypeProcessing.DecimalProcessor;
+import org.sql.generation.implementation.transformation.DataTypeProcessing.NumericProcessor;
+import org.sql.generation.implementation.transformation.DataTypeProcessing.SQLCharProcessor;
+import org.sql.generation.implementation.transformation.DataTypeProcessing.SQLFloatProcessor;
+import org.sql.generation.implementation.transformation.DataTypeProcessing.SQLIntervalProcessor;
+import org.sql.generation.implementation.transformation.DataTypeProcessing.SQLTimeProcessor;
+import org.sql.generation.implementation.transformation.DataTypeProcessing.SQLTimeStampProcessor;
+import org.sql.generation.implementation.transformation.DataTypeProcessing.UserDefinedDataTypeProcessor;
 import org.sql.generation.implementation.transformation.DefinitionProcessing.CheckConstraintProcessor;
 import org.sql.generation.implementation.transformation.DefinitionProcessing.ColumnDefinitionProcessor;
 import org.sql.generation.implementation.transformation.DefinitionProcessing.ForeignKeyConstraintProcessor;
@@ -391,15 +391,14 @@ public class DefaultSQLProcessor extends InteractionMapper<Typeable<?>, SQLProce
 
         // Data definition
         // First data types
-        VanillaDataTypeProcessor vanilla = new VanillaDataTypeProcessor();
-        processors.put( BigInt.class, vanilla );
-        processors.put( DoublePrecision.class, vanilla );
-        processors.put( Real.class, vanilla );
-        processors.put( SmallInt.class, vanilla );
-        processors.put( SQLBoolean.class, vanilla );
-        processors.put( SQLDate.class, vanilla );
-        processors.put( SQLInteger.class, vanilla );
-        processors.put( UserDefinedType.class, vanilla );
+        processors.put( BigInt.class, new ConstantProcessor( "BIGINT" ) );
+        processors.put( DoublePrecision.class, new ConstantProcessor( "DOUBLE PRECISION" ) );
+        processors.put( Real.class, new ConstantProcessor( "REAL" ) );
+        processors.put( SmallInt.class, new ConstantProcessor( "SMALLINT" ) );
+        processors.put( SQLBoolean.class, new ConstantProcessor( "BOOLEAN" ) );
+        processors.put( SQLDate.class, new ConstantProcessor( "DATE" ) );
+        processors.put( SQLInteger.class, new ConstantProcessor( "INTEGER" ) );
+        processors.put( UserDefinedType.class, new UserDefinedDataTypeProcessor() );
         processors.put( Decimal.class, new DecimalProcessor() );
         processors.put( Numeric.class, new NumericProcessor() );
         processors.put( SQLChar.class, new SQLCharProcessor() );

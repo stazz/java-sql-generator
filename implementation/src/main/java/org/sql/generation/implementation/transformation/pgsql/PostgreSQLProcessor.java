@@ -21,9 +21,11 @@ import org.atp.api.Typeable;
 import org.sql.generation.api.grammar.booleans.BinaryPredicate;
 import org.sql.generation.api.grammar.booleans.NotRegexpPredicate;
 import org.sql.generation.api.grammar.booleans.RegexpPredicate;
+import org.sql.generation.api.grammar.common.datatypes.pgsql.Text;
 import org.sql.generation.api.grammar.query.pgsql.PgSQLQuerySpecification;
-import org.sql.generation.implementation.transformation.DefaultSQLProcessor;
 import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.BinaryPredicateProcessor;
+import org.sql.generation.implementation.transformation.ConstantProcessor;
+import org.sql.generation.implementation.transformation.DefaultSQLProcessor;
 import org.sql.generation.implementation.transformation.pgsql.QueryProcessing.PgSQLQuerySpecificationProcessor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessor;
 
@@ -53,6 +55,8 @@ public class PostgreSQLProcessor extends DefaultSQLProcessor
         processors.put( NotRegexpPredicate.class,
             new BinaryPredicateProcessor( _defaultPgSQLBinaryOperators.get( NotRegexpPredicate.class ) ) );
         processors.put( PgSQLQuerySpecification.class, new PgSQLQuerySpecificationProcessor() );
+        processors.put( Text.class, new ConstantProcessor( "TEXT" ) );
+
         _defaultProcessors = processors;
     }
 

@@ -18,22 +18,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.sql.generation.api.grammar.common.SQLConstants;
-import org.sql.generation.api.grammar.common.datatypes.BigInt;
 import org.sql.generation.api.grammar.common.datatypes.Decimal;
-import org.sql.generation.api.grammar.common.datatypes.DoublePrecision;
 import org.sql.generation.api.grammar.common.datatypes.IntervalDataType;
 import org.sql.generation.api.grammar.common.datatypes.Numeric;
-import org.sql.generation.api.grammar.common.datatypes.Real;
-import org.sql.generation.api.grammar.common.datatypes.SQLBoolean;
 import org.sql.generation.api.grammar.common.datatypes.SQLChar;
-import org.sql.generation.api.grammar.common.datatypes.SQLDataType;
-import org.sql.generation.api.grammar.common.datatypes.SQLDate;
 import org.sql.generation.api.grammar.common.datatypes.SQLFloat;
-import org.sql.generation.api.grammar.common.datatypes.SQLInteger;
 import org.sql.generation.api.grammar.common.datatypes.SQLInterval;
 import org.sql.generation.api.grammar.common.datatypes.SQLTime;
 import org.sql.generation.api.grammar.common.datatypes.SQLTimeStamp;
-import org.sql.generation.api.grammar.common.datatypes.SmallInt;
 import org.sql.generation.api.grammar.common.datatypes.UserDefinedType;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
@@ -41,53 +33,21 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
  * 
  * @author Stanislav Muhametsin
  */
-public class DataTypeProessing
+public class DataTypeProcessing
 {
 
-    public static class VanillaDataTypeProcessor extends AbstractProcessor<SQLDataType>
+    public static class UserDefinedDataTypeProcessor extends AbstractProcessor<UserDefinedType>
     {
-        private static final Map<Class<? extends SQLDataType>, String> _defaultDataTypeNames;
 
-        static
+        public UserDefinedDataTypeProcessor()
         {
-            Map<Class<? extends SQLDataType>, String> map = new HashMap<Class<? extends SQLDataType>, String>();
-
-            map.put( BigInt.class, "BIGINT" );
-            map.put( DoublePrecision.class, "DOUBLE PRECISION" );
-            map.put( Real.class, "REAL" );
-            map.put( SmallInt.class, "SMALLINT" );
-            map.put( SQLBoolean.class, "BOOLEAN" );
-            map.put( SQLDate.class, "DATE" );
-            map.put( SQLInteger.class, "INTEGER" );
-
-            _defaultDataTypeNames = map;
-        }
-
-        private final Map<Class<? extends SQLDataType>, String> _dataTypeNames;
-
-        public VanillaDataTypeProcessor()
-        {
-            this( _defaultDataTypeNames );
-        }
-
-        public VanillaDataTypeProcessor( Map<Class<? extends SQLDataType>, String> dataTypeNames )
-        {
-            super( SQLDataType.class );
-
-            this._dataTypeNames = dataTypeNames;
+            super( UserDefinedType.class );
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator aggregator, SQLDataType object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator aggregator, UserDefinedType object, StringBuilder builder )
         {
-            if( object instanceof UserDefinedType )
-            {
-                builder.append( ((UserDefinedType) object).getTextualRepresentation() );
-            }
-            else
-            {
-                builder.append( this._dataTypeNames.get( object.getImplementedType() ) );
-            }
+            builder.append( object.getTextualRepresentation() );
         }
     }
 
