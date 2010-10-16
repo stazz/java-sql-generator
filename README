@@ -27,8 +27,6 @@ QueryExpression query = vendor.getQueryFactory().simpleQueryBuilder()
   .from( "table" )
   .where( b.eq( c.colName( "table", "value" ), l.n(5) ) )
   .orderByAsc( "1" )
-  .limit( 6 )
-  .offset( 3 )
   .createExpression();
 
 String sqlString = vendor.toString( query );
