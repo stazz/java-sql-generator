@@ -18,8 +18,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.atp.api.Typeable;
+import org.sql.generation.api.grammar.common.SchemaDefinitionStatement;
 import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.manipulation.DropSchemaStatement;
 import org.sql.generation.implementation.transformation.DefaultSQLProcessor;
+import org.sql.generation.implementation.transformation.NoOpProcessor;
 import org.sql.generation.implementation.transformation.mysql.MySQLTableProcessing.MySQLTableNameProcessor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessor;
 
@@ -36,8 +39,13 @@ public class MySQLProcessor extends DefaultSQLProcessor
     {
         Map<Class<? extends Typeable<?>>, SQLProcessor> processors = new HashMap<Class<? extends Typeable<?>>, SQLProcessor>(
             DefaultSQLProcessor.getDefaultProcessors() );
+
         // MySQL does not understand schema-qualified table names
         processors.put( TableName.class, new MySQLTableNameProcessor() );
+
+        // Ignore schema creations and drops
+        processors.put( SchemaDefinitionStatement.class, new NoOpProcessor() );
+        processors.put( DropSchemaStatement.class, new NoOpProcessor() );
 
         _defaultProcessors = processors;
     }

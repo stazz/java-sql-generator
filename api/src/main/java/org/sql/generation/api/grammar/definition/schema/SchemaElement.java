@@ -14,6 +14,8 @@
 
 package org.sql.generation.api.grammar.definition.schema;
 
+import org.atp.api.Typeable;
+
 /**
  * This is a common interface for all definitions that may be present in schema definition.
  * 
@@ -23,4 +25,5 @@ package org.sql.generation.api.grammar.definition.schema;
 public interface SchemaElement
 {
 
+    public Typeable<?> asTypeable();
 }

@@ -45,7 +45,7 @@ public abstract class AbstractDataDefinitionTest extends AbstractSQLSyntaxTest
          * parent_qname integer,
          * collection_path ltree NOT NULL,
          * qname_value integer,
-         * CONSTRAINT qname_9_pkey PRIMARY KEY (qname_id, entity_pk),
+         * PRIMARY KEY (qname_id, entity_pk),
          * CONSTRAINT qname_9_parent_qname_fkey FOREIGN KEY (parent_qname, entity_pk)
          * REFERENCES qi4j_schema.all_qnames (qname_id, entity_pk) MATCH SIMPLE
          * ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED,
@@ -53,7 +53,7 @@ public abstract class AbstractDataDefinitionTest extends AbstractSQLSyntaxTest
          * REFERENCES qi4j_schema.all_qnames (qname_id, entity_pk) MATCH SIMPLE
          * ON UPDATE CASCADE ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED,
          * CONSTRAINT qname_9_qname_value_fkey FOREIGN KEY (qname_value)
-         * REFERENCES qi4j_schema.used_classes (used_class_id) MATCH SIMPLE
+         * REFERENCES qi4j_schema.used_classes (used_class_id)
          * ON UPDATE CASCADE ON DELETE RESTRICT
          * )
          */
@@ -74,7 +74,7 @@ public abstract class AbstractDataDefinitionTest extends AbstractSQLSyntaxTest
             .addTableElement( d.createColumnDefinition( "parent_qname", "integer" ) )
             .addTableElement( d.createColumnDefinition( "collection_path", "ltree", false ) )
             .addTableElement( d.createColumnDefinition( "qname_value", "integer" ) )
-            .addTableElement( d.createTableConstraintDefinition( "qname_9_pkey", 
+            .addTableElement( d.createTableConstraintDefinition(
                 d.createUniqueConstraintBuilder()
                 .setUniqueness( UniqueSpecification.PRIMARY_KEY )
                 .addColumns( "qname_id", "entity_pk" )
@@ -115,7 +115,6 @@ public abstract class AbstractDataDefinitionTest extends AbstractSQLSyntaxTest
                         .addSourceColumns( "qname_value" )
                         .setTargetTableName( t.tableName( schemaName, "used_classes" ) )
                         .addTargetColumns( "used_class_id" )
-                        .setMatchType( MatchType.SIMPLE )
                         .setOnUpdate( ReferentialAction.CASCADE )
                         .setOnDelete( ReferentialAction.RESTRICT )
                         .createExpression()

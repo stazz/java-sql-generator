@@ -14,6 +14,7 @@
 
 package org.sql.generation.api.grammar.booleans;
 
+
 /**
  * The interface for syntax element representing {@code <X> IS [NOT] (TRUE | FALSE | UNKNOWN)} expression (boolean
  * test), where {@code <X>} is some boolean expression.
@@ -30,6 +31,7 @@ public interface BooleanTest
      */
     public final class TestType
     {
+
         /**
          * The test which tests the expression against the truth value.
          */
@@ -48,6 +50,7 @@ public interface BooleanTest
      */
     public final class TruthValue
     {
+
         /**
          * The {@code TRUE} truth value.
          */

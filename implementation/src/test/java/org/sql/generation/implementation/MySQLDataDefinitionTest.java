@@ -12,30 +12,23 @@
  *
  */
 
-package org.sql.generation.api.grammar.definition.table;
+package org.sql.generation.implementation;
 
+import org.sql.generation.api.vendor.MySQLVendor;
+import org.sql.generation.api.vendor.SQLVendor;
+import org.sql.generation.api.vendor.SQLVendorProvider;
 
 /**
- * This enum represents the three different ways of matching foreign keys. May be {@link #FULL}, {@link #PARTIAL}, or
- * {@link #SIMPLE}.
  * 
  * @author Stanislav Muhametsin
  */
-public final class MatchType
+public class MySQLDataDefinitionTest extends AbstractDataDefinitionTest
 {
 
-    /**
-     * Represents the full match ({@code MATCH FULL}).
-     */
-    public static final MatchType FULL = new MatchType();
-
-    /**
-     * Represents the partial match ({@code MATCH PARTIAL}).
-     */
-    public static final MatchType PARTIAL = new MatchType();
-
-    /**
-     * Represents the simple match ({@code MATCH SIMPLE}).
-     */
-    public static final MatchType SIMPLE = new MatchType();
+    @Override
+    protected SQLVendor getVendor()
+        throws Exception
+    {
+        return SQLVendorProvider.createVendor( MySQLVendor.class );
+    }
 }

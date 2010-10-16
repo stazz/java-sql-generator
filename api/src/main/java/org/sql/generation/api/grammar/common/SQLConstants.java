@@ -64,4 +64,6 @@ public interface SQLConstants
     public static final String NULL = "NULL";
 
     public static final String IS = "IS";
+
+    public static final String CREATE = "CREATE";
 }

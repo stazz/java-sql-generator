@@ -40,8 +40,6 @@ public class RegularViewSpecificationImpl extends TypeableImpl<ViewSpecification
     {
         super( realImplementingType );
 
-        NullArgumentException.validateNotNull( "Column name list", columns );
-
         this._columns = columns;
     }
 

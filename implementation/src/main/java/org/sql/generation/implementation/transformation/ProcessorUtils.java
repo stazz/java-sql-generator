@@ -14,7 +14,9 @@
 
 package org.sql.generation.implementation.transformation;
 
+import org.sql.generation.api.grammar.common.SQLConstants;
 import org.sql.generation.api.grammar.common.SetQuantifier;
+import org.sql.generation.api.grammar.manipulation.DropBehaviour;
 
 /**
  * 
@@ -36,6 +38,19 @@ public class ProcessorUtils
         else
         {
             builder.append( "DISTINCT" );
+        }
+    }
+
+    public static void processDropBehaviour( DropBehaviour behaviour, StringBuilder builder )
+    {
+        builder.append( SQLConstants.TOKEN_SEPARATOR );
+        if( behaviour == DropBehaviour.CASCADE )
+        {
+            builder.append( "CASCADE" );
+        }
+        else
+        {
+            builder.append( "RESTRICT" );
         }
     }
 }

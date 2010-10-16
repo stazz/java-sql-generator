@@ -14,6 +14,7 @@
 
 package org.sql.generation.api.grammar.definition.table;
 
+
 /**
  * This enum represents three different policies for checking constraints time. These policies are
  * {@link #INITIALLY_IMMEDIATE_DEFERRABLE}, {@link #INITIALLY_DEFERRED_DEFERRABLE}, and {@link #NOT_DEFERRABLE}.
@@ -22,7 +23,6 @@ package org.sql.generation.api.grammar.definition.table;
  */
 public final class ConstraintCharacteristics
 {
-
     /**
      * Represents the {@code INITIALLY IMMEDIATE DEFERRABLE} constraint time check.
      */

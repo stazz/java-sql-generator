@@ -14,6 +14,7 @@
 
 package org.sql.generation.implementation.grammar.definition.table;
 
+import org.atp.api.Typeable;
 import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.SchemaStatement;
@@ -62,6 +63,11 @@ public class TableDefinitionImpl extends TypeableImpl<SchemaStatement, TableDefi
         return this._name.equals( another.getTableName() ) && this._contents.equals( another.getContents() )
             && TypeableImpl.bothNullOrEquals( this._scope, another.getTableScope() )
             && TypeableImpl.bothNullOrEquals( this._commitAction, another.getCommitAction() );
+    }
+
+    public Typeable<?> asTypeable()
+    {
+        return this;
     }
 
     public TableCommitAction getCommitAction()

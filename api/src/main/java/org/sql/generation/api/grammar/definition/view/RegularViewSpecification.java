@@ -27,9 +27,9 @@ public interface RegularViewSpecification
 {
 
     /**
-     * Returns the column names of this view.
+     * Returns the column names of this view. Will be {@code null} if none are specified.
      * 
-     * @return The column names of this view.
+     * @return The column names of this view. Will be {@code null} if none are specified.
      */
     public ColumnNameList getColumns();
 }

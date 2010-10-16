@@ -14,6 +14,7 @@
 
 package org.sql.generation.implementation.grammar.definition.view;
 
+import org.atp.api.Typeable;
 import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.SchemaStatement;
@@ -66,6 +67,11 @@ public class ViewDefinitionImpl extends TypeableImpl<SchemaStatement, ViewDefini
         return this._name.equals( another.getViewName() ) && this._isRecursive.equals( another.isRecursive() )
             && this._spec.equals( another.getViewSpecification() ) && this._query.equals( another.getViewQuery() )
             && TypeableImpl.bothNullOrEquals( this._viewCheck, another.getViewCheckOption() );
+    }
+
+    public Typeable<?> asTypeable()
+    {
+        return this;
     }
 
     public ViewCheckOption getViewCheckOption()

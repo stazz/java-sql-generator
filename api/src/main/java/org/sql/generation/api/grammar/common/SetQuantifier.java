@@ -14,6 +14,7 @@
 
 package org.sql.generation.api.grammar.common;
 
+
 /**
  * Set quantifer, can be either {@link #ALL} or {@link #DISTINCT}.
  * 
@@ -21,6 +22,7 @@ package org.sql.generation.api.grammar.common;
  */
 public final class SetQuantifier
 {
+
     /**
      * Set quantifier for {@code DISTINCT} element.
      */
