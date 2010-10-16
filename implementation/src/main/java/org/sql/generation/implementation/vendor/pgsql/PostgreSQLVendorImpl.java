@@ -14,9 +14,11 @@
 
 package org.sql.generation.implementation.vendor.pgsql;
 
+import org.sql.generation.api.grammar.factories.pgsql.PgSQLDataTypeFactory;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLQueryFactory;
 import org.sql.generation.api.vendor.PostgreSQLVendor;
 import org.sql.generation.api.vendor.SQLVendor;
+import org.sql.generation.implementation.grammar.factories.pgsql.PgSQLDataTypeFactoryImpl;
 import org.sql.generation.implementation.grammar.factories.pgsql.PgSQLQueryFactoryImpl;
 import org.sql.generation.implementation.transformation.pgsql.PostgreSQLProcessor;
 import org.sql.generation.implementation.vendor.DefaultVendor;
@@ -36,10 +38,18 @@ public class PostgreSQLVendorImpl extends DefaultVendor
         }
     };
 
+    protected static final Callback<PgSQLDataTypeFactory> PG_DATA_TYPE_FACTORY = new Callback<PgSQLDataTypeFactory>()
+    {
+        public PgSQLDataTypeFactory get( SQLVendor vendor )
+        {
+            return new PgSQLDataTypeFactoryImpl();
+        }
+    };
+
     public PostgreSQLVendorImpl()
     {
         super( new PostgreSQLProcessor(), BOOLEAN_FACTORY, COLUMNS_FACTORY, LITERAL_FACTORY, MODIFICATION_FACTORY,
-            PG_QUERY_FACTORY, TABLE_REFERENCE_FACTORY, DEFINITION_FACTORY, MANIPULATION_FACTORY, DATA_TYPE_FACTORY );
+            PG_QUERY_FACTORY, TABLE_REFERENCE_FACTORY, DEFINITION_FACTORY, MANIPULATION_FACTORY, PG_DATA_TYPE_FACTORY );
 
     }
 
@@ -47,5 +57,11 @@ public class PostgreSQLVendorImpl extends DefaultVendor
     public PgSQLQueryFactory getQueryFactory()
     {
         return (PgSQLQueryFactory) super.getQueryFactory();
+    }
+
+    @Override
+    public PgSQLDataTypeFactory getDataTypeFactory()
+    {
+        return (PgSQLDataTypeFactory) super.getDataTypeFactory();
     }
 }

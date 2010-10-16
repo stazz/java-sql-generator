@@ -53,6 +53,6 @@ public final class DecimalImpl extends TypeableImpl<SQLDataType, Decimal>
     /**
      * This instance represents {@code DECIMAL} without precision and scale.
      */
-    public static final DecimalImpl PLAIN_DECIMAL = new DecimalImpl( null, null );
+    public static final Decimal PLAIN_DECIMAL = new DecimalImpl( null, null );
 
 }

@@ -52,5 +52,5 @@ public final class NumericImpl extends TypeableImpl<SQLDataType, Numeric>
     /**
      * This instance represents {@code NUMERIC} without precision and scale.
      */
-    public static final NumericImpl PLAIN_NUMERIC = new NumericImpl( null, null );
+    public static final Numeric PLAIN_NUMERIC = new NumericImpl( null, null );
 }

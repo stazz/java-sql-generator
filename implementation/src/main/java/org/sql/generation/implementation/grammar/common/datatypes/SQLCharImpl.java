@@ -44,7 +44,7 @@ public final class SQLCharImpl extends TypeableImpl<SQLDataType, SQLChar>
         return this._length;
     }
 
-    public static final SQLCharImpl PLAIN_FIXED = new SQLCharImpl( false, null );
+    public static final SQLChar PLAIN_FIXED = new SQLCharImpl( false, null );
 
-    public static final SQLCharImpl PLAIN_VARYING = new SQLCharImpl( true, null );
+    public static final SQLChar PLAIN_VARYING = new SQLCharImpl( true, null );
 }

@@ -39,5 +39,5 @@ public final class SQLFloatImpl extends TypeableImpl<SQLDataType, SQLFloat>
     /**
      * This instance represents {@code FLOAT} without precision.
      */
-    public static final SQLFloatImpl PLAIN_FLOAT = new SQLFloatImpl( null );
+    public static final SQLFloat PLAIN_FLOAT = new SQLFloatImpl( null );
 }
