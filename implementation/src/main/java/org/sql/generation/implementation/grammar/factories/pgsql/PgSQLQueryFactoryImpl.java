@@ -15,11 +15,13 @@
 package org.sql.generation.implementation.grammar.factories.pgsql;
 
 import org.sql.generation.api.grammar.builders.query.pgsql.PgSQLQuerySpecificationBuilder;
+import org.sql.generation.api.grammar.builders.query.pgsql.PgSQLSimpleQueryBuilder;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLQueryFactory;
 import org.sql.generation.api.grammar.query.pgsql.LimitByNumber;
 import org.sql.generation.api.grammar.query.pgsql.OffsetClause;
 import org.sql.generation.api.vendor.PostgreSQLVendor;
 import org.sql.generation.implementation.grammar.builders.query.pgsql.PgSQLQuerySpecificationBuilderImpl;
+import org.sql.generation.implementation.grammar.builders.query.pgsql.PgSQLSimpleQueryBuilderImpl;
 import org.sql.generation.implementation.grammar.factories.DefaultQueryFactory;
 import org.sql.generation.implementation.grammar.query.pgsql.LimitByNumberImpl;
 import org.sql.generation.implementation.grammar.query.pgsql.OffsetClauseImpl;
@@ -53,5 +55,11 @@ public class PgSQLQueryFactoryImpl extends DefaultQueryFactory
     public OffsetClause offset( Integer offset )
     {
         return new OffsetClauseImpl( offset );
+    }
+
+    @Override
+    public PgSQLSimpleQueryBuilder simpleQueryBuilder()
+    {
+        return new PgSQLSimpleQueryBuilderImpl( (PostgreSQLVendor) this.getVendor() );
     }
 }

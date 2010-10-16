@@ -20,6 +20,7 @@ import org.sql.generation.api.grammar.builders.query.GroupByBuilder;
 import org.sql.generation.api.grammar.builders.query.OrderByBuilder;
 import org.sql.generation.api.grammar.builders.query.QueryBuilder;
 import org.sql.generation.api.grammar.builders.query.QuerySpecificationBuilder;
+import org.sql.generation.api.grammar.builders.query.SimpleQueryBuilder;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.api.grammar.common.SetQuantifier;
 import org.sql.generation.api.grammar.common.ValueExpression;
@@ -136,9 +137,16 @@ public interface QueryFactory
     public SortSpecification sortSpec( ValueExpression expression, Ordering ordering );
 
     /**
-     * Creats a builder for {@code ORDER BY} clause.
+     * Creates a builder for {@code ORDER BY} clause.
      * 
      * @return The new {@link OrderByBuilder}.
      */
     public OrderByBuilder orderByBuilder();
+
+    /**
+     * Creates a builder for simple queries.
+     * 
+     * @return The new {@link SimpleQueryBuilder}.
+     */
+    public SimpleQueryBuilder simpleQueryBuilder();
 }

@@ -15,7 +15,6 @@
 package org.sql.generation.implementation.grammar.definition.view;
 
 import org.atp.spi.TypeableImpl;
-import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.ColumnNameList;
 import org.sql.generation.api.grammar.definition.view.RegularViewSpecification;
 import org.sql.generation.api.grammar.definition.view.ViewSpecification;

@@ -21,6 +21,7 @@ import org.sql.generation.api.grammar.builders.query.GroupByBuilder;
 import org.sql.generation.api.grammar.builders.query.OrderByBuilder;
 import org.sql.generation.api.grammar.builders.query.QueryBuilder;
 import org.sql.generation.api.grammar.builders.query.QuerySpecificationBuilder;
+import org.sql.generation.api.grammar.builders.query.SimpleQueryBuilder;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.api.grammar.common.SetQuantifier;
 import org.sql.generation.api.grammar.common.ValueExpression;
@@ -36,6 +37,7 @@ import org.sql.generation.implementation.grammar.builders.query.GroupByBuilderIm
 import org.sql.generation.implementation.grammar.builders.query.OrderByBuilderImpl;
 import org.sql.generation.implementation.grammar.builders.query.QueryBuilderImpl;
 import org.sql.generation.implementation.grammar.builders.query.QuerySpecificationBuilderImpl;
+import org.sql.generation.implementation.grammar.builders.query.SimpleQueryBuilderImpl;
 import org.sql.generation.implementation.grammar.query.OrdinaryGroupingSetImpl;
 import org.sql.generation.implementation.grammar.query.QueryExpressionImpl;
 import org.sql.generation.implementation.grammar.query.SortSpecificationImpl;
@@ -105,6 +107,11 @@ public class DefaultQueryFactory extends AbstractQueryFactory
     public SortSpecification sortSpec( ValueExpression expression, Ordering ordering )
     {
         return new SortSpecificationImpl( expression, ordering );
+    }
+
+    public SimpleQueryBuilder simpleQueryBuilder()
+    {
+        return new SimpleQueryBuilderImpl( this._vendor );
     }
 
 }

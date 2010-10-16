@@ -15,13 +15,9 @@
 package org.sql.generation.implementation;
 
 import org.junit.Test;
-import org.sql.generation.api.grammar.builders.query.pgsql.PgSQLQuerySpecificationBuilder;
 import org.sql.generation.api.grammar.factories.BooleanFactory;
 import org.sql.generation.api.grammar.factories.ColumnsFactory;
-import org.sql.generation.api.grammar.factories.LiteralFactory;
-import org.sql.generation.api.grammar.factories.TableReferenceFactory;
-import org.sql.generation.api.grammar.factories.pgsql.PgSQLQueryFactory;
-import org.sql.generation.api.grammar.query.Ordering;
+import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.vendor.PostgreSQLVendor;
 import org.sql.generation.api.vendor.SQLVendorProvider;
 
@@ -52,24 +48,24 @@ public class PostgreSQLQueryTest extends AbstractQueryTest
           LIMIT 6
           OFFSET 3
         */
-        // @formatter:on
+
 
         PostgreSQLVendor vendor = this.getVendor();
 
-        PgSQLQueryFactory q = vendor.getQueryFactory();
         BooleanFactory b = vendor.getBooleanFactory();
-        TableReferenceFactory t = vendor.getTableReferenceFactory();
-        LiteralFactory l = vendor.getLiteralFactory();
         ColumnsFactory c = vendor.getColumnsFactory();
+        
+        QueryExpression query = vendor.getQueryFactory().simpleQueryBuilder()
+            .select( "*" )
+            .from( "table" )
+            .where( b.regexp( c.colName( "table", "value" ), vendor.getLiteralFactory().param() ) )
+            .orderByAsc( "1" )
+            .limit( 6 )
+            .offset( 3 )
+            .createExpression();
+        // @formatter:on
 
-        PgSQLQuerySpecificationBuilder query = q.querySpecificationBuilder();
-        query.getSelect().selectAll();
-        query.getFrom().addTableReferences( t.tableBuilder( t.table( t.tableName( "table" ) ) ) );
-        query.getWhere().reset( b.regexp( c.colName( "table", "value" ), l.param() ) );
-        query.limit( q.limit( 6 ) ).offset( q.offset( 3 ) );
-        query.getOrderBy().addSortSpecs( q.sortSpec( l.n( 1 ), Ordering.ASCENDING ) );
-
-        this.logQuery( vendor, q.createQuery( query.createExpression() ) );
+        this.logQuery( vendor, query );
 
     }
 }

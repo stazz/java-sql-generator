@@ -15,6 +15,7 @@
 package org.sql.generation.api.grammar.factories.pgsql;
 
 import org.sql.generation.api.grammar.builders.query.pgsql.PgSQLQuerySpecificationBuilder;
+import org.sql.generation.api.grammar.builders.query.pgsql.PgSQLSimpleQueryBuilder;
 import org.sql.generation.api.grammar.factories.QueryFactory;
 import org.sql.generation.api.grammar.query.pgsql.LimitByNumber;
 import org.sql.generation.api.grammar.query.pgsql.OffsetClause;
@@ -47,4 +48,6 @@ public interface PgSQLQueryFactory
      * @return The offset clause.
      */
     public OffsetClause offset( Integer offset );
+
+    public PgSQLSimpleQueryBuilder simpleQueryBuilder();
 }

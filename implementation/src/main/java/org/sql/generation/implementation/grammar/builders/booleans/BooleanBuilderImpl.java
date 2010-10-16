@@ -40,7 +40,6 @@ public class BooleanBuilderImpl
     public BooleanBuilderImpl( BooleanFactory factory, BooleanExpression expression )
     {
         NullArgumentException.validateNotNull( "boolean expression factory", factory );
-        NullArgumentException.validateNotNull( "boolean expression", expression );
 
         this._factory = factory;
         this._topLevelExpression = expression;
@@ -66,13 +65,12 @@ public class BooleanBuilderImpl
 
     public BooleanBuilder reset( BooleanExpression newExpression )
     {
-        NullArgumentException.validateNotNull( "new expression", newExpression );
         this._topLevelExpression = newExpression;
         return this;
     }
 
     public BooleanExpression createExpression()
     {
-        return this._topLevelExpression;
+        return this._topLevelExpression == null ? Predicate.EmptyPredicate.INSTANCE : this._topLevelExpression;
     }
 }
