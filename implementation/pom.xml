@@ -5,19 +5,19 @@
   <parent>
     <groupId>org.java-sql-generator</groupId>
     <artifactId>java-sql-generator</artifactId>
-    <version>0.2</version>
+    <version>0.3-SNAPSHOT</version>
   </parent>
 
   <groupId>org.java-sql-generator.implementation</groupId>
   <artifactId>java-sql-generator-implementation</artifactId>
-  <version>0.2</version>
+  <version>0.3-SNAPSHOT</version>
 
   <name>Java SQL Generator Implementation</name>
   <dependencies>
   	<dependency>
   		<groupId>org.java-sql-generator.api</groupId>
   		<artifactId>java-sql-generator-api</artifactId>
-  		<version>0.2</version>
+  		<version>0.3-SNAPSHOT</version>
   		<scope>compile</scope>
   	</dependency>
   	<dependency>
