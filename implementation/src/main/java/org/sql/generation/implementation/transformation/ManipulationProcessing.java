@@ -218,5 +218,10 @@ public class ManipulationProcessing
 
             ProcessorUtils.processDropBehaviour( object.getDropBehaviour(), builder );
         }
+
+        protected Map<ObjectType, String> getObjectTypes()
+        {
+            return this._objectTypes;
+        }
     }
 }

@@ -18,6 +18,7 @@ import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.builders.query.QuerySpecificationBuilder;
 import org.sql.generation.api.grammar.builders.query.pgsql.PgSQLQuerySpecificationBuilder;
 import org.sql.generation.api.grammar.builders.query.pgsql.PgSQLSimpleQueryBuilder;
+import org.sql.generation.api.grammar.common.TableName;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLQueryFactory;
 import org.sql.generation.api.vendor.PostgreSQLVendor;
 import org.sql.generation.implementation.grammar.builders.query.SimpleQueryBuilderImpl;
@@ -81,7 +82,7 @@ public class PgSQLSimpleQueryBuilderImpl extends SimpleQueryBuilderImpl
     }
 
     @Override
-    public PgSQLSimpleQueryBuilder from( String... tableNames )
+    public PgSQLSimpleQueryBuilder from( TableName... tableNames )
     {
         super.from( tableNames );
         return this;

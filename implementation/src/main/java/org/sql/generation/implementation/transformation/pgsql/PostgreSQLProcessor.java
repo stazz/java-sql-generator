@@ -22,10 +22,16 @@ import org.sql.generation.api.grammar.booleans.BinaryPredicate;
 import org.sql.generation.api.grammar.booleans.NotRegexpPredicate;
 import org.sql.generation.api.grammar.booleans.RegexpPredicate;
 import org.sql.generation.api.grammar.common.datatypes.pgsql.Text;
+import org.sql.generation.api.grammar.definition.table.TableCommitAction;
+import org.sql.generation.api.grammar.definition.table.TableDefinition;
+import org.sql.generation.api.grammar.definition.table.pgsql.PgSQLTableCommitAction;
+import org.sql.generation.api.grammar.manipulation.pgsql.PgSQLDropTableOrViewStatement;
 import org.sql.generation.api.grammar.query.pgsql.PgSQLQuerySpecification;
 import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.BinaryPredicateProcessor;
 import org.sql.generation.implementation.transformation.ConstantProcessor;
 import org.sql.generation.implementation.transformation.DefaultSQLProcessor;
+import org.sql.generation.implementation.transformation.DefinitionProcessing.TableDefinitionProcessor;
+import org.sql.generation.implementation.transformation.pgsql.ManipulationProcessing.PgSQLDropTableOrViewStatementProcessor;
 import org.sql.generation.implementation.transformation.pgsql.QueryProcessing.PgSQLQuerySpecificationProcessor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessor;
 
@@ -50,12 +56,28 @@ public class PostgreSQLProcessor extends DefaultSQLProcessor
 
         Map<Class<? extends Typeable<?>>, SQLProcessor> processors = new HashMap<Class<? extends Typeable<?>>, SQLProcessor>(
             DefaultSQLProcessor.getDefaultProcessors() );
+
+        // Add support for regexp comparing
         processors.put( RegexpPredicate.class,
             new BinaryPredicateProcessor( _defaultPgSQLBinaryOperators.get( RegexpPredicate.class ) ) );
         processors.put( NotRegexpPredicate.class,
             new BinaryPredicateProcessor( _defaultPgSQLBinaryOperators.get( NotRegexpPredicate.class ) ) );
+
+        // Add support for PostgreSQL-specific queries (eg. LIMIT / OFFSET clause)
         processors.put( PgSQLQuerySpecification.class, new PgSQLQuerySpecificationProcessor() );
+
+        // Add support for "TEXT" data type
         processors.put( Text.class, new ConstantProcessor( "TEXT" ) );
+
+        // Add "DROP" table commit action
+        Map<TableCommitAction, String> commitActions = new HashMap<TableCommitAction, String>(
+            TableDefinitionProcessor.getDefaultCommitActions() );
+        commitActions.put( PgSQLTableCommitAction.DROP, "DROP" );
+        processors.put( TableDefinition.class,
+            new TableDefinitionProcessor( TableDefinitionProcessor.getDefaultTableScopes(), commitActions ) );
+
+        // Add "IF EXISTS" functionality to DROP TABLE/VIEW statements
+        processors.put( PgSQLDropTableOrViewStatement.class, new PgSQLDropTableOrViewStatementProcessor() );
 
         _defaultProcessors = processors;
     }

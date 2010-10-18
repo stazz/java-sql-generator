@@ -14,11 +14,14 @@
 
 package org.sql.generation.implementation.vendor.pgsql;
 
+import org.sql.generation.api.grammar.factories.ManipulationFactory;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLDataTypeFactory;
+import org.sql.generation.api.grammar.factories.pgsql.PgSQLManipulationFactory;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLQueryFactory;
 import org.sql.generation.api.vendor.PostgreSQLVendor;
 import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.grammar.factories.pgsql.PgSQLDataTypeFactoryImpl;
+import org.sql.generation.implementation.grammar.factories.pgsql.PgSQLManipulationFactoryImpl;
 import org.sql.generation.implementation.grammar.factories.pgsql.PgSQLQueryFactoryImpl;
 import org.sql.generation.implementation.transformation.pgsql.PostgreSQLProcessor;
 import org.sql.generation.implementation.vendor.DefaultVendor;
@@ -46,10 +49,19 @@ public class PostgreSQLVendorImpl extends DefaultVendor
         }
     };
 
+    protected static final Callback<PgSQLManipulationFactory> PG_MANIPULATION_FACTORY = new Callback<PgSQLManipulationFactory>()
+    {
+        public PgSQLManipulationFactory get( SQLVendor vendor )
+        {
+            return new PgSQLManipulationFactoryImpl();
+        }
+    };
+
     public PostgreSQLVendorImpl()
     {
         super( new PostgreSQLProcessor(), BOOLEAN_FACTORY, COLUMNS_FACTORY, LITERAL_FACTORY, MODIFICATION_FACTORY,
-            PG_QUERY_FACTORY, TABLE_REFERENCE_FACTORY, DEFINITION_FACTORY, MANIPULATION_FACTORY, PG_DATA_TYPE_FACTORY );
+            PG_QUERY_FACTORY, TABLE_REFERENCE_FACTORY, DEFINITION_FACTORY, PG_MANIPULATION_FACTORY,
+            PG_DATA_TYPE_FACTORY );
 
     }
 
@@ -63,5 +75,11 @@ public class PostgreSQLVendorImpl extends DefaultVendor
     public PgSQLDataTypeFactory getDataTypeFactory()
     {
         return (PgSQLDataTypeFactory) super.getDataTypeFactory();
+    }
+
+    @Override
+    public PgSQLManipulationFactory getManipulationFactory()
+    {
+        return (PgSQLManipulationFactory) super.getManipulationFactory();
     }
 }

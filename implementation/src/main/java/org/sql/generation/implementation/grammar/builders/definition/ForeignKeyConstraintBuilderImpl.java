@@ -56,7 +56,8 @@ public class ForeignKeyConstraintBuilderImpl
     public ForeignKeyConstraint createExpression()
     {
         return new ForeignKeyConstraintImpl( this._c.colNames( this._sourceColumns ), this._targetTable,
-            this._c.colNames( this._targetColumns ), this._matchType, this._onDelete, this._onUpdate );
+            this._targetColumns.size() == 0 ? null : this._c.colNames( this._targetColumns ), this._matchType,
+            this._onDelete, this._onUpdate );
     }
 
     public ForeignKeyConstraintBuilder addSourceColumns( String... columnNames )

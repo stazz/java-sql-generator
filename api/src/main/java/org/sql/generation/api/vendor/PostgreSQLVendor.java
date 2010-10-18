@@ -15,6 +15,7 @@
 package org.sql.generation.api.vendor;
 
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLDataTypeFactory;
+import org.sql.generation.api.grammar.factories.pgsql.PgSQLManipulationFactory;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLQueryFactory;
 import org.sql.generation.api.grammar.query.pgsql.LimitClause;
 import org.sql.generation.api.grammar.query.pgsql.OffsetClause;
@@ -43,4 +44,9 @@ public interface PostgreSQLVendor
      * standard ones.
      */
     public PgSQLDataTypeFactory getDataTypeFactory();
+
+    /**
+     * Returns the manipulation factory, which knows to create PostgreSQL-specific data manipulation statements.
+     */
+    public PgSQLManipulationFactory getManipulationFactory();
 }

@@ -23,6 +23,7 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.builders.query.QuerySpecificationBuilder;
 import org.sql.generation.api.grammar.builders.query.SimpleQueryBuilder;
+import org.sql.generation.api.grammar.common.TableName;
 import org.sql.generation.api.grammar.factories.ColumnsFactory;
 import org.sql.generation.api.grammar.factories.QueryFactory;
 import org.sql.generation.api.grammar.factories.TableReferenceFactory;
@@ -43,7 +44,7 @@ public class SimpleQueryBuilderImpl
 
     private final Map<Integer, String> _columnAliases;
 
-    private final List<String> _from;
+    private final List<TableName> _from;
 
     private BooleanExpression _where;
 
@@ -64,7 +65,7 @@ public class SimpleQueryBuilderImpl
         this._vendor = vendor;
         this._columns = new ArrayList<String>();
         this._columnAliases = new HashMap<Integer, String>();
-        this._from = new ArrayList<String>();
+        this._from = new ArrayList<TableName>();
         this._groupBy = new ArrayList<String>();
         this._orderBy = new ArrayList<String>();
         this._orderings = new ArrayList<Ordering>();
@@ -94,9 +95,9 @@ public class SimpleQueryBuilderImpl
             builda.getSelect().addNamedColumns( new ColumnReferenceInfo( alias, c.colName( colName ) ) );
         }
 
-        for( String tableName : this._from )
+        for( TableName tableName : this._from )
         {
-            builda.getFrom().addTableReferences( t.tableBuilder( t.table( t.tableName( tableName ) ) ) );
+            builda.getFrom().addTableReferences( t.tableBuilder( t.table( tableName ) ) );
         }
 
         builda.getWhere().reset( this._where );
@@ -135,9 +136,9 @@ public class SimpleQueryBuilderImpl
         return this;
     }
 
-    public SimpleQueryBuilder from( String... tableNames )
+    public SimpleQueryBuilder from( TableName... tableNames )
     {
-        for( String table : tableNames )
+        for( TableName table : tableNames )
         {
             this._from.add( table );
         }

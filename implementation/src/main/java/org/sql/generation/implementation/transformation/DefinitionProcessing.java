@@ -14,6 +14,7 @@
 
 package org.sql.generation.implementation.transformation;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -93,9 +94,19 @@ public class DefinitionProcessing
             _defaultTableScopes = operations;
 
             Map<TableCommitAction, String> commitActions = new HashMap<TableCommitAction, String>();
-            commitActions.put( TableCommitAction.ON_COMMIT_DELETE_ROWS, "DELETE" );
-            commitActions.put( TableCommitAction.ON_COMMIT_PRESERVE_ROWS, "PRESERVE" );
+            commitActions.put( TableCommitAction.ON_COMMIT_DELETE_ROWS, "DELETE ROWS" );
+            commitActions.put( TableCommitAction.ON_COMMIT_PRESERVE_ROWS, "PRESERVE ROWS" );
             _defaultCommitActions = commitActions;
+        }
+
+        public static Map<TableCommitAction, String> getDefaultCommitActions()
+        {
+            return Collections.unmodifiableMap( _defaultCommitActions );
+        }
+
+        public static Map<TableScope, String> getDefaultTableScopes()
+        {
+            return Collections.unmodifiableMap( _defaultTableScopes );
         }
 
         private final Map<TableScope, String> _tableScopes;
@@ -134,8 +145,7 @@ public class DefinitionProcessing
             if( object.getCommitAction() != null )
             {
                 builder.append( "ON COMMIT" ).append( SQLConstants.TOKEN_SEPARATOR )
-                    .append( this._commitActions.get( object.getCommitAction() ) )
-                    .append( SQLConstants.TOKEN_SEPARATOR ).append( "ROWS" );
+                    .append( this._commitActions.get( object.getCommitAction() ) );
             }
         }
     }
