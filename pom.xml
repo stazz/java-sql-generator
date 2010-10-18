@@ -111,7 +111,7 @@
           <target>${version.jdk.compiler}</target>
         </configuration>
       </plugin>
-      <plugin>
+      <!--  <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>animal-sniffer-maven-plugin</artifactId>
         <version>${version.maven.animal-sniffer}</version>
@@ -131,7 +131,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
+      </plugin> -->
     </plugins>
   </build>
   
