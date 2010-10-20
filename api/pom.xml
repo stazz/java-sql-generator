@@ -10,7 +10,6 @@
 
   <groupId>org.java-sql-generator.api</groupId>
   <artifactId>java-sql-generator-api</artifactId>
-  <version>0.3-SNAPSHOT</version>
 
   <name>Java SQL Generator API</name>
   <dependencies>

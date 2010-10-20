@@ -21,10 +21,11 @@ SQLVendor vendor = ...;
 BooleanFactory b = vendor.getBooleanFactory();
 ColumnsFactory c = vendor.getColumnsFactory();
 LiteralFactory l = vendor.getLiteralFactory();
+TableReferenceFactory t = vendor.getTableReferenceFactory();
 
 QueryExpression query = vendor.getQueryFactory().simpleQueryBuilder()
   .select( "value" )
-  .from( "table" )
+  .from( t.tableName( "table" ) )
   .where( b.eq( c.colName( "table", "value" ), l.n(5) ) )
   .orderByAsc( "1" )
   .createExpression();
