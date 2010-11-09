@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.atp.api.Typeable;
-import org.atp.spi.InteractionMapper;
+import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BetweenPredicate;
 import org.sql.generation.api.grammar.booleans.BinaryPredicate;
 import org.sql.generation.api.grammar.booleans.BooleanExpression.False;
@@ -124,6 +124,7 @@ import org.sql.generation.api.grammar.query.joins.NamedColumnsJoin;
 import org.sql.generation.api.grammar.query.joins.NaturalJoinedTable;
 import org.sql.generation.api.grammar.query.joins.QualifiedJoinedTable;
 import org.sql.generation.api.grammar.query.joins.UnionJoinedTable;
+import org.sql.generation.api.vendor.UnsupportedElementException;
 import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.BinaryPredicateProcessor;
 import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.BooleanTestProcessor;
 import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.ConjunctionProcessor;
@@ -206,7 +207,7 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
  * 
  * @author Stanislav Muhametsin
  */
-public class DefaultSQLProcessor extends InteractionMapper<Typeable<?>, SQLProcessor>
+public class DefaultSQLProcessor
     implements SQLProcessorAggregator
 {
 
@@ -434,6 +435,8 @@ public class DefaultSQLProcessor extends InteractionMapper<Typeable<?>, SQLProce
         _defaultProcessors = Collections.unmodifiableMap( processors );
     }
 
+    private final Map<Class<? extends Typeable<?>>, SQLProcessor> _processors;
+
     public DefaultSQLProcessor()
     {
         this( _defaultProcessors );
@@ -441,12 +444,23 @@ public class DefaultSQLProcessor extends InteractionMapper<Typeable<?>, SQLProce
 
     public DefaultSQLProcessor( Map<Class<? extends Typeable<?>>, SQLProcessor> processors )
     {
-        super( processors );
+        NullArgumentException.validateNotNull( "Processors", processors );
+
+        this._processors = processors;
     }
 
     public void process( Typeable<?> object, StringBuilder builder )
     {
-        this.getInteraction( object ).process( this, object, builder );
+        SQLProcessor processor = this._processors.get( object.getImplementedType() );
+        if( processor != null )
+        {
+            processor.process( this, object, builder );
+        }
+        else
+        {
+            throw new UnsupportedElementException( "The vendor " + this.getClass()
+                + " does not know how to handle element " + object + ".", object );
+        }
     }
 
     public static Map<Class<? extends Typeable<?>>, SQLProcessor> getDefaultProcessors()

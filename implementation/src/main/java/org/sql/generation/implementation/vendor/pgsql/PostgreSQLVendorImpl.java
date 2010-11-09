@@ -14,7 +14,6 @@
 
 package org.sql.generation.implementation.vendor.pgsql;
 
-import org.sql.generation.api.grammar.factories.ManipulationFactory;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLDataTypeFactory;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLManipulationFactory;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLQueryFactory;

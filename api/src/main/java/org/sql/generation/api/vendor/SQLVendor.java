@@ -124,6 +124,8 @@ public interface SQLVendor
      * 
      * @param statement The {@link SQLStatement} to process.
      * @return The textual SQL statement to be used directly with database.
+     * @throws UnsupportedElementException If during parsing this vendor encounters some SQL syntax element not
+     *             understood by this vendor.
      * @see SQLStatement
      */
     public String toString( SQLStatement statement );

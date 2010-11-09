@@ -43,4 +43,10 @@ public class OffsetClauseImpl
         return super.equals( obj ) || obj instanceof OffsetClause
             && this._offset.equals( ((OffsetClause) obj).getOffset() );
     }
+
+    @Override
+    public int hashCode()
+    {
+        return this._offset;
+    }
 }

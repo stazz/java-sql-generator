@@ -44,4 +44,10 @@ public class LimitByNumberImpl
         return super.equals( obj ) || obj instanceof LimitByNumber
             && this._limit.equals( ((LimitByNumber) obj).getLimit() );
     }
+
+    @Override
+    public int hashCode()
+    {
+        return this._limit;
+    }
 }
