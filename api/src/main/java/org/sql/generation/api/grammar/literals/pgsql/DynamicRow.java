@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Stanislav Muhametsin. All Rights Reserved.
+ * Copyright (c) 2011, Stanislav Muhametsin. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,24 +12,20 @@
  *
  */
 
-package org.sql.generation.api.grammar.common;
+package org.sql.generation.api.grammar.literals.pgsql;
 
 import java.util.List;
 
-import org.atp.api.Typeable;
+import org.sql.generation.api.grammar.common.ValueExpression;
+import org.sql.generation.api.grammar.literals.LiteralExpression;
 
 /**
- * This interface presents a non-empty list of plain-text column names.
  * 
  * @author Stanislav Muhametsin
  */
-public interface ColumnNameList
-    extends NonBooleanExpression
+public interface DynamicRow
+    extends LiteralExpression
 {
-    /**
-     * Returns the list of column names. This list will be always non-empty.
-     * 
-     * @return The non-empty list of column names.
-     */
-    public List<String> getColumnNames();
+
+    public List<ValueExpression> getValueExpressions();
 }

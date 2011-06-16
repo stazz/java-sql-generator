@@ -19,7 +19,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.ColumnNameList;
 
@@ -27,7 +26,7 @@ import org.sql.generation.api.grammar.common.ColumnNameList;
  * 
  * @author Stanislav Muhametsin
  */
-public class ColumnNameListImpl extends TypeableImpl<ColumnNameList, ColumnNameList>
+public class ColumnNameListImpl extends NonBooleanExpressionImpl<ColumnNameList>
     implements ColumnNameList
 {
 

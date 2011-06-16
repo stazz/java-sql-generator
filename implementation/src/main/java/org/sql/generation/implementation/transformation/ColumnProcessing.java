@@ -76,6 +76,7 @@ public class ColumnProcessing
         @Override
         protected void doProcess( SQLProcessorAggregator processor, ColumnNameList object, StringBuilder builder )
         {
+            builder.append( SQLConstants.OPEN_PARENTHESIS );
             Iterator<String> iter = object.getColumnNames().iterator();
             while( iter.hasNext() )
             {
@@ -85,6 +86,7 @@ public class ColumnProcessing
                     builder.append( SQLConstants.COMMA ).append( SQLConstants.TOKEN_SEPARATOR );
                 }
             }
+            builder.append( SQLConstants.CLOSE_PARENTHESIS );
         }
     }
 }
