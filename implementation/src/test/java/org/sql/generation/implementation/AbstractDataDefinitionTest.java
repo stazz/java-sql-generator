@@ -20,6 +20,7 @@ import org.sql.generation.api.grammar.builders.definition.TableElementListBuilde
 import org.sql.generation.api.grammar.definition.table.ConstraintCharacteristics;
 import org.sql.generation.api.grammar.definition.table.MatchType;
 import org.sql.generation.api.grammar.definition.table.ReferentialAction;
+import org.sql.generation.api.grammar.definition.table.TableDefinition;
 import org.sql.generation.api.grammar.definition.table.UniqueSpecification;
 import org.sql.generation.api.grammar.factories.DataTypeFactory;
 import org.sql.generation.api.grammar.factories.DefinitionFactory;
@@ -128,5 +129,38 @@ public abstract class AbstractDataDefinitionTest extends AbstractSQLSyntaxTest
         this.logStatement( "Table definition", vendor, builder.createExpression() );
         
         // @formatter:on
+    }
+
+    @Test
+    public void definition2()
+        throws Exception
+    {
+        SQLVendor vendor = this.getVendor();
+        TableReferenceFactory t = vendor.getTableReferenceFactory();
+        DefinitionFactory d = vendor.getDefinitionFactory();
+        DataTypeFactory dt = vendor.getDataTypeFactory();
+
+        String schemaName = "the_schema";
+        String tableName = "the_table";
+        String colPKName = "pk_column";
+        String colValueName = "value_column";
+
+        TableDefinition def = d
+            .createTableDefinitionBuilder()
+            .setTableName( t.tableName( schemaName, tableName ) )
+            .setTableContentsSource(
+                d.createTableElementListBuilder()
+                    .addTableElement( d.createColumnDefinition( colPKName, dt.integer(), false ) )
+                    .addTableElement( d.createColumnDefinition( colValueName, dt.sqlVarChar(), false ) )
+                    .addTableElement(
+                        d.createTableConstraintDefinition( d.createUniqueConstraintBuilder()
+                            .setUniqueness( UniqueSpecification.PRIMARY_KEY ).addColumns( colPKName )
+                            .createExpression() ) )
+                    .addTableElement(
+                        d.createTableConstraintDefinition( d.createUniqueConstraintBuilder()
+                            .setUniqueness( UniqueSpecification.UNIQUE ).addColumns( colValueName ).createExpression() ) )
+                    .createExpression() ).createExpression();
+
+        this.logStatement( "Table definition", vendor, def );
     }
 }

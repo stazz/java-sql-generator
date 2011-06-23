@@ -93,9 +93,7 @@ public class TableReferenceProcessing
 
                 if( tableAlias.getColumnAliases() != null )
                 {
-                    builder.append( SQLConstants.OPEN_PARENTHESIS );
                     processor.process( tableAlias.getColumnAliases(), builder );
-                    builder.append( SQLConstants.CLOSE_PARENTHESIS );
                 }
             }
         }
@@ -284,10 +282,9 @@ public class TableReferenceProcessing
         @Override
         protected void doProcess( SQLProcessorAggregator processor, NamedColumnsJoin join, StringBuilder builder )
         {
-            builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "USING" ).append( SQLConstants.TOKEN_SEPARATOR )
-                .append( SQLConstants.OPEN_PARENTHESIS );
+            builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "USING" ).append( SQLConstants.TOKEN_SEPARATOR );
+
             processor.process( join.getColumnNames(), builder );
-            builder.append( SQLConstants.CLOSE_PARENTHESIS );
         }
     }
 

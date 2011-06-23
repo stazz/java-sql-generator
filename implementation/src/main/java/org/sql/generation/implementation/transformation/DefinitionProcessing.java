@@ -316,10 +316,8 @@ public class DefinitionProcessing
         @Override
         protected void doProcess( SQLProcessorAggregator aggregator, UniqueConstraint object, StringBuilder builder )
         {
-            builder.append( this._uniqueSpecs.get( object.getUniquenessKind() ) )
-                .append( SQLConstants.OPEN_PARENTHESIS );
+            builder.append( this._uniqueSpecs.get( object.getUniquenessKind() ) );
             aggregator.process( object.getColumnNameList(), builder );
-            builder.append( SQLConstants.CLOSE_PARENTHESIS );
         }
     }
 
@@ -367,16 +365,13 @@ public class DefinitionProcessing
         @Override
         protected void doProcess( SQLProcessorAggregator aggregator, ForeignKeyConstraint object, StringBuilder builder )
         {
-            builder.append( "FOREIGN KEY" ).append( SQLConstants.OPEN_PARENTHESIS );
+            builder.append( "FOREIGN KEY" );
             aggregator.process( object.getSourceColumns(), builder );
-            builder.append( SQLConstants.CLOSE_PARENTHESIS ).append( SQLConstants.NEWLINE ).append( "REFERENCES" )
-                .append( SQLConstants.TOKEN_SEPARATOR );
+            builder.append( SQLConstants.NEWLINE ).append( "REFERENCES" ).append( SQLConstants.TOKEN_SEPARATOR );
             aggregator.process( object.getTargetTableName(), builder );
             if( object.getTargetColumns() != null )
             {
-                builder.append( SQLConstants.OPEN_PARENTHESIS );
                 aggregator.process( object.getTargetColumns(), builder );
-                builder.append( SQLConstants.CLOSE_PARENTHESIS );
             }
 
             if( object.getMatchType() != null )
@@ -466,9 +461,7 @@ public class DefinitionProcessing
         {
             if( object.getColumns() != null )
             {
-                builder.append( SQLConstants.OPEN_PARENTHESIS );
                 aggregator.process( object.getColumns(), builder );
-                builder.append( SQLConstants.CLOSE_PARENTHESIS );
             }
         }
     }

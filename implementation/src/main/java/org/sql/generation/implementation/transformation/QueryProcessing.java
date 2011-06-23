@@ -262,9 +262,7 @@ public class QueryProcessing
             if( object.getColumnList() != null )
             {
                 builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "BY" ).append( SQLConstants.TOKEN_SEPARATOR );
-                builder.append( SQLConstants.OPEN_PARENTHESIS );
                 processor.process( object.getColumnList(), builder );
-                builder.append( SQLConstants.CLOSE_PARENTHESIS );
             }
         }
     }

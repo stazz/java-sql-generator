@@ -49,9 +49,7 @@ public class ModificationProcessing
         {
             if( object.getColumnNames() != null )
             {
-                builder.append( SQLConstants.OPEN_PARENTHESIS );
                 processor.process( object.getColumnNames(), builder );
-                builder.append( SQLConstants.CLOSE_PARENTHESIS );
             }
             this.doProcessColumnSource( processor, object, builder );
         }
