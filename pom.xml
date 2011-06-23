@@ -5,11 +5,11 @@
   <parent>
     <groupId>org.sonatype.oss</groupId>
     <artifactId>oss-parent</artifactId>
-    <version>5</version>
+    <version>7</version>
   </parent>
   
   <groupId>org.java-sql-generator</groupId>
-  <artifactId>java-sql-generator</artifactId>
+  <artifactId>org.java-sql-generator</artifactId>
   <version>0.3-SNAPSHOT</version>
   <packaging>pom</packaging>
   
