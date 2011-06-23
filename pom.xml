@@ -10,7 +10,7 @@
   
   <groupId>org.java-sql-generator</groupId>
   <artifactId>org.java-sql-generator</artifactId>
-  <version>0.2.1</version>
+  <version>0.3-SNAPSHOT</version>
   <packaging>pom</packaging>
   
   <name>SQL Generator for Java</name>  
