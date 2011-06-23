@@ -23,6 +23,7 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.api.grammar.common.SQLConstants;
+import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.query.ColumnReferences;
 import org.sql.generation.api.grammar.query.ColumnReferences.ColumnReferenceInfo;
 import org.sql.generation.api.grammar.query.CorrespondingSpec;
@@ -36,10 +37,14 @@ import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.grammar.query.QueryExpressionBody;
 import org.sql.generation.api.grammar.query.QueryExpressionBodyBinary;
 import org.sql.generation.api.grammar.query.QuerySpecification;
+import org.sql.generation.api.grammar.query.RowDefinition;
+import org.sql.generation.api.grammar.query.RowSubQuery;
+import org.sql.generation.api.grammar.query.RowValueConstructor;
 import org.sql.generation.api.grammar.query.SelectColumnClause;
 import org.sql.generation.api.grammar.query.SetOperation;
 import org.sql.generation.api.grammar.query.SortSpecification;
 import org.sql.generation.api.grammar.query.TableReference;
+import org.sql.generation.api.grammar.query.TableValueConstructor;
 import org.sql.generation.implementation.grammar.booleans.BooleanUtils;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
@@ -372,6 +377,64 @@ public class QueryProcessing
                     }
                 }
             }
+        }
+    }
+
+    public static class TableValueConstructorProcessor extends AbstractProcessor<TableValueConstructor>
+    {
+        public TableValueConstructorProcessor()
+        {
+            super( TableValueConstructor.class );
+        }
+
+        @Override
+        protected void doProcess( SQLProcessorAggregator aggregator, TableValueConstructor object, StringBuilder builder )
+        {
+            builder.append( "VALUES" ).append( SQLConstants.TOKEN_SEPARATOR );
+            for( RowValueConstructor row : object.getRows() )
+            {
+                aggregator.process( row, builder );
+            }
+        }
+    }
+
+    public static class RowSubQueryProcessor extends AbstractProcessor<RowSubQuery>
+    {
+        public RowSubQueryProcessor()
+        {
+            super( RowSubQuery.class );
+        }
+
+        @Override
+        protected void doProcess( SQLProcessorAggregator aggregator, RowSubQuery object, StringBuilder builder )
+        {
+            builder.append( SQLConstants.OPEN_PARENTHESIS );
+            aggregator.process( object.getQueryExpression(), builder );
+            builder.append( SQLConstants.CLOSE_PARENTHESIS );
+        }
+    }
+
+    public static class RowDefinitionProcessor extends AbstractProcessor<RowDefinition>
+    {
+        public RowDefinitionProcessor()
+        {
+            super( RowDefinition.class );
+        }
+
+        @Override
+        protected void doProcess( SQLProcessorAggregator aggregator, RowDefinition object, StringBuilder builder )
+        {
+            builder.append( SQLConstants.OPEN_PARENTHESIS );
+            Iterator<ValueExpression> vals = object.getRowElements().iterator();
+            while( vals.hasNext() )
+            {
+                aggregator.process( vals.next(), builder );
+                if( vals.hasNext() )
+                {
+                    builder.append( SQLConstants.COMMA ).append( SQLConstants.TOKEN_SEPARATOR );
+                }
+            }
+            builder.append( SQLConstants.CLOSE_PARENTHESIS );
         }
     }
 }

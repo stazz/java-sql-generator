@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Stanislav Muhametsin. All Rights Reserved.
+ * Copyright (c) 2011, Stanislav Muhametsin. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,29 +12,18 @@
  *
  */
 
-package org.sql.generation.implementation.grammar.query;
+package org.sql.generation.api.grammar.query;
 
 import org.atp.api.Typeable;
-import org.atp.spi.TypeableImpl;
-import org.sql.generation.api.grammar.query.TableReference;
 
 /**
+ * This syntax elements represents either subquery or parenthesized row definition of {@code VALUES} expression in
+ * query.
  * 
  * @author Stanislav Muhametsin
  */
-public abstract class TableReferenceImpl<TypeableType extends Typeable<? super TypeableType>, RealType extends TypeableType>
-    extends TypeableImpl<TypeableType, RealType>
-    implements TableReference
+public interface RowValueConstructor
+    extends Typeable<RowValueConstructor>
 {
-
-    public TableReferenceImpl( Class<? extends RealType> expressionClass )
-    {
-        super( expressionClass );
-    }
-
-    public Typeable<?> asTypeable()
-    {
-        return this;
-    }
 
 }

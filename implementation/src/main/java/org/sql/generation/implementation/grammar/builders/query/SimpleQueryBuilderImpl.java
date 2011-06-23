@@ -24,9 +24,11 @@ import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.builders.query.QuerySpecificationBuilder;
 import org.sql.generation.api.grammar.builders.query.SimpleQueryBuilder;
 import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.factories.ColumnsFactory;
 import org.sql.generation.api.grammar.factories.QueryFactory;
 import org.sql.generation.api.grammar.factories.TableReferenceFactory;
+import org.sql.generation.api.grammar.query.ColumnReference;
 import org.sql.generation.api.grammar.query.ColumnReferences.ColumnReferenceInfo;
 import org.sql.generation.api.grammar.query.Ordering;
 import org.sql.generation.api.grammar.query.QueryExpression;
@@ -40,7 +42,9 @@ public class SimpleQueryBuilderImpl
     implements SimpleQueryBuilder
 {
 
-    private final List<String> _columns;
+    private final List<ColumnReference> _columns;
+
+    //    private final List<String> _columns;
 
     private final Map<Integer, String> _columnAliases;
 
@@ -63,7 +67,7 @@ public class SimpleQueryBuilderImpl
         NullArgumentException.validateNotNull( "Vendor", vendor );
 
         this._vendor = vendor;
-        this._columns = new ArrayList<String>();
+        this._columns = new ArrayList<ColumnReference>();
         this._columnAliases = new HashMap<Integer, String>();
         this._from = new ArrayList<TableName>();
         this._groupBy = new ArrayList<String>();
@@ -88,11 +92,11 @@ public class SimpleQueryBuilderImpl
         ColumnsFactory c = this._vendor.getColumnsFactory();
         TableReferenceFactory t = this._vendor.getTableReferenceFactory();
 
-        for( Integer colIndex = 0; colIndex < this._columnAliases.size(); ++colIndex )
+        for( Integer colIndex = 0; colIndex < this._columns.size(); ++colIndex )
         {
-            String colName = this._columns.get( colIndex );
+            ColumnReference ref = this._columns.get( colIndex );
             String alias = this._columnAliases.get( colIndex );
-            builda.getSelect().addNamedColumns( new ColumnReferenceInfo( alias, c.colName( colName ) ) );
+            builda.getSelect().addNamedColumns( new ColumnReferenceInfo( alias, ref ) );
         }
 
         for( TableName tableName : this._from )
@@ -125,7 +129,16 @@ public class SimpleQueryBuilderImpl
     {
         for( String col : columnNames )
         {
-            this._columns.add( col );
+            this._columns.add( this._vendor.getColumnsFactory().colName( col ) );
+        }
+        return this;
+    }
+
+    public SimpleQueryBuilder select( ValueExpression... expressions )
+    {
+        for( ValueExpression exp : expressions )
+        {
+            this._columns.add( this._vendor.getColumnsFactory().colExp( exp ) );
         }
         return this;
     }

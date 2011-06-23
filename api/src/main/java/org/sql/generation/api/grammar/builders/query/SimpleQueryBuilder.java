@@ -17,6 +17,7 @@ package org.sql.generation.api.grammar.builders.query;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.builders.AbstractBuilder;
 import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.factories.QueryFactory;
 import org.sql.generation.api.grammar.query.QueryExpression;
 
@@ -37,6 +38,14 @@ public interface SimpleQueryBuilder
      * @return This builder.
      */
     public SimpleQueryBuilder select( String... columnNames );
+
+    /**
+     * Adds the specified column expressions to the {@code SELECT} list.
+     * 
+     * @param expressions The value expressions for columns.
+     * @return This builder.
+     */
+    public SimpleQueryBuilder select( ValueExpression... expressions );
 
     /**
      * Adds alias to the most recently added column.

@@ -12,20 +12,17 @@
  *
  */
 
-package org.sql.generation.api.grammar.literals.pgsql;
+package org.sql.generation.api.grammar.query;
 
 import java.util.List;
 
-import org.sql.generation.api.grammar.common.ValueExpression;
-import org.sql.generation.api.grammar.literals.LiteralExpression;
-
 /**
+ * This syntax element represents the {@code VALUES} expression in query.
  * 
  * @author Stanislav Muhametsin
  */
-public interface DynamicRow
-    extends LiteralExpression
+public interface TableValueConstructor
+    extends QueryExpressionBodyActual
 {
-
-    public List<ValueExpression> getValueExpressions();
+    public List<RowValueConstructor> getRows();
 }

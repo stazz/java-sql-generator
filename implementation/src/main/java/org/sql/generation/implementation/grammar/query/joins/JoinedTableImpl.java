@@ -14,18 +14,18 @@
 
 package org.sql.generation.implementation.grammar.query.joins;
 
+import org.atp.api.Typeable;
 import org.sql.generation.api.common.NullArgumentException;
-import org.sql.generation.api.grammar.query.QueryExpressionBody;
 import org.sql.generation.api.grammar.query.TableReference;
 import org.sql.generation.api.grammar.query.joins.JoinedTable;
-import org.sql.generation.implementation.grammar.query.TableReferenceImpl;
+import org.sql.generation.implementation.grammar.query.QueryExpressionBodyImpl;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
 public abstract class JoinedTableImpl<TableReferenceType extends JoinedTable> extends
-    TableReferenceImpl<QueryExpressionBody, TableReferenceType>
+    QueryExpressionBodyImpl<TableReferenceType>
     implements JoinedTable
 {
 
@@ -51,6 +51,11 @@ public abstract class JoinedTableImpl<TableReferenceType extends JoinedTable> ex
     public TableReference getRight()
     {
         return this._right;
+    }
+
+    public Typeable<?> asTypeable()
+    {
+        return this;
     }
 
     @Override

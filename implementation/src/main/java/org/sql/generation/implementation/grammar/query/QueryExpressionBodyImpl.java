@@ -14,15 +14,15 @@
 
 package org.sql.generation.implementation.grammar.query;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.grammar.query.QueryExpressionBody;
+import org.sql.generation.implementation.grammar.common.NonBooleanExpressionImpl;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
 public abstract class QueryExpressionBodyImpl<ExpressionType extends QueryExpressionBody> extends
-    TypeableImpl<QueryExpressionBody, ExpressionType>
+    NonBooleanExpressionImpl<ExpressionType>
 {
 
     public QueryExpressionBodyImpl( Class<? extends ExpressionType> expressionClass )

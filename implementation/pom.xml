@@ -27,7 +27,7 @@
   	</dependency>
   	<dependency>
   		<groupId>org.api-typeable-pojos</groupId>
-  		<artifactId>atp-spi</artifactId>
+  		<artifactId>org.api-typeable-pojos.spi</artifactId>
   		<scope>compile</scope>
   	</dependency>
   	<dependency>

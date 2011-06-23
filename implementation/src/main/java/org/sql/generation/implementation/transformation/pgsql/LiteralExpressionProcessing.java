@@ -14,15 +14,7 @@
 
 package org.sql.generation.implementation.transformation.pgsql;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Iterator;
-
-import org.sql.generation.api.grammar.common.SQLConstants;
-import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.literals.DateTimeLiteral;
-import org.sql.generation.api.grammar.literals.pgsql.DynamicRow;
-import org.sql.generation.implementation.transformation.AbstractProcessor;
 import org.sql.generation.implementation.transformation.LiteralExpressionProcessing.DateTimeLiteralProcessor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
@@ -34,42 +26,11 @@ public class LiteralExpressionProcessing
 {
     public static class PGDateTimeLiteralProcessor extends DateTimeLiteralProcessor
     {
-        private final DateFormat _format;
-
-        public PGDateTimeLiteralProcessor()
-        {
-            this._format = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss.SSS" );
-        }
-
         @Override
         protected void doProcess( SQLProcessorAggregator processor, DateTimeLiteral object, StringBuilder builder )
         {
-            builder.append( "timestamp '" + this._format.format( object.getDate() ) + "'" );
+            builder.append( "timestamp " );
+            super.doProcess( processor, object, builder );
         }
-    }
-
-    public static class DynamicRowProcessor extends AbstractProcessor<DynamicRow>
-    {
-        public DynamicRowProcessor()
-        {
-            super( DynamicRow.class );
-        }
-
-        @Override
-        protected void doProcess( SQLProcessorAggregator aggregator, DynamicRow object, StringBuilder builder )
-        {
-            builder.append( SQLConstants.OPEN_PARENTHESIS );
-            Iterator<ValueExpression> iter = object.getValueExpressions().iterator();
-            while( iter.hasNext() )
-            {
-                aggregator.process( iter.next(), builder );
-                if( iter.hasNext() )
-                {
-                    builder.append( SQLConstants.COMMA ).append( SQLConstants.TOKEN_SEPARATOR );
-                }
-            }
-            builder.append( SQLConstants.CLOSE_PARENTHESIS );
-        }
-
     }
 }

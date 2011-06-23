@@ -14,6 +14,8 @@
 
 package org.sql.generation.implementation.grammar.factories;
 
+import java.util.Arrays;
+
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.builders.query.ColumnsBuilder;
 import org.sql.generation.api.grammar.builders.query.FromBuilder;
@@ -29,7 +31,11 @@ import org.sql.generation.api.grammar.query.Ordering;
 import org.sql.generation.api.grammar.query.OrdinaryGroupingSet;
 import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.grammar.query.QueryExpressionBody;
+import org.sql.generation.api.grammar.query.RowDefinition;
+import org.sql.generation.api.grammar.query.RowSubQuery;
+import org.sql.generation.api.grammar.query.RowValueConstructor;
 import org.sql.generation.api.grammar.query.SortSpecification;
+import org.sql.generation.api.grammar.query.TableValueConstructor;
 import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.grammar.builders.query.ColumnsBuilderImpl;
 import org.sql.generation.implementation.grammar.builders.query.FromBuilderImpl;
@@ -40,7 +46,10 @@ import org.sql.generation.implementation.grammar.builders.query.QuerySpecificati
 import org.sql.generation.implementation.grammar.builders.query.SimpleQueryBuilderImpl;
 import org.sql.generation.implementation.grammar.query.OrdinaryGroupingSetImpl;
 import org.sql.generation.implementation.grammar.query.QueryExpressionImpl;
+import org.sql.generation.implementation.grammar.query.RowDefinitionImpl;
+import org.sql.generation.implementation.grammar.query.RowSubQueryImpl;
 import org.sql.generation.implementation.grammar.query.SortSpecificationImpl;
+import org.sql.generation.implementation.grammar.query.TableValueConstructorImpl;
 
 /**
  * 
@@ -112,6 +121,21 @@ public class DefaultQueryFactory extends AbstractQueryFactory
     public SimpleQueryBuilder simpleQueryBuilder()
     {
         return new SimpleQueryBuilderImpl( this._vendor );
+    }
+
+    public TableValueConstructor values( RowValueConstructor... rows )
+    {
+        return new TableValueConstructorImpl( Arrays.asList( rows ) );
+    }
+
+    public RowSubQuery rowSubQuery( QueryExpression subQuery )
+    {
+        return new RowSubQueryImpl( subQuery );
+    }
+
+    public RowDefinition row( ValueExpression... elements )
+    {
+        return new RowDefinitionImpl( Arrays.asList( elements ) );
     }
 
 }

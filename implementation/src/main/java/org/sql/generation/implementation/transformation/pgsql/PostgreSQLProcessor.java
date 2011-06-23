@@ -26,14 +26,12 @@ import org.sql.generation.api.grammar.definition.table.TableCommitAction;
 import org.sql.generation.api.grammar.definition.table.TableDefinition;
 import org.sql.generation.api.grammar.definition.table.pgsql.PgSQLTableCommitAction;
 import org.sql.generation.api.grammar.literals.DateTimeLiteral;
-import org.sql.generation.api.grammar.literals.pgsql.DynamicRow;
 import org.sql.generation.api.grammar.manipulation.pgsql.PgSQLDropTableOrViewStatement;
 import org.sql.generation.api.grammar.query.pgsql.PgSQLQuerySpecification;
 import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.BinaryPredicateProcessor;
 import org.sql.generation.implementation.transformation.ConstantProcessor;
 import org.sql.generation.implementation.transformation.DefaultSQLProcessor;
 import org.sql.generation.implementation.transformation.DefinitionProcessing.TableDefinitionProcessor;
-import org.sql.generation.implementation.transformation.pgsql.LiteralExpressionProcessing.DynamicRowProcessor;
 import org.sql.generation.implementation.transformation.pgsql.LiteralExpressionProcessing.PGDateTimeLiteralProcessor;
 import org.sql.generation.implementation.transformation.pgsql.ManipulationProcessing.PgSQLDropTableOrViewStatementProcessor;
 import org.sql.generation.implementation.transformation.pgsql.QueryProcessing.PgSQLQuerySpecificationProcessor;
@@ -63,9 +61,6 @@ public class PostgreSQLProcessor extends DefaultSQLProcessor
 
         // Override default processor for date-time
         processors.put( DateTimeLiteral.class, new PGDateTimeLiteralProcessor() );
-
-        // Add support for dynamic rows
-        processors.put( DynamicRow.class, new DynamicRowProcessor() );
 
         // Add support for regexp comparing
         processors.put( RegexpPredicate.class,

@@ -14,15 +14,12 @@
 
 package org.sql.generation.implementation.vendor.pgsql;
 
-import org.sql.generation.api.grammar.factories.LiteralFactory;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLDataTypeFactory;
-import org.sql.generation.api.grammar.factories.pgsql.PgSQLLiteralFactory;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLManipulationFactory;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLQueryFactory;
 import org.sql.generation.api.vendor.PostgreSQLVendor;
 import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.grammar.factories.pgsql.PgSQLDataTypeFactoryImpl;
-import org.sql.generation.implementation.grammar.factories.pgsql.PgSQLLiteralFactoryImpl;
 import org.sql.generation.implementation.grammar.factories.pgsql.PgSQLManipulationFactoryImpl;
 import org.sql.generation.implementation.grammar.factories.pgsql.PgSQLQueryFactoryImpl;
 import org.sql.generation.implementation.transformation.pgsql.PostgreSQLProcessor;
@@ -59,17 +56,9 @@ public class PostgreSQLVendorImpl extends DefaultVendor
         }
     };
 
-    protected static final Callback<PgSQLLiteralFactory> PG_LITERAL_FACTORY = new Callback<PgSQLLiteralFactory>()
-    {
-        public PgSQLLiteralFactory get( SQLVendor vendor )
-        {
-            return new PgSQLLiteralFactoryImpl();
-        }
-    };
-
     public PostgreSQLVendorImpl()
     {
-        super( new PostgreSQLProcessor(), BOOLEAN_FACTORY, COLUMNS_FACTORY, PG_LITERAL_FACTORY, MODIFICATION_FACTORY,
+        super( new PostgreSQLProcessor(), BOOLEAN_FACTORY, COLUMNS_FACTORY, LITERAL_FACTORY, MODIFICATION_FACTORY,
             PG_QUERY_FACTORY, TABLE_REFERENCE_FACTORY, DEFINITION_FACTORY, PG_MANIPULATION_FACTORY,
             PG_DATA_TYPE_FACTORY );
 
@@ -93,9 +82,4 @@ public class PostgreSQLVendorImpl extends DefaultVendor
         return (PgSQLManipulationFactory) super.getManipulationFactory();
     }
 
-    @Override
-    public PgSQLLiteralFactory getLiteralFactory()
-    {
-        return (PgSQLLiteralFactory) super.getLiteralFactory();
-    }
 }

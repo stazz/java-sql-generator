@@ -33,6 +33,9 @@ import org.sql.generation.api.grammar.query.joins.JoinType;
 import org.sql.generation.api.vendor.SQLVendor;
 
 /**
+ * Contains the tests for various queries to test functionality of parser.
+ * 
+ * TODO how to actually verify queries? Currently this only outputs them.
  * 
  * @author Stanislav Muhametsin
  */
@@ -224,5 +227,33 @@ public abstract class AbstractQueryTest extends AbstractSQLSyntaxTest
 
         this.logQuery( vendor, query );
 
+    }
+
+    @Test
+    public void query3()
+        throws Exception
+    {
+        // @formatter:off
+        // SELECT COUNT(firstCol), MAX(secondCol)
+        // FROM schema.table;
+        // @formatter:on
+
+        // This test is related to bug reported by Paul Merlin
+        // The simple query builder was iterating the columns in erroneus way,
+        // thus skipping all non-aliased columns
+        SQLVendor vendor = this.getVendor();
+
+        QueryFactory q = vendor.getQueryFactory();
+        TableReferenceFactory t = vendor.getTableReferenceFactory();
+
+        String firstCol = "firstCol";
+        String secondCol = "secondCol";
+        String schemaName = "schema";
+        String tableName = "table";
+
+        QueryExpression query = q.simpleQueryBuilder().select( "COUNT(" + firstCol + ")", "MAX(" + secondCol + ")" )
+            .from( t.tableName( schemaName, tableName ) ).createExpression();
+
+        this.logQuery( vendor, query );
     }
 }

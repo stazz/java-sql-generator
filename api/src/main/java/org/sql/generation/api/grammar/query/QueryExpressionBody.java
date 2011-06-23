@@ -14,7 +14,7 @@
 
 package org.sql.generation.api.grammar.query;
 
-import org.atp.api.Typeable;
+import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.api.grammar.query.joins.JoinedTable;
 
 /**
@@ -25,7 +25,7 @@ import org.sql.generation.api.grammar.query.joins.JoinedTable;
  * @see JoinedTable
  */
 public interface QueryExpressionBody
-    extends Typeable<QueryExpressionBody>
+    extends NonBooleanExpression
 {
     /**
      * This syntax element represents the empty query expression body. It is defined for convenience. For example, an

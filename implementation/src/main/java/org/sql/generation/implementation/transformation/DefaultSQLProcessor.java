@@ -115,9 +115,12 @@ import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.grammar.query.QueryExpressionBody.EmptyQueryExpressionBody;
 import org.sql.generation.api.grammar.query.QueryExpressionBodyBinary;
 import org.sql.generation.api.grammar.query.QuerySpecification;
+import org.sql.generation.api.grammar.query.RowDefinition;
+import org.sql.generation.api.grammar.query.RowSubQuery;
 import org.sql.generation.api.grammar.query.SortSpecification;
 import org.sql.generation.api.grammar.query.TableReferenceByExpression;
 import org.sql.generation.api.grammar.query.TableReferenceByName;
+import org.sql.generation.api.grammar.query.TableValueConstructor;
 import org.sql.generation.api.grammar.query.joins.CrossJoinedTable;
 import org.sql.generation.api.grammar.query.joins.JoinCondition;
 import org.sql.generation.api.grammar.query.joins.NamedColumnsJoin;
@@ -186,8 +189,11 @@ import org.sql.generation.implementation.transformation.QueryProcessing.Ordinary
 import org.sql.generation.implementation.transformation.QueryProcessing.QueryExpressionBinaryProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.QueryExpressionProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.QuerySpecificationProcessor;
+import org.sql.generation.implementation.transformation.QueryProcessing.RowDefinitionProcessor;
+import org.sql.generation.implementation.transformation.QueryProcessing.RowSubQueryProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.SelectColumnsProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.SortSpecificationProcessor;
+import org.sql.generation.implementation.transformation.QueryProcessing.TableValueConstructorProcessor;
 import org.sql.generation.implementation.transformation.TableReferenceProcessing.CrossJoinedTableProcessor;
 import org.sql.generation.implementation.transformation.TableReferenceProcessing.JoinConditionProcessor;
 import org.sql.generation.implementation.transformation.TableReferenceProcessing.NamedColumnsJoinProcessor;
@@ -365,6 +371,9 @@ public class DefaultSQLProcessor
         SelectColumnsProcessor selectProcessor = new SelectColumnsProcessor();
         processors.put( AsteriskSelect.class, selectProcessor );
         processors.put( ColumnReferences.class, selectProcessor );
+        processors.put( TableValueConstructor.class, new TableValueConstructorProcessor() );
+        processors.put( RowDefinition.class, new RowDefinitionProcessor() );
+        processors.put( RowSubQuery.class, new RowSubQueryProcessor() );
 
         // Table references
         processors.put( TableName.class, new TableNameProcessor() );

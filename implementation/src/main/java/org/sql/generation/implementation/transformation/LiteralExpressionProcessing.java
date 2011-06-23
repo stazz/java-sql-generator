@@ -15,6 +15,7 @@
 package org.sql.generation.implementation.transformation;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 
 import org.sql.generation.api.grammar.common.SQLConstants;
@@ -66,15 +67,18 @@ public class LiteralExpressionProcessing
 
     public static class DateTimeLiteralProcessor extends AbstractProcessor<DateTimeLiteral>
     {
+        private final DateFormat _format;
+
         public DateTimeLiteralProcessor()
         {
             super( DateTimeLiteral.class );
+            this._format = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss.SSS" );
         }
 
         @Override
         protected void doProcess( SQLProcessorAggregator processor, DateTimeLiteral object, StringBuilder builder )
         {
-            builder.append( DateFormat.getDateTimeInstance().format( object.getDate() ) );
+            builder.append( "'" + this._format.format( object.getDate() ) + "'" );
         }
     }
 

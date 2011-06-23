@@ -12,19 +12,20 @@
  *
  */
 
-package org.sql.generation.api.grammar.factories.pgsql;
+package org.sql.generation.api.grammar.query;
+
+import java.util.List;
 
 import org.sql.generation.api.grammar.common.ValueExpression;
-import org.sql.generation.api.grammar.factories.LiteralFactory;
-import org.sql.generation.api.grammar.literals.pgsql.DynamicRow;
 
 /**
+ * This syntax element represents a comma-separated row value definition of {@code VALUES} expression in query.
  * 
  * @author Stanislav Muhametsin
  */
-public interface PgSQLLiteralFactory
-    extends LiteralFactory
+public interface RowDefinition
+    extends RowValueConstructor
 {
 
-    public DynamicRow dr( ValueExpression... expressions );
+    public List<ValueExpression> getRowElements();
 }

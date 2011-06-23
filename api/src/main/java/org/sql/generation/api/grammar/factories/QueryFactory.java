@@ -29,9 +29,13 @@ import org.sql.generation.api.grammar.query.Ordering;
 import org.sql.generation.api.grammar.query.OrdinaryGroupingSet;
 import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.grammar.query.QueryExpressionBody;
+import org.sql.generation.api.grammar.query.RowDefinition;
+import org.sql.generation.api.grammar.query.RowSubQuery;
+import org.sql.generation.api.grammar.query.RowValueConstructor;
 import org.sql.generation.api.grammar.query.QueryExpressionBody.EmptyQueryExpressionBody;
 import org.sql.generation.api.grammar.query.QuerySpecification;
 import org.sql.generation.api.grammar.query.SortSpecification;
+import org.sql.generation.api.grammar.query.TableValueConstructor;
 import org.sql.generation.api.vendor.SQLVendor;
 
 /**
@@ -149,4 +153,31 @@ public interface QueryFactory
      * @return The new {@link SimpleQueryBuilder}.
      */
     public SimpleQueryBuilder simpleQueryBuilder();
+
+    /**
+     * Creates a new {@code VALUES} expression in query.
+     * 
+     * @param rows The rows for {@code VALUES} expression.
+     * @return The new {@link TableValueConstructor}.
+     * @see RowValueConstructor
+     * @see RowSubQuery
+     * @see RowDefinition
+     */
+    public TableValueConstructor values( RowValueConstructor... rows );
+
+    /**
+     * Creates a new subquery for a row for {@code VALUES} expression in query.
+     * 
+     * @param subQuery The query to return the row.
+     * @return The new {@link RowSubQuery}.
+     */
+    public RowSubQuery rowSubQuery( QueryExpression subQuery );
+
+    /**
+     * Creates a new row for {@code VALUES} expression in query.
+     * 
+     * @param elements The elements for the row.
+     * @return The new {@link RowDefinition}.
+     */
+    public RowDefinition row( ValueExpression... elements );
 }
