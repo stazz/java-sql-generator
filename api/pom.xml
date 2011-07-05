@@ -8,7 +8,6 @@
     <version>0.3-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.java-sql-generator</groupId>
   <artifactId>org.java-sql-generator.api</artifactId>
 
   <name>Java SQL Generator API</name>
