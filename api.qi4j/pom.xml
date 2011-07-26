@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.java-sql-generator</groupId>
+    <artifactId>org.java-sql-generator</artifactId>
+    <version>0.3-SNAPSHOT</version>
+  </parent>
+  
+  <properties>
+    <version.qi4j>1.4-SNAPSHOT</version.qi4j>
+  </properties>
+
+  <artifactId>org.java-sql-generator.api.qi4j</artifactId>
+
+  <name>Java SQL Generator API for Qi4j</name>
+  <dependencies>
+    <dependency>
+      <groupId>org.java-sql-generator</groupId>
+      <artifactId>org.java-sql-generator.api</artifactId>
+      <scope>compile</scope>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.qi4j.core</groupId>
+      <artifactId>org.qi4j.core.api</artifactId>
+      <scope>compile</scope>
+      <version>${version.qi4j}</version>
+    </dependency>
+  </dependencies>
+  
+  <licenses>
+    <license>
+      <name>Apache 2</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+    
+  <developers>
+    <developer>
+      <id>stas.dev+jsg@gmail.com</id>
+      <name>Stanislav Muhametsin</name>
+      <email>stas.dev+jsg@gmail.com</email>
+      <timezone>UTC+2</timezone>
+    </developer>
+  </developers>
+  
+  <inceptionYear>2010</inceptionYear>
+
+</project>

@@ -1,4 +1,4 @@
-Java SQL Generator API
+Java SQL Generator API for Qi4j
 Copyright 2010, Stanislav Muhametsin
 
 Also see each file for additional information of Copyright claims.
@@ -9,5 +9,7 @@ Below follows a list of binary dependencies and their licenses;
 This module uses ATP API, which is copyright (c) 2010-2011, Stanislav Muhametsin,
 All rights reserved. See licences/atp.api.licence.
 
+This module uses various modules of Qi4j, which is copyright (c) 2008-2011, various contributors.
+All rights reserved. See licences/qi4j.licence.
 
 END OF NOTICE
