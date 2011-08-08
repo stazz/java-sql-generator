@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.common;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,12 +33,12 @@ public class ColumnNameListImpl extends NonBooleanExpressionImpl<ColumnNameList>
 
     private final List<String> _columnNames;
 
-    public ColumnNameListImpl( List<String> columnNames )
+    public ColumnNameListImpl( Collection<String> columnNames )
     {
         this( ColumnNameList.class, columnNames );
     }
 
-    protected ColumnNameListImpl( Class<? extends ColumnNameList> implClass, List<String> columnNames )
+    protected ColumnNameListImpl( Class<? extends ColumnNameList> implClass, Collection<String> columnNames )
     {
         super( implClass );
         NullArgumentException.validateNotNull( "column names", columnNames );

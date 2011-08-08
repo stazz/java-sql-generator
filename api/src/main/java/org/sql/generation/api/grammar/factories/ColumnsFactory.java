@@ -14,6 +14,7 @@
 
 package org.sql.generation.api.grammar.factories;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.sql.generation.api.grammar.common.ColumnNameList;
@@ -77,6 +78,6 @@ public interface ColumnsFactory
      * @param names The column names. Must contain at least one name.
      * @return The new {@link ColumnNameList}.
      */
-    public ColumnNameList colNames( List<String> names );
+    public ColumnNameList colNames( Collection<String> names );
 
 }

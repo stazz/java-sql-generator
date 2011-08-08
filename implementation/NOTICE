@@ -1,12 +1,12 @@
 Java SQL Generator Implementation
-Copyright 2010, Stanislav Muhametsin
+Copyright 2010-2011, Stanislav Muhametsin
 
 Also see each file for additional information of Copyright claims.
 
 Below follows a list of binary dependencies and their licenses;
 ----------------------------------------------------------------
 
-This module uses ATP SPI, which is copyright (c) 2010, Stanislav Muhametsin,
+This module uses ATP SPI, which is copyright (c) 2010-2011, Stanislav Muhametsin,
 All rights reserved. See licences/atp.spi.licence.
 
 END OF NOTICE
