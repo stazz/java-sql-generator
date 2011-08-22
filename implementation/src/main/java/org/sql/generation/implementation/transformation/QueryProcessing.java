@@ -389,9 +389,14 @@ public class QueryProcessing
         protected void doProcess( SQLProcessorAggregator aggregator, TableValueConstructor object, StringBuilder builder )
         {
             builder.append( "VALUES" ).append( SQLConstants.TOKEN_SEPARATOR );
-            for( RowValueConstructor row : object.getRows() )
+            Iterator<RowValueConstructor> iter = object.getRows().iterator();
+            while( iter.hasNext() )
             {
-                aggregator.process( row, builder );
+                aggregator.process( iter.next(), builder );
+                if( iter.hasNext() )
+                {
+                    builder.append( SQLConstants.COMMA ).append( SQLConstants.TOKEN_SEPARATOR );
+                }
             }
         }
     }
