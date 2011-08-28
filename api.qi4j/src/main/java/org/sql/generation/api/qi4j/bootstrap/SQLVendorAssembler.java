@@ -16,6 +16,7 @@ package org.sql.generation.api.qi4j.bootstrap;
 
 import java.io.IOException;
 
+import org.qi4j.api.common.Visibility;
 import org.qi4j.bootstrap.Assembler;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
@@ -31,11 +32,21 @@ public class SQLVendorAssembler
     implements Assembler
 {
 
+    public static final Visibility DEFAULT_VISIBILITY = Visibility.module;
+
     private final Class<? extends SQLVendor> _vendorClass;
+
+    private final Visibility _visibility;
 
     public SQLVendorAssembler( Class<? extends SQLVendor> vendorClass )
     {
+        this( vendorClass, DEFAULT_VISIBILITY );
+    }
+
+    public SQLVendorAssembler( Class<? extends SQLVendor> vendorClass, Visibility visibility )
+    {
         this._vendorClass = vendorClass;
+        this._visibility = visibility;
     }
 
     public void assemble( ModuleAssembly module )
@@ -43,8 +54,8 @@ public class SQLVendorAssembler
     {
         try
         {
-            module.services( SQLVendorServiceComposite.class ).setMetaInfo(
-                SQLVendorProvider.createVendor( this._vendorClass ) );
+            module.services( SQLVendorServiceComposite.class ).visibleIn( this._visibility )
+                .setMetaInfo( SQLVendorProvider.createVendor( this._vendorClass ) );
         }
         catch( IOException ioe )
         {
