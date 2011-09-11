@@ -59,4 +59,6 @@ public interface PgSQLSimpleQueryBuilder
     public PgSQLSimpleQueryBuilder orderByAsc( String... columns );
 
     public PgSQLSimpleQueryBuilder orderByDesc( String... columns );
+
+    public PgSQLSimpleQueryBuilder selectAllColumns();
 }

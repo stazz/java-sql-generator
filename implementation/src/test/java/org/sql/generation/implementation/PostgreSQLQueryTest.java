@@ -56,7 +56,7 @@ public class PostgreSQLQueryTest extends AbstractQueryTest
         ColumnsFactory c = vendor.getColumnsFactory();
         
         QueryExpression query = vendor.getQueryFactory().simpleQueryBuilder()
-            .select( "*" )
+            .selectAllColumns()
             .from( vendor.getTableReferenceFactory().tableName( "table" ) )
             .where( b.regexp( c.colName( "table", "value" ), vendor.getLiteralFactory().param() ) )
             .orderByAsc( "1" )

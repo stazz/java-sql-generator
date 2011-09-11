@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.builders.query.pgsql;
 
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.builders.query.QuerySpecificationBuilder;
+import org.sql.generation.api.grammar.builders.query.SimpleQueryBuilder;
 import org.sql.generation.api.grammar.builders.query.pgsql.PgSQLQuerySpecificationBuilder;
 import org.sql.generation.api.grammar.builders.query.pgsql.PgSQLSimpleQueryBuilder;
 import org.sql.generation.api.grammar.common.TableName;
@@ -127,6 +128,13 @@ public class PgSQLSimpleQueryBuilderImpl extends SimpleQueryBuilderImpl
     public PgSQLSimpleQueryBuilder where( BooleanExpression searchCondition )
     {
         super.where( searchCondition );
+        return this;
+    }
+
+    @Override
+    public PgSQLSimpleQueryBuilder selectAllColumns()
+    {
+        super.selectAllColumns();
         return this;
     }
 
