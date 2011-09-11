@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Stanislav Muhametsin. All Rights Reserved.
+ * Copyright (c) 2011, Stanislav Muhametsin. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,14 @@
 
 package org.sql.generation.api.grammar.literals;
 
-import java.sql.Date;
-
 /**
- * This syntax element encapsulates reference to some date to be inserted into SQL statement.
+ * This syntax element represents any literal that represents some kind of time.
  * 
- * @author Stanislav Muhametsin
+ * @author 2011 Stanislav Muhametsin
+ * @see DateTimeLiteral
  */
-public interface DateTimeLiteral
-    extends TemporalLiteral
+public interface TemporalLiteral
+    extends LiteralExpression
 {
 
-    /**
-     * Returns the date to be inserted into SQL statement.
-     * 
-     * @return The date to be inserted into SQL statement.
-     */
-    public Date getDate();
 }
