@@ -16,7 +16,7 @@ package org.sql.generation.api.grammar.builders.query.pgsql;
 
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.builders.query.SimpleQueryBuilder;
-import org.sql.generation.api.grammar.common.TableNameAbstract;
+import org.sql.generation.api.grammar.common.TableName;
 
 /**
  * This builder extends {@link SimpleQueryBuilder} functionality with PostgreSQL-specific elements.
@@ -48,7 +48,7 @@ public interface PgSQLSimpleQueryBuilder
 
     public PgSQLSimpleQueryBuilder as( String columnAlias );
 
-    public PgSQLSimpleQueryBuilder from( TableNameAbstract... tableNames );
+    public PgSQLSimpleQueryBuilder from( TableName... tableNames );
 
     public PgSQLSimpleQueryBuilder where( BooleanExpression searchCondition );
 

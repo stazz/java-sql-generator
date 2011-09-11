@@ -14,7 +14,7 @@
 
 package org.sql.generation.implementation.grammar.factories;
 
-import org.sql.generation.api.grammar.common.TableNameAbstract;
+import org.sql.generation.api.grammar.common.TableName;
 import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.common.TableNameFunction;
 import org.sql.generation.api.grammar.factories.TableReferenceFactory;
@@ -31,7 +31,7 @@ import org.sql.generation.api.grammar.query.TableReferenceByName;
 public abstract class AbstractTableRefFactory
     implements TableReferenceFactory
 {
-    public TableReferenceByName table( TableNameAbstract tableName )
+    public TableReferenceByName table( TableName tableName )
     {
         return this.table( tableName, null );
     }

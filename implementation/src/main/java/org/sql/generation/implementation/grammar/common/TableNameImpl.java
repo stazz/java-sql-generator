@@ -15,19 +15,19 @@
 package org.sql.generation.implementation.grammar.common;
 
 import org.atp.spi.TypeableImpl;
-import org.sql.generation.api.grammar.common.TableNameAbstract;
+import org.sql.generation.api.grammar.common.TableName;
 
 /**
  * 
  * @author 2011 Stanislav Muhametsin
  */
-public class TableNameAbstractImpl<TableNameType extends TableNameAbstract> extends
-    TypeableImpl<TableNameAbstract, TableNameType>
-    implements TableNameAbstract
+public class TableNameImpl<TableNameType extends TableName> extends
+    TypeableImpl<TableName, TableNameType>
+    implements TableName
 {
     private final String _schemaName;
 
-    protected TableNameAbstractImpl( Class<? extends TableNameType> implClass, String schemaName )
+    protected TableNameImpl( Class<? extends TableNameType> implClass, String schemaName )
     {
         super( implClass );
 

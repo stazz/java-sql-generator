@@ -21,7 +21,7 @@ import org.sql.generation.api.grammar.common.TableNameDirect;
  * 
  * @author Stanislav Muhametsin
  */
-public class TableNameDirectImpl extends TableNameAbstractImpl<TableNameDirect>
+public class TableNameDirectImpl extends TableNameImpl<TableNameDirect>
     implements TableNameDirect
 {
     private final String _tableName;

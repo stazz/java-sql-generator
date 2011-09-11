@@ -22,7 +22,7 @@ import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
  * @author 2011 Stanislav Muhametsin
  */
 public interface TableNameFunction
-    extends TableNameAbstract
+    extends TableName
 {
     /**
      * Returns the function to call.

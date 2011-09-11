@@ -16,7 +16,7 @@ package org.sql.generation.api.grammar.builders.query;
 
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.builders.AbstractBuilder;
-import org.sql.generation.api.grammar.common.TableNameAbstract;
+import org.sql.generation.api.grammar.common.TableName;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.factories.QueryFactory;
 import org.sql.generation.api.grammar.query.QueryExpression;
@@ -68,7 +68,7 @@ public interface SimpleQueryBuilder
      * @param tableNames The table names to add.
      * @return This builder.
      */
-    public SimpleQueryBuilder from( TableNameAbstract... tableNames );
+    public SimpleQueryBuilder from( TableName... tableNames );
 
     /**
      * Sets the search condition ({@code WHERE} clause) for this query.

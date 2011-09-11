@@ -18,7 +18,7 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.builders.query.TableReferenceBuilder;
 import org.sql.generation.api.grammar.common.ColumnNameList;
-import org.sql.generation.api.grammar.common.TableNameAbstract;
+import org.sql.generation.api.grammar.common.TableName;
 import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.common.TableNameFunction;
 import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
@@ -64,7 +64,7 @@ public class DefaultTableRefFactory extends AbstractTableRefFactory
         return new NamedColumnsJoinImpl( columnNames );
     }
 
-    public TableReferenceByName table( TableNameAbstract tableName, TableAlias alias )
+    public TableReferenceByName table( TableName tableName, TableAlias alias )
     {
         return new TableReferenceByNameImpl( tableName, alias );
     }

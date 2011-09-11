@@ -17,7 +17,7 @@ package org.sql.generation.api.grammar.factories;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.builders.query.TableReferenceBuilder;
 import org.sql.generation.api.grammar.common.ColumnNameList;
-import org.sql.generation.api.grammar.common.TableNameAbstract;
+import org.sql.generation.api.grammar.common.TableName;
 import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.common.TableNameFunction;
 import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
@@ -51,7 +51,7 @@ public interface TableReferenceFactory
      * @param tableName The table name to use.
      * @return The new {@link TableReferenceByName}.
      */
-    public TableReferenceByName table( TableNameAbstract tableName );
+    public TableReferenceByName table( TableName tableName );
 
     /**
      * Creates a new table references, which uses given table name along with given table alias.
@@ -60,7 +60,7 @@ public interface TableReferenceFactory
      * @param alias The table alias to use. May be {@code null}.
      * @return The new {@link TableReferenceByName}.
      */
-    public TableReferenceByName table( TableNameAbstract tableName, TableAlias alias );
+    public TableReferenceByName table( TableName tableName, TableAlias alias );
 
     /**
      * <p>

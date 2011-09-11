@@ -14,7 +14,7 @@
 
 package org.sql.generation.api.grammar.query;
 
-import org.sql.generation.api.grammar.common.TableNameAbstract;
+import org.sql.generation.api.grammar.common.TableName;
 
 /**
  * This syntax element represents the reference to a table in {@code FROM} clause.
@@ -31,5 +31,5 @@ public interface TableReferenceByName
      * @return The table name.
      * @see TableName
      */
-    public TableNameAbstract getTableName();
+    public TableName getTableName();
 }

@@ -22,8 +22,8 @@ import org.atp.api.Typeable;
  * 
  * @author 2011 Stanislav Muhametsin
  */
-public interface TableNameAbstract
-    extends Typeable<TableNameAbstract>
+public interface TableName
+    extends Typeable<TableName>
 {
     /**
      * Gets the schema name. Returns {@code null} if this is not schema-qualified table name.

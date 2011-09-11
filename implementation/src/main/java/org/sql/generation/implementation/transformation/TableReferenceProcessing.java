@@ -17,7 +17,7 @@ he.org/licenses/LICENSE-2.0
 package org.sql.generation.implementation.transformation;
 
 import org.sql.generation.api.grammar.common.SQLConstants;
-import org.sql.generation.api.grammar.common.TableNameAbstract;
+import org.sql.generation.api.grammar.common.TableName;
 import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.common.TableNameFunction;
 import org.sql.generation.api.grammar.query.TableAlias;
@@ -41,7 +41,7 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
 public class TableReferenceProcessing
 {
 
-    public static abstract class AbstractTableNameProcessor<TableNameType extends TableNameAbstract> extends
+    public static abstract class AbstractTableNameProcessor<TableNameType extends TableName> extends
         AbstractProcessor<TableNameType>
     {
 

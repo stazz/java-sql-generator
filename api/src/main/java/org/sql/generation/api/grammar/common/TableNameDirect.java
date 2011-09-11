@@ -20,7 +20,7 @@ package org.sql.generation.api.grammar.common;
  * @author Stanislav Muhametsin
  */
 public interface TableNameDirect
-    extends TableNameAbstract
+    extends TableName
 {
 
     /**

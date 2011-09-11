@@ -22,7 +22,7 @@ import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
  * 
  * @author 2011 Stanislav Muhametsin
  */
-public class TableNameFunctionImpl extends TableNameAbstractImpl<TableNameFunction>
+public class TableNameFunctionImpl extends TableNameImpl<TableNameFunction>
     implements TableNameFunction
 {
 
