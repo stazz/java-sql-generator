@@ -16,7 +16,7 @@ package org.sql.generation.api.grammar.modification;
 
 import org.atp.api.Typeable;
 import org.sql.generation.api.grammar.common.SQLStatement;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 
 /**
  * This syntax element represents a {@code INSERT INTO} statement.
@@ -32,7 +32,7 @@ public interface InsertStatement
      * 
      * @return The table name where to insert.
      */
-    public TableName getTableName();
+    public TableNameDirect getTableName();
 
     /**
      * Returns the data source for columns.

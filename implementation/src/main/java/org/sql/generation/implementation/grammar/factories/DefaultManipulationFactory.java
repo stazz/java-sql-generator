@@ -14,7 +14,7 @@
 
 package org.sql.generation.implementation.grammar.factories;
 
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
 import org.sql.generation.api.grammar.definition.table.TableConstraintDefinition;
 import org.sql.generation.api.grammar.factories.ManipulationFactory;
@@ -49,7 +49,7 @@ public class DefaultManipulationFactory
     implements ManipulationFactory
 {
 
-    public AlterTableStatement createAlterTableStatement( TableName tableName, AlterTableAction action )
+    public AlterTableStatement createAlterTableStatement( TableNameDirect tableName, AlterTableAction action )
     {
         return new AlterTableStatementImpl( tableName, action );
     }
@@ -91,7 +91,7 @@ public class DefaultManipulationFactory
         return new DropSchemaStatementImpl( dropBehaviour, schemaName );
     }
 
-    public DropTableOrViewStatement createDropTableOrViewStatement( TableName tableName, ObjectType theType,
+    public DropTableOrViewStatement createDropTableOrViewStatement( TableNameDirect tableName, ObjectType theType,
         DropBehaviour dropBehaviour )
     {
         DropTableOrViewStatement result = null;

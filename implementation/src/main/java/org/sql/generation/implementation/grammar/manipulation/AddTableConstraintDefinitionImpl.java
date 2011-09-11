@@ -14,12 +14,11 @@
 
 package org.sql.generation.implementation.grammar.manipulation;
 
+import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.definition.table.TableConstraintDefinition;
 import org.sql.generation.api.grammar.manipulation.AddTableConstraintDefinition;
 import org.sql.generation.api.grammar.manipulation.AlterTableAction;
-
-import org.atp.spi.TypeableImpl;
 
 /**
  * 

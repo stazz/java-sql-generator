@@ -15,7 +15,7 @@
 package org.sql.generation.api.grammar.definition.view;
 
 import org.sql.generation.api.grammar.common.SchemaDefinitionStatement;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.definition.schema.SchemaElement;
 import org.sql.generation.api.grammar.query.QueryExpression;
 
@@ -40,7 +40,7 @@ public interface ViewDefinition
      * 
      * @return The name of this view.
      */
-    public TableName getViewName();
+    public TableNameDirect getViewName();
 
     /**
      * Returns the view specification.

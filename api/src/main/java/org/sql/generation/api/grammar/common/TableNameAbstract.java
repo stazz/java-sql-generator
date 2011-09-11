@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Stanislav Muhametsin. All Rights Reserved.
+ * Copyright (c) 2011, Stanislav Muhametsin. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,14 +17,14 @@ package org.sql.generation.api.grammar.common;
 import org.atp.api.Typeable;
 
 /**
- * A table name may be just table name, or schema-qualified table name.
+ * This is common interface for table names. Table name may be either {@link TableNameDirect} or
+ * {@link TableNameFunction}.
  * 
- * @author Stanislav Muhametsin
+ * @author 2011 Stanislav Muhametsin
  */
-public interface TableName
-    extends Typeable<TableName>
+public interface TableNameAbstract
+    extends Typeable<TableNameAbstract>
 {
-
     /**
      * Gets the schema name. Returns {@code null} if this is not schema-qualified table name.
      * 
@@ -32,11 +32,4 @@ public interface TableName
      *         name.
      */
     public String getSchemaName();
-
-    /**
-     * Gets name of the table. Returns always non-{@code null}.
-     * 
-     * @return The name of the table. Always non-{@code null}.
-     */
-    public String getTableName();
 }

@@ -17,7 +17,7 @@ package org.sql.generation.implementation.grammar.manipulation;
 import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.SchemaStatement;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.manipulation.AlterTableAction;
 import org.sql.generation.api.grammar.manipulation.AlterTableStatement;
 
@@ -29,16 +29,16 @@ public class AlterTableStatementImpl extends TypeableImpl<SchemaStatement, Alter
     implements AlterTableStatement
 {
 
-    private final TableName _tableName;
+    private final TableNameDirect _tableName;
     private final AlterTableAction _action;
 
-    public AlterTableStatementImpl( TableName tableName, AlterTableAction action )
+    public AlterTableStatementImpl( TableNameDirect tableName, AlterTableAction action )
     {
         this( AlterTableStatement.class, tableName, action );
     }
 
-    protected AlterTableStatementImpl( Class<? extends AlterTableStatement> realImplementingType, TableName tableName,
-        AlterTableAction action )
+    protected AlterTableStatementImpl( Class<? extends AlterTableStatement> realImplementingType,
+        TableNameDirect tableName, AlterTableAction action )
     {
         super( realImplementingType );
 
@@ -60,7 +60,7 @@ public class AlterTableStatementImpl extends TypeableImpl<SchemaStatement, Alter
         return this._action;
     }
 
-    public TableName getTableName()
+    public TableNameDirect getTableName()
     {
         return this._tableName;
     }

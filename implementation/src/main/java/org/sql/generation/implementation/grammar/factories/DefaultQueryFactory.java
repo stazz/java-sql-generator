@@ -27,6 +27,7 @@ import org.sql.generation.api.grammar.builders.query.SimpleQueryBuilder;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.api.grammar.common.SetQuantifier;
 import org.sql.generation.api.grammar.common.ValueExpression;
+import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
 import org.sql.generation.api.grammar.query.Ordering;
 import org.sql.generation.api.grammar.query.OrdinaryGroupingSet;
 import org.sql.generation.api.grammar.query.QueryExpression;
@@ -136,6 +137,12 @@ public class DefaultQueryFactory extends AbstractQueryFactory
     public RowDefinition row( ValueExpression... elements )
     {
         return new RowDefinitionImpl( Arrays.asList( elements ) );
+    }
+
+    public QueryExpression callFunction( String schemaName, SQLFunctionLiteral function )
+    {
+        return this.simpleQueryBuilder().selectAllColumns()
+            .from( this.getVendor().getTableReferenceFactory().tableName( schemaName, function ) ).createExpression();
     }
 
 }

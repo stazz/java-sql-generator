@@ -18,7 +18,7 @@ import org.atp.api.Typeable;
 import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.SchemaStatement;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.definition.table.TableCommitAction;
 import org.sql.generation.api.grammar.definition.table.TableContentsSource;
 import org.sql.generation.api.grammar.definition.table.TableDefinition;
@@ -34,17 +34,17 @@ public class TableDefinitionImpl extends TypeableImpl<SchemaStatement, TableDefi
 
     private final TableCommitAction _commitAction;
     private final TableContentsSource _contents;
-    private final TableName _name;
+    private final TableNameDirect _name;
     private final TableScope _scope;
 
-    public TableDefinitionImpl( TableCommitAction commitAction, TableContentsSource contents, TableName name,
+    public TableDefinitionImpl( TableCommitAction commitAction, TableContentsSource contents, TableNameDirect name,
         TableScope scope )
     {
         this( TableDefinition.class, commitAction, contents, name, scope );
     }
 
     protected TableDefinitionImpl( Class<? extends TableDefinition> realImplementingType,
-        TableCommitAction commitAction, TableContentsSource contents, TableName name, TableScope scope )
+        TableCommitAction commitAction, TableContentsSource contents, TableNameDirect name, TableScope scope )
     {
         super( realImplementingType );
 
@@ -80,7 +80,7 @@ public class TableDefinitionImpl extends TypeableImpl<SchemaStatement, TableDefi
         return this._contents;
     }
 
-    public TableName getTableName()
+    public TableNameDirect getTableName()
     {
         return this._name;
     }

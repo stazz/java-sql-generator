@@ -14,7 +14,7 @@
 
 package org.sql.generation.api.grammar.manipulation;
 
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 
 /**
  * 
@@ -29,7 +29,7 @@ public interface AlterTableStatement
      * 
      * @return The name of the table to be altered.
      */
-    public TableName getTableName();
+    public TableNameDirect getTableName();
 
     /**
      * Returns the action to perform in order to alter table.

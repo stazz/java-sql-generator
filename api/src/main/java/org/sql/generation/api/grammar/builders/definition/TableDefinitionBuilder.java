@@ -15,7 +15,7 @@
 package org.sql.generation.api.grammar.builders.definition;
 
 import org.sql.generation.api.grammar.builders.AbstractBuilder;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.definition.table.TableCommitAction;
 import org.sql.generation.api.grammar.definition.table.TableContentsSource;
 import org.sql.generation.api.grammar.definition.table.TableDefinition;
@@ -47,7 +47,7 @@ public interface TableDefinitionBuilder
      * @return This builder.
      * @see TableName
      */
-    public TableDefinitionBuilder setTableName( TableName tableName );
+    public TableDefinitionBuilder setTableName( TableNameDirect tableName );
 
     /**
      * Sets the commit action for this table.
@@ -80,7 +80,7 @@ public interface TableDefinitionBuilder
      * 
      * @return The name for this table.
      */
-    public TableName getTableName();
+    public TableNameDirect getTableName();
 
     /**
      * Returns the commit action for this table.

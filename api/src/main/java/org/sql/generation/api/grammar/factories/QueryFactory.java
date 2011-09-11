@@ -24,16 +24,17 @@ import org.sql.generation.api.grammar.builders.query.SimpleQueryBuilder;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.api.grammar.common.SetQuantifier;
 import org.sql.generation.api.grammar.common.ValueExpression;
+import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
 import org.sql.generation.api.grammar.query.GroupByClause;
 import org.sql.generation.api.grammar.query.Ordering;
 import org.sql.generation.api.grammar.query.OrdinaryGroupingSet;
 import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.grammar.query.QueryExpressionBody;
+import org.sql.generation.api.grammar.query.QueryExpressionBody.EmptyQueryExpressionBody;
+import org.sql.generation.api.grammar.query.QuerySpecification;
 import org.sql.generation.api.grammar.query.RowDefinition;
 import org.sql.generation.api.grammar.query.RowSubQuery;
 import org.sql.generation.api.grammar.query.RowValueConstructor;
-import org.sql.generation.api.grammar.query.QueryExpressionBody.EmptyQueryExpressionBody;
-import org.sql.generation.api.grammar.query.QuerySpecification;
 import org.sql.generation.api.grammar.query.SortSpecification;
 import org.sql.generation.api.grammar.query.TableValueConstructor;
 import org.sql.generation.api.vendor.SQLVendor;
@@ -180,4 +181,24 @@ public interface QueryFactory
      * @return The new {@link RowDefinition}.
      */
     public RowDefinition row( ValueExpression... elements );
+
+    /**
+     * Returns a query for calling a SQL function with schema. The query is
+     * {@code SELECT * FROM schemaName.functionName(params...)}.
+     * 
+     * @param schemaName The name of the schema where SQL function resides.
+     * @param function The SQL function to call.
+     * @return A query returning the results of calling SQL function.
+     */
+    public QueryExpression callFunction( String schemaName, SQLFunctionLiteral function );
+
+    /**
+     * Returns a query for calling a SQL function without a schema. The query is
+     * {@code SELECT * FROM functionName(params...)}. Calling this method is equivalent to calling
+     * {@link #callFunction(String, SQLFunctionLiteral)} and passing {@code null} as first argument.
+     * 
+     * @param function The function to call.
+     * @return A query returning the results of calling SQL function.
+     */
+    public QueryExpression callFunction( SQLFunctionLiteral function );
 }

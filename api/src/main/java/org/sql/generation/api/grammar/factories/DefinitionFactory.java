@@ -21,7 +21,7 @@ import org.sql.generation.api.grammar.builders.definition.TableDefinitionBuilder
 import org.sql.generation.api.grammar.builders.definition.TableElementListBuilder;
 import org.sql.generation.api.grammar.builders.definition.UniqueConstraintBuilder;
 import org.sql.generation.api.grammar.builders.definition.ViewDefinitionBuilder;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.common.datatypes.SQLDataType;
 import org.sql.generation.api.grammar.definition.table.CheckConstraint;
 import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
@@ -127,7 +127,7 @@ public interface DefinitionFactory
      * @return The syntax element for {@code LIKE
      * <table name>} clause for {@code CREATE TABLE} statement.
      */
-    public LikeClause createLikeClause( TableName tableName );
+    public LikeClause createLikeClause( TableNameDirect tableName );
 
     /**
      * Creates a new unnamed table constraint without any {@link ConstraintCharacteristics}. Invoking this method is

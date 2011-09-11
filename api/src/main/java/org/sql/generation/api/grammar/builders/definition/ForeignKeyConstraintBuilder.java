@@ -17,7 +17,7 @@ package org.sql.generation.api.grammar.builders.definition;
 import java.util.List;
 
 import org.sql.generation.api.grammar.builders.AbstractBuilder;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.definition.table.ForeignKeyConstraint;
 import org.sql.generation.api.grammar.definition.table.MatchType;
 import org.sql.generation.api.grammar.definition.table.ReferentialAction;
@@ -53,7 +53,7 @@ public interface ForeignKeyConstraintBuilder
      * @param tableName The target table name for this foreign key constraint.
      * @return This builder.
      */
-    public ForeignKeyConstraintBuilder setTargetTableName( TableName tableName );
+    public ForeignKeyConstraintBuilder setTargetTableName( TableNameDirect tableName );
 
     /**
      * Sets the match type for this foreign key constraint.
@@ -101,7 +101,7 @@ public interface ForeignKeyConstraintBuilder
      * 
      * @return The target table name for this foreign key constraint.
      */
-    public TableName getTableName();
+    public TableNameDirect getTableName();
 
     /**
      * Returns the match type for this foreign key constraint.

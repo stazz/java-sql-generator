@@ -20,7 +20,7 @@ import org.sql.generation.api.grammar.builders.modification.DeleteBySearchBuilde
 import org.sql.generation.api.grammar.builders.modification.InsertStatementBuilder;
 import org.sql.generation.api.grammar.builders.modification.UpdateBySearchBuilder;
 import org.sql.generation.api.grammar.common.ColumnNameList;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.modification.ColumnSourceByQuery;
 import org.sql.generation.api.grammar.modification.SetClause;
@@ -78,7 +78,7 @@ public class DefaultModificationFactory extends AbstractModificationFactory
         return new UpdateBySearchBuilderImpl( this._vendor.getBooleanFactory().booleanBuilder() );
     }
 
-    public TargetTable createTargetTable( TableName tableName, Boolean isOnly )
+    public TargetTable createTargetTable( TableNameDirect tableName, Boolean isOnly )
     {
         return new TargetTableImpl( isOnly, tableName );
     }

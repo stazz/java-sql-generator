@@ -15,7 +15,7 @@
 package org.sql.generation.api.grammar.builders.definition;
 
 import org.sql.generation.api.grammar.builders.AbstractBuilder;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.definition.view.RegularViewSpecification;
 import org.sql.generation.api.grammar.definition.view.ViewCheckOption;
 import org.sql.generation.api.grammar.definition.view.ViewDefinition;
@@ -46,7 +46,7 @@ public interface ViewDefinitionBuilder
      * @param viewName The name for this view.
      * @return This builder.
      */
-    public ViewDefinitionBuilder setViewName( TableName viewName );
+    public ViewDefinitionBuilder setViewName( TableNameDirect viewName );
 
     /**
      * Sets the query for this view.
@@ -86,7 +86,7 @@ public interface ViewDefinitionBuilder
      * 
      * @return The name of the view.
      */
-    public TableName getViewName();
+    public TableNameDirect getViewName();
 
     /**
      * Returns the query for the view.

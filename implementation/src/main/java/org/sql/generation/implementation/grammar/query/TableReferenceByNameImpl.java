@@ -15,7 +15,8 @@
 package org.sql.generation.implementation.grammar.query;
 
 import org.sql.generation.api.common.NullArgumentException;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameAbstract;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.query.TableAlias;
 import org.sql.generation.api.grammar.query.TableReferenceByName;
 
@@ -27,14 +28,14 @@ public class TableReferenceByNameImpl extends TableReferencePrimaryImpl<TableRef
     implements TableReferenceByName
 {
 
-    private final TableName _tableName;
+    private final TableNameAbstract _tableName;
 
-    public TableReferenceByNameImpl( TableName tableName, TableAlias alias )
+    public TableReferenceByNameImpl( TableNameAbstract tableName, TableAlias alias )
     {
         this( TableReferenceByName.class, tableName, alias );
     }
 
-    protected TableReferenceByNameImpl( Class<? extends TableReferenceByName> implClass, TableName tableName,
+    protected TableReferenceByNameImpl( Class<? extends TableReferenceByName> implClass, TableNameAbstract tableName,
         TableAlias alias )
     {
         super( implClass, alias );
@@ -44,7 +45,7 @@ public class TableReferenceByNameImpl extends TableReferencePrimaryImpl<TableRef
         this._tableName = tableName;
     }
 
-    public TableName getTableName()
+    public TableNameAbstract getTableName()
     {
         return this._tableName;
     }

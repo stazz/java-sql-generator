@@ -1,4 +1,7 @@
-api/target
-implementation/target
-api.qi4j/target
+# Ignore default maven target folders
 target
+
+# Ignore Eclipse files and folders
+.settings
+.project
+.classpath

@@ -14,7 +14,7 @@
 
 package org.sql.generation.implementation.grammar.factories.pgsql;
 
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLManipulationFactory;
 import org.sql.generation.api.grammar.manipulation.DropBehaviour;
 import org.sql.generation.api.grammar.manipulation.ObjectType;
@@ -31,13 +31,13 @@ public class PgSQLManipulationFactoryImpl extends DefaultManipulationFactory
 {
 
     @Override
-    public PgSQLDropTableOrViewStatement createDropTableOrViewStatement( TableName tableName, ObjectType theType,
+    public PgSQLDropTableOrViewStatement createDropTableOrViewStatement( TableNameDirect tableName, ObjectType theType,
         DropBehaviour dropBehaviour )
     {
         return this.createDropTableOrViewStatement( tableName, theType, dropBehaviour, false );
     }
 
-    public PgSQLDropTableOrViewStatement createDropTableOrViewStatement( TableName tableName, ObjectType theType,
+    public PgSQLDropTableOrViewStatement createDropTableOrViewStatement( TableNameDirect tableName, ObjectType theType,
         DropBehaviour dropBehaviour, Boolean useIfExists )
     {
         return new PgSQLDropTableOrViewStatementImpl( theType, dropBehaviour, tableName, useIfExists );

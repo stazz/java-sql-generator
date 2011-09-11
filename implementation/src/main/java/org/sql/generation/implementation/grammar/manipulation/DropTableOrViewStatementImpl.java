@@ -15,7 +15,7 @@
 package org.sql.generation.implementation.grammar.manipulation;
 
 import org.sql.generation.api.common.NullArgumentException;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.manipulation.DropBehaviour;
 import org.sql.generation.api.grammar.manipulation.DropTableOrViewStatement;
 import org.sql.generation.api.grammar.manipulation.ObjectType;
@@ -28,15 +28,15 @@ public class DropTableOrViewStatementImpl extends DropStatementImpl<DropTableOrV
     implements DropTableOrViewStatement
 {
 
-    private final TableName _name;
+    private final TableNameDirect _name;
 
-    public DropTableOrViewStatementImpl( ObjectType whatToDrop, DropBehaviour dropBehaviour, TableName name )
+    public DropTableOrViewStatementImpl( ObjectType whatToDrop, DropBehaviour dropBehaviour, TableNameDirect name )
     {
         this( DropTableOrViewStatement.class, whatToDrop, dropBehaviour, name );
     }
 
     protected DropTableOrViewStatementImpl( Class<? extends DropTableOrViewStatement> realImplementingType,
-        ObjectType whatToDrop, DropBehaviour dropBehaviour, TableName name )
+        ObjectType whatToDrop, DropBehaviour dropBehaviour, TableNameDirect name )
     {
         super( realImplementingType, whatToDrop, dropBehaviour );
 
@@ -51,7 +51,7 @@ public class DropTableOrViewStatementImpl extends DropStatementImpl<DropTableOrV
         return this._name.equals( another.getTableName() ) && super.doesEqual( another );
     }
 
-    public TableName getTableName()
+    public TableNameDirect getTableName()
     {
         return this._name;
     }

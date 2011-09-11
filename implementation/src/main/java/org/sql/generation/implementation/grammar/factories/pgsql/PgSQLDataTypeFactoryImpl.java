@@ -16,7 +16,6 @@ package org.sql.generation.implementation.grammar.factories.pgsql;
 
 import org.sql.generation.api.grammar.common.datatypes.pgsql.Text;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLDataTypeFactory;
-
 import org.sql.generation.implementation.grammar.common.datatypes.pgsql.TextImpl;
 import org.sql.generation.implementation.grammar.factories.DefaultDataTypeFactory;
 

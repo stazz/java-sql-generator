@@ -14,8 +14,11 @@
 
 package org.sql.generation.implementation.grammar.factories;
 
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameAbstract;
+import org.sql.generation.api.grammar.common.TableNameDirect;
+import org.sql.generation.api.grammar.common.TableNameFunction;
 import org.sql.generation.api.grammar.factories.TableReferenceFactory;
+import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
 import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.grammar.query.TableAlias;
 import org.sql.generation.api.grammar.query.TableReferenceByExpression;
@@ -28,12 +31,12 @@ import org.sql.generation.api.grammar.query.TableReferenceByName;
 public abstract class AbstractTableRefFactory
     implements TableReferenceFactory
 {
-    public TableReferenceByName table( TableName tableName )
+    public TableReferenceByName table( TableNameAbstract tableName )
     {
         return this.table( tableName, null );
     }
 
-    public TableName tableName( String tableName )
+    public TableNameDirect tableName( String tableName )
     {
         return this.tableName( null, tableName );
     }
@@ -46,5 +49,10 @@ public abstract class AbstractTableRefFactory
     public TableReferenceByExpression table( QueryExpression query )
     {
         return this.table( query, null );
+    }
+
+    public TableNameFunction tableName( SQLFunctionLiteral function )
+    {
+        return this.tableName( null, function );
     }
 }

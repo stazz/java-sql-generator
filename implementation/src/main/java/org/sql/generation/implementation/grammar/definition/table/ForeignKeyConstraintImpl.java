@@ -17,7 +17,7 @@ package org.sql.generation.implementation.grammar.definition.table;
 import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.ColumnNameList;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.definition.table.ForeignKeyConstraint;
 import org.sql.generation.api.grammar.definition.table.MatchType;
 import org.sql.generation.api.grammar.definition.table.ReferentialAction;
@@ -32,21 +32,21 @@ public class ForeignKeyConstraintImpl extends TypeableImpl<TableConstraint, Fore
 {
 
     private final ColumnNameList _sourceColumns;
-    private final TableName _targetTableName;
+    private final TableNameDirect _targetTableName;
     private final ColumnNameList _targetColumns;
     private final MatchType _matchType;
     private final ReferentialAction _onDelete;
     private final ReferentialAction _onUpdate;
 
-    public ForeignKeyConstraintImpl( ColumnNameList sourceColumns, TableName targetTableName,
+    public ForeignKeyConstraintImpl( ColumnNameList sourceColumns, TableNameDirect targetTableName,
         ColumnNameList targetColumns, MatchType matchType, ReferentialAction onDelete, ReferentialAction onUpdate )
     {
         this( ForeignKeyConstraint.class, sourceColumns, targetTableName, targetColumns, matchType, onDelete, onUpdate );
     }
 
     protected ForeignKeyConstraintImpl( Class<? extends ForeignKeyConstraint> realImplementingType,
-        ColumnNameList sourceColumns, TableName targetTableName, ColumnNameList targetColumns, MatchType matchType,
-        ReferentialAction onDelete, ReferentialAction onUpdate )
+        ColumnNameList sourceColumns, TableNameDirect targetTableName, ColumnNameList targetColumns,
+        MatchType matchType, ReferentialAction onDelete, ReferentialAction onUpdate )
     {
         super( realImplementingType );
 
@@ -97,7 +97,7 @@ public class ForeignKeyConstraintImpl extends TypeableImpl<TableConstraint, Fore
         return this._targetColumns;
     }
 
-    public TableName getTargetTableName()
+    public TableNameDirect getTargetTableName()
     {
         return this._targetTableName;
     }

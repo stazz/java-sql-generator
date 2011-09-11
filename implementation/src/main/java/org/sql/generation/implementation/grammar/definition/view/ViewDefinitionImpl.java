@@ -18,7 +18,7 @@ import org.atp.api.Typeable;
 import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.SchemaStatement;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.definition.view.ViewCheckOption;
 import org.sql.generation.api.grammar.definition.view.ViewDefinition;
 import org.sql.generation.api.grammar.definition.view.ViewSpecification;
@@ -32,19 +32,19 @@ public class ViewDefinitionImpl extends TypeableImpl<SchemaStatement, ViewDefini
     implements ViewDefinition
 {
 
-    private final TableName _name;
+    private final TableNameDirect _name;
     private final QueryExpression _query;
     private final ViewSpecification _spec;
     private final ViewCheckOption _viewCheck;
     private final Boolean _isRecursive;
 
-    public ViewDefinitionImpl( TableName name, QueryExpression query, ViewSpecification spec,
+    public ViewDefinitionImpl( TableNameDirect name, QueryExpression query, ViewSpecification spec,
         ViewCheckOption viewCheck, Boolean isRecursive )
     {
         this( ViewDefinition.class, name, query, spec, viewCheck, isRecursive );
     }
 
-    protected ViewDefinitionImpl( Class<? extends ViewDefinition> realImplementingType, TableName name,
+    protected ViewDefinitionImpl( Class<? extends ViewDefinition> realImplementingType, TableNameDirect name,
         QueryExpression query, ViewSpecification spec, ViewCheckOption viewCheck, Boolean isRecursive )
     {
         super( realImplementingType );
@@ -79,7 +79,7 @@ public class ViewDefinitionImpl extends TypeableImpl<SchemaStatement, ViewDefini
         return this._viewCheck;
     }
 
-    public TableName getViewName()
+    public TableNameDirect getViewName()
     {
         return this._name;
     }

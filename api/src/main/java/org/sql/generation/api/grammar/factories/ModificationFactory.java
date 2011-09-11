@@ -19,7 +19,7 @@ import org.sql.generation.api.grammar.builders.modification.DeleteBySearchBuilde
 import org.sql.generation.api.grammar.builders.modification.InsertStatementBuilder;
 import org.sql.generation.api.grammar.builders.modification.UpdateBySearchBuilder;
 import org.sql.generation.api.grammar.common.ColumnNameList;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.modification.ColumnSourceByQuery;
 import org.sql.generation.api.grammar.modification.ColumnSourceByValues;
@@ -109,7 +109,7 @@ public interface ModificationFactory
      * @param tableName The name of the table.
      * @return The new {@link TargetTable}.
      */
-    public TargetTable createTargetTable( TableName tableName );
+    public TargetTable createTargetTable( TableNameDirect tableName );
 
     /**
      * Creates new target table to use in modification statements.
@@ -118,7 +118,7 @@ public interface ModificationFactory
      * @param isOnly Whether modification should affect child-tables too.
      * @return The new {@link TargetTable}.
      */
-    public TargetTable createTargetTable( TableName tableName, Boolean isOnly );
+    public TargetTable createTargetTable( TableNameDirect tableName, Boolean isOnly );
 
     /**
      * Creates a new source for {@code UPDATE} statement. This source will use specified expression as a source for

@@ -23,7 +23,8 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.builders.query.QuerySpecificationBuilder;
 import org.sql.generation.api.grammar.builders.query.SimpleQueryBuilder;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameAbstract;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.factories.ColumnsFactory;
 import org.sql.generation.api.grammar.factories.QueryFactory;
@@ -44,11 +45,9 @@ public class SimpleQueryBuilderImpl
 
     private final List<ColumnReference> _columns;
 
-    //    private final List<String> _columns;
-
     private final Map<Integer, String> _columnAliases;
 
-    private final List<TableName> _from;
+    private final List<TableNameAbstract> _from;
 
     private BooleanExpression _where;
 
@@ -62,6 +61,8 @@ public class SimpleQueryBuilderImpl
 
     private final SQLVendor _vendor;
 
+    private boolean _selectAll;
+
     public SimpleQueryBuilderImpl( SQLVendor vendor )
     {
         NullArgumentException.validateNotNull( "Vendor", vendor );
@@ -69,10 +70,11 @@ public class SimpleQueryBuilderImpl
         this._vendor = vendor;
         this._columns = new ArrayList<ColumnReference>();
         this._columnAliases = new HashMap<Integer, String>();
-        this._from = new ArrayList<TableName>();
+        this._from = new ArrayList<TableNameAbstract>();
         this._groupBy = new ArrayList<String>();
         this._orderBy = new ArrayList<String>();
         this._orderings = new ArrayList<Ordering>();
+        this._selectAll = false;
     }
 
     public QueryExpression createExpression()
@@ -92,14 +94,20 @@ public class SimpleQueryBuilderImpl
         ColumnsFactory c = this._vendor.getColumnsFactory();
         TableReferenceFactory t = this._vendor.getTableReferenceFactory();
 
-        for( Integer colIndex = 0; colIndex < this._columns.size(); ++colIndex )
+        if( this._selectAll )
         {
-            ColumnReference ref = this._columns.get( colIndex );
-            String alias = this._columnAliases.get( colIndex );
-            builda.getSelect().addNamedColumns( new ColumnReferenceInfo( alias, ref ) );
+            builda.getSelect().selectAll();
         }
-
-        for( TableName tableName : this._from )
+        else
+        {
+            for( Integer colIndex = 0; colIndex < this._columns.size(); ++colIndex )
+            {
+                ColumnReference ref = this._columns.get( colIndex );
+                String alias = this._columnAliases.get( colIndex );
+                builda.getSelect().addNamedColumns( new ColumnReferenceInfo( alias, ref ) );
+            }
+        }
+        for( TableNameAbstract tableName : this._from )
         {
             builda.getFrom().addTableReferences( t.tableBuilder( t.table( tableName ) ) );
         }
@@ -127,6 +135,7 @@ public class SimpleQueryBuilderImpl
 
     public SimpleQueryBuilder select( String... columnNames )
     {
+        this._selectAll = false;
         for( String col : columnNames )
         {
             this._columns.add( this._vendor.getColumnsFactory().colName( col ) );
@@ -136,10 +145,17 @@ public class SimpleQueryBuilderImpl
 
     public SimpleQueryBuilder select( ValueExpression... expressions )
     {
+        this._selectAll = false;
         for( ValueExpression exp : expressions )
         {
             this._columns.add( this._vendor.getColumnsFactory().colExp( exp ) );
         }
+        return this;
+    }
+
+    public SimpleQueryBuilder selectAllColumns()
+    {
+        this._selectAll = true;
         return this;
     }
 
@@ -149,9 +165,9 @@ public class SimpleQueryBuilderImpl
         return this;
     }
 
-    public SimpleQueryBuilder from( TableName... tableNames )
+    public SimpleQueryBuilder from( TableNameAbstract... tableNames )
     {
-        for( TableName table : tableNames )
+        for( TableNameAbstract table : tableNames )
         {
             this._from.add( table );
         }

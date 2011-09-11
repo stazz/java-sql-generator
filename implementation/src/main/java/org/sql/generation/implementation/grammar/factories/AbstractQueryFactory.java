@@ -18,6 +18,8 @@ import org.sql.generation.api.grammar.builders.query.ColumnsBuilder;
 import org.sql.generation.api.grammar.builders.query.QueryBuilder;
 import org.sql.generation.api.grammar.common.SetQuantifier;
 import org.sql.generation.api.grammar.factories.QueryFactory;
+import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
+import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.grammar.query.QueryExpressionBody;
 import org.sql.generation.implementation.grammar.builders.query.ColumnsBuilderImpl;
 
@@ -39,4 +41,8 @@ public abstract class AbstractQueryFactory
         return new ColumnsBuilderImpl( SetQuantifier.ALL );
     }
 
+    public QueryExpression callFunction( SQLFunctionLiteral function )
+    {
+        return this.callFunction( null, function );
+    }
 }

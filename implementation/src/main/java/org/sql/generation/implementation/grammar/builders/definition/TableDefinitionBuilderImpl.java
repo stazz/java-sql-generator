@@ -15,7 +15,7 @@
 package org.sql.generation.implementation.grammar.builders.definition;
 
 import org.sql.generation.api.grammar.builders.definition.TableDefinitionBuilder;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.definition.table.TableCommitAction;
 import org.sql.generation.api.grammar.definition.table.TableContentsSource;
 import org.sql.generation.api.grammar.definition.table.TableDefinition;
@@ -31,7 +31,7 @@ public class TableDefinitionBuilderImpl
 {
 
     private TableScope _scope;
-    private TableName _name;
+    private TableNameDirect _name;
     private TableCommitAction _commitAction;
     private TableContentsSource _contents;
 
@@ -46,7 +46,7 @@ public class TableDefinitionBuilderImpl
         return this;
     }
 
-    public TableDefinitionBuilder setTableName( TableName tableName )
+    public TableDefinitionBuilder setTableName( TableNameDirect tableName )
     {
         this._name = tableName;
         return this;
@@ -69,7 +69,7 @@ public class TableDefinitionBuilderImpl
         return this._scope;
     }
 
-    public TableName getTableName()
+    public TableNameDirect getTableName()
     {
         return this._name;
     }

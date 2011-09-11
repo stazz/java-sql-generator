@@ -22,7 +22,7 @@ import org.sql.generation.api.grammar.builders.definition.TableDefinitionBuilder
 import org.sql.generation.api.grammar.builders.definition.TableElementListBuilder;
 import org.sql.generation.api.grammar.builders.definition.UniqueConstraintBuilder;
 import org.sql.generation.api.grammar.builders.definition.ViewDefinitionBuilder;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.common.datatypes.SQLDataType;
 import org.sql.generation.api.grammar.definition.table.CheckConstraint;
 import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
@@ -81,7 +81,7 @@ public class DefaultDefinitionFactory extends AbstractDefinitionFactory
         return new ColumnDefinitionImpl( columnName, columnDataType, columnDefault, mayBeNull );
     }
 
-    public LikeClause createLikeClause( TableName tableName )
+    public LikeClause createLikeClause( TableNameDirect tableName )
     {
         return new LikeClauseImpl( tableName );
     }

@@ -12,25 +12,21 @@
  *
  */
 
-package org.sql.generation.api.grammar.definition.table;
-
-import org.sql.generation.api.grammar.common.TableNameDirect;
+package org.sql.generation.api.grammar.common;
 
 /**
- * This syntax element represents the {@code LIKE
- * <table name>} clause in table definition.
+ * A direct table name may be just table name, or schema-qualified table name.
  * 
  * @author Stanislav Muhametsin
- * @see TableDefinition
  */
-public interface LikeClause
-    extends TableElement
+public interface TableNameDirect
+    extends TableNameAbstract
 {
 
     /**
-     * Returns the name of the table for this {@code LIKE} clause.
+     * Gets name of the table. Returns always non-{@code null}.
      * 
-     * @return The name of the table for this {@code LIKE} clause.
+     * @return The name of the table. Always non-{@code null}.
      */
-    public TableNameDirect getTableName();
+    public String getTableName();
 }

@@ -17,7 +17,10 @@ package org.sql.generation.api.grammar.factories;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.builders.query.TableReferenceBuilder;
 import org.sql.generation.api.grammar.common.ColumnNameList;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameAbstract;
+import org.sql.generation.api.grammar.common.TableNameDirect;
+import org.sql.generation.api.grammar.common.TableNameFunction;
+import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
 import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.grammar.query.TableAlias;
 import org.sql.generation.api.grammar.query.TableReferenceByExpression;
@@ -48,7 +51,7 @@ public interface TableReferenceFactory
      * @param tableName The table name to use.
      * @return The new {@link TableReferenceByName}.
      */
-    public TableReferenceByName table( TableName tableName );
+    public TableReferenceByName table( TableNameAbstract tableName );
 
     /**
      * Creates a new table references, which uses given table name along with given table alias.
@@ -57,7 +60,7 @@ public interface TableReferenceFactory
      * @param alias The table alias to use. May be {@code null}.
      * @return The new {@link TableReferenceByName}.
      */
-    public TableReferenceByName table( TableName tableName, TableAlias alias );
+    public TableReferenceByName table( TableNameAbstract tableName, TableAlias alias );
 
     /**
      * <p>
@@ -71,7 +74,7 @@ public interface TableReferenceFactory
      * @param tableName The name of the table.
      * @return The new {@link TableName}.
      */
-    public TableName tableName( String tableName );
+    public TableNameDirect tableName( String tableName );
 
     /**
      * Creates a new table name. If the given schema-name is non-{@code null}, the table name is said to be
@@ -81,7 +84,25 @@ public interface TableReferenceFactory
      * @param tableName The table name to use.
      * @return The new {@link TableName}.
      */
-    public TableName tableName( String schemaName, String tableName );
+    public TableNameDirect tableName( String schemaName, String tableName );
+
+    /**
+     * Creates a new table name representing a call to SQL function without a schema. This is equivalent to calling
+     * {@link #tableName(String, SQLFunctionLiteral)} and passing {@code null} as first argument.
+     * 
+     * @param function The function to call.
+     * @return Table name representing a call to SQL function without a schema.
+     */
+    public TableNameFunction tableName( SQLFunctionLiteral function );
+
+    /**
+     * Creates a new table name representing a call to SQL function with schema.
+     * 
+     * @param schemaName The schema where function resides.
+     * @param function The function to call.
+     * @return Table name representing a call to SQL function with schema.
+     */
+    public TableNameFunction tableName( String schemaName, SQLFunctionLiteral function );
 
     /**
      * <p>

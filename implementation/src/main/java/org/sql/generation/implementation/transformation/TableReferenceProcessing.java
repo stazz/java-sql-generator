@@ -3,7 +3,9 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * You may obtain a copy of the License at http://www.apac
+import org.sql.generation.api.grammar.common.TableNameFunction;
+he.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,7 +17,9 @@
 package org.sql.generation.implementation.transformation;
 
 import org.sql.generation.api.grammar.common.SQLConstants;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameAbstract;
+import org.sql.generation.api.grammar.common.TableNameDirect;
+import org.sql.generation.api.grammar.common.TableNameFunction;
 import org.sql.generation.api.grammar.query.TableAlias;
 import org.sql.generation.api.grammar.query.TableReferenceByExpression;
 import org.sql.generation.api.grammar.query.TableReferenceByName;
@@ -37,27 +41,70 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
 public class TableReferenceProcessing
 {
 
-    public static class TableNameProcessor extends AbstractProcessor<TableName>
+    public static abstract class AbstractTableNameProcessor<TableNameType extends TableNameAbstract> extends
+        AbstractProcessor<TableNameType>
     {
 
-        public TableNameProcessor()
-        {
-            this( TableName.class );
-        }
-
-        protected TableNameProcessor( Class<? extends TableName> realType )
+        protected AbstractTableNameProcessor( Class<? extends TableNameType> realType )
         {
             super( realType );
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator processor, TableName object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, TableNameType object, StringBuilder builder )
         {
             String schemaName = object.getSchemaName();
             if( ProcessorUtils.notNullAndNotEmpty( schemaName ) )
             {
                 builder.append( schemaName ).append( SQLConstants.SCHEMA_TABLE_SEPARATOR );
             }
+            this.doProcessTableName( processor, object, builder );
+        }
+
+        protected abstract void doProcessTableName( SQLProcessorAggregator processor, TableNameType object,
+            StringBuilder builder );
+
+    }
+
+    public static class TableNameFunctionProcessor extends AbstractTableNameProcessor<TableNameFunction>
+    {
+
+        public TableNameFunctionProcessor()
+        {
+            this( TableNameFunction.class );
+        }
+
+        protected TableNameFunctionProcessor( Class<? extends TableNameFunction> realType )
+        {
+            super( realType );
+        }
+
+        @Override
+        protected void doProcessTableName( SQLProcessorAggregator processor, TableNameFunction object,
+            StringBuilder builder )
+        {
+            processor.process( object.getFunction(), builder );
+        }
+
+    }
+
+    public static class TableNameDirectProcessor extends AbstractTableNameProcessor<TableNameDirect>
+    {
+
+        public TableNameDirectProcessor()
+        {
+            this( TableNameDirect.class );
+        }
+
+        protected TableNameDirectProcessor( Class<? extends TableNameDirect> realType )
+        {
+            super( realType );
+        }
+
+        @Override
+        protected void doProcessTableName( SQLProcessorAggregator processor, TableNameDirect object,
+            StringBuilder builder )
+        {
             builder.append( object.getTableName() );
         }
 
@@ -111,16 +158,6 @@ public class TableReferenceProcessing
             StringBuilder builder )
         {
             processor.process( object.getTableName(), builder );
-        }
-
-        protected void processTableName( TableName tableName, StringBuilder builder )
-        {
-            String schemaName = tableName.getSchemaName();
-            if( ProcessorUtils.notNullAndNotEmpty( schemaName ) )
-            {
-                builder.append( schemaName ).append( SQLConstants.SCHEMA_TABLE_SEPARATOR );
-            }
-            builder.append( tableName.getTableName() );
         }
     }
 

@@ -17,8 +17,8 @@ package org.sql.generation.implementation.transformation.pgsql;
 import org.sql.generation.api.grammar.common.SQLConstants;
 import org.sql.generation.api.grammar.manipulation.DropTableOrViewStatement;
 import org.sql.generation.api.grammar.manipulation.pgsql.PgSQLDropTableOrViewStatement;
-import org.sql.generation.implementation.transformation.ProcessorUtils;
 import org.sql.generation.implementation.transformation.ManipulationProcessing.DropTableOrViewStatementProcessor;
+import org.sql.generation.implementation.transformation.ProcessorUtils;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**

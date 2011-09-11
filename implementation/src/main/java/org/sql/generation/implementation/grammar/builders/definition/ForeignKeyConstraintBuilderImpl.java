@@ -19,7 +19,7 @@ import java.util.List;
 
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.builders.definition.ForeignKeyConstraintBuilder;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.definition.table.ForeignKeyConstraint;
 import org.sql.generation.api.grammar.definition.table.MatchType;
 import org.sql.generation.api.grammar.definition.table.ReferentialAction;
@@ -36,7 +36,7 @@ public class ForeignKeyConstraintBuilderImpl
 
     private final List<String> _sourceColumns;
     private final List<String> _targetColumns;
-    private TableName _targetTable;
+    private TableNameDirect _targetTable;
     private MatchType _matchType;
     private ReferentialAction _onUpdate;
     private ReferentialAction _onDelete;
@@ -78,7 +78,7 @@ public class ForeignKeyConstraintBuilderImpl
         return this;
     }
 
-    public ForeignKeyConstraintBuilder setTargetTableName( TableName tableName )
+    public ForeignKeyConstraintBuilder setTargetTableName( TableNameDirect tableName )
     {
         this._targetTable = tableName;
         return this;
@@ -112,7 +112,7 @@ public class ForeignKeyConstraintBuilderImpl
         return this._targetColumns;
     }
 
-    public TableName getTableName()
+    public TableNameDirect getTableName()
     {
         return this._targetTable;
     }

@@ -15,7 +15,7 @@
 package org.sql.generation.api.grammar.builders.modification;
 
 import org.sql.generation.api.grammar.builders.AbstractBuilder;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.modification.ColumnSource;
 import org.sql.generation.api.grammar.modification.InsertStatement;
 
@@ -37,14 +37,14 @@ public interface InsertStatementBuilder
      * @param tableName The table name for this {@code INSERT} statement.
      * @return This builder.
      */
-    public InsertStatementBuilder setTableName( TableName tableName );
+    public InsertStatementBuilder setTableName( TableNameDirect tableName );
 
     /**
      * Returns the table name for this {@code INSERT} statement.
      * 
      * @return The table name for this {@code INSERT} statement.
      */
-    public TableName getTableName();
+    public TableNameDirect getTableName();
 
     /**
      * Sets the source for the columns for this {@code INSERT} statement.

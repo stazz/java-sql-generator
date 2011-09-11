@@ -14,10 +14,9 @@
 
 package org.sql.generation.implementation.grammar.common.datatypes;
 
+import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.grammar.common.datatypes.SQLDataType;
 import org.sql.generation.api.grammar.common.datatypes.UserDefinedType;
-
-import org.atp.spi.TypeableImpl;
 
 /**
  * 

@@ -15,7 +15,7 @@
 package org.sql.generation.api.grammar.definition.table;
 
 import org.sql.generation.api.grammar.common.SchemaDefinitionStatement;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.definition.schema.SchemaElement;
 
 /**
@@ -40,7 +40,7 @@ public interface TableDefinition
      * @return The name for this table.
      * @see TableName
      */
-    public TableName getTableName();
+    public TableNameDirect getTableName();
 
     /**
      * Returns the commit action for this table. May be {@code null} if no commit action defined.

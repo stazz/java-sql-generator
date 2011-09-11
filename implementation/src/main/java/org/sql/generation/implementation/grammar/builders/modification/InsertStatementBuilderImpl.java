@@ -15,7 +15,7 @@
 package org.sql.generation.implementation.grammar.builders.modification;
 
 import org.sql.generation.api.grammar.builders.modification.InsertStatementBuilder;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.modification.ColumnSource;
 import org.sql.generation.api.grammar.modification.InsertStatement;
 import org.sql.generation.implementation.grammar.modification.InsertStatementImpl;
@@ -28,7 +28,7 @@ public class InsertStatementBuilderImpl
     implements InsertStatementBuilder
 {
 
-    private TableName _tableName;
+    private TableNameDirect _tableName;
 
     private ColumnSource _columnSource;
 
@@ -37,13 +37,13 @@ public class InsertStatementBuilderImpl
         return new InsertStatementImpl( this._tableName, this._columnSource );
     }
 
-    public InsertStatementBuilder setTableName( TableName tableName )
+    public InsertStatementBuilder setTableName( TableNameDirect tableName )
     {
         this._tableName = tableName;
         return this;
     }
 
-    public TableName getTableName()
+    public TableNameDirect getTableName()
     {
         return this._tableName;
     }

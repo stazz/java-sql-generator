@@ -14,7 +14,7 @@
 
 package org.sql.generation.api.grammar.factories.pgsql;
 
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.factories.ManipulationFactory;
 import org.sql.generation.api.grammar.manipulation.DropBehaviour;
 import org.sql.generation.api.grammar.manipulation.ObjectType;
@@ -28,7 +28,7 @@ public interface PgSQLManipulationFactory
     extends ManipulationFactory
 {
 
-    public PgSQLDropTableOrViewStatement createDropTableOrViewStatement( TableName tableName, ObjectType theType,
+    public PgSQLDropTableOrViewStatement createDropTableOrViewStatement( TableNameDirect tableName, ObjectType theType,
         DropBehaviour dropBehaviour );
 
     /**
@@ -40,6 +40,6 @@ public interface PgSQLManipulationFactory
      * @param useIfExists {@code true} to append {@code IF EXISTS} before table/view name, {@code false} otherwise.
      * @return New {@code DROP TABLE/VIEW} statement.
      */
-    public PgSQLDropTableOrViewStatement createDropTableOrViewStatement( TableName tableName, ObjectType theType,
+    public PgSQLDropTableOrViewStatement createDropTableOrViewStatement( TableNameDirect tableName, ObjectType theType,
         DropBehaviour dropBehaviour, Boolean useIfExists );
 }

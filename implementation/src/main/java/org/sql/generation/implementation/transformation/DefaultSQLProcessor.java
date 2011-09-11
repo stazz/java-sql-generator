@@ -48,7 +48,8 @@ import org.sql.generation.api.grammar.booleans.UnaryPredicate;
 import org.sql.generation.api.grammar.booleans.UniquePredicate;
 import org.sql.generation.api.grammar.common.ColumnNameList;
 import org.sql.generation.api.grammar.common.SQLConstants;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
+import org.sql.generation.api.grammar.common.TableNameFunction;
 import org.sql.generation.api.grammar.common.datatypes.BigInt;
 import org.sql.generation.api.grammar.common.datatypes.Decimal;
 import org.sql.generation.api.grammar.common.datatypes.DoublePrecision;
@@ -199,7 +200,8 @@ import org.sql.generation.implementation.transformation.TableReferenceProcessing
 import org.sql.generation.implementation.transformation.TableReferenceProcessing.NamedColumnsJoinProcessor;
 import org.sql.generation.implementation.transformation.TableReferenceProcessing.NaturalJoinedTableProcessor;
 import org.sql.generation.implementation.transformation.TableReferenceProcessing.QualifiedJoinedTableProcessor;
-import org.sql.generation.implementation.transformation.TableReferenceProcessing.TableNameProcessor;
+import org.sql.generation.implementation.transformation.TableReferenceProcessing.TableNameDirectProcessor;
+import org.sql.generation.implementation.transformation.TableReferenceProcessing.TableNameFunctionProcessor;
 import org.sql.generation.implementation.transformation.TableReferenceProcessing.TableReferenceByExpressionProcessor;
 import org.sql.generation.implementation.transformation.TableReferenceProcessing.TableReferenceByNameProcessor;
 import org.sql.generation.implementation.transformation.TableReferenceProcessing.UnionJoinedTableProcessor;
@@ -376,7 +378,8 @@ public class DefaultSQLProcessor
         processors.put( RowSubQuery.class, new RowSubQueryProcessor() );
 
         // Table references
-        processors.put( TableName.class, new TableNameProcessor() );
+        processors.put( TableNameDirect.class, new TableNameDirectProcessor() );
+        processors.put( TableNameFunction.class, new TableNameFunctionProcessor() );
         processors.put( TableReferenceByName.class, new TableReferenceByNameProcessor() );
         processors.put( TableReferenceByExpression.class, new TableReferenceByExpressionProcessor() );
         processors.put( CrossJoinedTable.class, new CrossJoinedTableProcessor() );

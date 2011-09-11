@@ -14,7 +14,7 @@
 
 package org.sql.generation.implementation.grammar.factories;
 
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.factories.ModificationFactory;
 import org.sql.generation.api.grammar.modification.ColumnSourceByQuery;
 import org.sql.generation.api.grammar.modification.TargetTable;
@@ -28,7 +28,7 @@ public abstract class AbstractModificationFactory
     implements ModificationFactory
 {
 
-    public TargetTable createTargetTable( TableName tableName )
+    public TargetTable createTargetTable( TableNameDirect tableName )
     {
         return this.createTargetTable( tableName, false );
     }

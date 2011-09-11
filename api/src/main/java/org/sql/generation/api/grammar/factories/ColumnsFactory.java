@@ -15,7 +15,6 @@
 package org.sql.generation.api.grammar.factories;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.sql.generation.api.grammar.common.ColumnNameList;
 import org.sql.generation.api.grammar.common.ValueExpression;

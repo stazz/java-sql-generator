@@ -16,7 +16,7 @@ package org.sql.generation.implementation.grammar.modification;
 
 import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.modification.ColumnSource;
 import org.sql.generation.api.grammar.modification.InsertStatement;
 
@@ -28,15 +28,15 @@ public class InsertStatementImpl extends TypeableImpl<InsertStatement, InsertSta
     implements InsertStatement
 {
 
-    private final TableName _tableName;
+    private final TableNameDirect _tableName;
     private final ColumnSource _columnSource;
 
-    public InsertStatementImpl( TableName tableName, ColumnSource columnSource )
+    public InsertStatementImpl( TableNameDirect tableName, ColumnSource columnSource )
     {
         this( InsertStatement.class, tableName, columnSource );
     }
 
-    protected InsertStatementImpl( Class<? extends InsertStatement> expressionClass, TableName tableName,
+    protected InsertStatementImpl( Class<? extends InsertStatement> expressionClass, TableNameDirect tableName,
         ColumnSource columnSource )
     {
         super( expressionClass );
@@ -48,7 +48,7 @@ public class InsertStatementImpl extends TypeableImpl<InsertStatement, InsertSta
         this._columnSource = columnSource;
     }
 
-    public TableName getTableName()
+    public TableNameDirect getTableName()
     {
         return this._tableName;
     }

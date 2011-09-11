@@ -14,7 +14,7 @@
 
 package org.sql.generation.api.grammar.factories;
 
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
 import org.sql.generation.api.grammar.definition.table.TableConstraintDefinition;
 import org.sql.generation.api.grammar.manipulation.AddColumnDefinition;
@@ -54,7 +54,7 @@ public interface ManipulationFactory
      * @see #createDropColumnDefinition(String, DropBehaviour)
      * @see #createDropTableConstraintDefinition(String, DropBehaviour)
      */
-    public AlterTableStatement createAlterTableStatement( TableName tableName, AlterTableAction action );
+    public AlterTableStatement createAlterTableStatement( TableNameDirect tableName, AlterTableAction action );
 
     /**
      * Creates the syntax element for adding column ({@code ADD COLUMN ...}) in {@code ALTER TABLE} statement.
@@ -147,7 +147,7 @@ public interface ManipulationFactory
      * @see DropBehaviour
      * @see ObjectType
      */
-    public DropTableOrViewStatement createDropTableOrViewStatement( TableName tableName, ObjectType theType,
+    public DropTableOrViewStatement createDropTableOrViewStatement( TableNameDirect tableName, ObjectType theType,
         DropBehaviour dropBehaviour );
 
 }

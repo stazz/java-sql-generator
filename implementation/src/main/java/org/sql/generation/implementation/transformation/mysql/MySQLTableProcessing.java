@@ -14,8 +14,10 @@
 
 package org.sql.generation.implementation.transformation.mysql;
 
-import org.sql.generation.api.grammar.common.TableName;
-import org.sql.generation.implementation.transformation.TableReferenceProcessing.TableNameProcessor;
+import org.sql.generation.api.grammar.common.TableNameDirect;
+import org.sql.generation.api.grammar.common.TableNameFunction;
+import org.sql.generation.implementation.transformation.TableReferenceProcessing.TableNameDirectProcessor;
+import org.sql.generation.implementation.transformation.TableReferenceProcessing.TableNameFunctionProcessor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
@@ -24,13 +26,23 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
  */
 public class MySQLTableProcessing
 {
-    public static class MySQLTableNameProcessor extends TableNameProcessor
+    public static class MySQLTableNameDirectProcessor extends TableNameDirectProcessor
     {
         @Override
-        protected void doProcess( SQLProcessorAggregator processor, TableName object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, TableNameDirect object, StringBuilder builder )
         {
             // MySQL does not understand schema-qualified table names
             builder.append( object.getTableName() );
+        }
+    }
+
+    public static class MySQLTableNameFunctionProcessor extends TableNameFunctionProcessor
+    {
+        @Override
+        protected void doProcess( SQLProcessorAggregator processor, TableNameFunction object, StringBuilder builder )
+        {
+            // MySQL does not understand schema-qualified table names
+            processor.process( object.getFunction(), builder );
         }
     }
 }

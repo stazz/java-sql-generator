@@ -14,7 +14,7 @@
 
 package org.sql.generation.api.grammar.manipulation;
 
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 
 /**
  * This is generalized statement to drop tables and views.
@@ -30,5 +30,5 @@ public interface DropTableOrViewStatement
      * 
      * @return The name of the table or view to be deleted.
      */
-    public TableName getTableName();
+    public TableNameDirect getTableName();
 }

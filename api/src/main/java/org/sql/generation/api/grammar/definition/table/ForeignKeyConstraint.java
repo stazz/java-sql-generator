@@ -15,7 +15,7 @@
 package org.sql.generation.api.grammar.definition.table;
 
 import org.sql.generation.api.grammar.common.ColumnNameList;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 
 /**
  * This syntax element represents the {@code FOREIGN KEY(col1, col2, ...) ...} table constraint in table definition.
@@ -40,7 +40,7 @@ public interface ForeignKeyConstraint
      * 
      * @return The name of the table where the columns in this table are referencing to.
      */
-    public TableName getTargetTableName();
+    public TableNameDirect getTargetTableName();
 
     /**
      * Returns the list of column names in target table. Will be {@code null} if none specified.

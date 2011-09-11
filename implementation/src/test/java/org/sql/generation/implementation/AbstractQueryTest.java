@@ -256,4 +256,19 @@ public abstract class AbstractQueryTest extends AbstractSQLSyntaxTest
 
         this.logQuery( vendor, query );
     }
+
+    @Test
+    public void query4()
+        throws Exception
+    {
+        // @formatter:off
+        // SELECT * FROM schema.function_name(6, 'param2');
+        // @formatter:on
+
+        SQLVendor vendor = this.getVendor();
+        QueryFactory q = vendor.getQueryFactory();
+        LiteralFactory l = vendor.getLiteralFactory();
+
+        this.logQuery( vendor, q.callFunction( "schema", l.func( "function_name", l.n( 6 ), l.s( "param2" ) ) ) );
+    }
 }

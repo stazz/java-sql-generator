@@ -18,13 +18,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.atp.api.Typeable;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
+import org.sql.generation.api.grammar.common.TableNameFunction;
 import org.sql.generation.api.grammar.definition.schema.SchemaDefinition;
 import org.sql.generation.api.grammar.manipulation.DropSchemaStatement;
 import org.sql.generation.implementation.transformation.DefaultSQLProcessor;
 import org.sql.generation.implementation.transformation.NoOpProcessor;
 import org.sql.generation.implementation.transformation.mysql.MySQLDefinitionProcessing.MySQLSchemaDefinitionProcessor;
-import org.sql.generation.implementation.transformation.mysql.MySQLTableProcessing.MySQLTableNameProcessor;
+import org.sql.generation.implementation.transformation.mysql.MySQLTableProcessing.MySQLTableNameFunctionProcessor;
+import org.sql.generation.implementation.transformation.mysql.MySQLTableProcessing.MySQLTableNameDirectProcessor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessor;
 
 /**
@@ -42,7 +44,8 @@ public class MySQLProcessor extends DefaultSQLProcessor
             DefaultSQLProcessor.getDefaultProcessors() );
 
         // MySQL does not understand schema-qualified table names (or anything related to schemas)
-        processors.put( TableName.class, new MySQLTableNameProcessor() );
+        processors.put( TableNameDirect.class, new MySQLTableNameDirectProcessor() );
+        processors.put( TableNameFunction.class, new MySQLTableNameFunctionProcessor() );
 
         // Only process schema elements from schema definition, and ignore drop schema statements
         processors.put( SchemaDefinition.class, new MySQLSchemaDefinitionProcessor() );

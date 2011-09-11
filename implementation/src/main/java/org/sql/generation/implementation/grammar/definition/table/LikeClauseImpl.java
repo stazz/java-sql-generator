@@ -16,7 +16,7 @@ package org.sql.generation.implementation.grammar.definition.table;
 
 import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.definition.table.LikeClause;
 import org.sql.generation.api.grammar.definition.table.TableElement;
 
@@ -28,14 +28,14 @@ public class LikeClauseImpl extends TypeableImpl<TableElement, LikeClause>
     implements LikeClause
 {
 
-    private final TableName _tableName;
+    private final TableNameDirect _tableName;
 
-    public LikeClauseImpl( TableName tableName )
+    public LikeClauseImpl( TableNameDirect tableName )
     {
         this( LikeClause.class, tableName );
     }
 
-    protected LikeClauseImpl( Class<? extends LikeClause> realImplementingType, TableName tableName )
+    protected LikeClauseImpl( Class<? extends LikeClause> realImplementingType, TableNameDirect tableName )
     {
         super( realImplementingType );
 
@@ -50,7 +50,7 @@ public class LikeClauseImpl extends TypeableImpl<TableElement, LikeClause>
         return this._tableName.equals( another.getTableName() );
     }
 
-    public TableName getTableName()
+    public TableNameDirect getTableName()
     {
         return this._tableName;
     }

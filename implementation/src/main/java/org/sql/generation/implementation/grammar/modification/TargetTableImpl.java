@@ -16,7 +16,7 @@ package org.sql.generation.implementation.grammar.modification;
 
 import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.modification.TargetTable;
 
 /**
@@ -29,14 +29,14 @@ public class TargetTableImpl extends TypeableImpl<TargetTable, TargetTable>
 
     private Boolean _isOnly;
 
-    private TableName _tableName;
+    private TableNameDirect _tableName;
 
-    public TargetTableImpl( Boolean isOnly, TableName tableName )
+    public TargetTableImpl( Boolean isOnly, TableNameDirect tableName )
     {
         this( TargetTable.class, isOnly, tableName );
     }
 
-    protected TargetTableImpl( Class<? extends TargetTable> expressionClass, Boolean isOnly, TableName tableName )
+    protected TargetTableImpl( Class<? extends TargetTable> expressionClass, Boolean isOnly, TableNameDirect tableName )
     {
         super( expressionClass );
 
@@ -55,7 +55,7 @@ public class TargetTableImpl extends TypeableImpl<TargetTable, TargetTable>
         return this._isOnly;
     }
 
-    public TableName getTableName()
+    public TableNameDirect getTableName()
     {
         return this._tableName;
     }

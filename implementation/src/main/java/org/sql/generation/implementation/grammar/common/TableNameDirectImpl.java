@@ -14,39 +14,29 @@
 
 package org.sql.generation.implementation.grammar.common;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class TableNameImpl extends TypeableImpl<TableName, TableName>
-    implements TableName
+public class TableNameDirectImpl extends TableNameAbstractImpl<TableNameDirect>
+    implements TableNameDirect
 {
-
-    private final String _schemaName;
-
     private final String _tableName;
 
-    public TableNameImpl( String schemaName, String tableName )
+    public TableNameDirectImpl( String schemaName, String tableName )
     {
-        this( TableName.class, schemaName, tableName );
+        this( TableNameDirect.class, schemaName, tableName );
     }
 
-    protected TableNameImpl( Class<? extends TableName> implClass, String schemaName, String tableName )
+    protected TableNameDirectImpl( Class<? extends TableNameDirect> implClass, String schemaName, String tableName )
     {
-        super( implClass );
+        super( implClass, schemaName );
         NullArgumentException.validateNotNull( "table name", tableName );
 
-        this._schemaName = schemaName;
         this._tableName = tableName;
-    }
-
-    public String getSchemaName()
-    {
-        return this._schemaName;
     }
 
     public String getTableName()
@@ -55,9 +45,8 @@ public class TableNameImpl extends TypeableImpl<TableName, TableName>
     }
 
     @Override
-    protected boolean doesEqual( TableName another )
+    protected boolean doesEqual( TableNameDirect another )
     {
-        return this._tableName.equals( another.getSchemaName() )
-            && TypeableImpl.bothNullOrEquals( this._schemaName, another.getSchemaName() );
+        return super.doesEqual( another ) && this._tableName.equals( another.getTableName() );
     }
 }

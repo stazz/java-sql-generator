@@ -18,7 +18,10 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.builders.query.TableReferenceBuilder;
 import org.sql.generation.api.grammar.common.ColumnNameList;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameAbstract;
+import org.sql.generation.api.grammar.common.TableNameDirect;
+import org.sql.generation.api.grammar.common.TableNameFunction;
+import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
 import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.grammar.query.TableAlias;
 import org.sql.generation.api.grammar.query.TableReferenceByExpression;
@@ -28,7 +31,8 @@ import org.sql.generation.api.grammar.query.joins.JoinCondition;
 import org.sql.generation.api.grammar.query.joins.NamedColumnsJoin;
 import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.grammar.builders.query.TableReferenceBuilderImpl;
-import org.sql.generation.implementation.grammar.common.TableNameImpl;
+import org.sql.generation.implementation.grammar.common.TableNameDirectImpl;
+import org.sql.generation.implementation.grammar.common.TableNameFunctionImpl;
 import org.sql.generation.implementation.grammar.query.TableAliasImpl;
 import org.sql.generation.implementation.grammar.query.TableReferenceByExpressionImpl;
 import org.sql.generation.implementation.grammar.query.TableReferenceByNameImpl;
@@ -60,14 +64,19 @@ public class DefaultTableRefFactory extends AbstractTableRefFactory
         return new NamedColumnsJoinImpl( columnNames );
     }
 
-    public TableReferenceByName table( TableName tableName, TableAlias alias )
+    public TableReferenceByName table( TableNameAbstract tableName, TableAlias alias )
     {
         return new TableReferenceByNameImpl( tableName, alias );
     }
 
-    public TableName tableName( String schemaName, String tableName )
+    public TableNameDirect tableName( String schemaName, String tableName )
     {
-        return new TableNameImpl( schemaName, tableName );
+        return new TableNameDirectImpl( schemaName, tableName );
+    }
+
+    public TableNameFunction tableName( String schemaName, SQLFunctionLiteral function )
+    {
+        return new TableNameFunctionImpl( schemaName, function );
     }
 
     public TableAlias tableAliasWithCols( String tableNameAlias, String... colNames )

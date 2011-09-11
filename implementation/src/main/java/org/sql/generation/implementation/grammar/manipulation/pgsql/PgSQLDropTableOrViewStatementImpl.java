@@ -15,7 +15,7 @@
 package org.sql.generation.implementation.grammar.manipulation.pgsql;
 
 import org.sql.generation.api.common.NullArgumentException;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.manipulation.DropBehaviour;
 import org.sql.generation.api.grammar.manipulation.DropTableOrViewStatement;
 import org.sql.generation.api.grammar.manipulation.ObjectType;
@@ -32,14 +32,14 @@ public class PgSQLDropTableOrViewStatementImpl extends DropTableOrViewStatementI
 
     private final Boolean _useIfExists;
 
-    public PgSQLDropTableOrViewStatementImpl( ObjectType whatToDrop, DropBehaviour dropBehaviour, TableName name,
+    public PgSQLDropTableOrViewStatementImpl( ObjectType whatToDrop, DropBehaviour dropBehaviour, TableNameDirect name,
         Boolean useIfExists )
     {
         this( PgSQLDropTableOrViewStatement.class, whatToDrop, dropBehaviour, name, useIfExists );
     }
 
     protected PgSQLDropTableOrViewStatementImpl( Class<? extends PgSQLDropTableOrViewStatement> realImplementingType,
-        ObjectType whatToDrop, DropBehaviour dropBehaviour, TableName name, Boolean useIfExists )
+        ObjectType whatToDrop, DropBehaviour dropBehaviour, TableNameDirect name, Boolean useIfExists )
     {
         super( realImplementingType, whatToDrop, dropBehaviour, name );
 

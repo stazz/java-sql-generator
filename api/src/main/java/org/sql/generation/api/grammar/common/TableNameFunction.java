@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Stanislav Muhametsin. All Rights Reserved.
+ * Copyright (c) 2011, Stanislav Muhametsin. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,25 +12,22 @@
  *
  */
 
-package org.sql.generation.api.grammar.definition.table;
+package org.sql.generation.api.grammar.common;
 
-import org.sql.generation.api.grammar.common.TableNameDirect;
+import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
 
 /**
- * This syntax element represents the {@code LIKE
- * <table name>} clause in table definition.
+ * A table name function serves as a function call when selecting data.
  * 
- * @author Stanislav Muhametsin
- * @see TableDefinition
+ * @author 2011 Stanislav Muhametsin
  */
-public interface LikeClause
-    extends TableElement
+public interface TableNameFunction
+    extends TableNameAbstract
 {
-
     /**
-     * Returns the name of the table for this {@code LIKE} clause.
+     * Returns the function to call.
      * 
-     * @return The name of the table for this {@code LIKE} clause.
+     * @return The function to call.
      */
-    public TableNameDirect getTableName();
+    public SQLFunctionLiteral getFunction();
 }

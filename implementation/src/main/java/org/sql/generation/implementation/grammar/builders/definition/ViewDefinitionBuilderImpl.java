@@ -15,7 +15,7 @@
 package org.sql.generation.implementation.grammar.builders.definition;
 
 import org.sql.generation.api.grammar.builders.definition.ViewDefinitionBuilder;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.definition.view.ViewCheckOption;
 import org.sql.generation.api.grammar.definition.view.ViewDefinition;
 import org.sql.generation.api.grammar.definition.view.ViewSpecification;
@@ -31,7 +31,7 @@ public class ViewDefinitionBuilderImpl
 {
 
     private Boolean _isRecursive;
-    private TableName _name;
+    private TableNameDirect _name;
     private QueryExpression _query;
     private ViewCheckOption _viewCheck;
     private ViewSpecification _viewSpec;
@@ -47,7 +47,7 @@ public class ViewDefinitionBuilderImpl
         return this;
     }
 
-    public ViewDefinitionBuilder setViewName( TableName viewName )
+    public ViewDefinitionBuilder setViewName( TableNameDirect viewName )
     {
         this._name = viewName;
         return this;
@@ -76,7 +76,7 @@ public class ViewDefinitionBuilderImpl
         return this._isRecursive;
     }
 
-    public TableName getViewName()
+    public TableNameDirect getViewName()
     {
         return this._name;
     }

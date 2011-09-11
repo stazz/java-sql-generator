@@ -15,7 +15,7 @@
 package org.sql.generation.api.grammar.modification;
 
 import org.atp.api.Typeable;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.grammar.common.TableNameDirect;
 
 /**
  * This syntax element represents the target table of {@code DELETE FROM} and {@code UPDATE} statements.
@@ -39,5 +39,5 @@ public interface TargetTable
      * @return The table name of the target table.
      * @see TableName
      */
-    public TableName getTableName();
+    public TableNameDirect getTableName();
 }
