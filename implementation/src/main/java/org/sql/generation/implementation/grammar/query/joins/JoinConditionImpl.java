@@ -17,6 +17,7 @@ package org.sql.generation.implementation.grammar.query.joins;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.query.joins.JoinCondition;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -28,14 +29,15 @@ public class JoinConditionImpl extends JoinSpecificationImpl<JoinCondition>
 
     private final BooleanExpression _searchCondition;
 
-    public JoinConditionImpl( BooleanExpression searchCondition )
+    public JoinConditionImpl( SQLProcessorAggregator processor, BooleanExpression searchCondition )
     {
-        this( JoinCondition.class, searchCondition );
+        this( processor, JoinCondition.class, searchCondition );
     }
 
-    protected JoinConditionImpl( Class<? extends JoinCondition> implClass, BooleanExpression searchCondition )
+    protected JoinConditionImpl( SQLProcessorAggregator processor, Class<? extends JoinCondition> implClass,
+        BooleanExpression searchCondition )
     {
-        super( implClass );
+        super( processor, implClass );
         NullArgumentException.validateNotNull( "search condition", searchCondition );
 
         this._searchCondition = searchCondition;

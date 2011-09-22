@@ -19,6 +19,7 @@ import org.sql.generation.api.grammar.builders.modification.DeleteBySearchBuilde
 import org.sql.generation.api.grammar.builders.modification.InsertStatementBuilder;
 import org.sql.generation.api.grammar.builders.modification.UpdateBySearchBuilder;
 import org.sql.generation.api.grammar.common.ColumnNameList;
+import org.sql.generation.api.grammar.common.TableName;
 import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.modification.ColumnSourceByQuery;

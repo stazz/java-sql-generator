@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.booleans;
 
 import org.sql.generation.api.grammar.booleans.NotEqualsPredicate;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -25,15 +26,16 @@ public class NotEqualsPredicateImpl extends BinaryPredicateImpl<NotEqualsPredica
     implements NotEqualsPredicate
 {
 
-    public NotEqualsPredicateImpl( NonBooleanExpression left, NonBooleanExpression right )
-    {
-        this( NotEqualsPredicate.class, left, right );
-    }
-
-    protected NotEqualsPredicateImpl( Class<? extends NotEqualsPredicate> predicateClass, NonBooleanExpression left,
+    public NotEqualsPredicateImpl( SQLProcessorAggregator processor, NonBooleanExpression left,
         NonBooleanExpression right )
     {
-        super( predicateClass, left, right );
+        this( processor, NotEqualsPredicate.class, left, right );
+    }
+
+    protected NotEqualsPredicateImpl( SQLProcessorAggregator processor,
+        Class<? extends NotEqualsPredicate> predicateClass, NonBooleanExpression left, NonBooleanExpression right )
+    {
+        super( processor, predicateClass, left, right );
     }
 
 }

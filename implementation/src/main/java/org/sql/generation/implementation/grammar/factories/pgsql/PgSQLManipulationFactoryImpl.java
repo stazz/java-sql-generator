@@ -19,8 +19,10 @@ import org.sql.generation.api.grammar.factories.pgsql.PgSQLManipulationFactory;
 import org.sql.generation.api.grammar.manipulation.DropBehaviour;
 import org.sql.generation.api.grammar.manipulation.ObjectType;
 import org.sql.generation.api.grammar.manipulation.pgsql.PgSQLDropTableOrViewStatement;
+import org.sql.generation.api.vendor.PostgreSQLVendor;
 import org.sql.generation.implementation.grammar.factories.DefaultManipulationFactory;
 import org.sql.generation.implementation.grammar.manipulation.pgsql.PgSQLDropTableOrViewStatementImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -29,6 +31,10 @@ import org.sql.generation.implementation.grammar.manipulation.pgsql.PgSQLDropTab
 public class PgSQLManipulationFactoryImpl extends DefaultManipulationFactory
     implements PgSQLManipulationFactory
 {
+    public PgSQLManipulationFactoryImpl( PostgreSQLVendor vendor, SQLProcessorAggregator processor )
+    {
+        super( vendor, processor );
+    }
 
     @Override
     public PgSQLDropTableOrViewStatement createDropTableOrViewStatement( TableNameDirect tableName, ObjectType theType,
@@ -40,7 +46,8 @@ public class PgSQLManipulationFactoryImpl extends DefaultManipulationFactory
     public PgSQLDropTableOrViewStatement createDropTableOrViewStatement( TableNameDirect tableName, ObjectType theType,
         DropBehaviour dropBehaviour, Boolean useIfExists )
     {
-        return new PgSQLDropTableOrViewStatementImpl( theType, dropBehaviour, tableName, useIfExists );
+        return new PgSQLDropTableOrViewStatementImpl( this.getProcessor(), theType, dropBehaviour, tableName,
+            useIfExists );
     }
 
 }

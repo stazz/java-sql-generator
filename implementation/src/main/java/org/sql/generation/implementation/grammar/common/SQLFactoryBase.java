@@ -14,35 +14,36 @@
 
 package org.sql.generation.implementation.grammar.common;
 
-import org.atp.spi.TypeableImpl;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.common.NullArgumentException;
+import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author 2011 Stanislav Muhametsin
  */
-public class TableNameImpl<TableNameType extends TableName> extends SQLSyntaxElementBase<TableName, TableNameType>
-    implements TableName
+public abstract class SQLFactoryBase
 {
-    private final String _schemaName;
 
-    protected TableNameImpl( SQLProcessorAggregator processor, Class<? extends TableNameType> implClass,
-        String schemaName )
+    private final SQLVendor _vendor;
+    private final SQLProcessorAggregator _processor;
+
+    protected SQLFactoryBase( SQLVendor vendor, SQLProcessorAggregator processor )
     {
-        super( processor, implClass );
+        NullArgumentException.validateNotNull( "vendor", vendor );
+        NullArgumentException.validateNotNull( "SQL processor", processor );
 
-        this._schemaName = schemaName;
+        this._vendor = vendor;
+        this._processor = processor;
     }
 
-    public String getSchemaName()
+    protected SQLVendor getVendor()
     {
-        return this._schemaName;
+        return this._vendor;
     }
 
-    @Override
-    protected boolean doesEqual( TableNameType another )
+    protected SQLProcessorAggregator getProcessor()
     {
-        return TypeableImpl.bothNullOrEquals( this._schemaName, another.getSchemaName() );
+        return this._processor;
     }
 }

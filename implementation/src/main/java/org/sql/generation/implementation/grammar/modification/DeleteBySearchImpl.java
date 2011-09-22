@@ -20,12 +20,14 @@ import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.modification.DeleteBySearch;
 import org.sql.generation.api.grammar.modification.DeleteStatement;
 import org.sql.generation.api.grammar.modification.TargetTable;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class DeleteBySearchImpl extends TypeableImpl<DeleteStatement, DeleteBySearch>
+public class DeleteBySearchImpl extends SQLSyntaxElementBase<DeleteStatement, DeleteBySearch>
     implements DeleteBySearch
 {
 
@@ -33,15 +35,15 @@ public class DeleteBySearchImpl extends TypeableImpl<DeleteStatement, DeleteBySe
 
     private final BooleanExpression _where;
 
-    public DeleteBySearchImpl( TargetTable targetTable, BooleanExpression where )
+    public DeleteBySearchImpl( SQLProcessorAggregator processor, TargetTable targetTable, BooleanExpression where )
     {
-        this( DeleteBySearch.class, targetTable, where );
+        this( processor, DeleteBySearch.class, targetTable, where );
     }
 
-    protected DeleteBySearchImpl( Class<? extends DeleteBySearch> expressionClass, TargetTable targetTable,
-        BooleanExpression where )
+    protected DeleteBySearchImpl( SQLProcessorAggregator processor, Class<? extends DeleteBySearch> expressionClass,
+        TargetTable targetTable, BooleanExpression where )
     {
-        super( expressionClass );
+        super( processor, expressionClass );
         NullArgumentException.validateNotNull( "target table", targetTable );
 
         this._targetTable = targetTable;

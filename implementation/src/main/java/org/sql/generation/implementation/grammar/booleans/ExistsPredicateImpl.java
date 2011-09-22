@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.booleans;
 
 import org.sql.generation.api.grammar.booleans.ExistsPredicate;
 import org.sql.generation.api.grammar.query.QueryExpression;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -25,14 +26,15 @@ public class ExistsPredicateImpl extends UnaryPredicateImpl<ExistsPredicate>
     implements ExistsPredicate
 {
 
-    public ExistsPredicateImpl( QueryExpression query )
+    public ExistsPredicateImpl( SQLProcessorAggregator processor, QueryExpression query )
     {
-        this( ExistsPredicate.class, query );
+        this( processor, ExistsPredicate.class, query );
     }
 
-    protected ExistsPredicateImpl( Class<? extends ExistsPredicate> predicateClass, QueryExpression query )
+    protected ExistsPredicateImpl( SQLProcessorAggregator processor, Class<? extends ExistsPredicate> predicateClass,
+        QueryExpression query )
     {
-        super( predicateClass, query );
+        super( processor, predicateClass, query );
     }
 
     @Override

@@ -14,32 +14,33 @@
 
 package org.sql.generation.implementation.grammar.modification;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.modification.ColumnSource;
 import org.sql.generation.api.grammar.modification.InsertStatement;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class InsertStatementImpl extends TypeableImpl<InsertStatement, InsertStatement>
+public class InsertStatementImpl extends SQLSyntaxElementBase<InsertStatement, InsertStatement>
     implements InsertStatement
 {
 
     private final TableNameDirect _tableName;
     private final ColumnSource _columnSource;
 
-    public InsertStatementImpl( TableNameDirect tableName, ColumnSource columnSource )
+    public InsertStatementImpl( SQLProcessorAggregator processor, TableNameDirect tableName, ColumnSource columnSource )
     {
-        this( InsertStatement.class, tableName, columnSource );
+        this( processor, InsertStatement.class, tableName, columnSource );
     }
 
-    protected InsertStatementImpl( Class<? extends InsertStatement> expressionClass, TableNameDirect tableName,
-        ColumnSource columnSource )
+    protected InsertStatementImpl( SQLProcessorAggregator processor, Class<? extends InsertStatement> expressionClass,
+        TableNameDirect tableName, ColumnSource columnSource )
     {
-        super( expressionClass );
+        super( processor, expressionClass );
 
         NullArgumentException.validateNotNull( "tableName", tableName );
         NullArgumentException.validateNotNull( "column source", columnSource );

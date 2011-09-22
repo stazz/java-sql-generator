@@ -17,12 +17,14 @@ package org.sql.generation.implementation.grammar.query;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.ColumnNameList;
 import org.sql.generation.api.grammar.query.TableAlias;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class TableAliasImpl
+public class TableAliasImpl extends SQLSyntaxElementBase<TableAlias, TableAlias>
     implements TableAlias
 {
 
@@ -30,8 +32,16 @@ public class TableAliasImpl
 
     private final ColumnNameList _columnAliases;
 
-    public TableAliasImpl( String tableAlias, ColumnNameList columnNames )
+    public TableAliasImpl( SQLProcessorAggregator processor, String tableAlias, ColumnNameList columnNames )
     {
+        this( processor, TableAlias.class, tableAlias, columnNames );
+    }
+
+    protected TableAliasImpl( SQLProcessorAggregator processor, Class<? extends TableAlias> implementingClass,
+        String tableAlias, ColumnNameList columnNames )
+    {
+        super( processor, implementingClass );
+
         NullArgumentException.validateNotNull( "table alias table name", tableAlias );
 
         this._tableAlias = tableAlias;
@@ -47,4 +57,12 @@ public class TableAliasImpl
     {
         return this._tableAlias;
     }
+
+    @Override
+    protected boolean doesEqual( TableAlias another )
+    {
+        return this._tableAlias.equals( another.getTableAlias() )
+            && bothNullOrEquals( this._columnAliases, another.getColumnAliases() );
+    }
+
 }

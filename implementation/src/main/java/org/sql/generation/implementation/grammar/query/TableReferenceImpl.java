@@ -15,21 +15,22 @@
 package org.sql.generation.implementation.grammar.query;
 
 import org.atp.api.Typeable;
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.grammar.query.TableReference;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
 public abstract class TableReferenceImpl<TypeableType extends Typeable<? super TypeableType>, RealType extends TypeableType>
-    extends TypeableImpl<TypeableType, RealType>
+    extends SQLSyntaxElementBase<TypeableType, RealType>
     implements TableReference
 {
 
-    public TableReferenceImpl( Class<? extends RealType> expressionClass )
+    public TableReferenceImpl( SQLProcessorAggregator processor, Class<? extends RealType> expressionClass )
     {
-        super( expressionClass );
+        super( processor, expressionClass );
     }
 
     public Typeable<?> asTypeable()

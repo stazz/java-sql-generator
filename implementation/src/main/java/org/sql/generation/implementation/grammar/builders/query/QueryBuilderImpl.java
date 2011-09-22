@@ -20,13 +20,15 @@ import org.sql.generation.api.grammar.common.SetQuantifier;
 import org.sql.generation.api.grammar.query.CorrespondingSpec;
 import org.sql.generation.api.grammar.query.QueryExpressionBody;
 import org.sql.generation.api.grammar.query.SetOperation;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.grammar.query.QueryExpressionBodyBinaryImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class QueryBuilderImpl
+public class QueryBuilderImpl extends SQLBuilderBase
     implements QueryBuilder
 {
 
@@ -44,15 +46,17 @@ public class QueryBuilderImpl
 
     private QueryExpressionBody _topLevelExpression;
 
-    public QueryBuilderImpl( QueryExpressionBody topLevelExpression )
+    public QueryBuilderImpl( SQLProcessorAggregator processor, QueryExpressionBody topLevelExpression )
     {
-        this( topLevelExpression, DEFAULT_SET_QUANTIFIER_FOR_UNIONS, DEFAULT_SET_QUANTIFIER_FOR_INTERSECTIONS,
-            DEFAULT_SET_QUANTIFIER_FOR_EXCEPTS );
+        this( processor, topLevelExpression, DEFAULT_SET_QUANTIFIER_FOR_UNIONS,
+            DEFAULT_SET_QUANTIFIER_FOR_INTERSECTIONS, DEFAULT_SET_QUANTIFIER_FOR_EXCEPTS );
     }
 
-    protected QueryBuilderImpl( QueryExpressionBody topLevelExpression, SetQuantifier defaultSetQuantifierForUnions,
-        SetQuantifier defaultSetQuantifierForIntersections, SetQuantifier defaultSetQuantifierForExcepts )
+    protected QueryBuilderImpl( SQLProcessorAggregator processor, QueryExpressionBody topLevelExpression,
+        SetQuantifier defaultSetQuantifierForUnions, SetQuantifier defaultSetQuantifierForIntersections,
+        SetQuantifier defaultSetQuantifierForExcepts )
     {
+        super( processor );
         NullArgumentException.validateNotNull( "default quantifier for unions", defaultSetQuantifierForUnions );
         NullArgumentException.validateNotNull( "default quantifier for intersections",
             defaultSetQuantifierForIntersections );
@@ -83,8 +87,8 @@ public class QueryBuilderImpl
     public QueryBuilder union( SetQuantifier setQuantifier, CorrespondingSpec correspondingSpec,
         QueryExpressionBody another )
     {
-        this._topLevelExpression = new QueryExpressionBodyBinaryImpl( SetOperation.UNION, this._topLevelExpression,
-            another, setQuantifier, correspondingSpec );
+        this._topLevelExpression = new QueryExpressionBodyBinaryImpl( this.getProcessor(), SetOperation.UNION,
+            this._topLevelExpression, another, setQuantifier, correspondingSpec );
         return this;
     }
 
@@ -106,8 +110,8 @@ public class QueryBuilderImpl
     public QueryBuilder intersect( SetQuantifier setQuantifier, CorrespondingSpec correspondingSpec,
         QueryExpressionBody another )
     {
-        this._topLevelExpression = new QueryExpressionBodyBinaryImpl( SetOperation.INTERSECT, this._topLevelExpression,
-            another, setQuantifier, correspondingSpec );
+        this._topLevelExpression = new QueryExpressionBodyBinaryImpl( this.getProcessor(), SetOperation.INTERSECT,
+            this._topLevelExpression, another, setQuantifier, correspondingSpec );
         return this;
     }
 
@@ -129,8 +133,8 @@ public class QueryBuilderImpl
     public QueryBuilder except( SetQuantifier setQuantifier, CorrespondingSpec correspondingSpec,
         QueryExpressionBody another )
     {
-        this._topLevelExpression = new QueryExpressionBodyBinaryImpl( SetOperation.EXCEPT, this._topLevelExpression,
-            another, setQuantifier, correspondingSpec );
+        this._topLevelExpression = new QueryExpressionBodyBinaryImpl( this.getProcessor(), SetOperation.EXCEPT,
+            this._topLevelExpression, another, setQuantifier, correspondingSpec );
         return this;
     }
 

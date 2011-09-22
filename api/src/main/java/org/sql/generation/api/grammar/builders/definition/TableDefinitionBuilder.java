@@ -15,6 +15,7 @@
 package org.sql.generation.api.grammar.builders.definition;
 
 import org.sql.generation.api.grammar.builders.AbstractBuilder;
+import org.sql.generation.api.grammar.common.TableName;
 import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.definition.table.TableCommitAction;
 import org.sql.generation.api.grammar.definition.table.TableContentsSource;

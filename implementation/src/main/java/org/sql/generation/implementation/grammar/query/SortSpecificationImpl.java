@@ -14,17 +14,18 @@
 
 package org.sql.generation.implementation.grammar.query;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.query.Ordering;
 import org.sql.generation.api.grammar.query.SortSpecification;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class SortSpecificationImpl extends TypeableImpl<SortSpecification, SortSpecification>
+public class SortSpecificationImpl extends SQLSyntaxElementBase<SortSpecification, SortSpecification>
     implements SortSpecification
 {
 
@@ -32,15 +33,15 @@ public class SortSpecificationImpl extends TypeableImpl<SortSpecification, SortS
 
     private final ValueExpression _expression;
 
-    public SortSpecificationImpl( ValueExpression expression, Ordering ordering )
+    public SortSpecificationImpl( SQLProcessorAggregator processor, ValueExpression expression, Ordering ordering )
     {
-        this( SortSpecification.class, expression, ordering );
+        this( processor, SortSpecification.class, expression, ordering );
     }
 
-    protected SortSpecificationImpl( Class<? extends SortSpecification> implClass, ValueExpression expression,
-        Ordering ordering )
+    protected SortSpecificationImpl( SQLProcessorAggregator processor, Class<? extends SortSpecification> implClass,
+        ValueExpression expression, Ordering ordering )
     {
-        super( implClass );
+        super( processor, implClass );
         NullArgumentException.validateNotNull( "expression", expression );
         NullArgumentException.validateNotNull( "ordering", ordering );
 

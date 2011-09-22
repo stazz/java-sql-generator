@@ -24,21 +24,24 @@ import org.sql.generation.api.grammar.common.SetQuantifier;
 import org.sql.generation.api.grammar.query.ColumnReference;
 import org.sql.generation.api.grammar.query.ColumnReferences.ColumnReferenceInfo;
 import org.sql.generation.api.grammar.query.SelectColumnClause;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.grammar.query.AsteriskSelectImpl;
 import org.sql.generation.implementation.grammar.query.ColumnReferencesImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class ColumnsBuilderImpl
+public class ColumnsBuilderImpl extends SQLBuilderBase
     implements ColumnsBuilder
 {
     private final List<ColumnReferenceInfo> _columns;
     private SetQuantifier _quantifier;
 
-    public ColumnsBuilderImpl( SetQuantifier setQuantifier )
+    public ColumnsBuilderImpl( SQLProcessorAggregator processor, SetQuantifier setQuantifier )
     {
+        super( processor );
         NullArgumentException.validateNotNull( "set quantifier", setQuantifier );
 
         this._quantifier = setQuantifier;
@@ -95,11 +98,11 @@ public class ColumnsBuilderImpl
         SelectColumnClause result = null;
         if( this._columns.isEmpty() )
         {
-            result = new AsteriskSelectImpl( this._quantifier );
+            result = new AsteriskSelectImpl( this.getProcessor(), this._quantifier );
         }
         else
         {
-            result = new ColumnReferencesImpl( this._quantifier, this._columns );
+            result = new ColumnReferencesImpl( this.getProcessor(), this._quantifier, this._columns );
         }
 
         return result;

@@ -23,20 +23,23 @@ import org.sql.generation.api.grammar.builders.query.FromBuilder;
 import org.sql.generation.api.grammar.builders.query.TableReferenceBuilder;
 import org.sql.generation.api.grammar.query.FromClause;
 import org.sql.generation.api.grammar.query.TableReference;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.grammar.query.FromClauseImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class FromBuilderImpl
+public class FromBuilderImpl extends SQLBuilderBase
     implements FromBuilder
 {
 
     private final List<TableReferenceBuilder> _tableRefs;
 
-    public FromBuilderImpl()
+    public FromBuilderImpl( SQLProcessorAggregator processor )
     {
+        super( processor );
         this._tableRefs = new ArrayList<TableReferenceBuilder>();
     }
 
@@ -64,6 +67,6 @@ public class FromBuilderImpl
             refs.add( builder.createExpression() );
         }
 
-        return new FromClauseImpl( refs );
+        return new FromClauseImpl( this.getProcessor(), refs );
     }
 }

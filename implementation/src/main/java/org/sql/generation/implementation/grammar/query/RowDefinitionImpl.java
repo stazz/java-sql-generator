@@ -17,33 +17,32 @@ package org.sql.generation.implementation.grammar.query;
 import java.util.Collections;
 import java.util.List;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.query.RowDefinition;
 import org.sql.generation.api.grammar.query.RowValueConstructor;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class RowDefinitionImpl extends TypeableImpl<RowValueConstructor, RowDefinition>
+public class RowDefinitionImpl extends SQLSyntaxElementBase<RowValueConstructor, RowDefinition>
     implements RowDefinition
 {
 
     private List<ValueExpression> _rowElements;
 
-    public RowDefinitionImpl( List<ValueExpression> rowElements )
+    public RowDefinitionImpl( SQLProcessorAggregator processor, List<ValueExpression> rowElements )
     {
-        this( RowDefinition.class, rowElements );
+        this( processor, RowDefinition.class, rowElements );
     }
 
-    /**
-     * @param realImplementingType
-     */
-    protected RowDefinitionImpl( Class<? extends RowDefinition> realImplementingType, List<ValueExpression> rowElements )
+    protected RowDefinitionImpl( SQLProcessorAggregator processor, Class<? extends RowDefinition> realImplementingType,
+        List<ValueExpression> rowElements )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         NullArgumentException.validateNotNull( "row elements", rowElements );
 

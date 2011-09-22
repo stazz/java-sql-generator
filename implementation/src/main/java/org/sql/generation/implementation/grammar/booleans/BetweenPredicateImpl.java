@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.booleans;
 
 import org.sql.generation.api.grammar.booleans.BetweenPredicate;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -24,15 +25,16 @@ import org.sql.generation.api.grammar.common.NonBooleanExpression;
 public class BetweenPredicateImpl extends MultiPredicateImpl<BetweenPredicate>
     implements BetweenPredicate
 {
-    public BetweenPredicateImpl( NonBooleanExpression left, NonBooleanExpression minimum, NonBooleanExpression maximum )
-    {
-        this( BetweenPredicate.class, left, minimum, maximum );
-    }
-
-    protected BetweenPredicateImpl( Class<? extends BetweenPredicate> predicateClass, NonBooleanExpression left,
+    public BetweenPredicateImpl( SQLProcessorAggregator processor, NonBooleanExpression left,
         NonBooleanExpression minimum, NonBooleanExpression maximum )
     {
-        super( predicateClass, left, minimum, maximum );
+        this( processor, BetweenPredicate.class, left, minimum, maximum );
+    }
+
+    protected BetweenPredicateImpl( SQLProcessorAggregator processor, Class<? extends BetweenPredicate> predicateClass,
+        NonBooleanExpression left, NonBooleanExpression minimum, NonBooleanExpression maximum )
+    {
+        super( processor, predicateClass, left, minimum, maximum );
     }
 
     public NonBooleanExpression getMaximum()

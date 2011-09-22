@@ -14,35 +14,36 @@
 
 package org.sql.generation.implementation.grammar.common;
 
+import org.atp.api.Typeable;
 import org.atp.spi.TypeableImpl;
-import org.sql.generation.api.grammar.common.TableName;
+import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author 2011 Stanislav Muhametsin
  */
-public class TableNameImpl<TableNameType extends TableName> extends SQLSyntaxElementBase<TableName, TableNameType>
-    implements TableName
+public abstract class SQLSyntaxElementBase<BaseInterfaceType extends Typeable<?>, ActualInterfaceType extends BaseInterfaceType>
+    extends TypeableImpl<BaseInterfaceType, ActualInterfaceType>
 {
-    private final String _schemaName;
+    private final SQLProcessorAggregator _processor;
 
-    protected TableNameImpl( SQLProcessorAggregator processor, Class<? extends TableNameType> implClass,
-        String schemaName )
+    protected SQLSyntaxElementBase( SQLProcessorAggregator processor,
+        Class<? extends ActualInterfaceType> realImplementingType )
     {
-        super( processor, implClass );
+        super( realImplementingType );
 
-        this._schemaName = schemaName;
-    }
+        NullArgumentException.validateNotNull( "SQL Processor", processor );
 
-    public String getSchemaName()
-    {
-        return this._schemaName;
+        this._processor = processor;
     }
 
     @Override
-    protected boolean doesEqual( TableNameType another )
+    public String toString()
     {
-        return TypeableImpl.bothNullOrEquals( this._schemaName, another.getSchemaName() );
+        StringBuilder builder = new StringBuilder();
+        this._processor.process( this, builder );
+        return builder.toString();
     }
+
 }

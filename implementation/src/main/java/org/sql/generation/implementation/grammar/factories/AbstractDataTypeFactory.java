@@ -21,14 +21,22 @@ import org.sql.generation.api.grammar.common.datatypes.SQLFloat;
 import org.sql.generation.api.grammar.common.datatypes.SQLTime;
 import org.sql.generation.api.grammar.common.datatypes.SQLTimeStamp;
 import org.sql.generation.api.grammar.factories.DataTypeFactory;
+import org.sql.generation.api.vendor.SQLVendor;
+import org.sql.generation.implementation.grammar.common.SQLFactoryBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public abstract class AbstractDataTypeFactory
+public abstract class AbstractDataTypeFactory extends SQLFactoryBase
     implements DataTypeFactory
 {
+
+    protected AbstractDataTypeFactory( SQLVendor vendor, SQLProcessorAggregator processor )
+    {
+        super( vendor, processor );
+    }
 
     public Decimal decimal()
     {

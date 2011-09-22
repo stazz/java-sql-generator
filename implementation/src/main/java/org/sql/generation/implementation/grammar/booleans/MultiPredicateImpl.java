@@ -21,6 +21,7 @@ import java.util.List;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.MultiPredicate;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -35,16 +36,16 @@ public abstract class MultiPredicateImpl<ExpressionType extends MultiPredicate> 
 
     private final List<NonBooleanExpression> _rights;
 
-    protected MultiPredicateImpl( Class<? extends ExpressionType> expressionClass, NonBooleanExpression left,
-        NonBooleanExpression... rights )
+    protected MultiPredicateImpl( SQLProcessorAggregator processor, Class<? extends ExpressionType> expressionClass,
+        NonBooleanExpression left, NonBooleanExpression... rights )
     {
-        this( expressionClass, left, Arrays.asList( rights ) );
+        this( processor, expressionClass, left, Arrays.asList( rights ) );
     }
 
-    protected MultiPredicateImpl( Class<? extends ExpressionType> expressionClass, NonBooleanExpression left,
-        List<NonBooleanExpression> rights )
+    protected MultiPredicateImpl( SQLProcessorAggregator processor, Class<? extends ExpressionType> expressionClass,
+        NonBooleanExpression left, List<NonBooleanExpression> rights )
     {
-        super( expressionClass );
+        super( processor, expressionClass );
         NullArgumentException.validateNotNull( "left", left );
         NullArgumentException.validateNotNull( "rights", rights );
 

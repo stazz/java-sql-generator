@@ -14,21 +14,23 @@
 
 package org.sql.generation.implementation.grammar.query.joins;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.grammar.query.joins.JoinSpecification;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
 public abstract class JoinSpecificationImpl<JoinSpecificationType extends JoinSpecification> extends
-    TypeableImpl<JoinSpecification, JoinSpecificationType>
+    SQLSyntaxElementBase<JoinSpecification, JoinSpecificationType>
     implements JoinSpecification
 {
 
-    public JoinSpecificationImpl( Class<? extends JoinSpecificationType> expressionClass )
+    public JoinSpecificationImpl( SQLProcessorAggregator processor,
+        Class<? extends JoinSpecificationType> expressionClass )
     {
-        super( expressionClass );
+        super( processor, expressionClass );
     }
 
 }

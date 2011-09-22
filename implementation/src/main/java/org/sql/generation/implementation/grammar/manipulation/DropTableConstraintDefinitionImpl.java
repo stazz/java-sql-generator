@@ -14,32 +14,36 @@
 
 package org.sql.generation.implementation.grammar.manipulation;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.manipulation.AlterTableAction;
 import org.sql.generation.api.grammar.manipulation.DropBehaviour;
 import org.sql.generation.api.grammar.manipulation.DropTableConstraintDefinition;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class DropTableConstraintDefinitionImpl extends TypeableImpl<AlterTableAction, DropTableConstraintDefinition>
+public class DropTableConstraintDefinitionImpl extends
+    SQLSyntaxElementBase<AlterTableAction, DropTableConstraintDefinition>
     implements DropTableConstraintDefinition
 {
 
     private final String _constraintName;
     private final DropBehaviour _dropBehaviour;
 
-    public DropTableConstraintDefinitionImpl( String constraintName, DropBehaviour dropBehaviour )
+    public DropTableConstraintDefinitionImpl( SQLProcessorAggregator processor, String constraintName,
+        DropBehaviour dropBehaviour )
     {
-        this( DropTableConstraintDefinition.class, constraintName, dropBehaviour );
+        this( processor, DropTableConstraintDefinition.class, constraintName, dropBehaviour );
     }
 
-    protected DropTableConstraintDefinitionImpl( Class<? extends DropTableConstraintDefinition> realImplementingType,
-        String constraintName, DropBehaviour dropBehaviour )
+    protected DropTableConstraintDefinitionImpl( SQLProcessorAggregator processor,
+        Class<? extends DropTableConstraintDefinition> realImplementingType, String constraintName,
+        DropBehaviour dropBehaviour )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         NullArgumentException.validateNotNull( "Constraint name", constraintName );
         NullArgumentException.validateNotNull( "Drop behaviour", dropBehaviour );

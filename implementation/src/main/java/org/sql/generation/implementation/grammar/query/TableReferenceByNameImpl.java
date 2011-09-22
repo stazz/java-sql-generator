@@ -16,9 +16,9 @@ package org.sql.generation.implementation.grammar.query;
 
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.TableName;
-import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.query.TableAlias;
 import org.sql.generation.api.grammar.query.TableReferenceByName;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -30,15 +30,15 @@ public class TableReferenceByNameImpl extends TableReferencePrimaryImpl<TableRef
 
     private final TableName _tableName;
 
-    public TableReferenceByNameImpl( TableName tableName, TableAlias alias )
+    public TableReferenceByNameImpl( SQLProcessorAggregator processor, TableName tableName, TableAlias alias )
     {
-        this( TableReferenceByName.class, tableName, alias );
+        this( processor, TableReferenceByName.class, tableName, alias );
     }
 
-    protected TableReferenceByNameImpl( Class<? extends TableReferenceByName> implClass, TableName tableName,
-        TableAlias alias )
+    protected TableReferenceByNameImpl( SQLProcessorAggregator processor,
+        Class<? extends TableReferenceByName> implClass, TableName tableName, TableAlias alias )
     {
-        super( implClass, alias );
+        super( processor, implClass, alias );
 
         NullArgumentException.validateNotNull( "table name", tableName );
 

@@ -20,13 +20,15 @@ import org.sql.generation.api.grammar.definition.table.TableCommitAction;
 import org.sql.generation.api.grammar.definition.table.TableContentsSource;
 import org.sql.generation.api.grammar.definition.table.TableDefinition;
 import org.sql.generation.api.grammar.definition.table.TableScope;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.grammar.definition.table.TableDefinitionImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class TableDefinitionBuilderImpl
+public class TableDefinitionBuilderImpl extends SQLBuilderBase
     implements TableDefinitionBuilder
 {
 
@@ -35,9 +37,15 @@ public class TableDefinitionBuilderImpl
     private TableCommitAction _commitAction;
     private TableContentsSource _contents;
 
+    public TableDefinitionBuilderImpl( SQLProcessorAggregator processor )
+    {
+        super( processor );
+    }
+
     public TableDefinition createExpression()
     {
-        return new TableDefinitionImpl( this._commitAction, this._contents, this._name, this._scope );
+        return new TableDefinitionImpl( this.getProcessor(), this._commitAction, this._contents, this._name,
+            this._scope );
     }
 
     public TableDefinitionBuilder setTableScope( TableScope scope )

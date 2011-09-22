@@ -16,14 +16,22 @@ package org.sql.generation.implementation.grammar.factories;
 
 import org.sql.generation.api.grammar.factories.ColumnsFactory;
 import org.sql.generation.api.grammar.query.ColumnReferenceByName;
+import org.sql.generation.api.vendor.SQLVendor;
+import org.sql.generation.implementation.grammar.common.SQLFactoryBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public abstract class AbstractColumnsFactory
+public abstract class AbstractColumnsFactory extends SQLFactoryBase
     implements ColumnsFactory
 {
+
+    protected AbstractColumnsFactory( SQLVendor vendor, SQLProcessorAggregator processor )
+    {
+        super( vendor, processor );
+    }
 
     public ColumnReferenceByName colName( String colName )
     {

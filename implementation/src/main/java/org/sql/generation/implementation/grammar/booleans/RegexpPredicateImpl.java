@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.booleans;
 
 import org.sql.generation.api.grammar.booleans.RegexpPredicate;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -25,15 +26,15 @@ public class RegexpPredicateImpl extends BinaryPredicateImpl<RegexpPredicate>
     implements RegexpPredicate
 {
 
-    public RegexpPredicateImpl( NonBooleanExpression left, NonBooleanExpression right )
+    public RegexpPredicateImpl( SQLProcessorAggregator processor, NonBooleanExpression left, NonBooleanExpression right )
     {
-        this( RegexpPredicate.class, left, right );
+        this( processor, RegexpPredicate.class, left, right );
     }
 
-    protected RegexpPredicateImpl( Class<? extends RegexpPredicate> predicateClass, NonBooleanExpression left,
-        NonBooleanExpression right )
+    protected RegexpPredicateImpl( SQLProcessorAggregator processor, Class<? extends RegexpPredicate> predicateClass,
+        NonBooleanExpression left, NonBooleanExpression right )
     {
-        super( predicateClass, left, right );
+        super( processor, predicateClass, left, right );
     }
 
 }

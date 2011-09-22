@@ -14,31 +14,32 @@
 
 package org.sql.generation.implementation.grammar.manipulation;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
 import org.sql.generation.api.grammar.manipulation.AddColumnDefinition;
 import org.sql.generation.api.grammar.manipulation.AlterTableAction;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class AddColumnDefinitionImpl extends TypeableImpl<AlterTableAction, AddColumnDefinition>
+public class AddColumnDefinitionImpl extends SQLSyntaxElementBase<AlterTableAction, AddColumnDefinition>
     implements AddColumnDefinition
 {
 
     private final ColumnDefinition _columnDefinition;
 
-    public AddColumnDefinitionImpl( ColumnDefinition columnDefinition )
+    public AddColumnDefinitionImpl( SQLProcessorAggregator processor, ColumnDefinition columnDefinition )
     {
-        this( AddColumnDefinition.class, columnDefinition );
+        this( processor, AddColumnDefinition.class, columnDefinition );
     }
 
-    protected AddColumnDefinitionImpl( Class<? extends AddColumnDefinition> realImplementingType,
-        ColumnDefinition columnDefinition )
+    protected AddColumnDefinitionImpl( SQLProcessorAggregator processor,
+        Class<? extends AddColumnDefinition> realImplementingType, ColumnDefinition columnDefinition )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         NullArgumentException.validateNotNull( "Column definition", columnDefinition );
 

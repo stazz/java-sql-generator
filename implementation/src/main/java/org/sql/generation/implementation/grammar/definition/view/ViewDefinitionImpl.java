@@ -23,12 +23,14 @@ import org.sql.generation.api.grammar.definition.view.ViewCheckOption;
 import org.sql.generation.api.grammar.definition.view.ViewDefinition;
 import org.sql.generation.api.grammar.definition.view.ViewSpecification;
 import org.sql.generation.api.grammar.query.QueryExpression;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class ViewDefinitionImpl extends TypeableImpl<SchemaStatement, ViewDefinition>
+public class ViewDefinitionImpl extends SQLSyntaxElementBase<SchemaStatement, ViewDefinition>
     implements ViewDefinition
 {
 
@@ -38,16 +40,17 @@ public class ViewDefinitionImpl extends TypeableImpl<SchemaStatement, ViewDefini
     private final ViewCheckOption _viewCheck;
     private final Boolean _isRecursive;
 
-    public ViewDefinitionImpl( TableNameDirect name, QueryExpression query, ViewSpecification spec,
-        ViewCheckOption viewCheck, Boolean isRecursive )
+    public ViewDefinitionImpl( SQLProcessorAggregator processor, TableNameDirect name, QueryExpression query,
+        ViewSpecification spec, ViewCheckOption viewCheck, Boolean isRecursive )
     {
-        this( ViewDefinition.class, name, query, spec, viewCheck, isRecursive );
+        this( processor, ViewDefinition.class, name, query, spec, viewCheck, isRecursive );
     }
 
-    protected ViewDefinitionImpl( Class<? extends ViewDefinition> realImplementingType, TableNameDirect name,
-        QueryExpression query, ViewSpecification spec, ViewCheckOption viewCheck, Boolean isRecursive )
+    protected ViewDefinitionImpl( SQLProcessorAggregator processor,
+        Class<? extends ViewDefinition> realImplementingType, TableNameDirect name, QueryExpression query,
+        ViewSpecification spec, ViewCheckOption viewCheck, Boolean isRecursive )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         NullArgumentException.validateNotNull( "View name", name );
         NullArgumentException.validateNotNull( "View query", query );

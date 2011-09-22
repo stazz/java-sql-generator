@@ -21,6 +21,7 @@ import org.sql.generation.api.grammar.query.CorrespondingSpec;
 import org.sql.generation.api.grammar.query.QueryExpressionBody;
 import org.sql.generation.api.grammar.query.QueryExpressionBodyBinary;
 import org.sql.generation.api.grammar.query.SetOperation;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -40,17 +41,19 @@ public class QueryExpressionBodyBinaryImpl extends QueryExpressionBodyImpl<Query
 
     private final CorrespondingSpec _correspondingColumns;
 
-    public QueryExpressionBodyBinaryImpl( SetOperation setOperation, QueryExpressionBody left,
-        QueryExpressionBody right, SetQuantifier setQuantifier, CorrespondingSpec correspondingColumns )
-    {
-        this( QueryExpressionBodyBinary.class, setOperation, left, right, setQuantifier, correspondingColumns );
-    }
-
-    protected QueryExpressionBodyBinaryImpl( Class<? extends QueryExpressionBodyBinary> implClass,
-        SetOperation setOperation, QueryExpressionBody left, QueryExpressionBody right, SetQuantifier setQuantifier,
+    public QueryExpressionBodyBinaryImpl( SQLProcessorAggregator processor, SetOperation setOperation,
+        QueryExpressionBody left, QueryExpressionBody right, SetQuantifier setQuantifier,
         CorrespondingSpec correspondingColumns )
     {
-        super( implClass );
+        this( processor, QueryExpressionBodyBinary.class, setOperation, left, right, setQuantifier,
+            correspondingColumns );
+    }
+
+    protected QueryExpressionBodyBinaryImpl( SQLProcessorAggregator processor,
+        Class<? extends QueryExpressionBodyBinary> implClass, SetOperation setOperation, QueryExpressionBody left,
+        QueryExpressionBody right, SetQuantifier setQuantifier, CorrespondingSpec correspondingColumns )
+    {
+        super( processor, implClass );
         NullArgumentException.validateNotNull( "set operation", setOperation );
         NullArgumentException.validateNotNull( "left", left );
         NullArgumentException.validateNotNull( "right", right );

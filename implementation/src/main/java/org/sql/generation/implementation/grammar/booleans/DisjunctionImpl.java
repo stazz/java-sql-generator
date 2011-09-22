@@ -20,6 +20,7 @@ import java.util.Iterator;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.booleans.Disjunction;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -33,15 +34,15 @@ public class DisjunctionImpl extends ComposedBooleanExpressionImpl<Disjunction>
 
     private final BooleanExpression _right;
 
-    public DisjunctionImpl( BooleanExpression left, BooleanExpression right )
+    public DisjunctionImpl( SQLProcessorAggregator processor, BooleanExpression left, BooleanExpression right )
     {
-        this( Disjunction.class, left, right );
+        this( processor, Disjunction.class, left, right );
     }
 
-    protected DisjunctionImpl( Class<? extends Disjunction> expressionClass, BooleanExpression left,
-        BooleanExpression right )
+    protected DisjunctionImpl( SQLProcessorAggregator processor, Class<? extends Disjunction> expressionClass,
+        BooleanExpression left, BooleanExpression right )
     {
-        super( expressionClass );
+        super( processor, expressionClass );
         NullArgumentException.validateNotNull( "left", left );
         NullArgumentException.validateNotNull( "right", right );
 

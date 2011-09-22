@@ -17,6 +17,7 @@ package org.sql.generation.implementation.grammar.query;
 import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.query.ColumnReferenceByName;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -30,15 +31,15 @@ public class ColumnReferenceByNameImpl extends ColumnReferenceImpl<ColumnReferen
 
     private final String _columnName;
 
-    public ColumnReferenceByNameImpl( String tableName, String columnName )
+    public ColumnReferenceByNameImpl( SQLProcessorAggregator processor, String tableName, String columnName )
     {
-        this( ColumnReferenceByName.class, tableName, columnName );
+        this( processor, ColumnReferenceByName.class, tableName, columnName );
     }
 
-    protected ColumnReferenceByNameImpl( Class<? extends ColumnReferenceByName> implClass, String tableName,
-        String columnName )
+    protected ColumnReferenceByNameImpl( SQLProcessorAggregator processor,
+        Class<? extends ColumnReferenceByName> implClass, String tableName, String columnName )
     {
-        super( implClass );
+        super( processor, implClass );
 
         NullArgumentException.validateNotNull( "column name", columnName );
 

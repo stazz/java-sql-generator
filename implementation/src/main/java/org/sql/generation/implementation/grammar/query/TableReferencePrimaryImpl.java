@@ -17,6 +17,7 @@ package org.sql.generation.implementation.grammar.query;
 import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.grammar.query.TableAlias;
 import org.sql.generation.api.grammar.query.TableReferencePrimary;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -29,9 +30,10 @@ public class TableReferencePrimaryImpl<TableReferenceType extends TableReference
 
     private final TableAlias _tableAlias;
 
-    public TableReferencePrimaryImpl( Class<? extends TableReferenceType> tableReferenceClass, TableAlias alias )
+    public TableReferencePrimaryImpl( SQLProcessorAggregator processor,
+        Class<? extends TableReferenceType> tableReferenceClass, TableAlias alias )
     {
-        super( tableReferenceClass );
+        super( processor, tableReferenceClass );
         this._tableAlias = alias;
     }
 

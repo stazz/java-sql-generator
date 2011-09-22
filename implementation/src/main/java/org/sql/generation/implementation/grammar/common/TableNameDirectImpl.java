@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.common;
 
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.TableNameDirect;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -26,14 +27,15 @@ public class TableNameDirectImpl extends TableNameImpl<TableNameDirect>
 {
     private final String _tableName;
 
-    public TableNameDirectImpl( String schemaName, String tableName )
+    public TableNameDirectImpl( SQLProcessorAggregator processor, String schemaName, String tableName )
     {
-        this( TableNameDirect.class, schemaName, tableName );
+        this( processor, TableNameDirect.class, schemaName, tableName );
     }
 
-    protected TableNameDirectImpl( Class<? extends TableNameDirect> implClass, String schemaName, String tableName )
+    protected TableNameDirectImpl( SQLProcessorAggregator processor, Class<? extends TableNameDirect> implClass,
+        String schemaName, String tableName )
     {
-        super( implClass, schemaName );
+        super( processor, implClass, schemaName );
         NullArgumentException.validateNotNull( "table name", tableName );
 
         this._tableName = tableName;

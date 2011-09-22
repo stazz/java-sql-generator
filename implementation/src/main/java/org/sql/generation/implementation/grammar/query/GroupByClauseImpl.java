@@ -18,24 +18,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.query.GroupByClause;
 import org.sql.generation.api.grammar.query.GroupingElement;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class GroupByClauseImpl extends TypeableImpl<GroupByClause, GroupByClause>
+public class GroupByClauseImpl extends SQLSyntaxElementBase<GroupByClause, GroupByClause>
     implements GroupByClause
 {
 
     private final List<GroupingElement> _groupingElements;
 
-    public GroupByClauseImpl( List<GroupingElement> groupingElements )
+    public GroupByClauseImpl( SQLProcessorAggregator processor, List<GroupingElement> groupingElements )
     {
-        super( GroupByClause.class );
+        super( processor, GroupByClause.class );
 
         NullArgumentException.validateNotNull( "grouping elements", groupingElements );
         for( GroupingElement element : groupingElements )

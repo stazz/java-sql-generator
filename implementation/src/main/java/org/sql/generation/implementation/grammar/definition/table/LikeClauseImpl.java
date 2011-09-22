@@ -14,30 +14,32 @@
 
 package org.sql.generation.implementation.grammar.definition.table;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.definition.table.LikeClause;
 import org.sql.generation.api.grammar.definition.table.TableElement;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class LikeClauseImpl extends TypeableImpl<TableElement, LikeClause>
+public class LikeClauseImpl extends SQLSyntaxElementBase<TableElement, LikeClause>
     implements LikeClause
 {
 
     private final TableNameDirect _tableName;
 
-    public LikeClauseImpl( TableNameDirect tableName )
+    public LikeClauseImpl( SQLProcessorAggregator processor, TableNameDirect tableName )
     {
-        this( LikeClause.class, tableName );
+        this( processor, LikeClause.class, tableName );
     }
 
-    protected LikeClauseImpl( Class<? extends LikeClause> realImplementingType, TableNameDirect tableName )
+    protected LikeClauseImpl( SQLProcessorAggregator processor, Class<? extends LikeClause> realImplementingType,
+        TableNameDirect tableName )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         NullArgumentException.validateNotNull( "Table name", tableName );
 

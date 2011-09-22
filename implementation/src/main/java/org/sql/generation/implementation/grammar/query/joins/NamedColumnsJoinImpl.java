@@ -17,6 +17,7 @@ package org.sql.generation.implementation.grammar.query.joins;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.ColumnNameList;
 import org.sql.generation.api.grammar.query.joins.NamedColumnsJoin;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -28,14 +29,15 @@ public class NamedColumnsJoinImpl extends JoinSpecificationImpl<NamedColumnsJoin
 
     private final ColumnNameList _columnNames;
 
-    public NamedColumnsJoinImpl( ColumnNameList columnNames )
+    public NamedColumnsJoinImpl( SQLProcessorAggregator processor, ColumnNameList columnNames )
     {
-        this( NamedColumnsJoin.class, columnNames );
+        this( processor, NamedColumnsJoin.class, columnNames );
     }
 
-    protected NamedColumnsJoinImpl( Class<? extends NamedColumnsJoin> implClass, ColumnNameList columnNames )
+    protected NamedColumnsJoinImpl( SQLProcessorAggregator processor, Class<? extends NamedColumnsJoin> implClass,
+        ColumnNameList columnNames )
     {
-        super( implClass );
+        super( processor, implClass );
 
         NullArgumentException.validateNotNull( "column names", columnNames );
 

@@ -14,32 +14,33 @@
 
 package org.sql.generation.implementation.grammar.manipulation;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.manipulation.AlterTableAction;
 import org.sql.generation.api.grammar.manipulation.DropBehaviour;
 import org.sql.generation.api.grammar.manipulation.DropColumnDefinition;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class DropColumnDefinitionImpl extends TypeableImpl<AlterTableAction, DropColumnDefinition>
+public class DropColumnDefinitionImpl extends SQLSyntaxElementBase<AlterTableAction, DropColumnDefinition>
     implements DropColumnDefinition
 {
 
     private final String _columnName;
     private final DropBehaviour _dropBehaviour;
 
-    public DropColumnDefinitionImpl( String columnName, DropBehaviour dropBehaviour )
+    public DropColumnDefinitionImpl( SQLProcessorAggregator processor, String columnName, DropBehaviour dropBehaviour )
     {
-        this( DropColumnDefinition.class, columnName, dropBehaviour );
+        this( processor, DropColumnDefinition.class, columnName, dropBehaviour );
     }
 
-    protected DropColumnDefinitionImpl( Class<? extends DropColumnDefinition> realImplementingType, String columnName,
-        DropBehaviour dropBehaviour )
+    protected DropColumnDefinitionImpl( SQLProcessorAggregator processor,
+        Class<? extends DropColumnDefinition> realImplementingType, String columnName, DropBehaviour dropBehaviour )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         NullArgumentException.validateNotNull( "Column name", columnName );
         NullArgumentException.validateNotNull( "Drop behaviour", dropBehaviour );

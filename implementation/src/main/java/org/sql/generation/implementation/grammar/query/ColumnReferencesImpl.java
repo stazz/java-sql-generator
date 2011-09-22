@@ -21,6 +21,7 @@ import java.util.List;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.SetQuantifier;
 import org.sql.generation.api.grammar.query.ColumnReferences;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -32,20 +33,22 @@ public class ColumnReferencesImpl extends SelectColumnClauseImpl<ColumnReference
 
     private final List<ColumnReferenceInfo> _columns;
 
-    public ColumnReferencesImpl( SetQuantifier quantifier, ColumnReferenceInfo... columns )
+    public ColumnReferencesImpl( SQLProcessorAggregator processor, SetQuantifier quantifier,
+        ColumnReferenceInfo... columns )
     {
-        this( quantifier, Arrays.asList( columns ) );
+        this( processor, quantifier, Arrays.asList( columns ) );
     }
 
-    public ColumnReferencesImpl( SetQuantifier quantifier, List<ColumnReferenceInfo> columns )
-    {
-        this( ColumnReferences.class, quantifier, columns );
-    }
-
-    public ColumnReferencesImpl( Class<? extends ColumnReferences> type, SetQuantifier quantifier,
+    public ColumnReferencesImpl( SQLProcessorAggregator processor, SetQuantifier quantifier,
         List<ColumnReferenceInfo> columns )
     {
-        super( type, quantifier );
+        this( processor, ColumnReferences.class, quantifier, columns );
+    }
+
+    public ColumnReferencesImpl( SQLProcessorAggregator processor, Class<? extends ColumnReferences> type,
+        SetQuantifier quantifier, List<ColumnReferenceInfo> columns )
+    {
+        super( processor, type, quantifier );
 
         NullArgumentException.validateNotNull( "columns", columns );
 

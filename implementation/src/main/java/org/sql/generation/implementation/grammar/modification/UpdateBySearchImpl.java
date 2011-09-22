@@ -25,12 +25,14 @@ import org.sql.generation.api.grammar.modification.SetClause;
 import org.sql.generation.api.grammar.modification.TargetTable;
 import org.sql.generation.api.grammar.modification.UpdateBySearch;
 import org.sql.generation.api.grammar.modification.UpdateStatement;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class UpdateBySearchImpl extends TypeableImpl<UpdateStatement, UpdateBySearch>
+public class UpdateBySearchImpl extends SQLSyntaxElementBase<UpdateStatement, UpdateBySearch>
     implements UpdateBySearch
 {
 
@@ -40,15 +42,16 @@ public class UpdateBySearchImpl extends TypeableImpl<UpdateStatement, UpdateBySe
 
     private final BooleanExpression _where;
 
-    public UpdateBySearchImpl( TargetTable targetTable, List<SetClause> setClauses, BooleanExpression where )
+    public UpdateBySearchImpl( SQLProcessorAggregator processor, TargetTable targetTable, List<SetClause> setClauses,
+        BooleanExpression where )
     {
-        this( UpdateBySearch.class, targetTable, setClauses, where );
+        this( processor, UpdateBySearch.class, targetTable, setClauses, where );
     }
 
-    protected UpdateBySearchImpl( Class<? extends UpdateBySearch> expressionClass, TargetTable targetTable,
-        List<SetClause> setClauses, BooleanExpression where )
+    protected UpdateBySearchImpl( SQLProcessorAggregator processor, Class<? extends UpdateBySearch> expressionClass,
+        TargetTable targetTable, List<SetClause> setClauses, BooleanExpression where )
     {
-        super( expressionClass );
+        super( processor, expressionClass );
 
         NullArgumentException.validateNotNull( "target table", targetTable );
         NullArgumentException.validateNotNull( "set clauses", setClauses );

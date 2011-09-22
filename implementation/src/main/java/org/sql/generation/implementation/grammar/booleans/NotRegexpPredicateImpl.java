@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.booleans;
 
 import org.sql.generation.api.grammar.booleans.NotRegexpPredicate;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -25,15 +26,16 @@ public class NotRegexpPredicateImpl extends BinaryPredicateImpl<NotRegexpPredica
     implements NotRegexpPredicate
 {
 
-    public NotRegexpPredicateImpl( NonBooleanExpression left, NonBooleanExpression right )
-    {
-        this( NotRegexpPredicate.class, left, right );
-    }
-
-    protected NotRegexpPredicateImpl( Class<? extends NotRegexpPredicate> predicateClass, NonBooleanExpression left,
+    public NotRegexpPredicateImpl( SQLProcessorAggregator processor, NonBooleanExpression left,
         NonBooleanExpression right )
     {
-        super( predicateClass, left, right );
+        this( processor, NotRegexpPredicate.class, left, right );
+    }
+
+    protected NotRegexpPredicateImpl( SQLProcessorAggregator processor,
+        Class<? extends NotRegexpPredicate> predicateClass, NonBooleanExpression left, NonBooleanExpression right )
+    {
+        super( processor, predicateClass, left, right );
     }
 
 }

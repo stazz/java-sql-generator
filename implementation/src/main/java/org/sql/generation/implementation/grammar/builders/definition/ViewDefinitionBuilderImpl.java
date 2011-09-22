@@ -20,13 +20,15 @@ import org.sql.generation.api.grammar.definition.view.ViewCheckOption;
 import org.sql.generation.api.grammar.definition.view.ViewDefinition;
 import org.sql.generation.api.grammar.definition.view.ViewSpecification;
 import org.sql.generation.api.grammar.query.QueryExpression;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.grammar.definition.view.ViewDefinitionImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class ViewDefinitionBuilderImpl
+public class ViewDefinitionBuilderImpl extends SQLBuilderBase
     implements ViewDefinitionBuilder
 {
 
@@ -36,9 +38,15 @@ public class ViewDefinitionBuilderImpl
     private ViewCheckOption _viewCheck;
     private ViewSpecification _viewSpec;
 
+    public ViewDefinitionBuilderImpl( SQLProcessorAggregator processor )
+    {
+        super( processor );
+    }
+
     public ViewDefinition createExpression()
     {
-        return new ViewDefinitionImpl( this._name, this._query, this._viewSpec, this._viewCheck, this._isRecursive );
+        return new ViewDefinitionImpl( this.getProcessor(), this._name, this._query, this._viewSpec, this._viewCheck,
+            this._isRecursive );
     }
 
     public ViewDefinitionBuilder setRecursive( Boolean isRecursive )

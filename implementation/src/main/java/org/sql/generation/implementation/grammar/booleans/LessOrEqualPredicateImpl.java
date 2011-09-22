@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.booleans;
 
 import org.sql.generation.api.grammar.booleans.LessOrEqualPredicate;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -25,15 +26,16 @@ public class LessOrEqualPredicateImpl extends BinaryPredicateImpl<LessOrEqualPre
     implements LessOrEqualPredicate
 {
 
-    public LessOrEqualPredicateImpl( NonBooleanExpression left, NonBooleanExpression right )
+    public LessOrEqualPredicateImpl( SQLProcessorAggregator processor, NonBooleanExpression left,
+        NonBooleanExpression right )
     {
-        this( LessOrEqualPredicate.class, left, right );
+        this( processor, LessOrEqualPredicate.class, left, right );
     }
 
-    protected LessOrEqualPredicateImpl( Class<? extends LessOrEqualPredicate> predicateClass,
-        NonBooleanExpression left, NonBooleanExpression right )
+    protected LessOrEqualPredicateImpl( SQLProcessorAggregator processor,
+        Class<? extends LessOrEqualPredicate> predicateClass, NonBooleanExpression left, NonBooleanExpression right )
     {
-        super( predicateClass, left, right );
+        super( processor, predicateClass, left, right );
     }
 
 }

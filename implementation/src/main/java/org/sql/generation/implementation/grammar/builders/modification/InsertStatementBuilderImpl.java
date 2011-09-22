@@ -18,13 +18,15 @@ import org.sql.generation.api.grammar.builders.modification.InsertStatementBuild
 import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.modification.ColumnSource;
 import org.sql.generation.api.grammar.modification.InsertStatement;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.grammar.modification.InsertStatementImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class InsertStatementBuilderImpl
+public class InsertStatementBuilderImpl extends SQLBuilderBase
     implements InsertStatementBuilder
 {
 
@@ -32,9 +34,14 @@ public class InsertStatementBuilderImpl
 
     private ColumnSource _columnSource;
 
+    public InsertStatementBuilderImpl( SQLProcessorAggregator processor )
+    {
+        super( processor );
+    }
+
     public InsertStatement createExpression()
     {
-        return new InsertStatementImpl( this._tableName, this._columnSource );
+        return new InsertStatementImpl( this.getProcessor(), this._tableName, this._columnSource );
     }
 
     public InsertStatementBuilder setTableName( TableNameDirect tableName )

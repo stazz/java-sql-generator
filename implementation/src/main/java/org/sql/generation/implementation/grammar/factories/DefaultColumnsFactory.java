@@ -22,10 +22,12 @@ import org.sql.generation.api.grammar.common.SetQuantifier;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.query.ColumnReferenceByExpression;
 import org.sql.generation.api.grammar.query.ColumnReferenceByName;
+import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.grammar.builders.query.ColumnsBuilderImpl;
 import org.sql.generation.implementation.grammar.common.ColumnNameListImpl;
 import org.sql.generation.implementation.grammar.query.ColumnReferenceByExpressionImpl;
 import org.sql.generation.implementation.grammar.query.ColumnReferenceByNameImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -33,29 +35,35 @@ import org.sql.generation.implementation.grammar.query.ColumnReferenceByNameImpl
  */
 public class DefaultColumnsFactory extends AbstractColumnsFactory
 {
+
+    public DefaultColumnsFactory( SQLVendor vendor, SQLProcessorAggregator processor )
+    {
+        super( vendor, processor );
+    }
+
     public ColumnsBuilder columnsBuilder( SetQuantifier setQuantifier )
     {
-        return new ColumnsBuilderImpl( setQuantifier );
+        return new ColumnsBuilderImpl( this.getProcessor(), setQuantifier );
     }
 
     public ColumnReferenceByName colName( String tableName, String colName )
     {
-        return new ColumnReferenceByNameImpl( tableName, colName );
+        return new ColumnReferenceByNameImpl( this.getProcessor(), tableName, colName );
     }
 
     public ColumnReferenceByExpression colExp( ValueExpression expression )
     {
-        return new ColumnReferenceByExpressionImpl( expression );
+        return new ColumnReferenceByExpressionImpl( this.getProcessor(), expression );
     }
 
     public ColumnNameList colNames( String... names )
     {
-        return new ColumnNameListImpl( names );
+        return new ColumnNameListImpl( this.getProcessor(), names );
     }
 
     public ColumnNameList colNames( Collection<String> names )
     {
-        return new ColumnNameListImpl( names );
+        return new ColumnNameListImpl( this.getProcessor(), names );
     }
 
 }

@@ -14,7 +14,6 @@
 
 package org.sql.generation.implementation.grammar.factories;
 
-import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.builders.definition.ForeignKeyConstraintBuilder;
 import org.sql.generation.api.grammar.builders.definition.SchemaDefinitionBuilder;
@@ -43,6 +42,7 @@ import org.sql.generation.implementation.grammar.definition.table.ColumnDefiniti
 import org.sql.generation.implementation.grammar.definition.table.LikeClauseImpl;
 import org.sql.generation.implementation.grammar.definition.table.TableConstraintDefinitionImpl;
 import org.sql.generation.implementation.grammar.definition.view.RegularViewSpecificationImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -50,71 +50,67 @@ import org.sql.generation.implementation.grammar.definition.view.RegularViewSpec
  */
 public class DefaultDefinitionFactory extends AbstractDefinitionFactory
 {
-
-    private final SQLVendor _vendor;
-
-    public DefaultDefinitionFactory( SQLVendor vendor )
+    public DefaultDefinitionFactory( SQLVendor vendor, SQLProcessorAggregator processor )
     {
-        NullArgumentException.validateNotNull( "SQL Vendor", vendor );
-
-        this._vendor = vendor;
+        super( vendor, processor );
     }
 
     public SchemaDefinitionBuilder createSchemaDefinitionBuilder()
     {
-        return new SchemaDefinitionBuilderImpl();
+        return new SchemaDefinitionBuilderImpl( this.getProcessor() );
     }
 
     public TableDefinitionBuilder createTableDefinitionBuilder()
     {
-        return new TableDefinitionBuilderImpl();
+        return new TableDefinitionBuilderImpl( this.getProcessor() );
     }
 
     public TableElementListBuilder createTableElementListBuilder()
     {
-        return new TableElementListBuilderImpl();
+        return new TableElementListBuilderImpl( this.getProcessor() );
     }
 
     public ColumnDefinition createColumnDefinition( String columnName, SQLDataType columnDataType,
         String columnDefault, Boolean mayBeNull )
     {
-        return new ColumnDefinitionImpl( columnName, columnDataType, columnDefault, mayBeNull );
+        return new ColumnDefinitionImpl( this.getProcessor(), columnName, columnDataType, columnDefault, mayBeNull );
     }
 
     public LikeClause createLikeClause( TableNameDirect tableName )
     {
-        return new LikeClauseImpl( tableName );
+        return new LikeClauseImpl( this.getProcessor(), tableName );
     }
 
     public TableConstraintDefinition createTableConstraintDefinition( String name, TableConstraint constraint,
         ConstraintCharacteristics characteristics )
     {
-        return new TableConstraintDefinitionImpl( name, constraint, characteristics );
+        return new TableConstraintDefinitionImpl( this.getProcessor(), name, constraint, characteristics );
     }
 
     public CheckConstraint createCheckConstraint( BooleanExpression check )
     {
-        return new CheckConstraintImpl( check );
+        return new CheckConstraintImpl( this.getProcessor(), check );
     }
 
     public UniqueConstraintBuilder createUniqueConstraintBuilder()
     {
-        return new UniqueConstraintBuilderImpl( this._vendor.getColumnsFactory() );
+        return new UniqueConstraintBuilderImpl( this.getProcessor(), this.getVendor().getColumnsFactory() );
     }
 
     public ForeignKeyConstraintBuilder createForeignKeyConstraintBuilder()
     {
-        return new ForeignKeyConstraintBuilderImpl( this._vendor.getColumnsFactory() );
+        return new ForeignKeyConstraintBuilderImpl( this.getProcessor(), this.getVendor().getColumnsFactory() );
     }
 
     public ViewDefinitionBuilder createViewDefinitionBuilder()
     {
-        return new ViewDefinitionBuilderImpl();
+        return new ViewDefinitionBuilderImpl( this.getProcessor() );
     }
 
     public RegularViewSpecification createRegularViewSpecification( String... columnNames )
     {
-        return new RegularViewSpecificationImpl( this._vendor.getColumnsFactory().colNames( columnNames ) );
+        return new RegularViewSpecificationImpl( this.getProcessor(), this.getVendor().getColumnsFactory()
+            .colNames( columnNames ) );
     }
 
 }

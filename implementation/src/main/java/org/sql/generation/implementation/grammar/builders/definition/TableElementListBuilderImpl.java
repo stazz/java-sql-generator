@@ -20,26 +20,29 @@ import java.util.List;
 import org.sql.generation.api.grammar.builders.definition.TableElementListBuilder;
 import org.sql.generation.api.grammar.definition.table.TableElement;
 import org.sql.generation.api.grammar.definition.table.TableElementList;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.grammar.definition.table.TableElementListImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class TableElementListBuilderImpl
+public class TableElementListBuilderImpl extends SQLBuilderBase
     implements TableElementListBuilder
 {
 
     private final List<TableElement> _elements;
 
-    public TableElementListBuilderImpl()
+    public TableElementListBuilderImpl( SQLProcessorAggregator processor )
     {
+        super( processor );
         this._elements = new ArrayList<TableElement>();
     }
 
     public TableElementList createExpression()
     {
-        return new TableElementListImpl( this._elements );
+        return new TableElementListImpl( this.getProcessor(), this._elements );
     }
 
     public TableElementListBuilder addTableElement( TableElement element )

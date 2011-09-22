@@ -24,13 +24,15 @@ import org.sql.generation.api.grammar.builders.modification.UpdateBySearchBuilde
 import org.sql.generation.api.grammar.modification.SetClause;
 import org.sql.generation.api.grammar.modification.TargetTable;
 import org.sql.generation.api.grammar.modification.UpdateBySearch;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.grammar.modification.UpdateBySearchImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class UpdateBySearchBuilderImpl
+public class UpdateBySearchBuilderImpl extends SQLBuilderBase
     implements UpdateBySearchBuilder
 {
 
@@ -40,8 +42,9 @@ public class UpdateBySearchBuilderImpl
 
     private final BooleanBuilder _whereBuilder;
 
-    public UpdateBySearchBuilderImpl( BooleanBuilder whereBuilder )
+    public UpdateBySearchBuilderImpl( SQLProcessorAggregator processor, BooleanBuilder whereBuilder )
     {
+        super( processor );
         NullArgumentException.validateNotNull( "where builder", whereBuilder );
 
         this._setClauses = new ArrayList<SetClause>();
@@ -50,7 +53,8 @@ public class UpdateBySearchBuilderImpl
 
     public UpdateBySearch createExpression()
     {
-        return new UpdateBySearchImpl( this._targetTable, this._setClauses, this._whereBuilder.createExpression() );
+        return new UpdateBySearchImpl( this.getProcessor(), this._targetTable, this._setClauses,
+            this._whereBuilder.createExpression() );
     }
 
     public UpdateBySearchBuilder setTargetTable( TargetTable table )

@@ -20,6 +20,7 @@ import java.util.Iterator;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.booleans.BooleanTest;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -33,15 +34,16 @@ public class BooleanTestImpl extends ComposedBooleanExpressionImpl<BooleanTest>
     private final TestType _testType;
     private final TruthValue _truthValue;
 
-    public BooleanTestImpl( BooleanExpression expression, TestType testType, TruthValue truthValue )
+    public BooleanTestImpl( SQLProcessorAggregator processor, BooleanExpression expression, TestType testType,
+        TruthValue truthValue )
     {
-        this( BooleanTest.class, expression, testType, truthValue );
+        this( processor, BooleanTest.class, expression, testType, truthValue );
     }
 
-    protected BooleanTestImpl( Class<? extends BooleanTest> expressionClass, BooleanExpression expression,
-        TestType testType, TruthValue truthValue )
+    protected BooleanTestImpl( SQLProcessorAggregator processor, Class<? extends BooleanTest> expressionClass,
+        BooleanExpression expression, TestType testType, TruthValue truthValue )
     {
-        super( expressionClass );
+        super( processor, expressionClass );
 
         NullArgumentException.validateNotNull( "expression", expression );
 

@@ -19,6 +19,7 @@ import java.sql.Date;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.literals.DateTimeLiteral;
 import org.sql.generation.implementation.grammar.common.NonBooleanExpressionImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -30,14 +31,15 @@ public class DateTimeLiteralImpl extends NonBooleanExpressionImpl<DateTimeLitera
 
     private final Date _date;
 
-    public DateTimeLiteralImpl( Date date )
+    public DateTimeLiteralImpl( SQLProcessorAggregator processor, Date date )
     {
-        this( DateTimeLiteral.class, date );
+        this( processor, DateTimeLiteral.class, date );
     }
 
-    protected DateTimeLiteralImpl( Class<? extends DateTimeLiteral> implClass, Date date )
+    protected DateTimeLiteralImpl( SQLProcessorAggregator processor, Class<? extends DateTimeLiteral> implClass,
+        Date date )
     {
-        super( implClass );
+        super( processor, implClass );
 
         NullArgumentException.validateNotNull( "Date", date );
         this._date = date;

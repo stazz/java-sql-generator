@@ -17,6 +17,7 @@ package org.sql.generation.implementation.grammar.booleans;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.UnaryPredicate;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -29,9 +30,10 @@ public abstract class UnaryPredicateImpl<ExpressionType extends UnaryPredicate> 
 
     private final NonBooleanExpression _expression;
 
-    public UnaryPredicateImpl( Class<? extends ExpressionType> expressionClass, NonBooleanExpression expression )
+    public UnaryPredicateImpl( SQLProcessorAggregator processor, Class<? extends ExpressionType> expressionClass,
+        NonBooleanExpression expression )
     {
-        super( expressionClass );
+        super( processor, expressionClass );
         NullArgumentException.validateNotNull( "expression", expression );
 
         this._expression = expression;

@@ -19,12 +19,14 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.datatypes.SQLDataType;
 import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
 import org.sql.generation.api.grammar.definition.table.TableElement;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class ColumnDefinitionImpl extends TypeableImpl<TableElement, ColumnDefinition>
+public class ColumnDefinitionImpl extends SQLSyntaxElementBase<TableElement, ColumnDefinition>
     implements ColumnDefinition
 {
 
@@ -33,15 +35,17 @@ public class ColumnDefinitionImpl extends TypeableImpl<TableElement, ColumnDefin
     private final String _default;
     private final Boolean _mayBeNull;
 
-    public ColumnDefinitionImpl( String name, SQLDataType dataType, String defaultStr, Boolean mayBeNull )
+    public ColumnDefinitionImpl( SQLProcessorAggregator processor, String name, SQLDataType dataType,
+        String defaultStr, Boolean mayBeNull )
     {
-        this( ColumnDefinition.class, name, dataType, defaultStr, mayBeNull );
+        this( processor, ColumnDefinition.class, name, dataType, defaultStr, mayBeNull );
     }
 
-    protected ColumnDefinitionImpl( Class<? extends ColumnDefinition> realImplementingType, String name,
-        SQLDataType dataType, String defaultStr, Boolean mayBeNull )
+    protected ColumnDefinitionImpl( SQLProcessorAggregator processor,
+        Class<? extends ColumnDefinition> realImplementingType, String name, SQLDataType dataType, String defaultStr,
+        Boolean mayBeNull )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         NullArgumentException.validateNotNull( "Column name", name );
         NullArgumentException.validateNotNull( "Column data type", dataType );

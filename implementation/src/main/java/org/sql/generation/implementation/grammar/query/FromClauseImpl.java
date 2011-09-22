@@ -18,34 +18,36 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.query.FromClause;
 import org.sql.generation.api.grammar.query.TableReference;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class FromClauseImpl extends TypeableImpl<FromClause, FromClause>
+public class FromClauseImpl extends SQLSyntaxElementBase<FromClause, FromClause>
     implements FromClause
 {
 
     private List<TableReference> _tableReferences;
 
-    public FromClauseImpl( TableReference... tableReferences )
+    public FromClauseImpl( SQLProcessorAggregator processor, TableReference... tableReferences )
     {
-        this( Arrays.asList( tableReferences ) );
+        this( processor, Arrays.asList( tableReferences ) );
     }
 
-    public FromClauseImpl( List<TableReference> tableReferences )
+    public FromClauseImpl( SQLProcessorAggregator processor, List<TableReference> tableReferences )
     {
-        this( FromClause.class, tableReferences );
+        this( processor, FromClause.class, tableReferences );
     }
 
-    protected FromClauseImpl( Class<? extends FromClause> type, List<TableReference> tableReferences )
+    protected FromClauseImpl( SQLProcessorAggregator processor, Class<? extends FromClause> type,
+        List<TableReference> tableReferences )
     {
-        super( type );
+        super( processor, type );
 
         NullArgumentException.validateNotNull( "table references", tableReferences );
 

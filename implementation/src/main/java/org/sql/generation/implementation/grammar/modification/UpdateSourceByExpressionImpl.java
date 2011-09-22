@@ -14,31 +14,32 @@
 
 package org.sql.generation.implementation.grammar.modification;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.modification.UpdateSource;
 import org.sql.generation.api.grammar.modification.UpdateSourceByExpression;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class UpdateSourceByExpressionImpl extends TypeableImpl<UpdateSource, UpdateSourceByExpression>
+public class UpdateSourceByExpressionImpl extends SQLSyntaxElementBase<UpdateSource, UpdateSourceByExpression>
     implements UpdateSourceByExpression
 {
 
     private final ValueExpression _valueExpression;
 
-    public UpdateSourceByExpressionImpl( ValueExpression valueExpression )
+    public UpdateSourceByExpressionImpl( SQLProcessorAggregator processor, ValueExpression valueExpression )
     {
-        this( UpdateSourceByExpression.class, valueExpression );
+        this( processor, UpdateSourceByExpression.class, valueExpression );
     }
 
-    protected UpdateSourceByExpressionImpl( Class<? extends UpdateSourceByExpression> expressionClass,
-        ValueExpression valueExpression )
+    protected UpdateSourceByExpressionImpl( SQLProcessorAggregator processor,
+        Class<? extends UpdateSourceByExpression> expressionClass, ValueExpression valueExpression )
     {
-        super( expressionClass );
+        super( processor, expressionClass );
         NullArgumentException.validateNotNull( "expression", valueExpression );
 
         this._valueExpression = valueExpression;

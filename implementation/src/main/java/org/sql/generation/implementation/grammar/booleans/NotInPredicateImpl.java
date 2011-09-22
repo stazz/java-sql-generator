@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.sql.generation.api.grammar.booleans.NotInPredicate;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -27,26 +28,28 @@ public class NotInPredicateImpl extends MultiPredicateImpl<NotInPredicate>
     implements NotInPredicate
 {
 
-    public NotInPredicateImpl( NonBooleanExpression left, List<NonBooleanExpression> rights )
-    {
-        this( NotInPredicate.class, left, rights );
-    }
-
-    protected NotInPredicateImpl( Class<? extends NotInPredicate> predicateClass, NonBooleanExpression left,
+    public NotInPredicateImpl( SQLProcessorAggregator processor, NonBooleanExpression left,
         List<NonBooleanExpression> rights )
     {
-        super( predicateClass, left, rights );
+        this( processor, NotInPredicate.class, left, rights );
     }
 
-    public NotInPredicateImpl( NonBooleanExpression left, NonBooleanExpression... rights )
+    protected NotInPredicateImpl( SQLProcessorAggregator processor, Class<? extends NotInPredicate> predicateClass,
+        NonBooleanExpression left, List<NonBooleanExpression> rights )
     {
-        this( NotInPredicate.class, left, rights );
+        super( processor, predicateClass, left, rights );
     }
 
-    protected NotInPredicateImpl( Class<? extends NotInPredicate> predicateClass, NonBooleanExpression left,
+    public NotInPredicateImpl( SQLProcessorAggregator processor, NonBooleanExpression left,
         NonBooleanExpression... rights )
     {
-        super( predicateClass, left, rights );
+        this( processor, NotInPredicate.class, left, rights );
+    }
+
+    protected NotInPredicateImpl( SQLProcessorAggregator processor, Class<? extends NotInPredicate> predicateClass,
+        NonBooleanExpression left, NonBooleanExpression... rights )
+    {
+        super( processor, predicateClass, left, rights );
     }
 
 }

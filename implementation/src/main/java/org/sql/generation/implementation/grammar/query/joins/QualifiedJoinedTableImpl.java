@@ -19,6 +19,7 @@ import org.sql.generation.api.grammar.query.TableReference;
 import org.sql.generation.api.grammar.query.joins.JoinSpecification;
 import org.sql.generation.api.grammar.query.joins.JoinType;
 import org.sql.generation.api.grammar.query.joins.QualifiedJoinedTable;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -32,16 +33,17 @@ public class QualifiedJoinedTableImpl extends JoinedTableImpl<QualifiedJoinedTab
 
     private final JoinSpecification _joinSpec;
 
-    public QualifiedJoinedTableImpl( TableReference left, TableReference right, JoinType joinType,
-        JoinSpecification joinSpec )
+    public QualifiedJoinedTableImpl( SQLProcessorAggregator processor, TableReference left, TableReference right,
+        JoinType joinType, JoinSpecification joinSpec )
     {
-        this( QualifiedJoinedTable.class, left, right, joinType, joinSpec );
+        this( processor, QualifiedJoinedTable.class, left, right, joinType, joinSpec );
     }
 
-    protected QualifiedJoinedTableImpl( Class<? extends QualifiedJoinedTable> implClass, TableReference left,
-        TableReference right, JoinType joinType, JoinSpecification joinSpec )
+    protected QualifiedJoinedTableImpl( SQLProcessorAggregator processor,
+        Class<? extends QualifiedJoinedTable> implClass, TableReference left, TableReference right, JoinType joinType,
+        JoinSpecification joinSpec )
     {
-        super( implClass, left, right );
+        super( processor, implClass, left, right );
 
         NullArgumentException.validateNotNull( "join type", joinType );
         NullArgumentException.validateNotNull( "join specification", joinSpec );

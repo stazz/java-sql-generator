@@ -19,6 +19,7 @@ import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.manipulation.DropBehaviour;
 import org.sql.generation.api.grammar.manipulation.DropTableOrViewStatement;
 import org.sql.generation.api.grammar.manipulation.ObjectType;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -30,15 +31,17 @@ public class DropTableOrViewStatementImpl extends DropStatementImpl<DropTableOrV
 
     private final TableNameDirect _name;
 
-    public DropTableOrViewStatementImpl( ObjectType whatToDrop, DropBehaviour dropBehaviour, TableNameDirect name )
+    public DropTableOrViewStatementImpl( SQLProcessorAggregator processor, ObjectType whatToDrop,
+        DropBehaviour dropBehaviour, TableNameDirect name )
     {
-        this( DropTableOrViewStatement.class, whatToDrop, dropBehaviour, name );
+        this( processor, DropTableOrViewStatement.class, whatToDrop, dropBehaviour, name );
     }
 
-    protected DropTableOrViewStatementImpl( Class<? extends DropTableOrViewStatement> realImplementingType,
-        ObjectType whatToDrop, DropBehaviour dropBehaviour, TableNameDirect name )
+    protected DropTableOrViewStatementImpl( SQLProcessorAggregator processor,
+        Class<? extends DropTableOrViewStatement> realImplementingType, ObjectType whatToDrop,
+        DropBehaviour dropBehaviour, TableNameDirect name )
     {
-        super( realImplementingType, whatToDrop, dropBehaviour );
+        super( processor, realImplementingType, whatToDrop, dropBehaviour );
 
         NullArgumentException.validateNotNull( "Table name", name );
 

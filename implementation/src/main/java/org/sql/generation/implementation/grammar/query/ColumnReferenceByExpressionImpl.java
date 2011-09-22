@@ -17,6 +17,7 @@ package org.sql.generation.implementation.grammar.query;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.query.ColumnReferenceByExpression;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -28,15 +29,15 @@ public class ColumnReferenceByExpressionImpl extends ColumnReferenceImpl<ColumnR
 
     private final ValueExpression _expression;
 
-    public ColumnReferenceByExpressionImpl( ValueExpression expression )
+    public ColumnReferenceByExpressionImpl( SQLProcessorAggregator processor, ValueExpression expression )
     {
-        this( ColumnReferenceByExpression.class, expression );
+        this( processor, ColumnReferenceByExpression.class, expression );
     }
 
-    protected ColumnReferenceByExpressionImpl( Class<? extends ColumnReferenceByExpression> implClass,
-        ValueExpression expression )
+    protected ColumnReferenceByExpressionImpl( SQLProcessorAggregator processor,
+        Class<? extends ColumnReferenceByExpression> implClass, ValueExpression expression )
     {
-        super( implClass );
+        super( processor, implClass );
         NullArgumentException.validateNotNull( "expression", expression );
 
         this._expression = expression;

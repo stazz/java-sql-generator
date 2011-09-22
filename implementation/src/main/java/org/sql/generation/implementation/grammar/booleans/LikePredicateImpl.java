@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.booleans;
 
 import org.sql.generation.api.grammar.booleans.LikePredicate;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -25,15 +26,15 @@ public class LikePredicateImpl extends BinaryPredicateImpl<LikePredicate>
     implements LikePredicate
 {
 
-    public LikePredicateImpl( NonBooleanExpression left, NonBooleanExpression right )
+    public LikePredicateImpl( SQLProcessorAggregator processor, NonBooleanExpression left, NonBooleanExpression right )
     {
-        this( LikePredicate.class, left, right );
+        this( processor, LikePredicate.class, left, right );
     }
 
-    protected LikePredicateImpl( Class<? extends LikePredicate> predicateClass, NonBooleanExpression left,
-        NonBooleanExpression right )
+    protected LikePredicateImpl( SQLProcessorAggregator processor, Class<? extends LikePredicate> predicateClass,
+        NonBooleanExpression left, NonBooleanExpression right )
     {
-        super( predicateClass, left, right );
+        super( processor, predicateClass, left, right );
     }
 
 }

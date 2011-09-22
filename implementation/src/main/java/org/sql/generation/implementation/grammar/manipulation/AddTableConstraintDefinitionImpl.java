@@ -14,31 +14,33 @@
 
 package org.sql.generation.implementation.grammar.manipulation;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.definition.table.TableConstraintDefinition;
 import org.sql.generation.api.grammar.manipulation.AddTableConstraintDefinition;
 import org.sql.generation.api.grammar.manipulation.AlterTableAction;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class AddTableConstraintDefinitionImpl extends TypeableImpl<AlterTableAction, AddTableConstraintDefinition>
+public class AddTableConstraintDefinitionImpl extends
+    SQLSyntaxElementBase<AlterTableAction, AddTableConstraintDefinition>
     implements AddTableConstraintDefinition
 {
 
     private final TableConstraintDefinition _constraint;
 
-    public AddTableConstraintDefinitionImpl( TableConstraintDefinition constraint )
+    public AddTableConstraintDefinitionImpl( SQLProcessorAggregator processor, TableConstraintDefinition constraint )
     {
-        this( AddTableConstraintDefinition.class, constraint );
+        this( processor, AddTableConstraintDefinition.class, constraint );
     }
 
-    protected AddTableConstraintDefinitionImpl( Class<? extends AddTableConstraintDefinition> realImplementingType,
-        TableConstraintDefinition constraint )
+    protected AddTableConstraintDefinitionImpl( SQLProcessorAggregator processor,
+        Class<? extends AddTableConstraintDefinition> realImplementingType, TableConstraintDefinition constraint )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         NullArgumentException.validateNotNull( "Constraint", constraint );
 

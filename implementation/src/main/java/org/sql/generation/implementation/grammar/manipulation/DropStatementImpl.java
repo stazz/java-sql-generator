@@ -14,29 +14,30 @@
 
 package org.sql.generation.implementation.grammar.manipulation;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.SchemaStatement;
 import org.sql.generation.api.grammar.manipulation.DropBehaviour;
 import org.sql.generation.api.grammar.manipulation.DropStatement;
 import org.sql.generation.api.grammar.manipulation.ObjectType;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
 public class DropStatementImpl<DropStatementType extends DropStatement> extends
-    TypeableImpl<SchemaStatement, DropStatementType>
+    SQLSyntaxElementBase<SchemaStatement, DropStatementType>
     implements DropStatement
 {
 
     private final DropBehaviour _dropBehaviour;
     private final ObjectType _whatToDrop;
 
-    protected DropStatementImpl( Class<? extends DropStatementType> realImplementingType, ObjectType whatToDrop,
-        DropBehaviour dropBehaviour )
+    protected DropStatementImpl( SQLProcessorAggregator processor,
+        Class<? extends DropStatementType> realImplementingType, ObjectType whatToDrop, DropBehaviour dropBehaviour )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         NullArgumentException.validateNotNull( "What to drop", whatToDrop );
         NullArgumentException.validateNotNull( "Drop behaviour", dropBehaviour );

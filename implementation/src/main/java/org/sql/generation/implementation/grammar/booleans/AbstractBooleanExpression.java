@@ -14,22 +14,24 @@
 
 package org.sql.generation.implementation.grammar.booleans;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.common.ValueExpression;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
 public abstract class AbstractBooleanExpression<ExpressionType extends BooleanExpression> extends
-    TypeableImpl<ValueExpression, ExpressionType>
+    SQLSyntaxElementBase<ValueExpression, ExpressionType>
     implements BooleanExpression
 {
 
-    protected AbstractBooleanExpression( Class<? extends ExpressionType> expressionClass )
+    protected AbstractBooleanExpression( SQLProcessorAggregator processor,
+        Class<? extends ExpressionType> expressionClass )
     {
-        super( expressionClass );
+        super( processor, expressionClass );
     }
 
 }

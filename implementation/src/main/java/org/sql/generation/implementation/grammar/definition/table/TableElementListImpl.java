@@ -17,30 +17,32 @@ package org.sql.generation.implementation.grammar.definition.table;
 import java.util.Collections;
 import java.util.List;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.definition.table.TableContentsSource;
 import org.sql.generation.api.grammar.definition.table.TableElement;
 import org.sql.generation.api.grammar.definition.table.TableElementList;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class TableElementListImpl extends TypeableImpl<TableContentsSource, TableElementList>
+public class TableElementListImpl extends SQLSyntaxElementBase<TableContentsSource, TableElementList>
     implements TableElementList
 {
 
     private final List<TableElement> _elements;
 
-    public TableElementListImpl( List<TableElement> elements )
+    public TableElementListImpl( SQLProcessorAggregator processor, List<TableElement> elements )
     {
-        this( TableElementList.class, elements );
+        this( processor, TableElementList.class, elements );
     }
 
-    protected TableElementListImpl( Class<? extends TableElementList> realImplementingType, List<TableElement> elements )
+    protected TableElementListImpl( SQLProcessorAggregator processor,
+        Class<? extends TableElementList> realImplementingType, List<TableElement> elements )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         NullArgumentException.validateNotNull( "Table elements", elements );
 

@@ -22,6 +22,7 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.ColumnNameList;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.modification.ColumnSourceByValues;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -33,15 +34,17 @@ public class ColumnSourceByValuesImpl extends DynamicColumnSourceImpl<ColumnSour
 
     private final List<ValueExpression> _expressions;
 
-    public ColumnSourceByValuesImpl( ColumnNameList columnNames, List<ValueExpression> expressions )
+    public ColumnSourceByValuesImpl( SQLProcessorAggregator processor, ColumnNameList columnNames,
+        List<ValueExpression> expressions )
     {
-        this( ColumnSourceByValues.class, columnNames, expressions );
+        this( processor, ColumnSourceByValues.class, columnNames, expressions );
     }
 
-    protected ColumnSourceByValuesImpl( Class<? extends ColumnSourceByValues> expressionClass,
-        ColumnNameList columnNames, List<ValueExpression> expressions )
+    protected ColumnSourceByValuesImpl( SQLProcessorAggregator processor,
+        Class<? extends ColumnSourceByValues> expressionClass, ColumnNameList columnNames,
+        List<ValueExpression> expressions )
     {
-        super( expressionClass, columnNames );
+        super( processor, expressionClass, columnNames );
         NullArgumentException.validateNotNull( "expressions", expressions );
         if( expressions.isEmpty() )
         {

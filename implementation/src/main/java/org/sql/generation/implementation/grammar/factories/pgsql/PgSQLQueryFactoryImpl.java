@@ -25,6 +25,7 @@ import org.sql.generation.implementation.grammar.builders.query.pgsql.PgSQLSimpl
 import org.sql.generation.implementation.grammar.factories.DefaultQueryFactory;
 import org.sql.generation.implementation.grammar.query.pgsql.LimitByNumberImpl;
 import org.sql.generation.implementation.grammar.query.pgsql.OffsetClauseImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -34,17 +35,17 @@ public class PgSQLQueryFactoryImpl extends DefaultQueryFactory
     implements PgSQLQueryFactory
 {
 
-    public PgSQLQueryFactoryImpl( PostgreSQLVendor vendor )
+    public PgSQLQueryFactoryImpl( PostgreSQLVendor vendor, SQLProcessorAggregator processor )
     {
-        super( vendor );
+        super( vendor, processor );
     }
 
     @Override
     public PgSQLQuerySpecificationBuilder querySpecificationBuilder()
     {
-        return new PgSQLQuerySpecificationBuilderImpl( this, this.columnsBuilder(), this.fromBuilder(), this
-            .getVendor().getBooleanFactory().booleanBuilder(), this.groupByBuilder(), this.getVendor()
-            .getBooleanFactory().booleanBuilder(), this.orderByBuilder() );
+        return new PgSQLQuerySpecificationBuilderImpl( this.getProcessor(), this, this.columnsBuilder(),
+            this.fromBuilder(), this.getVendor().getBooleanFactory().booleanBuilder(), this.groupByBuilder(), this
+                .getVendor().getBooleanFactory().booleanBuilder(), this.orderByBuilder() );
     }
 
     public LimitByNumber limit( Integer limit )
@@ -60,6 +61,6 @@ public class PgSQLQueryFactoryImpl extends DefaultQueryFactory
     @Override
     public PgSQLSimpleQueryBuilder simpleQueryBuilder()
     {
-        return new PgSQLSimpleQueryBuilderImpl( (PostgreSQLVendor) this.getVendor() );
+        return new PgSQLSimpleQueryBuilderImpl( this.getProcessor(), (PostgreSQLVendor) this.getVendor() );
     }
 }

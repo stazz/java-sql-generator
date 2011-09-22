@@ -23,12 +23,14 @@ import org.sql.generation.api.grammar.booleans.InPredicate;
 import org.sql.generation.api.grammar.builders.booleans.InBuilder;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.implementation.grammar.booleans.InPredicateImpl;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class InBuilderImpl
+public class InBuilderImpl extends SQLBuilderBase
     implements InBuilder
 {
 
@@ -36,8 +38,9 @@ public class InBuilderImpl
 
     private final List<NonBooleanExpression> _expressions;
 
-    public InBuilderImpl( NonBooleanExpression left )
+    public InBuilderImpl( SQLProcessorAggregator processor, NonBooleanExpression left )
     {
+        super( processor );
         NullArgumentException.validateNotNull( "left", left );
 
         this._left = left;
@@ -58,6 +61,6 @@ public class InBuilderImpl
 
     public InPredicate createExpression()
     {
-        return new InPredicateImpl( this._left, this._expressions );
+        return new InPredicateImpl( this.getProcessor(), this._left, this._expressions );
     }
 }

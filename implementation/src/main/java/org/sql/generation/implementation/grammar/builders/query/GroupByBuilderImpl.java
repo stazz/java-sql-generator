@@ -23,20 +23,23 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.builders.query.GroupByBuilder;
 import org.sql.generation.api.grammar.query.GroupByClause;
 import org.sql.generation.api.grammar.query.GroupingElement;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.grammar.query.GroupByClauseImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class GroupByBuilderImpl
+public class GroupByBuilderImpl extends SQLBuilderBase
     implements GroupByBuilder
 {
 
     private final List<GroupingElement> _elements;
 
-    public GroupByBuilderImpl()
+    public GroupByBuilderImpl( SQLProcessorAggregator processor )
     {
+        super( processor );
         this._elements = new ArrayList<GroupingElement>();
     }
 
@@ -59,6 +62,6 @@ public class GroupByBuilderImpl
 
     public GroupByClause createExpression()
     {
-        return new GroupByClauseImpl( this._elements );
+        return new GroupByClauseImpl( this.getProcessor(), this._elements );
     }
 }

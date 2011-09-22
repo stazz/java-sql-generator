@@ -17,6 +17,7 @@ package org.sql.generation.implementation.grammar.literals;
 import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.grammar.literals.DirectLiteral;
 import org.sql.generation.implementation.grammar.common.NonBooleanExpressionImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -28,14 +29,15 @@ public class DirectLiteralImpl extends NonBooleanExpressionImpl<DirectLiteral>
 
     private final String _literal;
 
-    public DirectLiteralImpl( String literal )
+    public DirectLiteralImpl( SQLProcessorAggregator processor, String literal )
     {
-        this( DirectLiteral.class, literal );
+        this( processor, DirectLiteral.class, literal );
     }
 
-    protected DirectLiteralImpl( Class<? extends DirectLiteral> implClass, String literal )
+    protected DirectLiteralImpl( SQLProcessorAggregator processor, Class<? extends DirectLiteral> implClass,
+        String literal )
     {
-        super( implClass );
+        super( processor, implClass );
 
         this._literal = literal;
     }

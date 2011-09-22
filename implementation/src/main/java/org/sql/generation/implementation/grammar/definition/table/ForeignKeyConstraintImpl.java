@@ -22,12 +22,14 @@ import org.sql.generation.api.grammar.definition.table.ForeignKeyConstraint;
 import org.sql.generation.api.grammar.definition.table.MatchType;
 import org.sql.generation.api.grammar.definition.table.ReferentialAction;
 import org.sql.generation.api.grammar.definition.table.TableConstraint;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class ForeignKeyConstraintImpl extends TypeableImpl<TableConstraint, ForeignKeyConstraint>
+public class ForeignKeyConstraintImpl extends SQLSyntaxElementBase<TableConstraint, ForeignKeyConstraint>
     implements ForeignKeyConstraint
 {
 
@@ -38,17 +40,20 @@ public class ForeignKeyConstraintImpl extends TypeableImpl<TableConstraint, Fore
     private final ReferentialAction _onDelete;
     private final ReferentialAction _onUpdate;
 
-    public ForeignKeyConstraintImpl( ColumnNameList sourceColumns, TableNameDirect targetTableName,
-        ColumnNameList targetColumns, MatchType matchType, ReferentialAction onDelete, ReferentialAction onUpdate )
+    public ForeignKeyConstraintImpl( SQLProcessorAggregator processor, ColumnNameList sourceColumns,
+        TableNameDirect targetTableName, ColumnNameList targetColumns, MatchType matchType, ReferentialAction onDelete,
+        ReferentialAction onUpdate )
     {
-        this( ForeignKeyConstraint.class, sourceColumns, targetTableName, targetColumns, matchType, onDelete, onUpdate );
+        this( processor, ForeignKeyConstraint.class, sourceColumns, targetTableName, targetColumns, matchType,
+            onDelete, onUpdate );
     }
 
-    protected ForeignKeyConstraintImpl( Class<? extends ForeignKeyConstraint> realImplementingType,
-        ColumnNameList sourceColumns, TableNameDirect targetTableName, ColumnNameList targetColumns,
-        MatchType matchType, ReferentialAction onDelete, ReferentialAction onUpdate )
+    protected ForeignKeyConstraintImpl( SQLProcessorAggregator processor,
+        Class<? extends ForeignKeyConstraint> realImplementingType, ColumnNameList sourceColumns,
+        TableNameDirect targetTableName, ColumnNameList targetColumns, MatchType matchType, ReferentialAction onDelete,
+        ReferentialAction onUpdate )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         NullArgumentException.validateNotNull( "Source columns", sourceColumns );
         NullArgumentException.validateNotNull( "Target table name", targetTableName );

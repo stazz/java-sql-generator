@@ -19,13 +19,15 @@ import org.sql.generation.api.grammar.builders.booleans.BooleanBuilder;
 import org.sql.generation.api.grammar.builders.modification.DeleteBySearchBuilder;
 import org.sql.generation.api.grammar.modification.DeleteBySearch;
 import org.sql.generation.api.grammar.modification.TargetTable;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.grammar.modification.DeleteBySearchImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class DeleteBySearchBuilderImpl
+public class DeleteBySearchBuilderImpl extends SQLBuilderBase
     implements DeleteBySearchBuilder
 {
 
@@ -33,8 +35,9 @@ public class DeleteBySearchBuilderImpl
 
     private TargetTable _targetTable;
 
-    public DeleteBySearchBuilderImpl( BooleanBuilder whereBuilder )
+    public DeleteBySearchBuilderImpl( SQLProcessorAggregator processor, BooleanBuilder whereBuilder )
     {
+        super( processor );
         NullArgumentException.validateNotNull( "where builder", whereBuilder );
         this._whereBuilder = whereBuilder;
     }
@@ -42,7 +45,7 @@ public class DeleteBySearchBuilderImpl
     public DeleteBySearch createExpression()
     {
 
-        return new DeleteBySearchImpl( this._targetTable, this._whereBuilder.createExpression() );
+        return new DeleteBySearchImpl( this.getProcessor(), this._targetTable, this._whereBuilder.createExpression() );
     }
 
     public DeleteBySearchBuilder setTargetTable( TargetTable table )

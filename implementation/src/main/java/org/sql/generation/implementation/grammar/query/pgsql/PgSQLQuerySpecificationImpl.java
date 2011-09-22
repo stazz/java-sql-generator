@@ -25,6 +25,7 @@ import org.sql.generation.api.grammar.query.pgsql.LimitClause;
 import org.sql.generation.api.grammar.query.pgsql.OffsetClause;
 import org.sql.generation.api.grammar.query.pgsql.PgSQLQuerySpecification;
 import org.sql.generation.implementation.grammar.query.QuerySpecificationImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -38,10 +39,11 @@ public class PgSQLQuerySpecificationImpl extends QuerySpecificationImpl
 
     private final OffsetClause _offset;
 
-    public PgSQLQuerySpecificationImpl( SelectColumnClause select, FromClause from, BooleanExpression where,
-        GroupByClause groupBy, BooleanExpression having, OrderByClause orderBy, LimitClause limit, OffsetClause offset )
+    public PgSQLQuerySpecificationImpl( SQLProcessorAggregator processor, SelectColumnClause select, FromClause from,
+        BooleanExpression where, GroupByClause groupBy, BooleanExpression having, OrderByClause orderBy,
+        LimitClause limit, OffsetClause offset )
     {
-        super( PgSQLQuerySpecification.class, select, from, where, groupBy, having, orderBy );
+        super( processor, PgSQLQuerySpecification.class, select, from, where, groupBy, having, orderBy );
 
         this._limit = limit;
         this._offset = offset;

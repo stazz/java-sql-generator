@@ -23,6 +23,7 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
 import org.sql.generation.implementation.grammar.common.NonBooleanExpressionImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -36,20 +37,20 @@ public class SQLFunctionLiteralImpl extends NonBooleanExpressionImpl<SQLFunction
 
     private final List<ValueExpression> _parameters;
 
-    public SQLFunctionLiteralImpl( String name, ValueExpression... parameters )
+    public SQLFunctionLiteralImpl( SQLProcessorAggregator processor, String name, ValueExpression... parameters )
     {
-        this( name, Arrays.asList( parameters ) );
+        this( processor, name, Arrays.asList( parameters ) );
     }
 
-    public SQLFunctionLiteralImpl( String name, List<ValueExpression> parameters )
+    public SQLFunctionLiteralImpl( SQLProcessorAggregator processor, String name, List<ValueExpression> parameters )
     {
-        this( SQLFunctionLiteral.class, name, parameters );
+        this( processor, SQLFunctionLiteral.class, name, parameters );
     }
 
-    protected SQLFunctionLiteralImpl( Class<? extends SQLFunctionLiteral> implClass, String name,
-        List<ValueExpression> parameters )
+    protected SQLFunctionLiteralImpl( SQLProcessorAggregator processor, Class<? extends SQLFunctionLiteral> implClass,
+        String name, List<ValueExpression> parameters )
     {
-        super( implClass );
+        super( processor, implClass );
         NullArgumentException.validateNotNull( "name", name );
         NullArgumentException.validateNotNull( "parameters", parameters );
         for( ValueExpression exp : parameters )

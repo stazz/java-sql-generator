@@ -18,6 +18,7 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.grammar.query.QueryExpressionBody;
 import org.sql.generation.implementation.grammar.common.NonBooleanExpressionImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -29,14 +30,15 @@ public class QueryExpressionImpl extends NonBooleanExpressionImpl<QueryExpressio
 
     private final QueryExpressionBody _body;
 
-    public QueryExpressionImpl( QueryExpressionBody body )
+    public QueryExpressionImpl( SQLProcessorAggregator processor, QueryExpressionBody body )
     {
-        this( QueryExpression.class, body );
+        this( processor, QueryExpression.class, body );
     }
 
-    protected QueryExpressionImpl( Class<? extends QueryExpression> implClass, QueryExpressionBody body )
+    protected QueryExpressionImpl( SQLProcessorAggregator processor, Class<? extends QueryExpression> implClass,
+        QueryExpressionBody body )
     {
-        super( implClass );
+        super( processor, implClass );
         NullArgumentException.validateNotNull( "query expression body", body );
 
         this._body = body;

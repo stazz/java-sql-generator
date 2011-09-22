@@ -14,33 +14,32 @@
 
 package org.sql.generation.implementation.grammar.query;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.grammar.query.RowSubQuery;
 import org.sql.generation.api.grammar.query.RowValueConstructor;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class RowSubQueryImpl extends TypeableImpl<RowValueConstructor, RowSubQuery>
+public class RowSubQueryImpl extends SQLSyntaxElementBase<RowValueConstructor, RowSubQuery>
     implements RowSubQuery
 {
 
     private final QueryExpression _queryExpression;
 
-    public RowSubQueryImpl( QueryExpression queryExpression )
+    public RowSubQueryImpl( SQLProcessorAggregator processor, QueryExpression queryExpression )
     {
-        this( RowSubQuery.class, queryExpression );
+        this( processor, RowSubQuery.class, queryExpression );
     }
 
-    /**
-     * @param realImplementingType
-     */
-    protected RowSubQueryImpl( Class<? extends RowSubQuery> realImplementingType, QueryExpression queryExpression )
+    protected RowSubQueryImpl( SQLProcessorAggregator processor, Class<? extends RowSubQuery> realImplementingType,
+        QueryExpression queryExpression )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         NullArgumentException.validateNotNull( "query expression", queryExpression );
 

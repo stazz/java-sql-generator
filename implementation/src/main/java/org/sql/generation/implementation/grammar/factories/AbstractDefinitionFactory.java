@@ -20,14 +20,22 @@ import org.sql.generation.api.grammar.definition.table.ConstraintCharacteristics
 import org.sql.generation.api.grammar.definition.table.TableConstraint;
 import org.sql.generation.api.grammar.definition.table.TableConstraintDefinition;
 import org.sql.generation.api.grammar.factories.DefinitionFactory;
+import org.sql.generation.api.vendor.SQLVendor;
+import org.sql.generation.implementation.grammar.common.SQLFactoryBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public abstract class AbstractDefinitionFactory
+public abstract class AbstractDefinitionFactory extends SQLFactoryBase
     implements DefinitionFactory
 {
+
+    protected AbstractDefinitionFactory( SQLVendor vendor, SQLProcessorAggregator processor )
+    {
+        super( vendor, processor );
+    }
 
     public ColumnDefinition createColumnDefinition( String columnName, SQLDataType columnDataType )
     {

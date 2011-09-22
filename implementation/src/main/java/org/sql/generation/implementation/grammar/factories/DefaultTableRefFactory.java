@@ -14,7 +14,6 @@
 
 package org.sql.generation.implementation.grammar.factories;
 
-import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.builders.query.TableReferenceBuilder;
 import org.sql.generation.api.grammar.common.ColumnNameList;
@@ -38,6 +37,7 @@ import org.sql.generation.implementation.grammar.query.TableReferenceByExpressio
 import org.sql.generation.implementation.grammar.query.TableReferenceByNameImpl;
 import org.sql.generation.implementation.grammar.query.joins.JoinConditionImpl;
 import org.sql.generation.implementation.grammar.query.joins.NamedColumnsJoinImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -46,37 +46,34 @@ import org.sql.generation.implementation.grammar.query.joins.NamedColumnsJoinImp
 public class DefaultTableRefFactory extends AbstractTableRefFactory
 {
 
-    private final SQLVendor _vendor;
-
-    public DefaultTableRefFactory( SQLVendor vendor )
+    public DefaultTableRefFactory( SQLVendor vendor, SQLProcessorAggregator processor )
     {
-        NullArgumentException.validateNotNull( "vendor", vendor );
-        this._vendor = vendor;
+        super( vendor, processor );
     }
 
     public JoinCondition jc( BooleanExpression condition )
     {
-        return new JoinConditionImpl( condition );
+        return new JoinConditionImpl( this.getProcessor(), condition );
     }
 
     public NamedColumnsJoin nc( ColumnNameList columnNames )
     {
-        return new NamedColumnsJoinImpl( columnNames );
+        return new NamedColumnsJoinImpl( this.getProcessor(), columnNames );
     }
 
     public TableReferenceByName table( TableName tableName, TableAlias alias )
     {
-        return new TableReferenceByNameImpl( tableName, alias );
+        return new TableReferenceByNameImpl( this.getProcessor(), tableName, alias );
     }
 
     public TableNameDirect tableName( String schemaName, String tableName )
     {
-        return new TableNameDirectImpl( schemaName, tableName );
+        return new TableNameDirectImpl( this.getProcessor(), schemaName, tableName );
     }
 
     public TableNameFunction tableName( String schemaName, SQLFunctionLiteral function )
     {
-        return new TableNameFunctionImpl( schemaName, function );
+        return new TableNameFunctionImpl( this.getProcessor(), schemaName, function );
     }
 
     public TableAlias tableAliasWithCols( String tableNameAlias, String... colNames )
@@ -84,20 +81,20 @@ public class DefaultTableRefFactory extends AbstractTableRefFactory
         ColumnNameList colNameList = null;
         if( colNames.length > 0 )
         {
-            colNameList = this._vendor.getColumnsFactory().colNames( colNames );
+            colNameList = this.getVendor().getColumnsFactory().colNames( colNames );
         }
 
-        return new TableAliasImpl( tableNameAlias, colNameList );
+        return new TableAliasImpl( this.getProcessor(), tableNameAlias, colNameList );
     }
 
     public TableReferenceByExpression table( QueryExpression query, TableAlias alias )
     {
-        return new TableReferenceByExpressionImpl( query, alias );
+        return new TableReferenceByExpressionImpl( this.getProcessor(), query, alias );
     }
 
     public TableReferenceBuilder tableBuilder( TableReferencePrimary firstTable )
     {
-        return new TableReferenceBuilderImpl( firstTable );
+        return new TableReferenceBuilderImpl( this.getProcessor(), firstTable );
     }
 
 }

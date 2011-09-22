@@ -17,25 +17,28 @@ package org.sql.generation.implementation.grammar.query;
 import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.grammar.common.ColumnNameList;
 import org.sql.generation.api.grammar.query.CorrespondingSpec;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class CorrespondingSpecImpl extends TypeableImpl<CorrespondingSpec, CorrespondingSpec>
+public class CorrespondingSpecImpl extends SQLSyntaxElementBase<CorrespondingSpec, CorrespondingSpec>
     implements CorrespondingSpec
 {
 
     private final ColumnNameList _columnList;
 
-    public CorrespondingSpecImpl( ColumnNameList columnNames )
+    public CorrespondingSpecImpl( SQLProcessorAggregator processor, ColumnNameList columnNames )
     {
-        this( CorrespondingSpec.class, columnNames );
+        this( processor, CorrespondingSpec.class, columnNames );
     }
 
-    protected CorrespondingSpecImpl( Class<? extends CorrespondingSpec> implClass, ColumnNameList columnNames )
+    protected CorrespondingSpecImpl( SQLProcessorAggregator processor, Class<? extends CorrespondingSpec> implClass,
+        ColumnNameList columnNames )
     {
-        super( implClass );
+        super( processor, implClass );
 
         this._columnList = columnNames;
     }

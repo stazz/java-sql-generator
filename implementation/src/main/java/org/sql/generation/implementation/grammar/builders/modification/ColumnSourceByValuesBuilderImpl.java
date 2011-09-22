@@ -24,13 +24,15 @@ import org.sql.generation.api.grammar.common.ColumnNameList;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.modification.ColumnSourceByValues;
 import org.sql.generation.implementation.grammar.common.ColumnNameListImpl;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.grammar.modification.ColumnSourceByValuesImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class ColumnSourceByValuesBuilderImpl
+public class ColumnSourceByValuesBuilderImpl extends SQLBuilderBase
     implements ColumnSourceByValuesBuilder
 {
 
@@ -38,8 +40,9 @@ public class ColumnSourceByValuesBuilderImpl
 
     private final List<String> _columnNames;
 
-    public ColumnSourceByValuesBuilderImpl()
+    public ColumnSourceByValuesBuilderImpl( SQLProcessorAggregator processor )
     {
+        super( processor );
         this._values = new ArrayList<ValueExpression>();
         this._columnNames = new ArrayList<String>();
     }
@@ -49,9 +52,9 @@ public class ColumnSourceByValuesBuilderImpl
         ColumnNameList list = null;
         if( !this._columnNames.isEmpty() )
         {
-            list = new ColumnNameListImpl( this._columnNames );
+            list = new ColumnNameListImpl( this.getProcessor(), this._columnNames );
         }
-        return new ColumnSourceByValuesImpl( list, this._values );
+        return new ColumnSourceByValuesImpl( this.getProcessor(), list, this._values );
     }
 
     public ColumnSourceByValuesBuilder addValues( ValueExpression... values )

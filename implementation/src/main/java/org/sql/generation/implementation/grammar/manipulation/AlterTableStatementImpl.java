@@ -14,33 +14,34 @@
 
 package org.sql.generation.implementation.grammar.manipulation;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.SchemaStatement;
 import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.manipulation.AlterTableAction;
 import org.sql.generation.api.grammar.manipulation.AlterTableStatement;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class AlterTableStatementImpl extends TypeableImpl<SchemaStatement, AlterTableStatement>
+public class AlterTableStatementImpl extends SQLSyntaxElementBase<SchemaStatement, AlterTableStatement>
     implements AlterTableStatement
 {
 
     private final TableNameDirect _tableName;
     private final AlterTableAction _action;
 
-    public AlterTableStatementImpl( TableNameDirect tableName, AlterTableAction action )
+    public AlterTableStatementImpl( SQLProcessorAggregator processor, TableNameDirect tableName, AlterTableAction action )
     {
-        this( AlterTableStatement.class, tableName, action );
+        this( processor, AlterTableStatement.class, tableName, action );
     }
 
-    protected AlterTableStatementImpl( Class<? extends AlterTableStatement> realImplementingType,
-        TableNameDirect tableName, AlterTableAction action )
+    protected AlterTableStatementImpl( SQLProcessorAggregator processor,
+        Class<? extends AlterTableStatement> realImplementingType, TableNameDirect tableName, AlterTableAction action )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         NullArgumentException.validateNotNull( "Table name", tableName );
         NullArgumentException.validateNotNull( "Alter table taction", action );

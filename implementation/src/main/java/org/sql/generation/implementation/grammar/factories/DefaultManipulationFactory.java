@@ -31,6 +31,8 @@ import org.sql.generation.api.grammar.manipulation.DropTableConstraintDefinition
 import org.sql.generation.api.grammar.manipulation.DropTableOrViewStatement;
 import org.sql.generation.api.grammar.manipulation.ObjectType;
 import org.sql.generation.api.grammar.manipulation.SetColumnDefault;
+import org.sql.generation.api.vendor.SQLVendor;
+import org.sql.generation.implementation.grammar.common.SQLFactoryBase;
 import org.sql.generation.implementation.grammar.manipulation.AddColumnDefinitionImpl;
 import org.sql.generation.implementation.grammar.manipulation.AddTableConstraintDefinitionImpl;
 import org.sql.generation.implementation.grammar.manipulation.AlterColumnDefinitionImpl;
@@ -40,55 +42,61 @@ import org.sql.generation.implementation.grammar.manipulation.DropSchemaStatemen
 import org.sql.generation.implementation.grammar.manipulation.DropTableConstraintDefinitionImpl;
 import org.sql.generation.implementation.grammar.manipulation.DropTableOrViewStatementImpl;
 import org.sql.generation.implementation.grammar.manipulation.SetColumnDefaultImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class DefaultManipulationFactory
+public class DefaultManipulationFactory extends SQLFactoryBase
     implements ManipulationFactory
 {
 
+    public DefaultManipulationFactory( SQLVendor vendor, SQLProcessorAggregator processor )
+    {
+        super( vendor, processor );
+    }
+
     public AlterTableStatement createAlterTableStatement( TableNameDirect tableName, AlterTableAction action )
     {
-        return new AlterTableStatementImpl( tableName, action );
+        return new AlterTableStatementImpl( this.getProcessor(), tableName, action );
     }
 
     public AddColumnDefinition createAddColumnDefinition( ColumnDefinition definition )
     {
-        return new AddColumnDefinitionImpl( definition );
+        return new AddColumnDefinitionImpl( this.getProcessor(), definition );
     }
 
     public AddTableConstraintDefinition createAddTableConstraintDefinition(
         TableConstraintDefinition constraintDefinition )
     {
-        return new AddTableConstraintDefinitionImpl( constraintDefinition );
+        return new AddTableConstraintDefinitionImpl( this.getProcessor(), constraintDefinition );
     }
 
     public AlterColumnDefinition createAlterColumnDefinition( String columnName, AlterColumnAction action )
     {
-        return new AlterColumnDefinitionImpl( columnName, action );
+        return new AlterColumnDefinitionImpl( this.getProcessor(), columnName, action );
     }
 
     public SetColumnDefault createSetColumnDefault( String newDefault )
     {
-        return new SetColumnDefaultImpl( newDefault );
+        return new SetColumnDefaultImpl( this.getProcessor(), newDefault );
     }
 
     public DropColumnDefinition createDropColumnDefinition( String columnName, DropBehaviour dropBehaviour )
     {
-        return new DropColumnDefinitionImpl( columnName, dropBehaviour );
+        return new DropColumnDefinitionImpl( this.getProcessor(), columnName, dropBehaviour );
     }
 
     public DropTableConstraintDefinition createDropTableConstraintDefinition( String constraintName,
         DropBehaviour dropBehaviour )
     {
-        return new DropTableConstraintDefinitionImpl( constraintName, dropBehaviour );
+        return new DropTableConstraintDefinitionImpl( this.getProcessor(), constraintName, dropBehaviour );
     }
 
     public DropSchemaStatement createDropSchemaStatement( String schemaName, DropBehaviour dropBehaviour )
     {
-        return new DropSchemaStatementImpl( dropBehaviour, schemaName );
+        return new DropSchemaStatementImpl( this.getProcessor(), dropBehaviour, schemaName );
     }
 
     public DropTableOrViewStatement createDropTableOrViewStatement( TableNameDirect tableName, ObjectType theType,
@@ -97,7 +105,7 @@ public class DefaultManipulationFactory
         DropTableOrViewStatement result = null;
         if( theType == ObjectType.TABLE || theType == ObjectType.VIEW )
         {
-            result = new DropTableOrViewStatementImpl( theType, dropBehaviour, tableName );
+            result = new DropTableOrViewStatementImpl( this.getProcessor(), theType, dropBehaviour, tableName );
         }
         else
         {

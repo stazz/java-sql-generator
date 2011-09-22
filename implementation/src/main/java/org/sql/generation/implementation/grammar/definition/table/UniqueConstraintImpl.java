@@ -14,33 +14,35 @@
 
 package org.sql.generation.implementation.grammar.definition.table;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.ColumnNameList;
 import org.sql.generation.api.grammar.definition.table.TableConstraint;
 import org.sql.generation.api.grammar.definition.table.UniqueConstraint;
 import org.sql.generation.api.grammar.definition.table.UniqueSpecification;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class UniqueConstraintImpl extends TypeableImpl<TableConstraint, UniqueConstraint>
+public class UniqueConstraintImpl extends SQLSyntaxElementBase<TableConstraint, UniqueConstraint>
     implements UniqueConstraint
 {
 
     private final ColumnNameList _columns;
     private final UniqueSpecification _uniqueness;
 
-    public UniqueConstraintImpl( ColumnNameList columns, UniqueSpecification uniqueness )
-    {
-        this( UniqueConstraint.class, columns, uniqueness );
-    }
-
-    protected UniqueConstraintImpl( Class<? extends UniqueConstraint> realImplementingType, ColumnNameList columns,
+    public UniqueConstraintImpl( SQLProcessorAggregator processor, ColumnNameList columns,
         UniqueSpecification uniqueness )
     {
-        super( realImplementingType );
+        this( processor, UniqueConstraint.class, columns, uniqueness );
+    }
+
+    protected UniqueConstraintImpl( SQLProcessorAggregator processor,
+        Class<? extends UniqueConstraint> realImplementingType, ColumnNameList columns, UniqueSpecification uniqueness )
+    {
+        super( processor, realImplementingType );
 
         NullArgumentException.validateNotNull( "Columns", columns );
         NullArgumentException.validateNotNull( "Uniqueness", uniqueness );

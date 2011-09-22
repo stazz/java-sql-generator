@@ -43,6 +43,7 @@ import org.sql.generation.api.grammar.builders.booleans.BooleanBuilder;
 import org.sql.generation.api.grammar.builders.booleans.InBuilder;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.api.grammar.query.QueryExpression;
+import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.grammar.booleans.BetweenPredicateImpl;
 import org.sql.generation.implementation.grammar.booleans.BooleanTestImpl;
 import org.sql.generation.implementation.grammar.booleans.ConjunctionImpl;
@@ -66,6 +67,7 @@ import org.sql.generation.implementation.grammar.booleans.RegexpPredicateImpl;
 import org.sql.generation.implementation.grammar.booleans.UniquePredicateImpl;
 import org.sql.generation.implementation.grammar.builders.booleans.BooleanBuilderImpl;
 import org.sql.generation.implementation.grammar.builders.booleans.InBuilderImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -74,121 +76,126 @@ import org.sql.generation.implementation.grammar.builders.booleans.InBuilderImpl
 public class DefaultBooleanFactory extends AbstractBooleanFactory
 {
 
+    public DefaultBooleanFactory( SQLVendor vendor, SQLProcessorAggregator processor )
+    {
+        super( vendor, processor );
+    }
+
     public EqualsPredicate eq( NonBooleanExpression left, NonBooleanExpression right )
     {
-        return new EqualsPredicateImpl( left, right );
+        return new EqualsPredicateImpl( this.getProcessor(), left, right );
     }
 
     public NotEqualsPredicate neq( NonBooleanExpression left, NonBooleanExpression right )
     {
-        return new NotEqualsPredicateImpl( left, right );
+        return new NotEqualsPredicateImpl( this.getProcessor(), left, right );
     }
 
     public LessThanPredicate lt( NonBooleanExpression left, NonBooleanExpression right )
     {
-        return new LessThanPredicateImpl( left, right );
+        return new LessThanPredicateImpl( this.getProcessor(), left, right );
     }
 
     public LessOrEqualPredicate leq( NonBooleanExpression left, NonBooleanExpression right )
     {
-        return new LessOrEqualPredicateImpl( left, right );
+        return new LessOrEqualPredicateImpl( this.getProcessor(), left, right );
     }
 
     public GreaterThanPredicate gt( NonBooleanExpression left, NonBooleanExpression right )
     {
-        return new GreaterThanPredicateImpl( left, right );
+        return new GreaterThanPredicateImpl( this.getProcessor(), left, right );
     }
 
     public GreaterOrEqualPredicate geq( NonBooleanExpression left, NonBooleanExpression right )
     {
-        return new GreaterOrEqualPredicateImpl( left, right );
+        return new GreaterOrEqualPredicateImpl( this.getProcessor(), left, right );
     }
 
     public IsNullPredicate isNull( NonBooleanExpression what )
     {
-        return new IsNullPredicateImpl( what );
+        return new IsNullPredicateImpl( this.getProcessor(), what );
     }
 
     public IsNotNullPredicate isNotNull( NonBooleanExpression what )
     {
-        return new IsNotNullPredicateImpl( what );
+        return new IsNotNullPredicateImpl( this.getProcessor(), what );
     }
 
     public Negation not( BooleanExpression what )
     {
-        return new NegationImpl( what );
+        return new NegationImpl( this.getProcessor(), what );
     }
 
     public Conjunction and( BooleanExpression left, BooleanExpression right )
     {
-        return new ConjunctionImpl( left, right );
+        return new ConjunctionImpl( this.getProcessor(), left, right );
     }
 
     public Disjunction or( BooleanExpression left, BooleanExpression right )
     {
-        return new DisjunctionImpl( left, right );
+        return new DisjunctionImpl( this.getProcessor(), left, right );
     }
 
     public BetweenPredicate between( NonBooleanExpression left, NonBooleanExpression minimum,
         NonBooleanExpression maximum )
     {
-        return new BetweenPredicateImpl( left, minimum, maximum );
+        return new BetweenPredicateImpl( this.getProcessor(), left, minimum, maximum );
     }
 
     public NotBetweenPredicate notBetween( NonBooleanExpression left, NonBooleanExpression minimum,
         NonBooleanExpression maximum )
     {
-        return new NotBetweenPredicateImpl( left, minimum, maximum );
+        return new NotBetweenPredicateImpl( this.getProcessor(), left, minimum, maximum );
     }
 
     public InBuilder inBuilder( NonBooleanExpression what )
     {
-        return new InBuilderImpl( what );
+        return new InBuilderImpl( this.getProcessor(), what );
     }
 
     public NotInPredicate notIn( NonBooleanExpression what, NonBooleanExpression... values )
     {
-        return new NotInPredicateImpl( what, values );
+        return new NotInPredicateImpl( this.getProcessor(), what, values );
     }
 
     public LikePredicate like( NonBooleanExpression what, NonBooleanExpression pattern )
     {
-        return new LikePredicateImpl( what, pattern );
+        return new LikePredicateImpl( this.getProcessor(), what, pattern );
     }
 
     public NotLikePredicate notLike( NonBooleanExpression what, NonBooleanExpression pattern )
     {
-        return new NotLikePredicateImpl( what, pattern );
+        return new NotLikePredicateImpl( this.getProcessor(), what, pattern );
     }
 
     public RegexpPredicate regexp( NonBooleanExpression what, NonBooleanExpression pattern )
     {
-        return new RegexpPredicateImpl( what, pattern );
+        return new RegexpPredicateImpl( this.getProcessor(), what, pattern );
     }
 
     public NotRegexpPredicate notRegexp( NonBooleanExpression what, NonBooleanExpression pattern )
     {
-        return new NotRegexpPredicateImpl( what, pattern );
+        return new NotRegexpPredicateImpl( this.getProcessor(), what, pattern );
     }
 
     public ExistsPredicate exists( QueryExpression query )
     {
-        return new ExistsPredicateImpl( query );
+        return new ExistsPredicateImpl( this.getProcessor(), query );
     }
 
     public UniquePredicate unique( QueryExpression query )
     {
-        return new UniquePredicateImpl( query );
+        return new UniquePredicateImpl( this.getProcessor(), query );
     }
 
     public BooleanTest test( BooleanExpression expression, TestType testType, TruthValue truthValue )
     {
-        return new BooleanTestImpl( expression, testType, truthValue );
+        return new BooleanTestImpl( this.getProcessor(), expression, testType, truthValue );
     }
 
     public BooleanBuilder booleanBuilder( BooleanExpression first )
     {
-        return new BooleanBuilderImpl( this, this.transformNullToEmpty( first ) );
+        return new BooleanBuilderImpl( this.getProcessor(), this, this.transformNullToEmpty( first ) );
     }
 
     private final BooleanExpression transformNullToEmpty( BooleanExpression expression )

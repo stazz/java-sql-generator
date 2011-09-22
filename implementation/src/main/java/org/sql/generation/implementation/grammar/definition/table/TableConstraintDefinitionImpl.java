@@ -20,12 +20,14 @@ import org.sql.generation.api.grammar.definition.table.ConstraintCharacteristics
 import org.sql.generation.api.grammar.definition.table.TableConstraint;
 import org.sql.generation.api.grammar.definition.table.TableConstraintDefinition;
 import org.sql.generation.api.grammar.definition.table.TableElement;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class TableConstraintDefinitionImpl extends TypeableImpl<TableElement, TableConstraintDefinition>
+public class TableConstraintDefinitionImpl extends SQLSyntaxElementBase<TableElement, TableConstraintDefinition>
     implements TableConstraintDefinition
 {
 
@@ -33,16 +35,17 @@ public class TableConstraintDefinitionImpl extends TypeableImpl<TableElement, Ta
     private final TableConstraint _constraint;
     private final ConstraintCharacteristics _characteristics;
 
-    public TableConstraintDefinitionImpl( String name, TableConstraint constraint,
+    public TableConstraintDefinitionImpl( SQLProcessorAggregator processor, String name, TableConstraint constraint,
         ConstraintCharacteristics characteristics )
     {
-        this( TableConstraintDefinition.class, name, constraint, characteristics );
+        this( processor, TableConstraintDefinition.class, name, constraint, characteristics );
     }
 
-    protected TableConstraintDefinitionImpl( Class<? extends TableConstraintDefinition> realImplementingType,
-        String name, TableConstraint constraint, ConstraintCharacteristics characteristics )
+    protected TableConstraintDefinitionImpl( SQLProcessorAggregator processor,
+        Class<? extends TableConstraintDefinition> realImplementingType, String name, TableConstraint constraint,
+        ConstraintCharacteristics characteristics )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         NullArgumentException.validateNotNull( "Constraint", constraint );
 

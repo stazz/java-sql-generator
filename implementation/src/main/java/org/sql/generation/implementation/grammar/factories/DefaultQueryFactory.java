@@ -16,7 +16,6 @@ package org.sql.generation.implementation.grammar.factories;
 
 import java.util.Arrays;
 
-import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.builders.query.ColumnsBuilder;
 import org.sql.generation.api.grammar.builders.query.FromBuilder;
 import org.sql.generation.api.grammar.builders.query.GroupByBuilder;
@@ -51,6 +50,7 @@ import org.sql.generation.implementation.grammar.query.RowDefinitionImpl;
 import org.sql.generation.implementation.grammar.query.RowSubQueryImpl;
 import org.sql.generation.implementation.grammar.query.SortSpecificationImpl;
 import org.sql.generation.implementation.grammar.query.TableValueConstructorImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -59,84 +59,76 @@ import org.sql.generation.implementation.grammar.query.TableValueConstructorImpl
 public class DefaultQueryFactory extends AbstractQueryFactory
 {
 
-    private final SQLVendor _vendor;
-
-    public DefaultQueryFactory( SQLVendor vendor )
+    public DefaultQueryFactory( SQLVendor vendor, SQLProcessorAggregator processor )
     {
-        NullArgumentException.validateNotNull( "vendor", vendor );
-        this._vendor = vendor;
-    }
-
-    protected SQLVendor getVendor()
-    {
-        return this._vendor;
+        super( vendor, processor );
     }
 
     public QueryExpression createQuery( QueryExpressionBody body )
     {
-        return new QueryExpressionImpl( body );
+        return new QueryExpressionImpl( this.getProcessor(), body );
     }
 
     public QuerySpecificationBuilder querySpecificationBuilder()
     {
-        return new QuerySpecificationBuilderImpl( this, this.columnsBuilder(), this.fromBuilder(), this._vendor
-            .getBooleanFactory().booleanBuilder(), this.groupByBuilder(), this._vendor.getBooleanFactory()
-            .booleanBuilder(), this.orderByBuilder() );
+        return new QuerySpecificationBuilderImpl( this.getProcessor(), this, this.columnsBuilder(), this.fromBuilder(),
+            this.getVendor().getBooleanFactory().booleanBuilder(), this.groupByBuilder(), this.getVendor()
+                .getBooleanFactory().booleanBuilder(), this.orderByBuilder() );
     }
 
     public ColumnsBuilder columnsBuilder( SetQuantifier setQuantifier )
     {
-        return new ColumnsBuilderImpl( setQuantifier );
+        return new ColumnsBuilderImpl( this.getProcessor(), setQuantifier );
     }
 
     public QueryBuilder queryBuilder( QueryExpressionBody query )
     {
-        return new QueryBuilderImpl( query );
+        return new QueryBuilderImpl( this.getProcessor(), query );
     }
 
     public GroupByBuilder groupByBuilder()
     {
-        return new GroupByBuilderImpl();
+        return new GroupByBuilderImpl( this.getProcessor() );
     }
 
     public OrdinaryGroupingSet groupingElement( NonBooleanExpression... expressions )
     {
-        return new OrdinaryGroupingSetImpl( expressions );
+        return new OrdinaryGroupingSetImpl( this.getProcessor(), expressions );
     }
 
     public FromBuilder fromBuilder()
     {
-        return new FromBuilderImpl();
+        return new FromBuilderImpl( this.getProcessor() );
     }
 
     public OrderByBuilder orderByBuilder()
     {
-        return new OrderByBuilderImpl();
+        return new OrderByBuilderImpl( this.getProcessor() );
     }
 
     public SortSpecification sortSpec( ValueExpression expression, Ordering ordering )
     {
-        return new SortSpecificationImpl( expression, ordering );
+        return new SortSpecificationImpl( this.getProcessor(), expression, ordering );
     }
 
     public SimpleQueryBuilder simpleQueryBuilder()
     {
-        return new SimpleQueryBuilderImpl( this._vendor );
+        return new SimpleQueryBuilderImpl( this.getProcessor(), this.getVendor() );
     }
 
     public TableValueConstructor values( RowValueConstructor... rows )
     {
-        return new TableValueConstructorImpl( Arrays.asList( rows ) );
+        return new TableValueConstructorImpl( this.getProcessor(), Arrays.asList( rows ) );
     }
 
     public RowSubQuery rowSubQuery( QueryExpression subQuery )
     {
-        return new RowSubQueryImpl( subQuery );
+        return new RowSubQueryImpl( this.getProcessor(), subQuery );
     }
 
     public RowDefinition row( ValueExpression... elements )
     {
-        return new RowDefinitionImpl( Arrays.asList( elements ) );
+        return new RowDefinitionImpl( this.getProcessor(), Arrays.asList( elements ) );
     }
 
     public QueryExpression callFunction( String schemaName, SQLFunctionLiteral function )

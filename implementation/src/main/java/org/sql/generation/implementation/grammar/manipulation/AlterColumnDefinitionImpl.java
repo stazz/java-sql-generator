@@ -14,32 +14,33 @@
 
 package org.sql.generation.implementation.grammar.manipulation;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.manipulation.AlterColumnAction;
 import org.sql.generation.api.grammar.manipulation.AlterColumnDefinition;
 import org.sql.generation.api.grammar.manipulation.AlterTableAction;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class AlterColumnDefinitionImpl extends TypeableImpl<AlterTableAction, AlterColumnDefinition>
+public class AlterColumnDefinitionImpl extends SQLSyntaxElementBase<AlterTableAction, AlterColumnDefinition>
     implements AlterColumnDefinition
 {
 
     private final String _columnName;
     private final AlterColumnAction _action;
 
-    public AlterColumnDefinitionImpl( String columnName, AlterColumnAction action )
+    public AlterColumnDefinitionImpl( SQLProcessorAggregator processor, String columnName, AlterColumnAction action )
     {
-        this( AlterColumnDefinition.class, columnName, action );
+        this( processor, AlterColumnDefinition.class, columnName, action );
     }
 
-    protected AlterColumnDefinitionImpl( Class<? extends AlterColumnDefinition> realImplementingType,
-        String columnName, AlterColumnAction action )
+    protected AlterColumnDefinitionImpl( SQLProcessorAggregator processor,
+        Class<? extends AlterColumnDefinition> realImplementingType, String columnName, AlterColumnAction action )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         NullArgumentException.validateNotNull( "Column name", columnName );
         NullArgumentException.validateNotNull( "Alter column action", action );

@@ -14,25 +14,27 @@
 
 package org.sql.generation.implementation.grammar.modification;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.grammar.common.ColumnNameList;
 import org.sql.generation.api.grammar.modification.ColumnSource;
 import org.sql.generation.api.grammar.modification.DynamicColumnSource;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
 public abstract class DynamicColumnSourceImpl<ColumnSourceType extends DynamicColumnSource> extends
-    TypeableImpl<ColumnSource, ColumnSourceType>
+    SQLSyntaxElementBase<ColumnSource, ColumnSourceType>
     implements DynamicColumnSource
 {
 
     private final ColumnNameList _columnNames;
 
-    protected DynamicColumnSourceImpl( Class<? extends ColumnSourceType> expressionClass, ColumnNameList columnNames )
+    protected DynamicColumnSourceImpl( SQLProcessorAggregator processor,
+        Class<? extends ColumnSourceType> expressionClass, ColumnNameList columnNames )
     {
-        super( expressionClass );
+        super( processor, expressionClass );
 
         this._columnNames = columnNames;
     }

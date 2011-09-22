@@ -31,13 +31,15 @@ import org.sql.generation.api.grammar.query.ColumnReferences.ColumnReferenceInfo
 import org.sql.generation.api.grammar.query.GroupingElement;
 import org.sql.generation.api.grammar.query.OrdinaryGroupingSet;
 import org.sql.generation.api.grammar.query.QuerySpecification;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.grammar.query.QuerySpecificationImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class QuerySpecificationBuilderImpl
+public class QuerySpecificationBuilderImpl extends SQLBuilderBase
     implements QuerySpecificationBuilder
 {
 
@@ -55,9 +57,11 @@ public class QuerySpecificationBuilderImpl
 
     private final QueryFactory _queryFactory;
 
-    public QuerySpecificationBuilderImpl( QueryFactory q, ColumnsBuilder select, FromBuilder from,
-        BooleanBuilder where, GroupByBuilder groupBy, BooleanBuilder having, OrderByBuilder orderBy )
+    public QuerySpecificationBuilderImpl( SQLProcessorAggregator processor, QueryFactory q, ColumnsBuilder select,
+        FromBuilder from, BooleanBuilder where, GroupByBuilder groupBy, BooleanBuilder having, OrderByBuilder orderBy )
     {
+        super( processor );
+
         NullArgumentException.validateNotNull( "Query factory", q );
         NullArgumentException.validateNotNull( "select", select );
         NullArgumentException.validateNotNull( "from", from );
@@ -148,9 +152,9 @@ public class QuerySpecificationBuilderImpl
 
     public QuerySpecification createExpression()
     {
-        return new QuerySpecificationImpl( this._select.createExpression(), this._from.createExpression(),
-            this._where.createExpression(), this._groupBy.createExpression(), this._having.createExpression(),
-            this._orderBy.createExpression() );
+        return new QuerySpecificationImpl( this.getProcessor(), this._select.createExpression(),
+            this._from.createExpression(), this._where.createExpression(), this._groupBy.createExpression(),
+            this._having.createExpression(), this._orderBy.createExpression() );
     }
 
     public QuerySpecificationBuilder setSelect( ColumnsBuilder builder )

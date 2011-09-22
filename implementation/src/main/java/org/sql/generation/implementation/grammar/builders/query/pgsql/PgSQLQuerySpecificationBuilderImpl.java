@@ -30,6 +30,7 @@ import org.sql.generation.api.grammar.query.pgsql.OffsetClause;
 import org.sql.generation.api.grammar.query.pgsql.PgSQLQuerySpecification;
 import org.sql.generation.implementation.grammar.builders.query.QuerySpecificationBuilderImpl;
 import org.sql.generation.implementation.grammar.query.pgsql.PgSQLQuerySpecificationImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -43,18 +44,18 @@ public class PgSQLQuerySpecificationBuilderImpl extends QuerySpecificationBuilde
 
     private LimitClause _limit;
 
-    public PgSQLQuerySpecificationBuilderImpl( QueryFactory q, ColumnsBuilder select, FromBuilder from,
-        BooleanBuilder where, GroupByBuilder groupBy, BooleanBuilder having, OrderByBuilder orderBy )
+    public PgSQLQuerySpecificationBuilderImpl( SQLProcessorAggregator processor, QueryFactory q, ColumnsBuilder select,
+        FromBuilder from, BooleanBuilder where, GroupByBuilder groupBy, BooleanBuilder having, OrderByBuilder orderBy )
     {
-        super( q, select, from, where, groupBy, having, orderBy );
+        super( processor, q, select, from, where, groupBy, having, orderBy );
     }
 
     @Override
     public PgSQLQuerySpecification createExpression()
     {
-        return new PgSQLQuerySpecificationImpl( this.getSelect().createExpression(), this.getFrom().createExpression(),
-            this.getWhere().createExpression(), this.getGroupBy().createExpression(), this.getHaving()
-                .createExpression(), this.getOrderBy().createExpression(), this._limit, this._offset );
+        return new PgSQLQuerySpecificationImpl( this.getProcessor(), this.getSelect().createExpression(), this
+            .getFrom().createExpression(), this.getWhere().createExpression(), this.getGroupBy().createExpression(),
+            this.getHaving().createExpression(), this.getOrderBy().createExpression(), this._limit, this._offset );
     }
 
     public PgSQLQuerySpecificationBuilder offset( OffsetClause offset )

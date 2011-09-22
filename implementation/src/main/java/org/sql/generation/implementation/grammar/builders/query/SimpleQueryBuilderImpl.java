@@ -24,7 +24,6 @@ import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.builders.query.QuerySpecificationBuilder;
 import org.sql.generation.api.grammar.builders.query.SimpleQueryBuilder;
 import org.sql.generation.api.grammar.common.TableName;
-import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.factories.ColumnsFactory;
 import org.sql.generation.api.grammar.factories.QueryFactory;
@@ -34,12 +33,14 @@ import org.sql.generation.api.grammar.query.ColumnReferences.ColumnReferenceInfo
 import org.sql.generation.api.grammar.query.Ordering;
 import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.vendor.SQLVendor;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class SimpleQueryBuilderImpl
+public class SimpleQueryBuilderImpl extends SQLBuilderBase
     implements SimpleQueryBuilder
 {
 
@@ -63,8 +64,9 @@ public class SimpleQueryBuilderImpl
 
     private boolean _selectAll;
 
-    public SimpleQueryBuilderImpl( SQLVendor vendor )
+    public SimpleQueryBuilderImpl( SQLProcessorAggregator processor, SQLVendor vendor )
     {
+        super( processor );
         NullArgumentException.validateNotNull( "Vendor", vendor );
 
         this._vendor = vendor;

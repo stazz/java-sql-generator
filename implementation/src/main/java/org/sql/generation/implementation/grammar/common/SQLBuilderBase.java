@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Stanislav Muhametsin. All Rights Reserved.
+ * Copyright (c) 2011, Stanislav Muhametsin. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,26 @@
 
 package org.sql.generation.implementation.grammar.common;
 
-import org.sql.generation.api.grammar.common.NonBooleanExpression;
-import org.sql.generation.api.grammar.common.ValueExpression;
+import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
- * @author Stanislav Muhametsin
+ * @author 2011 Stanislav Muhametsin
  */
-public abstract class NonBooleanExpressionImpl<ExpressionType extends NonBooleanExpression> extends
-    SQLSyntaxElementBase<ValueExpression, ExpressionType>
+public abstract class SQLBuilderBase
 {
+    private final SQLProcessorAggregator _processor;
 
-    protected NonBooleanExpressionImpl( SQLProcessorAggregator aggregator,
-        Class<? extends ExpressionType> expressionClass )
+    protected SQLBuilderBase( SQLProcessorAggregator processor )
     {
-        super( aggregator, expressionClass );
+        NullArgumentException.validateNotNull( "Processor", processor );
+
+        this._processor = processor;
     }
 
+    protected SQLProcessorAggregator getProcessor()
+    {
+        return this._processor;
+    }
 }

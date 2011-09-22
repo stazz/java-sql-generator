@@ -18,26 +18,28 @@ import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.definition.table.CheckConstraint;
 import org.sql.generation.api.grammar.definition.table.TableConstraint;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class CheckConstraintImpl extends TypeableImpl<TableConstraint, CheckConstraint>
+public class CheckConstraintImpl extends SQLSyntaxElementBase<TableConstraint, CheckConstraint>
     implements CheckConstraint
 {
 
     private final BooleanExpression _searchCondition;
 
-    public CheckConstraintImpl( BooleanExpression searchCondition )
+    public CheckConstraintImpl( SQLProcessorAggregator processor, BooleanExpression searchCondition )
     {
-        this( CheckConstraint.class, searchCondition );
+        this( processor, CheckConstraint.class, searchCondition );
     }
 
-    protected CheckConstraintImpl( Class<? extends CheckConstraint> realImplementingType,
-        BooleanExpression searchCondition )
+    protected CheckConstraintImpl( SQLProcessorAggregator processor,
+        Class<? extends CheckConstraint> realImplementingType, BooleanExpression searchCondition )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         this._searchCondition = searchCondition;
     }

@@ -23,14 +23,23 @@ import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.grammar.query.TableAlias;
 import org.sql.generation.api.grammar.query.TableReferenceByExpression;
 import org.sql.generation.api.grammar.query.TableReferenceByName;
+import org.sql.generation.api.vendor.SQLVendor;
+import org.sql.generation.implementation.grammar.common.SQLFactoryBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public abstract class AbstractTableRefFactory
+public abstract class AbstractTableRefFactory extends SQLFactoryBase
     implements TableReferenceFactory
 {
+
+    protected AbstractTableRefFactory( SQLVendor vendor, SQLProcessorAggregator processor )
+    {
+        super( vendor, processor );
+    }
+
     public TableReferenceByName table( TableName tableName )
     {
         return this.table( tableName, null );

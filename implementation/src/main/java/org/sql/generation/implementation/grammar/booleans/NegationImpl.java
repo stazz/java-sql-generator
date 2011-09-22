@@ -20,6 +20,7 @@ import java.util.Iterator;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.booleans.Negation;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -31,14 +32,15 @@ public class NegationImpl extends ComposedBooleanExpressionImpl<Negation>
 
     private final BooleanExpression _negated;
 
-    public NegationImpl( BooleanExpression negated )
+    public NegationImpl( SQLProcessorAggregator processor, BooleanExpression negated )
     {
-        this( Negation.class, negated );
+        this( processor, Negation.class, negated );
     }
 
-    protected NegationImpl( Class<? extends Negation> negationClass, BooleanExpression negated )
+    protected NegationImpl( SQLProcessorAggregator processor, Class<? extends Negation> negationClass,
+        BooleanExpression negated )
     {
-        super( negationClass );
+        super( processor, negationClass );
         NullArgumentException.validateNotNull( "negated", negated );
 
         this._negated = negated;

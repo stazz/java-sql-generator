@@ -18,14 +18,22 @@ import org.sql.generation.api.grammar.booleans.InPredicate;
 import org.sql.generation.api.grammar.builders.booleans.BooleanBuilder;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.api.grammar.factories.BooleanFactory;
+import org.sql.generation.api.vendor.SQLVendor;
+import org.sql.generation.implementation.grammar.common.SQLFactoryBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public abstract class AbstractBooleanFactory
+public abstract class AbstractBooleanFactory extends SQLFactoryBase
     implements BooleanFactory
 {
+
+    protected AbstractBooleanFactory( SQLVendor vendor, SQLProcessorAggregator processor )
+    {
+        super( vendor, processor );
+    }
 
     public BooleanBuilder booleanBuilder()
     {

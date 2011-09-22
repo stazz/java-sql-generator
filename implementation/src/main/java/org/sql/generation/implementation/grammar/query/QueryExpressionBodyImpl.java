@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.query;
 
 import org.sql.generation.api.grammar.query.QueryExpressionBody;
 import org.sql.generation.implementation.grammar.common.NonBooleanExpressionImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -25,9 +26,9 @@ public abstract class QueryExpressionBodyImpl<ExpressionType extends QueryExpres
     NonBooleanExpressionImpl<ExpressionType>
 {
 
-    public QueryExpressionBodyImpl( Class<? extends ExpressionType> expressionClass )
+    public QueryExpressionBodyImpl( SQLProcessorAggregator processor, Class<? extends ExpressionType> expressionClass )
     {
-        super( expressionClass );
+        super( processor, expressionClass );
     }
 
 }

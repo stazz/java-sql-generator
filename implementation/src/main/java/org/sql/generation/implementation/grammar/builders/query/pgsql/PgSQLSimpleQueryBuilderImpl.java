@@ -16,13 +16,13 @@ package org.sql.generation.implementation.grammar.builders.query.pgsql;
 
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.builders.query.QuerySpecificationBuilder;
-import org.sql.generation.api.grammar.builders.query.SimpleQueryBuilder;
 import org.sql.generation.api.grammar.builders.query.pgsql.PgSQLQuerySpecificationBuilder;
 import org.sql.generation.api.grammar.builders.query.pgsql.PgSQLSimpleQueryBuilder;
 import org.sql.generation.api.grammar.common.TableName;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLQueryFactory;
 import org.sql.generation.api.vendor.PostgreSQLVendor;
 import org.sql.generation.implementation.grammar.builders.query.SimpleQueryBuilderImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -35,9 +35,9 @@ public class PgSQLSimpleQueryBuilderImpl extends SimpleQueryBuilderImpl
     private Integer _offset;
     private Integer _limit;
 
-    public PgSQLSimpleQueryBuilderImpl( PostgreSQLVendor vendor )
+    public PgSQLSimpleQueryBuilderImpl( SQLProcessorAggregator processor, PostgreSQLVendor vendor )
     {
-        super( vendor );
+        super( processor, vendor );
     }
 
     public PgSQLSimpleQueryBuilder offset( Integer offset )

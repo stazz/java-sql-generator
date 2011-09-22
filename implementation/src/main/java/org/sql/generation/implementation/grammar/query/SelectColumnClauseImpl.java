@@ -14,25 +14,27 @@
 
 package org.sql.generation.implementation.grammar.query;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.SetQuantifier;
 import org.sql.generation.api.grammar.query.SelectColumnClause;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
 public abstract class SelectColumnClauseImpl<SelectType extends SelectColumnClause> extends
-    TypeableImpl<SelectColumnClause, SelectType>
+    SQLSyntaxElementBase<SelectColumnClause, SelectType>
     implements SelectColumnClause
 {
 
     private final SetQuantifier _setQuantifier;
 
-    protected SelectColumnClauseImpl( Class<? extends SelectType> type, SetQuantifier quantifier )
+    protected SelectColumnClauseImpl( SQLProcessorAggregator processor, Class<? extends SelectType> type,
+        SetQuantifier quantifier )
     {
-        super( type );
+        super( processor, type );
         NullArgumentException.validateNotNull( "set quantifier", quantifier );
 
         this._setQuantifier = quantifier;

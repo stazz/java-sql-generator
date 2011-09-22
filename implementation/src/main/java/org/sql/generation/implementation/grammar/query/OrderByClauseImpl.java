@@ -18,24 +18,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.query.OrderByClause;
 import org.sql.generation.api.grammar.query.SortSpecification;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class OrderByClauseImpl extends TypeableImpl<OrderByClause, OrderByClause>
+public class OrderByClauseImpl extends SQLSyntaxElementBase<OrderByClause, OrderByClause>
     implements OrderByClause
 {
 
     private List<SortSpecification> _sortSpecs;
 
-    public OrderByClauseImpl( List<SortSpecification> sortSpecs )
+    public OrderByClauseImpl( SQLProcessorAggregator processor, List<SortSpecification> sortSpecs )
     {
-        super( OrderByClause.class );
+        super( processor, OrderByClause.class );
 
         NullArgumentException.validateNotNull( "sort specifications", sortSpecs );
         for( SortSpecification sortSpec : sortSpecs )

@@ -15,6 +15,7 @@
 package org.sql.generation.api.grammar.definition.table;
 
 import org.sql.generation.api.grammar.common.SchemaDefinitionStatement;
+import org.sql.generation.api.grammar.common.TableName;
 import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.definition.schema.SchemaElement;
 

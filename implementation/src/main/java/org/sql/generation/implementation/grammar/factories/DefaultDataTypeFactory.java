@@ -31,6 +31,7 @@ import org.sql.generation.api.grammar.common.datatypes.SQLTime;
 import org.sql.generation.api.grammar.common.datatypes.SQLTimeStamp;
 import org.sql.generation.api.grammar.common.datatypes.SmallInt;
 import org.sql.generation.api.grammar.common.datatypes.UserDefinedType;
+import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.grammar.common.datatypes.BigIntImpl;
 import org.sql.generation.implementation.grammar.common.datatypes.DecimalImpl;
 import org.sql.generation.implementation.grammar.common.datatypes.DoublePrecisionImpl;
@@ -46,6 +47,7 @@ import org.sql.generation.implementation.grammar.common.datatypes.SQLTimeImpl;
 import org.sql.generation.implementation.grammar.common.datatypes.SQLTimeStampImpl;
 import org.sql.generation.implementation.grammar.common.datatypes.SmallIntImpl;
 import org.sql.generation.implementation.grammar.common.datatypes.UserDefinedTypeImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -53,6 +55,11 @@ import org.sql.generation.implementation.grammar.common.datatypes.UserDefinedTyp
  */
 public class DefaultDataTypeFactory extends AbstractDataTypeFactory
 {
+
+    public DefaultDataTypeFactory( SQLVendor vendor, SQLProcessorAggregator processor )
+    {
+        super( vendor, processor );
+    }
 
     public BigInt bigInt()
     {

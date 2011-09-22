@@ -17,6 +17,7 @@ package org.sql.generation.implementation.grammar.common;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.TableNameFunction;
 import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -28,15 +29,15 @@ public class TableNameFunctionImpl extends TableNameImpl<TableNameFunction>
 
     private final SQLFunctionLiteral _function;
 
-    public TableNameFunctionImpl( String schemaName, SQLFunctionLiteral function )
+    public TableNameFunctionImpl( SQLProcessorAggregator processor, String schemaName, SQLFunctionLiteral function )
     {
-        this( TableNameFunction.class, schemaName, function );
+        this( processor, TableNameFunction.class, schemaName, function );
     }
 
-    protected TableNameFunctionImpl( Class<? extends TableNameFunction> implClass, String schemaName,
-        SQLFunctionLiteral function )
+    protected TableNameFunctionImpl( SQLProcessorAggregator processor, Class<? extends TableNameFunction> implClass,
+        String schemaName, SQLFunctionLiteral function )
     {
-        super( implClass, schemaName );
+        super( processor, implClass, schemaName );
         NullArgumentException.validateNotNull( "SQL function", function );
 
         this._function = function;

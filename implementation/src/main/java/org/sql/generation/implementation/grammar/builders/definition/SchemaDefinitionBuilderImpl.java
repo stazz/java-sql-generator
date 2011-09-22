@@ -20,13 +20,15 @@ import java.util.List;
 import org.sql.generation.api.grammar.builders.definition.SchemaDefinitionBuilder;
 import org.sql.generation.api.grammar.definition.schema.SchemaDefinition;
 import org.sql.generation.api.grammar.definition.schema.SchemaElement;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.grammar.definition.schema.SchemaDefinitionImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class SchemaDefinitionBuilderImpl
+public class SchemaDefinitionBuilderImpl extends SQLBuilderBase
     implements SchemaDefinitionBuilder
 {
 
@@ -34,14 +36,15 @@ public class SchemaDefinitionBuilderImpl
     private String _schemaCharset;
     private final List<SchemaElement> _elements;
 
-    public SchemaDefinitionBuilderImpl()
+    public SchemaDefinitionBuilderImpl( SQLProcessorAggregator processor )
     {
+        super( processor );
         this._elements = new ArrayList<SchemaElement>();
     }
 
     public SchemaDefinition createExpression()
     {
-        return new SchemaDefinitionImpl( this._schemaName, this._schemaCharset, this._elements );
+        return new SchemaDefinitionImpl( this.getProcessor(), this._schemaName, this._schemaCharset, this._elements );
     }
 
     public SchemaDefinitionBuilder setSchemaName( String schemaName )

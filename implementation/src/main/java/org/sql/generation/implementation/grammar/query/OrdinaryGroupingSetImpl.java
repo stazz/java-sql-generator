@@ -19,36 +19,37 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.api.grammar.query.GroupingElement;
 import org.sql.generation.api.grammar.query.OrdinaryGroupingSet;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class OrdinaryGroupingSetImpl extends TypeableImpl<GroupingElement, OrdinaryGroupingSet>
+public class OrdinaryGroupingSetImpl extends SQLSyntaxElementBase<GroupingElement, OrdinaryGroupingSet>
     implements OrdinaryGroupingSet
 {
 
     private final List<NonBooleanExpression> _columns;
 
-    public OrdinaryGroupingSetImpl( NonBooleanExpression... columns )
+    public OrdinaryGroupingSetImpl( SQLProcessorAggregator processor, NonBooleanExpression... columns )
     {
-        this( Arrays.asList( columns ) );
+        this( processor, Arrays.asList( columns ) );
     }
 
-    public OrdinaryGroupingSetImpl( List<NonBooleanExpression> columns )
+    public OrdinaryGroupingSetImpl( SQLProcessorAggregator processor, List<NonBooleanExpression> columns )
     {
-        this( OrdinaryGroupingSet.class, columns );
+        this( processor, OrdinaryGroupingSet.class, columns );
     }
 
-    protected OrdinaryGroupingSetImpl( Class<? extends OrdinaryGroupingSet> implClass,
-        List<NonBooleanExpression> columns )
+    protected OrdinaryGroupingSetImpl( SQLProcessorAggregator processor,
+        Class<? extends OrdinaryGroupingSet> implClass, List<NonBooleanExpression> columns )
     {
-        super( implClass );
+        super( processor, implClass );
 
         NullArgumentException.validateNotNull( "columns", columns );
         for( NonBooleanExpression expr : columns )

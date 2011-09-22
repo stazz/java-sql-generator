@@ -14,16 +14,17 @@
 
 package org.sql.generation.implementation.grammar.modification;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.modification.TargetTable;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class TargetTableImpl extends TypeableImpl<TargetTable, TargetTable>
+public class TargetTableImpl extends SQLSyntaxElementBase<TargetTable, TargetTable>
     implements TargetTable
 {
 
@@ -31,14 +32,15 @@ public class TargetTableImpl extends TypeableImpl<TargetTable, TargetTable>
 
     private TableNameDirect _tableName;
 
-    public TargetTableImpl( Boolean isOnly, TableNameDirect tableName )
+    public TargetTableImpl( SQLProcessorAggregator processor, Boolean isOnly, TableNameDirect tableName )
     {
-        this( TargetTable.class, isOnly, tableName );
+        this( processor, TargetTable.class, isOnly, tableName );
     }
 
-    protected TargetTableImpl( Class<? extends TargetTable> expressionClass, Boolean isOnly, TableNameDirect tableName )
+    protected TargetTableImpl( SQLProcessorAggregator processor, Class<? extends TargetTable> expressionClass,
+        Boolean isOnly, TableNameDirect tableName )
     {
-        super( expressionClass );
+        super( processor, expressionClass );
 
         NullArgumentException.validateNotNull( "table name", tableName );
         if( isOnly == null )

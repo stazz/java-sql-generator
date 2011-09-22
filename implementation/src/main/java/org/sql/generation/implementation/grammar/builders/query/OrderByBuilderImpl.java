@@ -23,20 +23,23 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.builders.query.OrderByBuilder;
 import org.sql.generation.api.grammar.query.OrderByClause;
 import org.sql.generation.api.grammar.query.SortSpecification;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.grammar.query.OrderByClauseImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class OrderByBuilderImpl
+public class OrderByBuilderImpl extends SQLBuilderBase
     implements OrderByBuilder
 {
 
     private final List<SortSpecification> _sortSpecs;
 
-    public OrderByBuilderImpl()
+    public OrderByBuilderImpl( SQLProcessorAggregator processor )
     {
+        super( processor );
         this._sortSpecs = new ArrayList<SortSpecification>();
     }
 
@@ -58,6 +61,6 @@ public class OrderByBuilderImpl
 
     public OrderByClause createExpression()
     {
-        return new OrderByClauseImpl( this._sortSpecs );
+        return new OrderByClauseImpl( this.getProcessor(), this._sortSpecs );
     }
 }

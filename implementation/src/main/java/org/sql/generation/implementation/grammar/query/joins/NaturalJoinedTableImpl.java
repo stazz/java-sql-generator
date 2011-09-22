@@ -18,6 +18,7 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.query.TableReference;
 import org.sql.generation.api.grammar.query.joins.JoinType;
 import org.sql.generation.api.grammar.query.joins.NaturalJoinedTable;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -29,15 +30,16 @@ public class NaturalJoinedTableImpl extends JoinedTableImpl<NaturalJoinedTable>
 
     private final JoinType _joinType;
 
-    public NaturalJoinedTableImpl( TableReference left, TableReference right, JoinType joinType )
+    public NaturalJoinedTableImpl( SQLProcessorAggregator processor, TableReference left, TableReference right,
+        JoinType joinType )
     {
-        this( NaturalJoinedTable.class, left, right, joinType );
+        this( processor, NaturalJoinedTable.class, left, right, joinType );
     }
 
-    protected NaturalJoinedTableImpl( Class<? extends NaturalJoinedTable> implClass, TableReference left,
-        TableReference right, JoinType joinType )
+    protected NaturalJoinedTableImpl( SQLProcessorAggregator processor, Class<? extends NaturalJoinedTable> implClass,
+        TableReference left, TableReference right, JoinType joinType )
     {
-        super( implClass, left, right );
+        super( processor, implClass, left, right );
 
         NullArgumentException.validateNotNull( "join type", joinType );
 

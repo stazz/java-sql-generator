@@ -17,6 +17,7 @@ package org.sql.generation.implementation.grammar.booleans;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BinaryPredicate;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -31,10 +32,10 @@ public abstract class BinaryPredicateImpl<ExpressionType extends BinaryPredicate
 
     private final NonBooleanExpression _right;
 
-    protected BinaryPredicateImpl( Class<? extends ExpressionType> expressionClass, NonBooleanExpression left,
-        NonBooleanExpression right )
+    protected BinaryPredicateImpl( SQLProcessorAggregator processor, Class<? extends ExpressionType> expressionClass,
+        NonBooleanExpression left, NonBooleanExpression right )
     {
-        super( expressionClass );
+        super( processor, expressionClass );
         NullArgumentException.validateNotNull( "left", left );
         NullArgumentException.validateNotNull( "right", right );
 

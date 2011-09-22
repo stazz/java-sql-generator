@@ -18,6 +18,7 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.grammar.query.TableAlias;
 import org.sql.generation.api.grammar.query.TableReferenceByExpression;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -29,15 +30,16 @@ public class TableReferenceByExpressionImpl extends TableReferencePrimaryImpl<Ta
 
     private final QueryExpression _expression;
 
-    public TableReferenceByExpressionImpl( QueryExpression expression, TableAlias alias )
+    public TableReferenceByExpressionImpl( SQLProcessorAggregator processor, QueryExpression expression,
+        TableAlias alias )
     {
-        this( TableReferenceByExpression.class, expression, alias );
+        this( processor, TableReferenceByExpression.class, expression, alias );
     }
 
-    protected TableReferenceByExpressionImpl( Class<? extends TableReferenceByExpression> implClass,
-        QueryExpression expression, TableAlias alias )
+    protected TableReferenceByExpressionImpl( SQLProcessorAggregator processor,
+        Class<? extends TableReferenceByExpression> implClass, QueryExpression expression, TableAlias alias )
     {
-        super( implClass, alias );
+        super( processor, implClass, alias );
 
         NullArgumentException.validateNotNull( "collection expression", expression );
 

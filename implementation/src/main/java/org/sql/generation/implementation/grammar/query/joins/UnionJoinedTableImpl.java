@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.query.joins;
 
 import org.sql.generation.api.grammar.query.TableReference;
 import org.sql.generation.api.grammar.query.joins.UnionJoinedTable;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -25,15 +26,15 @@ public class UnionJoinedTableImpl extends JoinedTableImpl<UnionJoinedTable>
     implements UnionJoinedTable
 {
 
-    public UnionJoinedTableImpl( TableReference left, TableReference right )
+    public UnionJoinedTableImpl( SQLProcessorAggregator processor, TableReference left, TableReference right )
     {
-        this( UnionJoinedTable.class, left, right );
+        this( processor, UnionJoinedTable.class, left, right );
     }
 
-    protected UnionJoinedTableImpl( Class<? extends UnionJoinedTable> implClass, TableReference left,
-        TableReference right )
+    protected UnionJoinedTableImpl( SQLProcessorAggregator processor, Class<? extends UnionJoinedTable> implClass,
+        TableReference left, TableReference right )
     {
-        super( implClass, left, right );
+        super( processor, implClass, left, right );
     }
 
     @Override

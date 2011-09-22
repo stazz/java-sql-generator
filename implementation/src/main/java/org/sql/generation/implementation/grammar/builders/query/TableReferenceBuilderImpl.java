@@ -20,19 +20,22 @@ import org.sql.generation.api.grammar.query.TableReference;
 import org.sql.generation.api.grammar.query.TableReferencePrimary;
 import org.sql.generation.api.grammar.query.joins.JoinSpecification;
 import org.sql.generation.api.grammar.query.joins.JoinType;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.grammar.query.joins.CrossJoinedTableImpl;
 import org.sql.generation.implementation.grammar.query.joins.NaturalJoinedTableImpl;
 import org.sql.generation.implementation.grammar.query.joins.QualifiedJoinedTableImpl;
 import org.sql.generation.implementation.grammar.query.joins.UnionJoinedTableImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
-public class TableReferenceBuilderImpl
+public class TableReferenceBuilderImpl extends SQLBuilderBase
     implements TableReferenceBuilder
 {
 
     private TableReference _currentTable;
 
-    public TableReferenceBuilderImpl( TableReferencePrimary startingTable )
+    public TableReferenceBuilderImpl( SQLProcessorAggregator processor, TableReferencePrimary startingTable )
     {
+        super( processor );
         NullArgumentException.validateNotNull( "starting table", startingTable );
 
         this._currentTable = startingTable;
@@ -40,25 +43,26 @@ public class TableReferenceBuilderImpl
 
     public TableReferenceBuilder addQualifiedJoin( JoinType joinType, TableReference right, JoinSpecification joinSpec )
     {
-        this._currentTable = new QualifiedJoinedTableImpl( this._currentTable, right, joinType, joinSpec );
+        this._currentTable = new QualifiedJoinedTableImpl( this.getProcessor(), this._currentTable, right, joinType,
+            joinSpec );
         return this;
     }
 
     public TableReferenceBuilder addCrossJoin( TableReference right )
     {
-        this._currentTable = new CrossJoinedTableImpl( this._currentTable, right );
+        this._currentTable = new CrossJoinedTableImpl( this.getProcessor(), this._currentTable, right );
         return this;
     }
 
     public TableReferenceBuilder addNaturalJoin( JoinType joinType, TableReference right )
     {
-        this._currentTable = new NaturalJoinedTableImpl( this._currentTable, right, joinType );
+        this._currentTable = new NaturalJoinedTableImpl( this.getProcessor(), this._currentTable, right, joinType );
         return this;
     }
 
     public TableReferenceBuilder addUnionJoin( TableReference right )
     {
-        this._currentTable = new UnionJoinedTableImpl( this._currentTable, right );
+        this._currentTable = new UnionJoinedTableImpl( this.getProcessor(), this._currentTable, right );
         return this;
     }
 

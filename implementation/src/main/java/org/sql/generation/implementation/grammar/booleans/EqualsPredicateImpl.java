@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.booleans;
 
 import org.sql.generation.api.grammar.booleans.EqualsPredicate;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -25,15 +26,15 @@ public class EqualsPredicateImpl extends BinaryPredicateImpl<EqualsPredicate>
     implements EqualsPredicate
 {
 
-    public EqualsPredicateImpl( NonBooleanExpression left, NonBooleanExpression right )
+    public EqualsPredicateImpl( SQLProcessorAggregator processor, NonBooleanExpression left, NonBooleanExpression right )
     {
-        this( EqualsPredicate.class, left, right );
+        this( processor, EqualsPredicate.class, left, right );
     }
 
-    protected EqualsPredicateImpl( Class<? extends EqualsPredicate> predicateClass, NonBooleanExpression left,
-        NonBooleanExpression right )
+    protected EqualsPredicateImpl( SQLProcessorAggregator processor, Class<? extends EqualsPredicate> predicateClass,
+        NonBooleanExpression left, NonBooleanExpression right )
     {
-        super( predicateClass, left, right );
+        super( processor, predicateClass, left, right );
     }
 
 }

@@ -18,6 +18,7 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.ColumnNameList;
 import org.sql.generation.api.grammar.modification.ColumnSourceByQuery;
 import org.sql.generation.api.grammar.query.QueryExpression;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -29,15 +30,15 @@ public class ColumnSourceByQueryImpl extends DynamicColumnSourceImpl<ColumnSourc
 
     private final QueryExpression _query;
 
-    public ColumnSourceByQueryImpl( ColumnNameList columnNames, QueryExpression query )
+    public ColumnSourceByQueryImpl( SQLProcessorAggregator processor, ColumnNameList columnNames, QueryExpression query )
     {
-        this( ColumnSourceByQuery.class, columnNames, query );
+        this( processor, ColumnSourceByQuery.class, columnNames, query );
     }
 
-    protected ColumnSourceByQueryImpl( Class<? extends ColumnSourceByQuery> expressionClass,
-        ColumnNameList columnNames, QueryExpression query )
+    protected ColumnSourceByQueryImpl( SQLProcessorAggregator processor,
+        Class<? extends ColumnSourceByQuery> expressionClass, ColumnNameList columnNames, QueryExpression query )
     {
-        super( expressionClass, columnNames );
+        super( processor, expressionClass, columnNames );
         NullArgumentException.validateNotNull( "query", query );
         this._query = query;
     }

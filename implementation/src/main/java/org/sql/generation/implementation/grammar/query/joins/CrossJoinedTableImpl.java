@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.query.joins;
 
 import org.sql.generation.api.grammar.query.TableReference;
 import org.sql.generation.api.grammar.query.joins.CrossJoinedTable;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -25,15 +26,15 @@ public class CrossJoinedTableImpl extends JoinedTableImpl<CrossJoinedTable>
     implements CrossJoinedTable
 {
 
-    public CrossJoinedTableImpl( TableReference left, TableReference right )
+    public CrossJoinedTableImpl( SQLProcessorAggregator processor, TableReference left, TableReference right )
     {
-        this( CrossJoinedTable.class, left, right );
+        this( processor, CrossJoinedTable.class, left, right );
     }
 
-    protected CrossJoinedTableImpl( Class<? extends CrossJoinedTable> implClass, TableReference left,
-        TableReference right )
+    protected CrossJoinedTableImpl( SQLProcessorAggregator processor, Class<? extends CrossJoinedTable> implClass,
+        TableReference left, TableReference right )
     {
-        super( implClass, left, right );
+        super( processor, implClass, left, right );
     }
 
     @Override

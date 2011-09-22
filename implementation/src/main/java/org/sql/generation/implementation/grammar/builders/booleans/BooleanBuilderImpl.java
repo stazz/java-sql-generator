@@ -19,12 +19,14 @@ import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.booleans.Predicate;
 import org.sql.generation.api.grammar.builders.booleans.BooleanBuilder;
 import org.sql.generation.api.grammar.factories.BooleanFactory;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class BooleanBuilderImpl
+public class BooleanBuilderImpl extends SQLBuilderBase
     implements BooleanBuilder
 {
 
@@ -32,13 +34,14 @@ public class BooleanBuilderImpl
 
     private final BooleanFactory _factory;
 
-    public BooleanBuilderImpl( BooleanFactory factory )
+    public BooleanBuilderImpl( SQLProcessorAggregator processor, BooleanFactory factory )
     {
-        this( factory, Predicate.EmptyPredicate.INSTANCE );
+        this( processor, factory, Predicate.EmptyPredicate.INSTANCE );
     }
 
-    public BooleanBuilderImpl( BooleanFactory factory, BooleanExpression expression )
+    public BooleanBuilderImpl( SQLProcessorAggregator processor, BooleanFactory factory, BooleanExpression expression )
     {
+        super( processor );
         NullArgumentException.validateNotNull( "boolean expression factory", factory );
 
         this._factory = factory;

@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.booleans;
 
 import org.sql.generation.api.grammar.booleans.GreaterThanPredicate;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -25,15 +26,16 @@ public class GreaterThanPredicateImpl extends BinaryPredicateImpl<GreaterThanPre
     implements GreaterThanPredicate
 {
 
-    public GreaterThanPredicateImpl( NonBooleanExpression left, NonBooleanExpression right )
+    public GreaterThanPredicateImpl( SQLProcessorAggregator processor, NonBooleanExpression left,
+        NonBooleanExpression right )
     {
-        this( GreaterThanPredicate.class, left, right );
+        this( processor, GreaterThanPredicate.class, left, right );
     }
 
-    protected GreaterThanPredicateImpl( Class<? extends GreaterThanPredicate> predicateClass,
-        NonBooleanExpression left, NonBooleanExpression right )
+    protected GreaterThanPredicateImpl( SQLProcessorAggregator processor,
+        Class<? extends GreaterThanPredicate> predicateClass, NonBooleanExpression left, NonBooleanExpression right )
     {
-        super( predicateClass, left, right );
+        super( processor, predicateClass, left, right );
     }
 
 }

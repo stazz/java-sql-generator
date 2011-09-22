@@ -19,6 +19,7 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.query.TableReference;
 import org.sql.generation.api.grammar.query.joins.JoinedTable;
 import org.sql.generation.implementation.grammar.query.QueryExpressionBodyImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -32,10 +33,10 @@ public abstract class JoinedTableImpl<TableReferenceType extends JoinedTable> ex
     private final TableReference _left;
     private final TableReference _right;
 
-    protected JoinedTableImpl( Class<? extends TableReferenceType> tableReferenceClass, TableReference left,
-        TableReference right )
+    protected JoinedTableImpl( SQLProcessorAggregator processor,
+        Class<? extends TableReferenceType> tableReferenceClass, TableReference left, TableReference right )
     {
-        super( tableReferenceClass );
+        super( processor, tableReferenceClass );
         NullArgumentException.validateNotNull( "left", left );
         NullArgumentException.validateNotNull( "right", right );
 

@@ -14,16 +14,17 @@
 
 package org.sql.generation.implementation.grammar.modification;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.modification.SetClause;
 import org.sql.generation.api.grammar.modification.UpdateSource;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class SetClauseImpl extends TypeableImpl<SetClause, SetClause>
+public class SetClauseImpl extends SQLSyntaxElementBase<SetClause, SetClause>
     implements SetClause
 {
 
@@ -31,14 +32,15 @@ public class SetClauseImpl extends TypeableImpl<SetClause, SetClause>
 
     private final UpdateSource _source;
 
-    public SetClauseImpl( String updateTarget, UpdateSource updateSource )
+    public SetClauseImpl( SQLProcessorAggregator processor, String updateTarget, UpdateSource updateSource )
     {
-        this( SetClause.class, updateTarget, updateSource );
+        this( processor, SetClause.class, updateTarget, updateSource );
     }
 
-    protected SetClauseImpl( Class<? extends SetClause> expressionClass, String updateTarget, UpdateSource updateSource )
+    protected SetClauseImpl( SQLProcessorAggregator processor, Class<? extends SetClause> expressionClass,
+        String updateTarget, UpdateSource updateSource )
     {
-        super( expressionClass );
+        super( processor, expressionClass );
         NullArgumentException.validateNotNull( "update target", updateTarget );
         NullArgumentException.validateNotNull( "source", updateSource );
 

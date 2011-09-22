@@ -22,13 +22,15 @@ import org.sql.generation.api.grammar.builders.definition.UniqueConstraintBuilde
 import org.sql.generation.api.grammar.definition.table.UniqueConstraint;
 import org.sql.generation.api.grammar.definition.table.UniqueSpecification;
 import org.sql.generation.api.grammar.factories.ColumnsFactory;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.grammar.definition.table.UniqueConstraintImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class UniqueConstraintBuilderImpl
+public class UniqueConstraintBuilderImpl extends SQLBuilderBase
     implements UniqueConstraintBuilder
 {
 
@@ -37,8 +39,9 @@ public class UniqueConstraintBuilderImpl
 
     private final ColumnsFactory _c;
 
-    public UniqueConstraintBuilderImpl( ColumnsFactory c )
+    public UniqueConstraintBuilderImpl( SQLProcessorAggregator processor, ColumnsFactory c )
     {
+        super( processor );
         NullArgumentException.validateNotNull( "Columns factory", c );
 
         this._c = c;
@@ -47,7 +50,7 @@ public class UniqueConstraintBuilderImpl
 
     public UniqueConstraint createExpression()
     {
-        return new UniqueConstraintImpl( this._c.colNames( this._columns ), this._uniqueness );
+        return new UniqueConstraintImpl( this.getProcessor(), this._c.colNames( this._columns ), this._uniqueness );
     }
 
     public UniqueConstraintBuilder setUniqueness( UniqueSpecification uniqueness )

@@ -20,6 +20,7 @@ import java.util.List;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.query.RowValueConstructor;
 import org.sql.generation.api.grammar.query.TableValueConstructor;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -31,18 +32,15 @@ public class TableValueConstructorImpl extends QueryExpressionBodyImpl<TableValu
 
     private final List<RowValueConstructor> _rows;
 
-    public TableValueConstructorImpl( List<RowValueConstructor> rows )
+    public TableValueConstructorImpl( SQLProcessorAggregator processor, List<RowValueConstructor> rows )
     {
-        this( TableValueConstructor.class, rows );
+        this( processor, TableValueConstructor.class, rows );
     }
 
-    /**
-     * @param expressionClass
-     */
-    protected TableValueConstructorImpl( Class<? extends TableValueConstructor> expressionClass,
-        List<RowValueConstructor> rows )
+    protected TableValueConstructorImpl( SQLProcessorAggregator processor,
+        Class<? extends TableValueConstructor> expressionClass, List<RowValueConstructor> rows )
     {
-        super( expressionClass );
+        super( processor, expressionClass );
 
         NullArgumentException.validateNotNull( "rows", rows );
 

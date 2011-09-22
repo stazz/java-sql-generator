@@ -15,6 +15,7 @@
 package org.sql.generation.api.grammar.modification;
 
 import org.atp.api.Typeable;
+import org.sql.generation.api.grammar.common.TableName;
 import org.sql.generation.api.grammar.common.TableNameDirect;
 
 /**

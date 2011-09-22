@@ -21,6 +21,7 @@ import org.sql.generation.api.grammar.manipulation.DropTableOrViewStatement;
 import org.sql.generation.api.grammar.manipulation.ObjectType;
 import org.sql.generation.api.grammar.manipulation.pgsql.PgSQLDropTableOrViewStatement;
 import org.sql.generation.implementation.grammar.manipulation.DropTableOrViewStatementImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -32,16 +33,17 @@ public class PgSQLDropTableOrViewStatementImpl extends DropTableOrViewStatementI
 
     private final Boolean _useIfExists;
 
-    public PgSQLDropTableOrViewStatementImpl( ObjectType whatToDrop, DropBehaviour dropBehaviour, TableNameDirect name,
-        Boolean useIfExists )
+    public PgSQLDropTableOrViewStatementImpl( SQLProcessorAggregator processor, ObjectType whatToDrop,
+        DropBehaviour dropBehaviour, TableNameDirect name, Boolean useIfExists )
     {
-        this( PgSQLDropTableOrViewStatement.class, whatToDrop, dropBehaviour, name, useIfExists );
+        this( processor, PgSQLDropTableOrViewStatement.class, whatToDrop, dropBehaviour, name, useIfExists );
     }
 
-    protected PgSQLDropTableOrViewStatementImpl( Class<? extends PgSQLDropTableOrViewStatement> realImplementingType,
-        ObjectType whatToDrop, DropBehaviour dropBehaviour, TableNameDirect name, Boolean useIfExists )
+    protected PgSQLDropTableOrViewStatementImpl( SQLProcessorAggregator processor,
+        Class<? extends PgSQLDropTableOrViewStatement> realImplementingType, ObjectType whatToDrop,
+        DropBehaviour dropBehaviour, TableNameDirect name, Boolean useIfExists )
     {
-        super( realImplementingType, whatToDrop, dropBehaviour, name );
+        super( processor, realImplementingType, whatToDrop, dropBehaviour, name );
 
         NullArgumentException.validateNotNull( "Use IF EXISTS", useIfExists );
 

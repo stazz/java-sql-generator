@@ -22,6 +22,7 @@ import org.sql.generation.api.grammar.query.GroupByClause;
 import org.sql.generation.api.grammar.query.OrderByClause;
 import org.sql.generation.api.grammar.query.QuerySpecification;
 import org.sql.generation.api.grammar.query.SelectColumnClause;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -43,16 +44,17 @@ public class QuerySpecificationImpl extends QueryExpressionBodyImpl<QuerySpecifi
 
     private final OrderByClause _orderBy;
 
-    public QuerySpecificationImpl( SelectColumnClause select, FromClause from, BooleanExpression where,
-        GroupByClause groupBy, BooleanExpression having, OrderByClause orderBy )
+    public QuerySpecificationImpl( SQLProcessorAggregator processor, SelectColumnClause select, FromClause from,
+        BooleanExpression where, GroupByClause groupBy, BooleanExpression having, OrderByClause orderBy )
     {
-        this( QuerySpecification.class, select, from, where, groupBy, having, orderBy );
+        this( processor, QuerySpecification.class, select, from, where, groupBy, having, orderBy );
     }
 
-    protected QuerySpecificationImpl( Class<? extends QuerySpecification> queryClass, SelectColumnClause select,
-        FromClause from, BooleanExpression where, GroupByClause groupBy, BooleanExpression having, OrderByClause orderBy )
+    protected QuerySpecificationImpl( SQLProcessorAggregator processor, Class<? extends QuerySpecification> queryClass,
+        SelectColumnClause select, FromClause from, BooleanExpression where, GroupByClause groupBy,
+        BooleanExpression having, OrderByClause orderBy )
     {
-        super( queryClass );
+        super( processor, queryClass );
 
         NullArgumentException.validateNotNull( "select", select );
 

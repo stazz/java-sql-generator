@@ -23,12 +23,14 @@ import org.sql.generation.api.grammar.definition.table.TableCommitAction;
 import org.sql.generation.api.grammar.definition.table.TableContentsSource;
 import org.sql.generation.api.grammar.definition.table.TableDefinition;
 import org.sql.generation.api.grammar.definition.table.TableScope;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class TableDefinitionImpl extends TypeableImpl<SchemaStatement, TableDefinition>
+public class TableDefinitionImpl extends SQLSyntaxElementBase<SchemaStatement, TableDefinition>
     implements TableDefinition
 {
 
@@ -37,16 +39,17 @@ public class TableDefinitionImpl extends TypeableImpl<SchemaStatement, TableDefi
     private final TableNameDirect _name;
     private final TableScope _scope;
 
-    public TableDefinitionImpl( TableCommitAction commitAction, TableContentsSource contents, TableNameDirect name,
-        TableScope scope )
+    public TableDefinitionImpl( SQLProcessorAggregator processor, TableCommitAction commitAction,
+        TableContentsSource contents, TableNameDirect name, TableScope scope )
     {
-        this( TableDefinition.class, commitAction, contents, name, scope );
+        this( processor, TableDefinition.class, commitAction, contents, name, scope );
     }
 
-    protected TableDefinitionImpl( Class<? extends TableDefinition> realImplementingType,
-        TableCommitAction commitAction, TableContentsSource contents, TableNameDirect name, TableScope scope )
+    protected TableDefinitionImpl( SQLProcessorAggregator processor,
+        Class<? extends TableDefinition> realImplementingType, TableCommitAction commitAction,
+        TableContentsSource contents, TableNameDirect name, TableScope scope )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         NullArgumentException.validateNotNull( "Table name", name );
         NullArgumentException.validateNotNull( "Table contents", contents );

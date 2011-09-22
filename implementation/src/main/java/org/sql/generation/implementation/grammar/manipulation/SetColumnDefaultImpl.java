@@ -14,29 +14,31 @@
 
 package org.sql.generation.implementation.grammar.manipulation;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.manipulation.AlterColumnAction;
 import org.sql.generation.api.grammar.manipulation.SetColumnDefault;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class SetColumnDefaultImpl extends TypeableImpl<AlterColumnAction, SetColumnDefault>
+public class SetColumnDefaultImpl extends SQLSyntaxElementBase<AlterColumnAction, SetColumnDefault>
     implements SetColumnDefault
 {
 
     private final String _default;
 
-    public SetColumnDefaultImpl( String colDefault )
+    public SetColumnDefaultImpl( SQLProcessorAggregator processor, String colDefault )
     {
-        this( SetColumnDefault.class, colDefault );
+        this( processor, SetColumnDefault.class, colDefault );
     }
 
-    protected SetColumnDefaultImpl( Class<? extends SetColumnDefault> realImplementingType, String colDefault )
+    protected SetColumnDefaultImpl( SQLProcessorAggregator processor,
+        Class<? extends SetColumnDefault> realImplementingType, String colDefault )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         NullArgumentException.validateNotNull( "Column default", colDefault );
 

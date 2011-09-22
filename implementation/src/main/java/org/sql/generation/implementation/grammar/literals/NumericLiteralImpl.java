@@ -17,6 +17,7 @@ package org.sql.generation.implementation.grammar.literals;
 import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.grammar.literals.NumericLiteral;
 import org.sql.generation.implementation.grammar.common.NonBooleanExpressionImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -28,14 +29,15 @@ public class NumericLiteralImpl extends NonBooleanExpressionImpl<NumericLiteral>
 
     private final Number _number;
 
-    public NumericLiteralImpl( Number number )
+    public NumericLiteralImpl( SQLProcessorAggregator processor, Number number )
     {
-        this( NumericLiteral.class, number );
+        this( processor, NumericLiteral.class, number );
     }
 
-    protected NumericLiteralImpl( Class<? extends NumericLiteral> implClass, Number number )
+    protected NumericLiteralImpl( SQLProcessorAggregator processor, Class<? extends NumericLiteral> implClass,
+        Number number )
     {
-        super( implClass );
+        super( processor, implClass );
 
         this._number = number;
     }

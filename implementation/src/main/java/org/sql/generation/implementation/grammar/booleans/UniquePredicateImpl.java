@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.booleans;
 
 import org.sql.generation.api.grammar.booleans.UniquePredicate;
 import org.sql.generation.api.grammar.query.QueryExpression;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -25,14 +26,15 @@ public class UniquePredicateImpl extends UnaryPredicateImpl<UniquePredicate>
     implements UniquePredicate
 {
 
-    public UniquePredicateImpl( QueryExpression query )
+    public UniquePredicateImpl( SQLProcessorAggregator processor, QueryExpression query )
     {
-        this( UniquePredicate.class, query );
+        this( processor, UniquePredicate.class, query );
     }
 
-    protected UniquePredicateImpl( Class<? extends UniquePredicate> predicateClass, QueryExpression query )
+    protected UniquePredicateImpl( SQLProcessorAggregator processor, Class<? extends UniquePredicate> predicateClass,
+        QueryExpression query )
     {
-        super( predicateClass, query );
+        super( processor, predicateClass, query );
     }
 
     @Override

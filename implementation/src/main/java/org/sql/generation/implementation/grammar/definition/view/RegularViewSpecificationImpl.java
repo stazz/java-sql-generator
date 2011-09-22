@@ -14,30 +14,31 @@
 
 package org.sql.generation.implementation.grammar.definition.view;
 
-import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.grammar.common.ColumnNameList;
 import org.sql.generation.api.grammar.definition.view.RegularViewSpecification;
 import org.sql.generation.api.grammar.definition.view.ViewSpecification;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class RegularViewSpecificationImpl extends TypeableImpl<ViewSpecification, RegularViewSpecification>
+public class RegularViewSpecificationImpl extends SQLSyntaxElementBase<ViewSpecification, RegularViewSpecification>
     implements RegularViewSpecification
 {
 
     private final ColumnNameList _columns;
 
-    public RegularViewSpecificationImpl( ColumnNameList columns )
+    public RegularViewSpecificationImpl( SQLProcessorAggregator processor, ColumnNameList columns )
     {
-        this( RegularViewSpecification.class, columns );
+        this( processor, RegularViewSpecification.class, columns );
     }
 
-    protected RegularViewSpecificationImpl( Class<? extends RegularViewSpecification> realImplementingType,
-        ColumnNameList columns )
+    protected RegularViewSpecificationImpl( SQLProcessorAggregator processor,
+        Class<? extends RegularViewSpecification> realImplementingType, ColumnNameList columns )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         this._columns = columns;
     }

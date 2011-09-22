@@ -24,25 +24,35 @@ import org.sql.generation.api.grammar.literals.DirectLiteral;
 import org.sql.generation.api.grammar.literals.NumericLiteral;
 import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
 import org.sql.generation.api.grammar.literals.StringLiteral;
+import org.sql.generation.api.vendor.SQLVendor;
+import org.sql.generation.implementation.grammar.common.SQLFactoryBase;
 import org.sql.generation.implementation.grammar.literals.DateTimeLiteralImpl;
 import org.sql.generation.implementation.grammar.literals.DirectLiteralImpl;
 import org.sql.generation.implementation.grammar.literals.NumericLiteralImpl;
 import org.sql.generation.implementation.grammar.literals.SQLFunctionLiteralImpl;
 import org.sql.generation.implementation.grammar.literals.StringLiteralImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class DefaultLiteralFactory
+public class DefaultLiteralFactory extends SQLFactoryBase
     implements LiteralFactory
 {
 
-    private static final DirectLiteral _param = new DirectLiteralImpl( SQLConstants.QUESTION_MARK );
+    private final DirectLiteral _param;
+
+    public DefaultLiteralFactory( SQLVendor vendor, SQLProcessorAggregator processor )
+    {
+        super( vendor, processor );
+
+        this._param = new DirectLiteralImpl( this.getProcessor(), SQLConstants.QUESTION_MARK );
+    }
 
     public DirectLiteral l( String literalContents )
     {
-        return new DirectLiteralImpl( literalContents );
+        return new DirectLiteralImpl( this.getProcessor(), literalContents );
     }
 
     public DirectLiteral param()
@@ -52,21 +62,21 @@ public class DefaultLiteralFactory
 
     public StringLiteral s( String literal )
     {
-        return new StringLiteralImpl( literal );
+        return new StringLiteralImpl( this.getProcessor(), literal );
     }
 
     public DateTimeLiteral dt( Date date )
     {
-        return new DateTimeLiteralImpl( date );
+        return new DateTimeLiteralImpl( this.getProcessor(), date );
     }
 
     public NumericLiteral n( Number number )
     {
-        return new NumericLiteralImpl( number );
+        return new NumericLiteralImpl( this.getProcessor(), number );
     }
 
     public SQLFunctionLiteral func( String name, ValueExpression... parameters )
     {
-        return new SQLFunctionLiteralImpl( name, parameters );
+        return new SQLFunctionLiteralImpl( this.getProcessor(), name, parameters );
     }
 }

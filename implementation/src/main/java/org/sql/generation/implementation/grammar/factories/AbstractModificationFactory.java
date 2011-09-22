@@ -19,14 +19,22 @@ import org.sql.generation.api.grammar.factories.ModificationFactory;
 import org.sql.generation.api.grammar.modification.ColumnSourceByQuery;
 import org.sql.generation.api.grammar.modification.TargetTable;
 import org.sql.generation.api.grammar.query.QueryExpression;
+import org.sql.generation.api.vendor.SQLVendor;
+import org.sql.generation.implementation.grammar.common.SQLFactoryBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public abstract class AbstractModificationFactory
+public abstract class AbstractModificationFactory extends SQLFactoryBase
     implements ModificationFactory
 {
+
+    protected AbstractModificationFactory( SQLVendor vendor, SQLProcessorAggregator processor )
+    {
+        super( vendor, processor );
+    }
 
     public TargetTable createTargetTable( TableNameDirect tableName )
     {

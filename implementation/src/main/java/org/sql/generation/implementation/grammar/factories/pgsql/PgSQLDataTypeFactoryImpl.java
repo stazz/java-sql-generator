@@ -16,8 +16,10 @@ package org.sql.generation.implementation.grammar.factories.pgsql;
 
 import org.sql.generation.api.grammar.common.datatypes.pgsql.Text;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLDataTypeFactory;
+import org.sql.generation.api.vendor.PostgreSQLVendor;
 import org.sql.generation.implementation.grammar.common.datatypes.pgsql.TextImpl;
 import org.sql.generation.implementation.grammar.factories.DefaultDataTypeFactory;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -26,6 +28,11 @@ import org.sql.generation.implementation.grammar.factories.DefaultDataTypeFactor
 public class PgSQLDataTypeFactoryImpl extends DefaultDataTypeFactory
     implements PgSQLDataTypeFactory
 {
+
+    public PgSQLDataTypeFactoryImpl( PostgreSQLVendor vendor, SQLProcessorAggregator processor )
+    {
+        super( vendor, processor );
+    }
 
     public Text text()
     {

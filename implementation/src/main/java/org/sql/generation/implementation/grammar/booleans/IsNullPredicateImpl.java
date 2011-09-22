@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.booleans;
 
 import org.sql.generation.api.grammar.booleans.IsNullPredicate;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -25,14 +26,15 @@ public class IsNullPredicateImpl extends UnaryPredicateImpl<IsNullPredicate>
     implements IsNullPredicate
 {
 
-    public IsNullPredicateImpl( NonBooleanExpression expression )
+    public IsNullPredicateImpl( SQLProcessorAggregator processor, NonBooleanExpression expression )
     {
-        this( IsNullPredicate.class, expression );
+        this( processor, IsNullPredicate.class, expression );
     }
 
-    protected IsNullPredicateImpl( Class<? extends IsNullPredicate> predicateClass, NonBooleanExpression expression )
+    protected IsNullPredicateImpl( SQLProcessorAggregator processor, Class<? extends IsNullPredicate> predicateClass,
+        NonBooleanExpression expression )
     {
-        super( predicateClass, expression );
+        super( processor, predicateClass, expression );
     }
 
 }

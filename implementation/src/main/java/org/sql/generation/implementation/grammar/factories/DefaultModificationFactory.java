@@ -14,7 +14,6 @@
 
 package org.sql.generation.implementation.grammar.factories;
 
-import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.builders.modification.ColumnSourceByValuesBuilder;
 import org.sql.generation.api.grammar.builders.modification.DeleteBySearchBuilder;
 import org.sql.generation.api.grammar.builders.modification.InsertStatementBuilder;
@@ -37,6 +36,7 @@ import org.sql.generation.implementation.grammar.modification.ColumnSourceByQuer
 import org.sql.generation.implementation.grammar.modification.SetClauseImpl;
 import org.sql.generation.implementation.grammar.modification.TargetTableImpl;
 import org.sql.generation.implementation.grammar.modification.UpdateSourceByExpressionImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -45,51 +45,50 @@ import org.sql.generation.implementation.grammar.modification.UpdateSourceByExpr
 public class DefaultModificationFactory extends AbstractModificationFactory
 {
 
-    private final SQLVendor _vendor;
-
-    public DefaultModificationFactory( SQLVendor vendor )
+    public DefaultModificationFactory( SQLVendor vendor, SQLProcessorAggregator processor )
     {
-        NullArgumentException.validateNotNull( "vendor", vendor );
-        this._vendor = vendor;
+        super( vendor, processor );
     }
 
     public ColumnSourceByValuesBuilder columnSourceByValues()
     {
-        return new ColumnSourceByValuesBuilderImpl();
+        return new ColumnSourceByValuesBuilderImpl( this.getProcessor() );
     }
 
     public ColumnSourceByQuery columnSourceByQuery( ColumnNameList columnNames, QueryExpression query )
     {
-        return new ColumnSourceByQueryImpl( columnNames, query );
+        return new ColumnSourceByQueryImpl( this.getProcessor(), columnNames, query );
     }
 
     public DeleteBySearchBuilder deleteBySearch()
     {
-        return new DeleteBySearchBuilderImpl( this._vendor.getBooleanFactory().booleanBuilder() );
+        return new DeleteBySearchBuilderImpl( this.getProcessor(), this.getVendor().getBooleanFactory()
+            .booleanBuilder() );
     }
 
     public InsertStatementBuilder insert()
     {
-        return new InsertStatementBuilderImpl();
+        return new InsertStatementBuilderImpl( this.getProcessor() );
     }
 
     public UpdateBySearchBuilder updateBySearch()
     {
-        return new UpdateBySearchBuilderImpl( this._vendor.getBooleanFactory().booleanBuilder() );
+        return new UpdateBySearchBuilderImpl( this.getProcessor(), this.getVendor().getBooleanFactory()
+            .booleanBuilder() );
     }
 
     public TargetTable createTargetTable( TableNameDirect tableName, Boolean isOnly )
     {
-        return new TargetTableImpl( isOnly, tableName );
+        return new TargetTableImpl( this.getProcessor(), isOnly, tableName );
     }
 
     public UpdateSourceByExpression updateSourceByExp( ValueExpression expression )
     {
-        return new UpdateSourceByExpressionImpl( expression );
+        return new UpdateSourceByExpressionImpl( this.getProcessor(), expression );
     }
 
     public SetClause setClause( String updateTarget, UpdateSource updateSource )
     {
-        return new SetClauseImpl( updateTarget, updateSource );
+        return new SetClauseImpl( this.getProcessor(), updateTarget, updateSource );
     }
 }

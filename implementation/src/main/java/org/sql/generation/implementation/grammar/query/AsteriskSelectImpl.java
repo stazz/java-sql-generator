@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.query;
 
 import org.sql.generation.api.grammar.common.SetQuantifier;
 import org.sql.generation.api.grammar.query.AsteriskSelect;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -24,14 +25,15 @@ import org.sql.generation.api.grammar.query.AsteriskSelect;
 public class AsteriskSelectImpl extends SelectColumnClauseImpl<AsteriskSelect>
     implements AsteriskSelect
 {
-    public AsteriskSelectImpl( SetQuantifier quantifier )
+    public AsteriskSelectImpl( SQLProcessorAggregator processor, SetQuantifier quantifier )
     {
-        this( AsteriskSelect.class, quantifier );
+        this( processor, AsteriskSelect.class, quantifier );
     }
 
-    public AsteriskSelectImpl( Class<? extends AsteriskSelect> type, SetQuantifier quantifier )
+    public AsteriskSelectImpl( SQLProcessorAggregator processor, Class<? extends AsteriskSelect> type,
+        SetQuantifier quantifier )
     {
-        super( type, quantifier );
+        super( processor, type, quantifier );
     }
 
 }

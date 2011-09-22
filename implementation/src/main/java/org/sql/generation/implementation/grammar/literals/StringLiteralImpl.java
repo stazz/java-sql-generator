@@ -17,6 +17,7 @@ package org.sql.generation.implementation.grammar.literals;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.literals.StringLiteral;
 import org.sql.generation.implementation.grammar.common.NonBooleanExpressionImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -28,14 +29,15 @@ public class StringLiteralImpl extends NonBooleanExpressionImpl<StringLiteral>
 
     private final String _literal;
 
-    public StringLiteralImpl( String literal )
+    public StringLiteralImpl( SQLProcessorAggregator processor, String literal )
     {
-        this( StringLiteral.class, literal );
+        this( processor, StringLiteral.class, literal );
     }
 
-    protected StringLiteralImpl( Class<? extends StringLiteral> implClass, String literal )
+    protected StringLiteralImpl( SQLProcessorAggregator processor, Class<? extends StringLiteral> implClass,
+        String literal )
     {
-        super( implClass );
+        super( processor, implClass );
         NullArgumentException.validateNotNull( "literal", literal );
 
         this._literal = literal;

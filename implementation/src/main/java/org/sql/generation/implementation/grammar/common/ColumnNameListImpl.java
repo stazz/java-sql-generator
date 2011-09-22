@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.ColumnNameList;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -33,14 +34,15 @@ public class ColumnNameListImpl extends NonBooleanExpressionImpl<ColumnNameList>
 
     private final List<String> _columnNames;
 
-    public ColumnNameListImpl( Collection<String> columnNames )
+    public ColumnNameListImpl( SQLProcessorAggregator processor, Collection<String> columnNames )
     {
-        this( ColumnNameList.class, columnNames );
+        this( processor, ColumnNameList.class, columnNames );
     }
 
-    protected ColumnNameListImpl( Class<? extends ColumnNameList> implClass, Collection<String> columnNames )
+    protected ColumnNameListImpl( SQLProcessorAggregator processor, Class<? extends ColumnNameList> implClass,
+        Collection<String> columnNames )
     {
-        super( implClass );
+        super( processor, implClass );
         NullArgumentException.validateNotNull( "column names", columnNames );
 
         if( columnNames.isEmpty() )
@@ -56,9 +58,9 @@ public class ColumnNameListImpl extends NonBooleanExpressionImpl<ColumnNameList>
         this._columnNames = Collections.unmodifiableList( new ArrayList<String>( columnNames ) );
     }
 
-    public ColumnNameListImpl( String... columnNames )
+    public ColumnNameListImpl( SQLProcessorAggregator processor, String... columnNames )
     {
-        this( Arrays.asList( columnNames ) );
+        this( processor, Arrays.asList( columnNames ) );
     }
 
     public List<String> getColumnNames()

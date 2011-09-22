@@ -14,6 +14,7 @@
 
 package org.sql.generation.api.grammar.query;
 
+import org.atp.api.Typeable;
 import org.sql.generation.api.grammar.common.ColumnNameList;
 
 /**
@@ -22,6 +23,7 @@ import org.sql.generation.api.grammar.common.ColumnNameList;
  * @author Stanislav Muhametsin
  */
 public interface TableAlias
+    extends Typeable<TableAlias>
 {
 
     /**

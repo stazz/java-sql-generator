@@ -24,13 +24,15 @@ import org.sql.generation.api.grammar.definition.table.ForeignKeyConstraint;
 import org.sql.generation.api.grammar.definition.table.MatchType;
 import org.sql.generation.api.grammar.definition.table.ReferentialAction;
 import org.sql.generation.api.grammar.factories.ColumnsFactory;
+import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.grammar.definition.table.ForeignKeyConstraintImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class ForeignKeyConstraintBuilderImpl
+public class ForeignKeyConstraintBuilderImpl extends SQLBuilderBase
     implements ForeignKeyConstraintBuilder
 {
 
@@ -43,8 +45,9 @@ public class ForeignKeyConstraintBuilderImpl
 
     private final ColumnsFactory _c;
 
-    public ForeignKeyConstraintBuilderImpl( ColumnsFactory c )
+    public ForeignKeyConstraintBuilderImpl( SQLProcessorAggregator processor, ColumnsFactory c )
     {
+        super( processor );
         NullArgumentException.validateNotNull( "Columns factory", c );
 
         this._c = c;
@@ -55,9 +58,9 @@ public class ForeignKeyConstraintBuilderImpl
 
     public ForeignKeyConstraint createExpression()
     {
-        return new ForeignKeyConstraintImpl( this._c.colNames( this._sourceColumns ), this._targetTable,
-            this._targetColumns.size() == 0 ? null : this._c.colNames( this._targetColumns ), this._matchType,
-            this._onDelete, this._onUpdate );
+        return new ForeignKeyConstraintImpl( this.getProcessor(), this._c.colNames( this._sourceColumns ),
+            this._targetTable, this._targetColumns.size() == 0 ? null : this._c.colNames( this._targetColumns ),
+            this._matchType, this._onDelete, this._onUpdate );
     }
 
     public ForeignKeyConstraintBuilder addSourceColumns( String... columnNames )

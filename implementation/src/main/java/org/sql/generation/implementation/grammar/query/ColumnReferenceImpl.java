@@ -16,6 +16,7 @@ package org.sql.generation.implementation.grammar.query;
 
 import org.sql.generation.api.grammar.query.ColumnReference;
 import org.sql.generation.implementation.grammar.common.NonBooleanExpressionImpl;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -25,9 +26,10 @@ public abstract class ColumnReferenceImpl<ColumnReferenceType extends ColumnRefe
     NonBooleanExpressionImpl<ColumnReferenceType>
     implements ColumnReference
 {
-    public ColumnReferenceImpl( Class<? extends ColumnReferenceType> columnReferenceClass )
+    public ColumnReferenceImpl( SQLProcessorAggregator processor,
+        Class<? extends ColumnReferenceType> columnReferenceClass )
     {
-        super( columnReferenceClass );
+        super( processor, columnReferenceClass );
     }
 
 }

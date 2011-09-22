@@ -23,12 +23,14 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.SchemaStatement;
 import org.sql.generation.api.grammar.definition.schema.SchemaDefinition;
 import org.sql.generation.api.grammar.definition.schema.SchemaElement;
+import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class SchemaDefinitionImpl extends TypeableImpl<SchemaStatement, SchemaDefinition>
+public class SchemaDefinitionImpl extends SQLSyntaxElementBase<SchemaStatement, SchemaDefinition>
     implements SchemaDefinition
 {
 
@@ -36,15 +38,17 @@ public class SchemaDefinitionImpl extends TypeableImpl<SchemaStatement, SchemaDe
     private final String _name;
     private final List<SchemaElement> _elements;
 
-    public SchemaDefinitionImpl( String name, String charset, List<SchemaElement> elements )
+    public SchemaDefinitionImpl( SQLProcessorAggregator processor, String name, String charset,
+        List<SchemaElement> elements )
     {
-        this( SchemaDefinition.class, name, charset, elements );
+        this( processor, SchemaDefinition.class, name, charset, elements );
     }
 
-    protected SchemaDefinitionImpl( Class<? extends SchemaDefinition> realImplementingType, String name,
-        String charset, List<SchemaElement> elements )
+    protected SchemaDefinitionImpl( SQLProcessorAggregator processor,
+        Class<? extends SchemaDefinition> realImplementingType, String name, String charset,
+        List<SchemaElement> elements )
     {
-        super( realImplementingType );
+        super( processor, realImplementingType );
 
         NullArgumentException.validateNotNull( "Schema name", name );
         NullArgumentException.validateNotNull( "Elements", elements );

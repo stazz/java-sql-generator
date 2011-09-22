@@ -18,6 +18,7 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.manipulation.DropBehaviour;
 import org.sql.generation.api.grammar.manipulation.DropSchemaStatement;
 import org.sql.generation.api.grammar.manipulation.ObjectType;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -29,15 +30,16 @@ public class DropSchemaStatementImpl extends DropStatementImpl<DropSchemaStateme
 
     private final String _schemaName;
 
-    public DropSchemaStatementImpl( DropBehaviour dropBehaviour, String schemaName )
+    public DropSchemaStatementImpl( SQLProcessorAggregator processor, DropBehaviour dropBehaviour, String schemaName )
     {
-        this( DropSchemaStatement.class, ObjectType.SCHEMA, dropBehaviour, schemaName );
+        this( processor, DropSchemaStatement.class, ObjectType.SCHEMA, dropBehaviour, schemaName );
     }
 
-    protected DropSchemaStatementImpl( Class<? extends DropSchemaStatement> realImplementingType,
-        ObjectType whatToDrop, DropBehaviour dropBehaviour, String schemaName )
+    protected DropSchemaStatementImpl( SQLProcessorAggregator processor,
+        Class<? extends DropSchemaStatement> realImplementingType, ObjectType whatToDrop, DropBehaviour dropBehaviour,
+        String schemaName )
     {
-        super( realImplementingType, whatToDrop, dropBehaviour );
+        super( processor, realImplementingType, whatToDrop, dropBehaviour );
 
         NullArgumentException.validateNotNull( "Schema name", schemaName );
 

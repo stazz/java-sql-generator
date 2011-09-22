@@ -18,6 +18,7 @@ import java.util.Iterator;
 
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.booleans.ComposedBooleanExpression;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
@@ -28,9 +29,10 @@ public abstract class ComposedBooleanExpressionImpl<ExpressionType extends Compo
     implements ComposedBooleanExpression
 {
 
-    protected ComposedBooleanExpressionImpl( Class<? extends ExpressionType> expressionClass )
+    protected ComposedBooleanExpressionImpl( SQLProcessorAggregator processor,
+        Class<? extends ExpressionType> expressionClass )
     {
-        super( expressionClass );
+        super( processor, expressionClass );
     }
 
     @Override

@@ -21,15 +21,23 @@ import org.sql.generation.api.grammar.factories.QueryFactory;
 import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
 import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.grammar.query.QueryExpressionBody;
+import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.grammar.builders.query.ColumnsBuilderImpl;
+import org.sql.generation.implementation.grammar.common.SQLFactoryBase;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public abstract class AbstractQueryFactory
+public abstract class AbstractQueryFactory extends SQLFactoryBase
     implements QueryFactory
 {
+
+    protected AbstractQueryFactory( SQLVendor vendor, SQLProcessorAggregator processor )
+    {
+        super( vendor, processor );
+    }
 
     public QueryBuilder queryBuilder()
     {
@@ -38,7 +46,7 @@ public abstract class AbstractQueryFactory
 
     public ColumnsBuilder columnsBuilder()
     {
-        return new ColumnsBuilderImpl( SetQuantifier.ALL );
+        return new ColumnsBuilderImpl( this.getProcessor(), SetQuantifier.ALL );
     }
 
     public QueryExpression callFunction( SQLFunctionLiteral function )
