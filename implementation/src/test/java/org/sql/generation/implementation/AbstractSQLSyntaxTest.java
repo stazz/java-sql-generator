@@ -14,6 +14,7 @@
 
 package org.sql.generation.implementation;
 
+import org.junit.Assert;
 import org.slf4j.LoggerFactory;
 import org.sql.generation.api.grammar.common.SQLStatement;
 import org.sql.generation.api.vendor.SQLVendor;
@@ -27,8 +28,12 @@ public abstract class AbstractSQLSyntaxTest
 
     protected void logStatement( String statementType, SQLVendor vendor, SQLStatement statement )
     {
-        LoggerFactory.getLogger( this.getClass().getName() ).info(
-            statementType + ":" + "\n" + vendor.toString( statement ) + "\n" );
+        String stringStmt = vendor.toString( statement );
+        LoggerFactory.getLogger( this.getClass().getName() ).info( statementType + ":" + "\n" + stringStmt + "\n" );
+
+        Assert.assertEquals(
+            "Strings must be same from both SQLVendor.toString(...) and statement.toString() methods.", stringStmt,
+            statement.toString() );
     }
 
     protected abstract SQLVendor getVendor()
