@@ -1,6 +1,6 @@
-The java-sql-generator is a framework to generate syntactically correct SQL statements with Java language. It provides uniform, typesafe, and (reasonably) easy way to create SQL statements using provided API's. It is specifically designed to handle even really complex SQL clauses. In fact, the API's were designed by looking at SQL 99 BNF ( http://savage.net.au/SQL/sql-99.bnf.html ) in one monitor, and creating the corresponding Java API in another monitor. However, there are many things omitted from automated BNF conversion, so that API would remain usable and simple.
+The java-sql-generator is a framework to generate syntactically correct SQL statements with Java language. It provides uniform, typesafe, and (reasonably) easy way to create SQL statements using provided API's. It is specifically designed to handle even really complex SQL clauses. In fact, the API's were designed by looking at SQL 99 BNF ( http://savage.net.au/SQL/sql-99.bnf.html ), and creating the corresponding Java API. However, there are many things omitted, changed, or varied from automated BNF conversion, so that API would remain usable and simple.
 
-Please notice that this framework depends on API Typeable POJOs (ATP) project ( http://github.com/stazz/api-typeable-pojos ). Currently APT is in public maven repo, so you will won't need to download it separately, if you are using Maven.
+Please notice that this framework depends on API Typeable POJOs (ATP) project ( http://github.com/stazz/api-typeable-pojos ). Currently APT is in public maven repo, so you won't need to download it separately, if you are using Maven.
 
 Currently there is support for data querying (SELECT), modification (INSERT, UPDATE, DELETE), data definition (CREATE), data manipulation (ALTER).
 
