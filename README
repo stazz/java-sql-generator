@@ -30,4 +30,6 @@ QueryExpression query = vendor.getQueryFactory().simpleQueryBuilder()
   .orderByAsc( "1" )
   .createExpression();
 
+// The following two statements produce equivalent SQL statement string
 String sqlString = vendor.toString( query );
+String sqlStirng2 = query.toString( );
