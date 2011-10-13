@@ -15,9 +15,10 @@
 package org.sql.generation.api.grammar.factories;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import org.sql.generation.api.grammar.common.ValueExpression;
-import org.sql.generation.api.grammar.literals.DateTimeLiteral;
+import org.sql.generation.api.grammar.literals.TimestampTimeLiteral;
 import org.sql.generation.api.grammar.literals.DirectLiteral;
 import org.sql.generation.api.grammar.literals.NumericLiteral;
 import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
@@ -61,9 +62,9 @@ public interface LiteralFactory
      * Creates a literal, which has some date as content.
      * 
      * @param date The date to use.
-     * @return The new {@link DateTimeLiteral}.
+     * @return The new {@link TimestampTimeLiteral}.
      */
-    public DateTimeLiteral dt( Date date );
+    public TimestampTimeLiteral dt( Timestamp date );
 
     /**
      * Creates a literal, which has some number as contents.

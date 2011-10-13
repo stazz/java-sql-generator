@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 import org.sql.generation.api.grammar.common.SQLConstants;
 import org.sql.generation.api.grammar.common.ValueExpression;
-import org.sql.generation.api.grammar.literals.DateTimeLiteral;
+import org.sql.generation.api.grammar.literals.TimestampTimeLiteral;
 import org.sql.generation.api.grammar.literals.DirectLiteral;
 import org.sql.generation.api.grammar.literals.NumericLiteral;
 import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
@@ -65,20 +65,20 @@ public class LiteralExpressionProcessing
         }
     }
 
-    public static class DateTimeLiteralProcessor extends AbstractProcessor<DateTimeLiteral>
+    public static class DateTimeLiteralProcessor extends AbstractProcessor<TimestampTimeLiteral>
     {
         private final DateFormat _format;
 
         public DateTimeLiteralProcessor()
         {
-            super( DateTimeLiteral.class );
+            super( TimestampTimeLiteral.class );
             this._format = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss.SSS" );
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator processor, DateTimeLiteral object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, TimestampTimeLiteral object, StringBuilder builder )
         {
-            builder.append( "'" + this._format.format( object.getDate() ) + "'" );
+            builder.append( "'" + this._format.format( object.getTimestamp() ) + "'" );
         }
     }
 

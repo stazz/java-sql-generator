@@ -76,7 +76,7 @@ import org.sql.generation.api.grammar.definition.table.TableElementList;
 import org.sql.generation.api.grammar.definition.table.UniqueConstraint;
 import org.sql.generation.api.grammar.definition.view.RegularViewSpecification;
 import org.sql.generation.api.grammar.definition.view.ViewDefinition;
-import org.sql.generation.api.grammar.literals.DateTimeLiteral;
+import org.sql.generation.api.grammar.literals.TimestampTimeLiteral;
 import org.sql.generation.api.grammar.literals.DirectLiteral;
 import org.sql.generation.api.grammar.literals.NumericLiteral;
 import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
@@ -352,7 +352,7 @@ public class DefaultSQLProcessor
 
         // Literals
         processors.put( StringLiteral.class, new StringLiteralExpressionProcessor() );
-        processors.put( DateTimeLiteral.class, new DateTimeLiteralProcessor() );
+        processors.put( TimestampTimeLiteral.class, new DateTimeLiteralProcessor() );
         processors.put( SQLFunctionLiteral.class, new SQLFunctionLiteralProcessor() );
         processors.put( NumericLiteral.class, new NumericLiteralProcessor() );
         processors.put( DirectLiteral.class, new DirectLiteralProcessor() );

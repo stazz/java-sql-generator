@@ -15,18 +15,19 @@
 package org.sql.generation.implementation.grammar.factories;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import org.sql.generation.api.grammar.common.SQLConstants;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.factories.LiteralFactory;
-import org.sql.generation.api.grammar.literals.DateTimeLiteral;
+import org.sql.generation.api.grammar.literals.TimestampTimeLiteral;
 import org.sql.generation.api.grammar.literals.DirectLiteral;
 import org.sql.generation.api.grammar.literals.NumericLiteral;
 import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
 import org.sql.generation.api.grammar.literals.StringLiteral;
 import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.grammar.common.SQLFactoryBase;
-import org.sql.generation.implementation.grammar.literals.DateTimeLiteralImpl;
+import org.sql.generation.implementation.grammar.literals.TimestampLiteralImpl;
 import org.sql.generation.implementation.grammar.literals.DirectLiteralImpl;
 import org.sql.generation.implementation.grammar.literals.NumericLiteralImpl;
 import org.sql.generation.implementation.grammar.literals.SQLFunctionLiteralImpl;
@@ -65,9 +66,9 @@ public class DefaultLiteralFactory extends SQLFactoryBase
         return new StringLiteralImpl( this.getProcessor(), literal );
     }
 
-    public DateTimeLiteral dt( Date date )
+    public TimestampTimeLiteral dt( Timestamp date )
     {
-        return new DateTimeLiteralImpl( this.getProcessor(), date );
+        return new TimestampLiteralImpl( this.getProcessor(), date );
     }
 
     public NumericLiteral n( Number number )

@@ -15,20 +15,21 @@
 package org.sql.generation.api.grammar.literals;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
- * This syntax element encapsulates reference to some date to be inserted into SQL statement.
+ * This syntax element encapsulates reference to some time stamp to be inserted into SQL statement.
  * 
  * @author Stanislav Muhametsin
  */
-public interface DateTimeLiteral
+public interface TimestampTimeLiteral
     extends TemporalLiteral
 {
 
     /**
-     * Returns the date to be inserted into SQL statement.
+     * Returns the time stamp to be inserted into SQL statement.
      * 
-     * @return The date to be inserted into SQL statement.
+     * @return The time stamp to be inserted into SQL statement.
      */
-    public Date getDate();
+    public Timestamp getTimestamp();
 }

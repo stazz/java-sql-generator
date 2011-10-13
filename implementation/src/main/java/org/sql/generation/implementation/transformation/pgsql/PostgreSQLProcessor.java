@@ -25,7 +25,7 @@ import org.sql.generation.api.grammar.common.datatypes.pgsql.Text;
 import org.sql.generation.api.grammar.definition.table.TableCommitAction;
 import org.sql.generation.api.grammar.definition.table.TableDefinition;
 import org.sql.generation.api.grammar.definition.table.pgsql.PgSQLTableCommitAction;
-import org.sql.generation.api.grammar.literals.DateTimeLiteral;
+import org.sql.generation.api.grammar.literals.TimestampTimeLiteral;
 import org.sql.generation.api.grammar.manipulation.pgsql.PgSQLDropTableOrViewStatement;
 import org.sql.generation.api.grammar.query.pgsql.PgSQLQuerySpecification;
 import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.BinaryPredicateProcessor;
@@ -60,7 +60,7 @@ public class PostgreSQLProcessor extends DefaultSQLProcessor
             DefaultSQLProcessor.getDefaultProcessors() );
 
         // Override default processor for date-time
-        processors.put( DateTimeLiteral.class, new PGDateTimeLiteralProcessor() );
+        processors.put( TimestampTimeLiteral.class, new PGDateTimeLiteralProcessor() );
 
         // Add support for regexp comparing
         processors.put( RegexpPredicate.class,

@@ -15,9 +15,10 @@
 package org.sql.generation.implementation.grammar.literals;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import org.sql.generation.api.common.NullArgumentException;
-import org.sql.generation.api.grammar.literals.DateTimeLiteral;
+import org.sql.generation.api.grammar.literals.TimestampTimeLiteral;
 import org.sql.generation.implementation.grammar.common.NonBooleanExpressionImpl;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
@@ -25,34 +26,34 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
  * 
  * @author Stanislav Muhametsin
  */
-public class DateTimeLiteralImpl extends NonBooleanExpressionImpl<DateTimeLiteral>
-    implements DateTimeLiteral
+public class TimestampLiteralImpl extends NonBooleanExpressionImpl<TimestampTimeLiteral>
+    implements TimestampTimeLiteral
 {
 
-    private final Date _date;
+    private final Timestamp _date;
 
-    public DateTimeLiteralImpl( SQLProcessorAggregator processor, Date date )
+    public TimestampLiteralImpl( SQLProcessorAggregator processor, Timestamp date )
     {
-        this( processor, DateTimeLiteral.class, date );
+        this( processor, TimestampTimeLiteral.class, date );
     }
 
-    protected DateTimeLiteralImpl( SQLProcessorAggregator processor, Class<? extends DateTimeLiteral> implClass,
-        Date date )
+    protected TimestampLiteralImpl( SQLProcessorAggregator processor, Class<? extends TimestampTimeLiteral> implClass,
+        Timestamp date )
     {
         super( processor, implClass );
 
-        NullArgumentException.validateNotNull( "Date", date );
+        NullArgumentException.validateNotNull( "Timestamp", date );
         this._date = date;
     }
 
-    public Date getDate()
+    public Timestamp getTimestamp()
     {
         return this._date;
     }
 
     @Override
-    protected boolean doesEqual( DateTimeLiteral another )
+    protected boolean doesEqual( TimestampTimeLiteral another )
     {
-        return this._date.equals( another.getDate() );
+        return this._date.equals( another.getTimestamp() );
     }
 }

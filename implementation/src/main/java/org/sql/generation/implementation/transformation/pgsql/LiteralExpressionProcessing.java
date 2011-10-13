@@ -14,7 +14,7 @@
 
 package org.sql.generation.implementation.transformation.pgsql;
 
-import org.sql.generation.api.grammar.literals.DateTimeLiteral;
+import org.sql.generation.api.grammar.literals.TimestampTimeLiteral;
 import org.sql.generation.implementation.transformation.LiteralExpressionProcessing.DateTimeLiteralProcessor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
@@ -27,7 +27,7 @@ public class LiteralExpressionProcessing
     public static class PGDateTimeLiteralProcessor extends DateTimeLiteralProcessor
     {
         @Override
-        protected void doProcess( SQLProcessorAggregator processor, DateTimeLiteral object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, TimestampTimeLiteral object, StringBuilder builder )
         {
             builder.append( "timestamp " );
             super.doProcess( processor, object, builder );

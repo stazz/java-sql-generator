@@ -18,7 +18,7 @@ package org.sql.generation.api.grammar.literals;
  * This syntax element represents any literal that represents some kind of time.
  * 
  * @author 2011 Stanislav Muhametsin
- * @see DateTimeLiteral
+ * @see TimestampTimeLiteral
  */
 public interface TemporalLiteral
     extends LiteralExpression
