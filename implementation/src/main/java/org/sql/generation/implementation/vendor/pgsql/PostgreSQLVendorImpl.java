@@ -83,11 +83,7 @@ public class PostgreSQLVendorImpl extends DefaultVendor
 
     public void setLegacyOffsetAndLimit( boolean useLegacyOffsetAndLimit )
     {
-        if( this._legacyOffsetAndLimit != useLegacyOffsetAndLimit )
-        {
-            this._legacyOffsetAndLimit = useLegacyOffsetAndLimit;
-            ((PostgreSQLProcessor) this.getProcessor()).setLegacyOffsetAndLimit( this._legacyOffsetAndLimit );
-        }
+        this._legacyOffsetAndLimit = useLegacyOffsetAndLimit;
     }
 
 }

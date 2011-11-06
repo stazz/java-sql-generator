@@ -149,22 +149,15 @@ public class QueryProcessing
 
     public static class QuerySpecificationProcessor extends AbstractProcessor<QuerySpecification>
     {
-        private final boolean _offsetBeforeLimit;
 
         public QuerySpecificationProcessor()
         {
-            this( QuerySpecification.class, true );
+            this( QuerySpecification.class );
         }
 
-        public QuerySpecificationProcessor( boolean offsetBeforeLimit )
-        {
-            this( QuerySpecification.class, offsetBeforeLimit );
-        }
-
-        public QuerySpecificationProcessor( Class<? extends QuerySpecification> queryClass, boolean offsetBeforeLimit )
+        public QuerySpecificationProcessor( Class<? extends QuerySpecification> queryClass )
         {
             super( queryClass );
-            this._offsetBeforeLimit = offsetBeforeLimit;
         }
 
         @Override
@@ -180,7 +173,7 @@ public class QueryProcessing
             processor.process( query.getOrderBy(), builder );
             Typeable<?> first = null;
             Typeable<?> second = null;
-            if( this._offsetBeforeLimit )
+            if( this.isOffsetBeforeLimit( processor ) )
             {
                 first = query.getOffsetSpecification();
                 second = query.getLimitSpecification();
@@ -202,6 +195,11 @@ public class QueryProcessing
                         + " clause, but without ORDER BY. The result will be unpredictable!" + "\n" + "Query: "
                         + builder.toString() );
             }
+        }
+
+        protected boolean isOffsetBeforeLimit( SQLProcessorAggregator processor )
+        {
+            return true;
         }
 
     }
@@ -484,23 +482,18 @@ public class QueryProcessing
     public static class OffsetSpecificationProcessor extends AbstractProcessor<OffsetSpecification>
     {
 
-        private final String _prefix;
-        private final String _postfix;
-
-        public OffsetSpecificationProcessor( String prefix, String postfix )
+        public OffsetSpecificationProcessor()
         {
             super( OffsetSpecification.class );
-
-            this._prefix = prefix;
-            this._postfix = postfix;
         }
 
         @Override
         protected void doProcess( SQLProcessorAggregator aggregator, OffsetSpecification object, StringBuilder builder )
         {
-            if( this._prefix != null )
+            String prefix = this.getPrefix( aggregator );
+            if( prefix != null )
             {
-                builder.append( this._prefix ).append( SQLConstants.TOKEN_SEPARATOR );
+                builder.append( prefix ).append( SQLConstants.TOKEN_SEPARATOR );
             }
             NonBooleanExpression skip = object.getSkip();
             boolean isComplex = !(skip instanceof LiteralExpression);
@@ -513,25 +506,29 @@ public class QueryProcessing
             {
                 builder.append( SQLConstants.CLOSE_PARENTHESIS );
             }
-            if( this._postfix != null )
+            String postfix = this.getPostfix( aggregator );
+            if( postfix != null )
             {
-                builder.append( SQLConstants.TOKEN_SEPARATOR ).append( this._postfix );
+                builder.append( SQLConstants.TOKEN_SEPARATOR ).append( postfix );
             }
+        }
+
+        protected String getPrefix( SQLProcessorAggregator processor )
+        {
+            return SQLConstants.OFFSET_PREFIX;
+        }
+
+        protected String getPostfix( SQLProcessorAggregator processor )
+        {
+            return SQLConstants.OFFSET_POSTFIX;
         }
     }
 
     public static class LimitSpecificationProcessor extends AbstractProcessor<LimitSpecification>
     {
-
-        private final String _prefix;
-        private final String _postfix;
-
-        public LimitSpecificationProcessor( String prefix, String postfix )
+        public LimitSpecificationProcessor()
         {
             super( LimitSpecification.class );
-
-            this._prefix = prefix;
-            this._postfix = postfix;
         }
 
         @Override
@@ -540,9 +537,10 @@ public class QueryProcessing
             NonBooleanExpression count = this.getRealCount( object.getCount() );
             if( count != null )
             {
-                if( this._prefix != null )
+                String prefix = this.getPrefix( aggregator );
+                if( prefix != null )
                 {
-                    builder.append( this._prefix ).append( SQLConstants.TOKEN_SEPARATOR );
+                    builder.append( prefix ).append( SQLConstants.TOKEN_SEPARATOR );
                 }
                 boolean isComplex = !(count instanceof LiteralExpression);
                 if( isComplex )
@@ -554,9 +552,10 @@ public class QueryProcessing
                 {
                     builder.append( SQLConstants.CLOSE_PARENTHESIS );
                 }
-                if( this._postfix != null )
+                String postfix = this.getPostfix( aggregator );
+                if( postfix != null )
                 {
-                    builder.append( SQLConstants.TOKEN_SEPARATOR ).append( this._postfix );
+                    builder.append( SQLConstants.TOKEN_SEPARATOR ).append( postfix );
                 }
             }
         }
@@ -564,6 +563,16 @@ public class QueryProcessing
         protected NonBooleanExpression getRealCount( NonBooleanExpression limitCount )
         {
             return limitCount;
+        }
+
+        protected String getPrefix( SQLProcessorAggregator processor )
+        {
+            return SQLConstants.LIMIT_PREFIX;
+        }
+
+        protected String getPostfix( SQLProcessorAggregator processor )
+        {
+            return SQLConstants.LIMIT_POSTFIX;
         }
 
     }

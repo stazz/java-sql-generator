@@ -381,10 +381,8 @@ public class DefaultSQLProcessor
         processors.put( TableValueConstructor.class, new TableValueConstructorProcessor() );
         processors.put( RowDefinition.class, new RowDefinitionProcessor() );
         processors.put( RowSubQuery.class, new RowSubQueryProcessor() );
-        processors.put( OffsetSpecification.class, new OffsetSpecificationProcessor( SQLConstants.OFFSET_PREFIX,
-            SQLConstants.OFFSET_POSTFIX ) );
-        processors.put( LimitSpecification.class, new LimitSpecificationProcessor( SQLConstants.LIMIT_PREFIX,
-            SQLConstants.LIMIT_POSTFIX ) );
+        processors.put( OffsetSpecification.class, new OffsetSpecificationProcessor() );
+        processors.put( LimitSpecification.class, new LimitSpecificationProcessor() );
 
         // Table references
         processors.put( TableNameDirect.class, new TableNameDirectProcessor() );
