@@ -48,7 +48,7 @@ public class QueryProcessing
             Typeable<?> first, Typeable<?> second )
         {
             MySQLVendor vendor = (MySQLVendor) processor.getVendor();
-            if( vendor.legacyLimit() || (first == null && second != null) )
+            if( vendor.legacyLimit() )
             {
                 // Just do the processing right away, because of the difference of syntax
                 builder.append( SQLConstants.NEWLINE ).append( MYSQL_LIMIT_PREFIX )
@@ -69,6 +69,10 @@ public class QueryProcessing
             }
             else
             {
+                if( first == null && second != null )
+                {
+                    first = vendor.getQueryFactory().limit( vendor.getLiteralFactory().n( Long.MAX_VALUE ) );
+                }
                 super.processLimitAndOffset( processor, builder, first, second );
             }
         }

@@ -31,6 +31,8 @@ import org.sql.generation.api.grammar.query.OrdinaryGroupingSet;
 import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.grammar.query.QueryExpressionBody;
 import org.sql.generation.api.grammar.query.QueryExpressionBody.EmptyQueryExpressionBody;
+import org.sql.generation.api.grammar.query.LimitSpecification;
+import org.sql.generation.api.grammar.query.OffsetSpecification;
 import org.sql.generation.api.grammar.query.QuerySpecification;
 import org.sql.generation.api.grammar.query.RowDefinition;
 import org.sql.generation.api.grammar.query.RowSubQuery;
@@ -201,4 +203,20 @@ public interface QueryFactory
      * @return A query returning the results of calling SQL function.
      */
     public QueryExpression callFunction( SQLFunctionLiteral function );
+
+    /**
+     * Creates a new {@code OFFSET <n> ROWS} syntax element for query.
+     * 
+     * @param offset The offset amount.
+     * @return A new {@code OFFSET <n> ROWS} syntax element.
+     */
+    public OffsetSpecification offset( NonBooleanExpression offset );
+
+    /**
+     * Creates a new {@code FETCH FIRST <n> ROWS ONLY} syntax element for query.
+     * 
+     * @param count The limit amount.
+     * @return A new {@code FETCH FIRST <n> ROWS ONLY} syntax element.
+     */
+    public LimitSpecification limit( NonBooleanExpression count );
 }

@@ -52,7 +52,7 @@ public abstract class AbstractQueryFactoryImpl<ExpressionType> extends SQLBuilde
 
     public AbstractQueryBuilder<ExpressionType> limit( NonBooleanExpression max )
     {
-        this._limit = (max == null ? null : new LimitSpecificationImpl( this.getProcessor(), max ));
+        this._limit = (max == null ? null : this.getProcessor().getVendor().getQueryFactory().limit( max ));
         return this;
     }
 
@@ -63,7 +63,7 @@ public abstract class AbstractQueryFactoryImpl<ExpressionType> extends SQLBuilde
 
     public AbstractQueryBuilder<ExpressionType> offset( NonBooleanExpression skip )
     {
-        this._offset = (skip == null ? null : new OffsetSpecificationImpl( this.getProcessor(), skip ));
+        this._offset = (skip == null ? null : this.getProcessor().getVendor().getQueryFactory().offset( skip ));
         return this;
     }
 

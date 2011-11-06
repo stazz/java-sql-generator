@@ -27,6 +27,8 @@ import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.api.grammar.common.SetQuantifier;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
+import org.sql.generation.api.grammar.query.LimitSpecification;
+import org.sql.generation.api.grammar.query.OffsetSpecification;
 import org.sql.generation.api.grammar.query.Ordering;
 import org.sql.generation.api.grammar.query.OrdinaryGroupingSet;
 import org.sql.generation.api.grammar.query.QueryExpression;
@@ -44,6 +46,8 @@ import org.sql.generation.implementation.grammar.builders.query.OrderByBuilderIm
 import org.sql.generation.implementation.grammar.builders.query.QueryBuilderImpl;
 import org.sql.generation.implementation.grammar.builders.query.QuerySpecificationBuilderImpl;
 import org.sql.generation.implementation.grammar.builders.query.SimpleQueryBuilderImpl;
+import org.sql.generation.implementation.grammar.query.LimitSpecificationImpl;
+import org.sql.generation.implementation.grammar.query.OffsetSpecificationImpl;
 import org.sql.generation.implementation.grammar.query.OrdinaryGroupingSetImpl;
 import org.sql.generation.implementation.grammar.query.QueryExpressionImpl;
 import org.sql.generation.implementation.grammar.query.RowDefinitionImpl;
@@ -135,6 +139,16 @@ public class DefaultQueryFactory extends AbstractQueryFactory
     {
         return this.simpleQueryBuilder().selectAllColumns()
             .from( this.getVendor().getTableReferenceFactory().tableName( schemaName, function ) ).createExpression();
+    }
+
+    public LimitSpecification limit( NonBooleanExpression count )
+    {
+        return new LimitSpecificationImpl( this.getProcessor(), count );
+    }
+
+    public OffsetSpecification offset( NonBooleanExpression offset )
+    {
+        return new OffsetSpecificationImpl( this.getProcessor(), offset );
     }
 
 }

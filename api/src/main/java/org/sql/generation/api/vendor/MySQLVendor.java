@@ -30,10 +30,6 @@ public interface MySQLVendor
      * the {@code LIMIT <n> OFFSET <skip>} is written as {@code LIMIT <skip>, <n> } instead. This method is not
      * thread-safe.
      * </p>
-     * <p>
-     * Please notice that the legacy syntax will be used automatically in queries with offset but no limit. This is
-     * because the newer OFFSET expression requires LIMIT, i.e. it does not work on its own.
-     * </p>
      * 
      * @return {@code true} if the legacy LIMIT expressions are used; {@code false} otherwise.
      */
@@ -44,10 +40,6 @@ public interface MySQLVendor
      * Sets the switch to use legacy LIMIT expression instead of the newer LIMIT/OFFSET expressions. In a legacy syntax,
      * the {@code LIMIT <n> OFFSET <skip>} is written as {@code LIMIT <skip>, <n> } instead. Set this to true only if
      * you really require it. This method is not thread-safe.
-     * </p>
-     * <p>
-     * Please notice that the legacy syntax will be used automatically in queries with offset but no limit. This is
-     * because the newer OFFSET expression requires LIMIT, i.e. it does not work on its own.
      * </p>
      * 
      * @param useLegacyLimit Whether to use legacy LIMIT expression instead of the newer LIMIT/OFFSET expressions.
