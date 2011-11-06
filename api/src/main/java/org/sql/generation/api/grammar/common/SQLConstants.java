@@ -66,4 +66,12 @@ public interface SQLConstants
     public static final String IS = "IS";
 
     public static final String CREATE = "CREATE";
+
+    public static final String OFFSET_PREFIX = "OFFSET";
+
+    public static final String OFFSET_POSTFIX = "ROWS";
+
+    public static final String LIMIT_PREFIX = "FETCH FIRST";
+
+    public static final String LIMIT_POSTFIX = "ROWS ONLY";
 }

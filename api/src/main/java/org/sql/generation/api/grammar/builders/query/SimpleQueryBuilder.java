@@ -15,7 +15,7 @@
 package org.sql.generation.api.grammar.builders.query;
 
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
-import org.sql.generation.api.grammar.builders.AbstractBuilder;
+import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.api.grammar.common.TableName;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.factories.QueryFactory;
@@ -28,7 +28,7 @@ import org.sql.generation.api.grammar.query.QueryExpression;
  * @author Stanislav Muhametsin
  */
 public interface SimpleQueryBuilder
-    extends AbstractBuilder<QueryExpression>
+    extends AbstractQueryBuilder<QueryExpression>
 {
 
     /**
@@ -109,4 +109,14 @@ public interface SimpleQueryBuilder
      * @return This builder.
      */
     public SimpleQueryBuilder orderByDesc( String... columns );
+
+    public SimpleQueryBuilder limit();
+
+    public SimpleQueryBuilder limit( Integer max );
+
+    public SimpleQueryBuilder limit( NonBooleanExpression max );
+
+    public SimpleQueryBuilder offset( Integer skip );
+
+    public SimpleQueryBuilder offset( NonBooleanExpression skip );
 }

@@ -20,11 +20,11 @@ import java.util.Iterator;
 
 import org.sql.generation.api.grammar.common.SQLConstants;
 import org.sql.generation.api.grammar.common.ValueExpression;
-import org.sql.generation.api.grammar.literals.TimestampTimeLiteral;
 import org.sql.generation.api.grammar.literals.DirectLiteral;
 import org.sql.generation.api.grammar.literals.NumericLiteral;
 import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
 import org.sql.generation.api.grammar.literals.StringLiteral;
+import org.sql.generation.api.grammar.literals.TimestampTimeLiteral;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**

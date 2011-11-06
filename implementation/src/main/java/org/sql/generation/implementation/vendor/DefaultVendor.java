@@ -47,6 +47,11 @@ public class DefaultVendor
     implements SQLVendor
 {
 
+    protected static interface ProcessorCallback
+    {
+        public SQLProcessorAggregator get( SQLVendor vendor );
+    }
+
     protected static interface Callback<T>
     {
         public T get( SQLVendor vendor, SQLProcessorAggregator processor );
@@ -123,6 +128,14 @@ public class DefaultVendor
         }
     };
 
+    protected static final ProcessorCallback DEFAULT_PROCESSOR = new ProcessorCallback()
+    {
+        public SQLProcessorAggregator get( SQLVendor vendor )
+        {
+            return new DefaultSQLProcessor( vendor );
+        }
+    };
+
     private final QueryFactory _queryFactory;
 
     private final BooleanFactory _booleanFactory;
@@ -145,16 +158,16 @@ public class DefaultVendor
 
     public DefaultVendor()
     {
-        this( new DefaultSQLProcessor() );
+        this( DEFAULT_PROCESSOR );
     }
 
-    protected DefaultVendor( SQLProcessorAggregator processor )
+    protected DefaultVendor( ProcessorCallback processor )
     {
         this( processor, BOOLEAN_FACTORY, COLUMNS_FACTORY, LITERAL_FACTORY, MODIFICATION_FACTORY, QUERY_FACTORY,
             TABLE_REFERENCE_FACTORY, DEFINITION_FACTORY, MANIPULATION_FACTORY, DATA_TYPE_FACTORY );
     }
 
-    protected DefaultVendor( SQLProcessorAggregator processor, Callback<? extends BooleanFactory> booleanFactory,
+    protected DefaultVendor( ProcessorCallback processor, Callback<? extends BooleanFactory> booleanFactory,
         Callback<? extends ColumnsFactory> columnsFactory, Callback<? extends LiteralFactory> literalFactory,
         Callback<? extends ModificationFactory> modificationFactory, Callback<? extends QueryFactory> queryFactory,
         Callback<? extends TableReferenceFactory> tableReferenceFactory,
@@ -163,16 +176,16 @@ public class DefaultVendor
     {
         NullArgumentException.validateNotNull( "processor", processor );
 
-        this._processor = processor;
-        this._booleanFactory = booleanFactory.get( this, processor );
-        this._columnsFactory = columnsFactory.get( this, processor );
-        this._literalFactory = literalFactory.get( this, processor );
-        this._queryFactory = queryFactory.get( this, processor );
-        this._modificationFactory = modificationFactory.get( this, processor );
-        this._fromFactory = tableReferenceFactory.get( this, processor );
-        this._definitionFactory = definitionFactory.get( this, processor );
-        this._manipulationFactory = manipulationFactory.get( this, processor );
-        this._dataTypeFactory = dataTypeFactory.get( this, processor );
+        this._processor = processor.get( this );
+        this._booleanFactory = booleanFactory.get( this, this._processor );
+        this._columnsFactory = columnsFactory.get( this, this._processor );
+        this._literalFactory = literalFactory.get( this, this._processor );
+        this._queryFactory = queryFactory.get( this, this._processor );
+        this._modificationFactory = modificationFactory.get( this, this._processor );
+        this._fromFactory = tableReferenceFactory.get( this, this._processor );
+        this._definitionFactory = definitionFactory.get( this, this._processor );
+        this._manipulationFactory = manipulationFactory.get( this, this._processor );
+        this._dataTypeFactory = dataTypeFactory.get( this, this._processor );
     }
 
     /**
@@ -228,5 +241,10 @@ public class DefaultVendor
     public DataTypeFactory getDataTypeFactory()
     {
         return this._dataTypeFactory;
+    }
+
+    protected SQLProcessorAggregator getProcessor()
+    {
+        return this._processor;
     }
 }

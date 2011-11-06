@@ -31,7 +31,6 @@ import org.sql.generation.api.grammar.query.ColumnReferences.ColumnReferenceInfo
 import org.sql.generation.api.grammar.query.GroupingElement;
 import org.sql.generation.api.grammar.query.OrdinaryGroupingSet;
 import org.sql.generation.api.grammar.query.QuerySpecification;
-import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.grammar.query.QuerySpecificationImpl;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
@@ -39,7 +38,7 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
  * 
  * @author Stanislav Muhametsin
  */
-public class QuerySpecificationBuilderImpl extends SQLBuilderBase
+public class QuerySpecificationBuilderImpl extends AbstractQueryFactoryImpl<QuerySpecification>
     implements QuerySpecificationBuilder
 {
 
@@ -154,7 +153,7 @@ public class QuerySpecificationBuilderImpl extends SQLBuilderBase
     {
         return new QuerySpecificationImpl( this.getProcessor(), this._select.createExpression(),
             this._from.createExpression(), this._where.createExpression(), this._groupBy.createExpression(),
-            this._having.createExpression(), this._orderBy.createExpression() );
+            this._having.createExpression(), this._orderBy.createExpression(), this.getOffset(), this.getLimit() );
     }
 
     public QuerySpecificationBuilder setSelect( ColumnsBuilder builder )
@@ -202,5 +201,35 @@ public class QuerySpecificationBuilderImpl extends SQLBuilderBase
     protected QueryFactory getQueryFactory()
     {
         return this._queryFactory;
+    }
+
+    @Override
+    public QuerySpecificationBuilder limit()
+    {
+        return (QuerySpecificationBuilder) super.limit();
+    }
+
+    @Override
+    public QuerySpecificationBuilder limit( Integer max )
+    {
+        return (QuerySpecificationBuilder) super.limit( max );
+    }
+
+    @Override
+    public QuerySpecificationBuilder limit( NonBooleanExpression max )
+    {
+        return (QuerySpecificationBuilder) super.limit( max );
+    }
+
+    @Override
+    public QuerySpecificationBuilder offset( Integer skip )
+    {
+        return (QuerySpecificationBuilder) super.offset( skip );
+    }
+
+    @Override
+    public QuerySpecificationBuilder offset( NonBooleanExpression skip )
+    {
+        return (QuerySpecificationBuilder) super.offset( skip );
     }
 }

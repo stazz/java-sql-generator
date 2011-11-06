@@ -15,7 +15,9 @@
 package org.sql.generation.implementation.vendor.mysql;
 
 import org.sql.generation.api.vendor.MySQLVendor;
+import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.transformation.mysql.MySQLProcessor;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 import org.sql.generation.implementation.vendor.DefaultVendor;
 
 /**
@@ -26,9 +28,17 @@ public class MySQLVendorImpl extends DefaultVendor
     implements MySQLVendor
 {
 
+    protected static final ProcessorCallback MYSQL_PROCESSOR = new ProcessorCallback()
+    {
+        public SQLProcessorAggregator get( SQLVendor vendor )
+        {
+            return new MySQLProcessor( vendor );
+        }
+    };
+
     public MySQLVendorImpl()
     {
-        super( new MySQLProcessor() );
+        super( MYSQL_PROCESSOR );
     }
 
 }

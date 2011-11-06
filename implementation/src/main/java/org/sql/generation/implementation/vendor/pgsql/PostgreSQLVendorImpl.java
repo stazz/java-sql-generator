@@ -16,12 +16,10 @@ package org.sql.generation.implementation.vendor.pgsql;
 
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLDataTypeFactory;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLManipulationFactory;
-import org.sql.generation.api.grammar.factories.pgsql.PgSQLQueryFactory;
 import org.sql.generation.api.vendor.PostgreSQLVendor;
 import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.grammar.factories.pgsql.PgSQLDataTypeFactoryImpl;
 import org.sql.generation.implementation.grammar.factories.pgsql.PgSQLManipulationFactoryImpl;
-import org.sql.generation.implementation.grammar.factories.pgsql.PgSQLQueryFactoryImpl;
 import org.sql.generation.implementation.transformation.pgsql.PostgreSQLProcessor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 import org.sql.generation.implementation.vendor.DefaultVendor;
@@ -33,14 +31,6 @@ import org.sql.generation.implementation.vendor.DefaultVendor;
 public class PostgreSQLVendorImpl extends DefaultVendor
     implements PostgreSQLVendor
 {
-    protected static final Callback<PgSQLQueryFactory> PG_QUERY_FACTORY = new Callback<PgSQLQueryFactory>()
-    {
-        public PgSQLQueryFactory get( SQLVendor vendor, SQLProcessorAggregator processor )
-        {
-            return new PgSQLQueryFactoryImpl( (PostgreSQLVendor) vendor, processor );
-        }
-    };
-
     protected static final Callback<PgSQLDataTypeFactory> PG_DATA_TYPE_FACTORY = new Callback<PgSQLDataTypeFactory>()
     {
         public PgSQLDataTypeFactory get( SQLVendor vendor, SQLProcessorAggregator processor )
@@ -57,18 +47,21 @@ public class PostgreSQLVendorImpl extends DefaultVendor
         }
     };
 
+    protected static final ProcessorCallback PG_PROCESSOR = new ProcessorCallback()
+    {
+        public SQLProcessorAggregator get( SQLVendor vendor )
+        {
+            return new PostgreSQLProcessor( vendor );
+        }
+    };
+
+    private boolean _legacyOffsetAndLimit;
+
     public PostgreSQLVendorImpl()
     {
-        super( new PostgreSQLProcessor(), BOOLEAN_FACTORY, COLUMNS_FACTORY, LITERAL_FACTORY, MODIFICATION_FACTORY,
-            PG_QUERY_FACTORY, TABLE_REFERENCE_FACTORY, DEFINITION_FACTORY, PG_MANIPULATION_FACTORY,
-            PG_DATA_TYPE_FACTORY );
-
-    }
-
-    @Override
-    public PgSQLQueryFactory getQueryFactory()
-    {
-        return (PgSQLQueryFactory) super.getQueryFactory();
+        super( PG_PROCESSOR, BOOLEAN_FACTORY, COLUMNS_FACTORY, LITERAL_FACTORY, MODIFICATION_FACTORY, QUERY_FACTORY,
+            TABLE_REFERENCE_FACTORY, DEFINITION_FACTORY, PG_MANIPULATION_FACTORY, PG_DATA_TYPE_FACTORY );
+        this._legacyOffsetAndLimit = false;
     }
 
     @Override
@@ -81,6 +74,20 @@ public class PostgreSQLVendorImpl extends DefaultVendor
     public PgSQLManipulationFactory getManipulationFactory()
     {
         return (PgSQLManipulationFactory) super.getManipulationFactory();
+    }
+
+    public boolean legacyOffsetAndLimit()
+    {
+        return this._legacyOffsetAndLimit;
+    }
+
+    public void setLegacyOffsetAndLimit( boolean useLegacyOffsetAndLimit )
+    {
+        if( this._legacyOffsetAndLimit != useLegacyOffsetAndLimit )
+        {
+            this._legacyOffsetAndLimit = useLegacyOffsetAndLimit;
+            ((PostgreSQLProcessor) this.getProcessor()).setLegacyOffsetAndLimit( this._legacyOffsetAndLimit );
+        }
     }
 
 }

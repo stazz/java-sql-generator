@@ -16,9 +16,6 @@ package org.sql.generation.api.vendor;
 
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLDataTypeFactory;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLManipulationFactory;
-import org.sql.generation.api.grammar.factories.pgsql.PgSQLQueryFactory;
-import org.sql.generation.api.grammar.query.pgsql.LimitClause;
-import org.sql.generation.api.grammar.query.pgsql.OffsetClause;
 
 /**
  * This is vendor for PostgreSQL database. PostgreSQL provides some extra SQL syntax elements for queries (notably
@@ -33,12 +30,6 @@ import org.sql.generation.api.grammar.query.pgsql.OffsetClause;
 public interface PostgreSQLVendor
     extends SQLVendor
 {
-
-    /**
-     * Returns the query factory, which knows to create PostgreSQL-specific query elements.
-     */
-    public PgSQLQueryFactory getQueryFactory();
-
     /**
      * Returns the data type factory, which knows to create PostgreSQL-specific data types as well as pre-defined
      * standard ones.
@@ -49,4 +40,24 @@ public interface PostgreSQLVendor
      * Returns the manipulation factory, which knows to create PostgreSQL-specific data manipulation statements.
      */
     public PgSQLManipulationFactory getManipulationFactory();
+
+    /**
+     * Are the legacy (pre-8.4) OFFSET/LIMIT expressions used instead of the OFFSET/FETCH defined in the SQL 2008
+     * standard. For more information, see http://www.postgresql.org/docs/8.3/static/sql-select.html#SQL-LIMIT . This
+     * method is not thread-safe.
+     * 
+     * @return {@code true} if the legacy OFFSET/LIMIT expressions are used; {@code false} otherwise.
+     */
+    public boolean legacyOffsetAndLimit();
+
+    /**
+     * Sets the switch to use legacy LIMIT/OFFSET expressions instead of the OFFSET/FETCH expressions of the SQL 2008
+     * standard. This is necessary only for pre-8.4 PgSQL databases. For more information, see
+     * http://www.postgresql.org/docs/8.3/static/sql-select.html#SQL-LIMIT . This method is not thread-safe.
+     * 
+     * @param useLegacyOffsetAndLimit Whether to use legacy LIMIT/OFFSET expressions instead of the OFFSET/FETCH
+     *            expressions defined in the SQL 2008 standard.
+     */
+    public void setLegacyOffsetAndLimit( boolean useLegacyOffsetAndLimit );
+
 }

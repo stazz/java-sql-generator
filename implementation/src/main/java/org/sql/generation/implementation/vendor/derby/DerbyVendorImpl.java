@@ -14,17 +14,26 @@
 package org.sql.generation.implementation.vendor.derby;
 
 import org.sql.generation.api.vendor.DerbyVendor;
+import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.transformation.derby.DerbyProcessor;
+import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 import org.sql.generation.implementation.vendor.DefaultVendor;
 
-public class DerbyVendorImpl
-        extends DefaultVendor
-        implements DerbyVendor
+public class DerbyVendorImpl extends DefaultVendor
+    implements DerbyVendor
 {
+
+    protected static final ProcessorCallback DERBY_PROCESSOR = new ProcessorCallback()
+    {
+        public SQLProcessorAggregator get( SQLVendor vendor )
+        {
+            return new DerbyProcessor( vendor );
+        }
+    };
 
     public DerbyVendorImpl()
     {
-        super( new DerbyProcessor() );
+        super( DERBY_PROCESSOR );
     }
 
 }

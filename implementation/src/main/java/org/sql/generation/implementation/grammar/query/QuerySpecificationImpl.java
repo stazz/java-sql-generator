@@ -19,6 +19,8 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.query.FromClause;
 import org.sql.generation.api.grammar.query.GroupByClause;
+import org.sql.generation.api.grammar.query.LimitSpecification;
+import org.sql.generation.api.grammar.query.OffsetSpecification;
 import org.sql.generation.api.grammar.query.OrderByClause;
 import org.sql.generation.api.grammar.query.QuerySpecification;
 import org.sql.generation.api.grammar.query.SelectColumnClause;
@@ -44,15 +46,20 @@ public class QuerySpecificationImpl extends QueryExpressionBodyImpl<QuerySpecifi
 
     private final OrderByClause _orderBy;
 
+    private final OffsetSpecification _offset;
+
+    private final LimitSpecification _limit;
+
     public QuerySpecificationImpl( SQLProcessorAggregator processor, SelectColumnClause select, FromClause from,
-        BooleanExpression where, GroupByClause groupBy, BooleanExpression having, OrderByClause orderBy )
+        BooleanExpression where, GroupByClause groupBy, BooleanExpression having, OrderByClause orderBy,
+        OffsetSpecification offset, LimitSpecification limit )
     {
-        this( processor, QuerySpecification.class, select, from, where, groupBy, having, orderBy );
+        this( processor, QuerySpecification.class, select, from, where, groupBy, having, orderBy, offset, limit );
     }
 
     protected QuerySpecificationImpl( SQLProcessorAggregator processor, Class<? extends QuerySpecification> queryClass,
         SelectColumnClause select, FromClause from, BooleanExpression where, GroupByClause groupBy,
-        BooleanExpression having, OrderByClause orderBy )
+        BooleanExpression having, OrderByClause orderBy, OffsetSpecification offset, LimitSpecification limit )
     {
         super( processor, queryClass );
 
@@ -64,6 +71,8 @@ public class QuerySpecificationImpl extends QueryExpressionBodyImpl<QuerySpecifi
         this._groupBy = groupBy;
         this._having = having;
         this._orderBy = orderBy;
+        this._offset = offset;
+        this._limit = limit;
     }
 
     public SelectColumnClause getColumns()
@@ -94,6 +103,16 @@ public class QuerySpecificationImpl extends QueryExpressionBodyImpl<QuerySpecifi
     public OrderByClause getOrderBy()
     {
         return this._orderBy;
+    }
+
+    public LimitSpecification getLimitSpecification()
+    {
+        return this._limit;
+    }
+
+    public OffsetSpecification getOffsetSpecification()
+    {
+        return this._offset;
     }
 
     @Override

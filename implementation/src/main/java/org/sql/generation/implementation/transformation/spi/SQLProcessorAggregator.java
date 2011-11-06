@@ -15,6 +15,7 @@
 package org.sql.generation.implementation.transformation.spi;
 
 import org.atp.api.Typeable;
+import org.sql.generation.api.vendor.SQLVendor;
 
 /**
  * 
@@ -23,6 +24,8 @@ import org.atp.api.Typeable;
 public interface SQLProcessorAggregator
 {
     public void process( Typeable<?> object, StringBuilder builder );
+
+    public SQLVendor getVendor();
 
     /**
      * <p>

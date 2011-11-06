@@ -23,6 +23,7 @@ import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.builders.query.QuerySpecificationBuilder;
 import org.sql.generation.api.grammar.builders.query.SimpleQueryBuilder;
+import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.api.grammar.common.TableName;
 import org.sql.generation.api.grammar.common.ValueExpression;
 import org.sql.generation.api.grammar.factories.ColumnsFactory;
@@ -33,14 +34,13 @@ import org.sql.generation.api.grammar.query.ColumnReferences.ColumnReferenceInfo
 import org.sql.generation.api.grammar.query.Ordering;
 import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.api.vendor.SQLVendor;
-import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
  * 
  * @author Stanislav Muhametsin
  */
-public class SimpleQueryBuilderImpl extends SQLBuilderBase
+public class SimpleQueryBuilderImpl extends AbstractQueryFactoryImpl<QueryExpression>
     implements SimpleQueryBuilder
 {
 
@@ -127,6 +127,16 @@ public class SimpleQueryBuilderImpl extends SQLBuilderBase
         {
             builda.getOrderBy().addSortSpecs(
                 q.sortSpec( c.colName( this._orderBy.get( orderByIndex ) ), this._orderings.get( orderByIndex ) ) );
+        }
+
+        if( this.getOffset() != null )
+        {
+            builda.offset( this.getOffset().getSkip() );
+        }
+
+        if( this.getLimit() != null )
+        {
+            builda.limit( this.getLimit().getCount() );
         }
     }
 
@@ -215,5 +225,35 @@ public class SimpleQueryBuilderImpl extends SQLBuilderBase
             this._orderings.add( Ordering.DESCENDING );
         }
         return this;
+    }
+
+    @Override
+    public SimpleQueryBuilder limit()
+    {
+        return (SimpleQueryBuilder) super.limit();
+    }
+
+    @Override
+    public SimpleQueryBuilder limit( Integer max )
+    {
+        return (SimpleQueryBuilder) super.limit( max );
+    }
+
+    @Override
+    public SimpleQueryBuilder limit( NonBooleanExpression max )
+    {
+        return (SimpleQueryBuilder) super.limit( max );
+    }
+
+    @Override
+    public SimpleQueryBuilder offset( Integer skip )
+    {
+        return (SimpleQueryBuilder) super.offset( skip );
+    }
+
+    @Override
+    public SimpleQueryBuilder offset( NonBooleanExpression skip )
+    {
+        return (SimpleQueryBuilder) super.offset( skip );
     }
 }

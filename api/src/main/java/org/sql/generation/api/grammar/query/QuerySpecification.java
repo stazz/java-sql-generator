@@ -74,4 +74,18 @@ public interface QuerySpecification
      */
     public OrderByClause getOrderBy();
 
+    /**
+     * Returns the {@code FETCH FIRST <number> ROWS ONLY} expression for this {@code SELECT} statement.
+     * 
+     * @return The {@code FETCH FIRST <number> ROWS ONLY} expression for this {@code SELECT} statement.
+     */
+    public LimitSpecification getLimitSpecification();
+
+    /**
+     * Returns the {@code OFFSET <number> ROWS} expression for this {@code SELECT} statement.
+     * 
+     * @return The {@code OFFSET <number> ROWS} expression for this {@code SELECT} statement.
+     */
+    public OffsetSpecification getOffsetSpecification();
+
 }

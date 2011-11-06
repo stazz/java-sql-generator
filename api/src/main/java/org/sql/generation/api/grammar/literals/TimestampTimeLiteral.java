@@ -14,7 +14,6 @@
 
 package org.sql.generation.api.grammar.literals;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 /**

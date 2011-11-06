@@ -19,17 +19,21 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.atp.api.Typeable;
+import org.slf4j.LoggerFactory;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.booleans.BooleanExpression;
 import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.api.grammar.common.SQLConstants;
 import org.sql.generation.api.grammar.common.ValueExpression;
+import org.sql.generation.api.grammar.literals.LiteralExpression;
 import org.sql.generation.api.grammar.query.ColumnReferences;
 import org.sql.generation.api.grammar.query.ColumnReferences.ColumnReferenceInfo;
 import org.sql.generation.api.grammar.query.CorrespondingSpec;
 import org.sql.generation.api.grammar.query.FromClause;
 import org.sql.generation.api.grammar.query.GroupByClause;
 import org.sql.generation.api.grammar.query.GroupingElement;
+import org.sql.generation.api.grammar.query.LimitSpecification;
+import org.sql.generation.api.grammar.query.OffsetSpecification;
 import org.sql.generation.api.grammar.query.OrderByClause;
 import org.sql.generation.api.grammar.query.Ordering;
 import org.sql.generation.api.grammar.query.OrdinaryGroupingSet;
@@ -69,7 +73,11 @@ public class QueryProcessing
     {
         if( element != null )
         {
-            builder.append( prefix ).append( name ).append( SQLConstants.TOKEN_SEPARATOR );
+            builder.append( prefix );
+            if( name != null )
+            {
+                builder.append( name ).append( SQLConstants.TOKEN_SEPARATOR );
+            }
             processor.process( element, builder );
         }
     }
@@ -141,14 +149,22 @@ public class QueryProcessing
 
     public static class QuerySpecificationProcessor extends AbstractProcessor<QuerySpecification>
     {
+        private final boolean _offsetBeforeLimit;
+
         public QuerySpecificationProcessor()
         {
-            this( QuerySpecification.class );
+            this( QuerySpecification.class, true );
         }
 
-        public QuerySpecificationProcessor( Class<? extends QuerySpecification> queryClass )
+        public QuerySpecificationProcessor( boolean offsetBeforeLimit )
+        {
+            this( QuerySpecification.class, offsetBeforeLimit );
+        }
+
+        public QuerySpecificationProcessor( Class<? extends QuerySpecification> queryClass, boolean offsetBeforeLimit )
         {
             super( queryClass );
+            this._offsetBeforeLimit = offsetBeforeLimit;
         }
 
         @Override
@@ -162,6 +178,30 @@ public class QueryProcessing
             QueryProcessing.processOptionalBooleanExpression( processor, builder, query.getHaving(),
                 SQLConstants.NEWLINE, SQLConstants.HAVING );
             processor.process( query.getOrderBy(), builder );
+            Typeable<?> first = null;
+            Typeable<?> second = null;
+            if( this._offsetBeforeLimit )
+            {
+                first = query.getOffsetSpecification();
+                second = query.getLimitSpecification();
+            }
+            else
+            {
+                first = query.getLimitSpecification();
+                second = query.getOffsetSpecification();
+            }
+
+            QueryProcessing.processOptional( processor, builder, first, SQLConstants.NEWLINE, null );
+            QueryProcessing.processOptional( processor, builder, second, SQLConstants.NEWLINE, null );
+
+            if( query.getOrderBy() == null
+                && (query.getOffsetSpecification() != null || query.getLimitSpecification() != null) )
+            {
+                LoggerFactory.getLogger( this.getClass().getName() ).warn(
+                    "Spotted query with " + SQLConstants.OFFSET_PREFIX + " and/or " + SQLConstants.LIMIT_PREFIX
+                        + " clause, but without ORDER BY. The result will be unpredictable!" + "\n" + "Query: "
+                        + builder.toString() );
+            }
         }
 
     }
@@ -439,5 +479,92 @@ public class QueryProcessing
             }
             builder.append( SQLConstants.CLOSE_PARENTHESIS );
         }
+    }
+
+    public static class OffsetSpecificationProcessor extends AbstractProcessor<OffsetSpecification>
+    {
+
+        private final String _prefix;
+        private final String _postfix;
+
+        public OffsetSpecificationProcessor( String prefix, String postfix )
+        {
+            super( OffsetSpecification.class );
+
+            this._prefix = prefix;
+            this._postfix = postfix;
+        }
+
+        @Override
+        protected void doProcess( SQLProcessorAggregator aggregator, OffsetSpecification object, StringBuilder builder )
+        {
+            if( this._prefix != null )
+            {
+                builder.append( this._prefix ).append( SQLConstants.TOKEN_SEPARATOR );
+            }
+            NonBooleanExpression skip = object.getSkip();
+            boolean isComplex = !(skip instanceof LiteralExpression);
+            if( isComplex )
+            {
+                builder.append( SQLConstants.OPEN_PARENTHESIS ).append( SQLConstants.NEWLINE );
+            }
+            aggregator.process( skip, builder );
+            if( isComplex )
+            {
+                builder.append( SQLConstants.CLOSE_PARENTHESIS );
+            }
+            if( this._postfix != null )
+            {
+                builder.append( SQLConstants.TOKEN_SEPARATOR ).append( this._postfix );
+            }
+        }
+    }
+
+    public static class LimitSpecificationProcessor extends AbstractProcessor<LimitSpecification>
+    {
+
+        private final String _prefix;
+        private final String _postfix;
+
+        public LimitSpecificationProcessor( String prefix, String postfix )
+        {
+            super( LimitSpecification.class );
+
+            this._prefix = prefix;
+            this._postfix = postfix;
+        }
+
+        @Override
+        protected void doProcess( SQLProcessorAggregator aggregator, LimitSpecification object, StringBuilder builder )
+        {
+            NonBooleanExpression count = this.getRealCount( object.getCount() );
+            if( count != null )
+            {
+                if( this._prefix != null )
+                {
+                    builder.append( this._prefix ).append( SQLConstants.TOKEN_SEPARATOR );
+                }
+                boolean isComplex = !(count instanceof LiteralExpression);
+                if( isComplex )
+                {
+                    builder.append( SQLConstants.OPEN_PARENTHESIS ).append( SQLConstants.NEWLINE );
+                }
+                aggregator.process( count, builder );
+                if( isComplex )
+                {
+                    builder.append( SQLConstants.CLOSE_PARENTHESIS );
+                }
+                if( this._postfix != null )
+                {
+                    builder.append( SQLConstants.TOKEN_SEPARATOR ).append( this._postfix );
+                }
+            }
+        }
+
+        protected NonBooleanExpression getRealCount( NonBooleanExpression limitCount )
+        {
+            return limitCount;
+        }
+
     }
 }

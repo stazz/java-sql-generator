@@ -76,11 +76,11 @@ import org.sql.generation.api.grammar.definition.table.TableElementList;
 import org.sql.generation.api.grammar.definition.table.UniqueConstraint;
 import org.sql.generation.api.grammar.definition.view.RegularViewSpecification;
 import org.sql.generation.api.grammar.definition.view.ViewDefinition;
-import org.sql.generation.api.grammar.literals.TimestampTimeLiteral;
 import org.sql.generation.api.grammar.literals.DirectLiteral;
 import org.sql.generation.api.grammar.literals.NumericLiteral;
 import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
 import org.sql.generation.api.grammar.literals.StringLiteral;
+import org.sql.generation.api.grammar.literals.TimestampTimeLiteral;
 import org.sql.generation.api.grammar.manipulation.AddColumnDefinition;
 import org.sql.generation.api.grammar.manipulation.AddTableConstraintDefinition;
 import org.sql.generation.api.grammar.manipulation.AlterColumnAction.DropDefault;
@@ -110,6 +110,8 @@ import org.sql.generation.api.grammar.query.CorrespondingSpec;
 import org.sql.generation.api.grammar.query.FromClause;
 import org.sql.generation.api.grammar.query.GroupByClause;
 import org.sql.generation.api.grammar.query.GroupingElement.GrandTotal;
+import org.sql.generation.api.grammar.query.LimitSpecification;
+import org.sql.generation.api.grammar.query.OffsetSpecification;
 import org.sql.generation.api.grammar.query.OrderByClause;
 import org.sql.generation.api.grammar.query.OrdinaryGroupingSet;
 import org.sql.generation.api.grammar.query.QueryExpression;
@@ -128,6 +130,7 @@ import org.sql.generation.api.grammar.query.joins.NamedColumnsJoin;
 import org.sql.generation.api.grammar.query.joins.NaturalJoinedTable;
 import org.sql.generation.api.grammar.query.joins.QualifiedJoinedTable;
 import org.sql.generation.api.grammar.query.joins.UnionJoinedTable;
+import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.api.vendor.UnsupportedElementException;
 import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.BinaryPredicateProcessor;
 import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.BooleanTestProcessor;
@@ -185,6 +188,8 @@ import org.sql.generation.implementation.transformation.ModificationProcessing.U
 import org.sql.generation.implementation.transformation.QueryProcessing.CorrespondingSpecProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.FromProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.GroupByProcessor;
+import org.sql.generation.implementation.transformation.QueryProcessing.LimitSpecificationProcessor;
+import org.sql.generation.implementation.transformation.QueryProcessing.OffsetSpecificationProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.OrderByProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.OrdinaryGroupingSetProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.QueryExpressionBinaryProcessor;
@@ -376,6 +381,10 @@ public class DefaultSQLProcessor
         processors.put( TableValueConstructor.class, new TableValueConstructorProcessor() );
         processors.put( RowDefinition.class, new RowDefinitionProcessor() );
         processors.put( RowSubQuery.class, new RowSubQueryProcessor() );
+        processors.put( OffsetSpecification.class, new OffsetSpecificationProcessor( SQLConstants.OFFSET_PREFIX,
+            SQLConstants.OFFSET_POSTFIX ) );
+        processors.put( LimitSpecification.class, new LimitSpecificationProcessor( SQLConstants.LIMIT_PREFIX,
+            SQLConstants.LIMIT_POSTFIX ) );
 
         // Table references
         processors.put( TableNameDirect.class, new TableNameDirectProcessor() );
@@ -448,17 +457,20 @@ public class DefaultSQLProcessor
     }
 
     private final Map<Class<? extends Typeable<?>>, SQLProcessor> _processors;
+    private final SQLVendor _vendor;
 
-    public DefaultSQLProcessor()
+    public DefaultSQLProcessor( SQLVendor vendor )
     {
-        this( _defaultProcessors );
+        this( vendor, _defaultProcessors );
     }
 
-    public DefaultSQLProcessor( Map<Class<? extends Typeable<?>>, SQLProcessor> processors )
+    public DefaultSQLProcessor( SQLVendor vendor, Map<Class<? extends Typeable<?>>, SQLProcessor> processors )
     {
+        NullArgumentException.validateNotNull( "Vendor", vendor );
         NullArgumentException.validateNotNull( "Processors", processors );
 
-        this._processors = processors;
+        this._vendor = vendor;
+        this._processors = new HashMap<Class<? extends Typeable<?>>, SQLProcessor>( processors );
     }
 
     public void process( Typeable<?> object, StringBuilder builder )
@@ -471,8 +483,18 @@ public class DefaultSQLProcessor
         else
         {
             throw new UnsupportedElementException( "The vendor " + this.getClass()
-                + " does not know how to handle element " + object + ".", object );
+                + " does not know how to handle element of type " + object.getImplementedType() + ".", object );
         }
+    }
+
+    public SQLVendor getVendor()
+    {
+        return this._vendor;
+    }
+
+    protected Map<Class<? extends Typeable<?>>, SQLProcessor> getProcessors()
+    {
+        return this._processors;
     }
 
     public static Map<Class<? extends Typeable<?>>, SQLProcessor> getDefaultProcessors()

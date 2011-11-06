@@ -14,7 +14,9 @@
 
 package org.sql.generation.implementation;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.slf4j.LoggerFactory;
 import org.sql.generation.api.grammar.common.SQLStatement;
 import org.sql.generation.api.vendor.SQLVendor;
@@ -26,6 +28,8 @@ import org.sql.generation.api.vendor.SQLVendor;
 public abstract class AbstractSQLSyntaxTest
 {
 
+    private SQLVendor _vendor;
+
     protected void logStatement( String statementType, SQLVendor vendor, SQLStatement statement )
     {
         String stringStmt = vendor.toString( statement );
@@ -36,6 +40,24 @@ public abstract class AbstractSQLSyntaxTest
             statement.toString() );
     }
 
-    protected abstract SQLVendor getVendor()
+    @Before
+    public final void setUp()
+        throws Exception
+    {
+        this._vendor = this.loadVendor();
+    }
+
+    @After
+    public final void tearDown()
+    {
+        this._vendor = null;
+    }
+
+    protected final SQLVendor getVendor()
+    {
+        return this._vendor;
+    }
+
+    protected abstract SQLVendor loadVendor()
         throws Exception;
 }

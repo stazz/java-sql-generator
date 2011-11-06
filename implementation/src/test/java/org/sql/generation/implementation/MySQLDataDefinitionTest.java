@@ -26,7 +26,7 @@ public class MySQLDataDefinitionTest extends AbstractDataDefinitionTest
 {
 
     @Override
-    protected SQLVendor getVendor()
+    protected SQLVendor loadVendor()
         throws Exception
     {
         return SQLVendorProvider.createVendor( MySQLVendor.class );

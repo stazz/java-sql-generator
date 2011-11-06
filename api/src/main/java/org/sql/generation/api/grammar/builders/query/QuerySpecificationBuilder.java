@@ -14,8 +14,8 @@
 
 package org.sql.generation.api.grammar.builders.query;
 
-import org.sql.generation.api.grammar.builders.AbstractBuilder;
 import org.sql.generation.api.grammar.builders.booleans.BooleanBuilder;
+import org.sql.generation.api.grammar.common.NonBooleanExpression;
 import org.sql.generation.api.grammar.query.QuerySpecification;
 
 /**
@@ -28,7 +28,7 @@ import org.sql.generation.api.grammar.query.QuerySpecification;
  * @see QuerySpecification
  */
 public interface QuerySpecificationBuilder
-    extends AbstractBuilder<QuerySpecification>
+    extends AbstractQueryBuilder<QuerySpecification>
 {
 
     /**
@@ -122,4 +122,14 @@ public interface QuerySpecificationBuilder
      * @return This builder.
      */
     public QuerySpecificationBuilder setOrderBy( OrderByBuilder builder );
+
+    public QuerySpecificationBuilder limit();
+
+    public QuerySpecificationBuilder limit( Integer max );
+
+    public QuerySpecificationBuilder limit( NonBooleanExpression max );
+
+    public QuerySpecificationBuilder offset( Integer skip );
+
+    public QuerySpecificationBuilder offset( NonBooleanExpression skip );
 }

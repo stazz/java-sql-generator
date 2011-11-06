@@ -22,8 +22,15 @@ import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.common.TableNameFunction;
 import org.sql.generation.api.grammar.definition.schema.SchemaDefinition;
 import org.sql.generation.api.grammar.manipulation.DropSchemaStatement;
+import org.sql.generation.api.grammar.query.LimitSpecification;
+import org.sql.generation.api.grammar.query.OffsetSpecification;
+import org.sql.generation.api.grammar.query.QuerySpecification;
+import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.transformation.DefaultSQLProcessor;
 import org.sql.generation.implementation.transformation.NoOpProcessor;
+import org.sql.generation.implementation.transformation.QueryProcessing.LimitSpecificationProcessor;
+import org.sql.generation.implementation.transformation.QueryProcessing.OffsetSpecificationProcessor;
+import org.sql.generation.implementation.transformation.QueryProcessing.QuerySpecificationProcessor;
 import org.sql.generation.implementation.transformation.mysql.MySQLDefinitionProcessing.MySQLSchemaDefinitionProcessor;
 import org.sql.generation.implementation.transformation.mysql.MySQLTableProcessing.MySQLTableNameDirectProcessor;
 import org.sql.generation.implementation.transformation.mysql.MySQLTableProcessing.MySQLTableNameFunctionProcessor;
@@ -38,6 +45,11 @@ public class MySQLProcessor extends DefaultSQLProcessor
 
     private static final Map<Class<? extends Typeable<?>>, SQLProcessor> _defaultProcessors;
 
+    private static final String MYSQL_LIMIT_PREFIX = "LIMIT";
+    private static final String MYSQL_LIMIT_POSTFIX = null;
+    private static final String MYSQL_OFFSET_PREFIX = "OFFSET";
+    private static final String MYSQL_OFFSET_POSTFIX = null;
+
     static
     {
         Map<Class<? extends Typeable<?>>, SQLProcessor> processors = new HashMap<Class<? extends Typeable<?>>, SQLProcessor>(
@@ -51,11 +63,18 @@ public class MySQLProcessor extends DefaultSQLProcessor
         processors.put( SchemaDefinition.class, new MySQLSchemaDefinitionProcessor() );
         processors.put( DropSchemaStatement.class, new NoOpProcessor() );
 
+        // Different syntax for OFFSET/FETCH
+        processors.put( OffsetSpecification.class, new OffsetSpecificationProcessor( MYSQL_OFFSET_PREFIX,
+            MYSQL_OFFSET_POSTFIX ) );
+        processors.put( LimitSpecification.class, new LimitSpecificationProcessor( MYSQL_LIMIT_PREFIX,
+            MYSQL_LIMIT_POSTFIX ) );
+        processors.put( QuerySpecification.class, new QuerySpecificationProcessor( false ) );
+
         _defaultProcessors = processors;
     }
 
-    public MySQLProcessor()
+    public MySQLProcessor( SQLVendor vendor )
     {
-        super( _defaultProcessors );
+        super( vendor, _defaultProcessors );
     }
 }

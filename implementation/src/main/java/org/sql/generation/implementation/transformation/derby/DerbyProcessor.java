@@ -13,15 +13,15 @@
  */
 package org.sql.generation.implementation.transformation.derby;
 
+import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.transformation.DefaultSQLProcessor;
 
-public class DerbyProcessor
-        extends DefaultSQLProcessor
+public class DerbyProcessor extends DefaultSQLProcessor
 {
 
-    public DerbyProcessor()
+    public DerbyProcessor( SQLVendor vendor )
     {
-        super( DefaultSQLProcessor.getDefaultProcessors() );
+        super( vendor, DefaultSQLProcessor.getDefaultProcessors() );
     }
 
 }

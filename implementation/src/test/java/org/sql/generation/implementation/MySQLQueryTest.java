@@ -26,7 +26,7 @@ public class MySQLQueryTest extends AbstractQueryTest
 {
 
     @Override
-    protected SQLVendor getVendor()
+    protected SQLVendor loadVendor()
         throws Exception
     {
         return SQLVendorProvider.createVendor( MySQLVendor.class );

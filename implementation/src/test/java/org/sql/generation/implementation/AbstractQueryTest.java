@@ -271,4 +271,37 @@ public abstract class AbstractQueryTest extends AbstractSQLSyntaxTest
 
         this.logQuery( vendor, q.callFunction( "schema", l.func( "function_name", l.n( 6 ), l.s( "param2" ) ) ) );
     }
+
+    @Test
+    public void query5()
+        throws Exception
+    {
+        // @formatter:off
+        /*
+          SELECT *
+          FROM table
+          WHERE table.value = ?
+          ORDER BY 1 ASC
+          LIMIT 6
+          OFFSET 3
+        */
+
+        SQLVendor vendor = this.getVendor();
+
+        BooleanFactory b = vendor.getBooleanFactory();
+        ColumnsFactory c = vendor.getColumnsFactory();
+        
+        QueryExpression query = vendor.getQueryFactory().simpleQueryBuilder()
+            .selectAllColumns()
+            .from( vendor.getTableReferenceFactory().tableName( "table" ) )
+            .where( b.eq( c.colName( "table", "value" ), vendor.getLiteralFactory().param() ) )
+            .orderByAsc( "1" )
+            .limit( 6 )
+            .offset( 3 )
+            .createExpression();
+        // @formatter:on
+
+        this.logQuery( vendor, query );
+
+    }
 }

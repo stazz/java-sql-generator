@@ -14,15 +14,14 @@
 
 package org.sql.generation.api.grammar.factories;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import org.sql.generation.api.grammar.common.ValueExpression;
-import org.sql.generation.api.grammar.literals.TimestampTimeLiteral;
 import org.sql.generation.api.grammar.literals.DirectLiteral;
 import org.sql.generation.api.grammar.literals.NumericLiteral;
 import org.sql.generation.api.grammar.literals.SQLFunctionLiteral;
 import org.sql.generation.api.grammar.literals.StringLiteral;
+import org.sql.generation.api.grammar.literals.TimestampTimeLiteral;
 import org.sql.generation.api.vendor.SQLVendor;
 
 /**

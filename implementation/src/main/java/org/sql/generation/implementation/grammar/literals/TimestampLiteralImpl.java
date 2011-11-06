@@ -14,7 +14,6 @@
 
 package org.sql.generation.implementation.grammar.literals;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import org.sql.generation.api.common.NullArgumentException;

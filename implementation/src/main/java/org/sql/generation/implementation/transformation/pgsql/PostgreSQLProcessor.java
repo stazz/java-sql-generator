@@ -21,20 +21,26 @@ import org.atp.api.Typeable;
 import org.sql.generation.api.grammar.booleans.BinaryPredicate;
 import org.sql.generation.api.grammar.booleans.NotRegexpPredicate;
 import org.sql.generation.api.grammar.booleans.RegexpPredicate;
+import org.sql.generation.api.grammar.common.SQLConstants;
 import org.sql.generation.api.grammar.common.datatypes.pgsql.Text;
 import org.sql.generation.api.grammar.definition.table.TableCommitAction;
 import org.sql.generation.api.grammar.definition.table.TableDefinition;
 import org.sql.generation.api.grammar.definition.table.pgsql.PgSQLTableCommitAction;
 import org.sql.generation.api.grammar.literals.TimestampTimeLiteral;
 import org.sql.generation.api.grammar.manipulation.pgsql.PgSQLDropTableOrViewStatement;
-import org.sql.generation.api.grammar.query.pgsql.PgSQLQuerySpecification;
+import org.sql.generation.api.grammar.query.LimitSpecification;
+import org.sql.generation.api.grammar.query.OffsetSpecification;
+import org.sql.generation.api.grammar.query.QuerySpecification;
+import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.transformation.BooleanExpressionProcessing.BinaryPredicateProcessor;
 import org.sql.generation.implementation.transformation.ConstantProcessor;
 import org.sql.generation.implementation.transformation.DefaultSQLProcessor;
 import org.sql.generation.implementation.transformation.DefinitionProcessing.TableDefinitionProcessor;
+import org.sql.generation.implementation.transformation.QueryProcessing.LimitSpecificationProcessor;
+import org.sql.generation.implementation.transformation.QueryProcessing.OffsetSpecificationProcessor;
+import org.sql.generation.implementation.transformation.QueryProcessing.QuerySpecificationProcessor;
 import org.sql.generation.implementation.transformation.pgsql.LiteralExpressionProcessing.PGDateTimeLiteralProcessor;
 import org.sql.generation.implementation.transformation.pgsql.ManipulationProcessing.PgSQLDropTableOrViewStatementProcessor;
-import org.sql.generation.implementation.transformation.pgsql.QueryProcessing.PgSQLQuerySpecificationProcessor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessor;
 
 /**
@@ -47,6 +53,11 @@ public class PostgreSQLProcessor extends DefaultSQLProcessor
     private static final Map<Class<? extends Typeable<?>>, SQLProcessor> _defaultProcessors;
 
     private static final Map<Class<? extends BinaryPredicate>, String> _defaultPgSQLBinaryOperators;
+
+    private static final String LEGACY_LIMIT_PREFIX = "LIMIT";
+    private static final String LEGACY_LIMIT_POSTFIX = null;
+    private static final String LEGACY_OFFSET_PREFIX = "OFFSET";
+    private static final String LEGACY_OFFSET_POSTFIX = null;
 
     static
     {
@@ -68,9 +79,6 @@ public class PostgreSQLProcessor extends DefaultSQLProcessor
         processors.put( NotRegexpPredicate.class,
             new BinaryPredicateProcessor( _defaultPgSQLBinaryOperators.get( NotRegexpPredicate.class ) ) );
 
-        // Add support for PostgreSQL-specific queries (eg. LIMIT / OFFSET clause)
-        processors.put( PgSQLQuerySpecification.class, new PgSQLQuerySpecificationProcessor() );
-
         // Add support for "TEXT" data type
         processors.put( Text.class, new ConstantProcessor( "TEXT" ) );
 
@@ -87,8 +95,23 @@ public class PostgreSQLProcessor extends DefaultSQLProcessor
         _defaultProcessors = processors;
     }
 
-    public PostgreSQLProcessor()
+    public PostgreSQLProcessor( SQLVendor vendor )
     {
-        super( _defaultProcessors );
+        super( vendor, _defaultProcessors );
+    }
+
+    public void setLegacyOffsetAndLimit( boolean useLegacyOffsetAndLimit )
+    {
+        String limitPrefix = useLegacyOffsetAndLimit ? LEGACY_LIMIT_PREFIX : SQLConstants.LIMIT_PREFIX;
+        String limitPostfix = useLegacyOffsetAndLimit ? LEGACY_LIMIT_POSTFIX : SQLConstants.LIMIT_POSTFIX;
+        String offsetPrefix = useLegacyOffsetAndLimit ? LEGACY_OFFSET_PREFIX : SQLConstants.OFFSET_PREFIX;
+        String offsetPostfix = useLegacyOffsetAndLimit ? LEGACY_OFFSET_POSTFIX : SQLConstants.OFFSET_POSTFIX;
+
+        this.getProcessors()
+            .put( LimitSpecification.class, new LimitSpecificationProcessor( limitPrefix, limitPostfix ) );
+        this.getProcessors().put( OffsetSpecification.class,
+            new OffsetSpecificationProcessor( offsetPrefix, offsetPostfix ) );
+        this.getProcessors()
+            .put( QuerySpecification.class, new QuerySpecificationProcessor( !useLegacyOffsetAndLimit ) );
     }
 }
