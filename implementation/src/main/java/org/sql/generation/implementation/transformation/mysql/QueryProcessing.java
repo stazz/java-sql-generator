@@ -14,6 +14,11 @@
 
 package org.sql.generation.implementation.transformation.mysql;
 
+import org.atp.api.Typeable;
+import org.sql.generation.api.grammar.common.SQLConstants;
+import org.sql.generation.api.grammar.query.LimitSpecification;
+import org.sql.generation.api.grammar.query.OffsetSpecification;
+import org.sql.generation.api.vendor.MySQLVendor;
 import org.sql.generation.implementation.transformation.QueryProcessing.LimitSpecificationProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.OffsetSpecificationProcessor;
 import org.sql.generation.implementation.transformation.QueryProcessing.QuerySpecificationProcessor;
@@ -36,6 +41,36 @@ public class QueryProcessing
         protected boolean isOffsetBeforeLimit( SQLProcessorAggregator processor )
         {
             return false;
+        }
+
+        @Override
+        protected void processLimitAndOffset( SQLProcessorAggregator processor, StringBuilder builder,
+            Typeable<?> first, Typeable<?> second )
+        {
+            MySQLVendor vendor = (MySQLVendor) processor.getVendor();
+            if( vendor.legacyLimit() || (first == null && second != null) )
+            {
+                // Just do the processing right away, because of the difference of syntax
+                builder.append( SQLConstants.NEWLINE ).append( MYSQL_LIMIT_PREFIX )
+                    .append( SQLConstants.TOKEN_SEPARATOR );
+                if( second != null )
+                {
+                    processor.process( ((OffsetSpecification) second).getSkip(), builder );
+                    builder.append( SQLConstants.COMMA );
+                }
+                if( first != null && ((LimitSpecification) first).getCount() != null )
+                {
+                    processor.process( ((LimitSpecification) first).getCount(), builder );
+                }
+                else if( second != null )
+                {
+                    builder.append( Long.MAX_VALUE );
+                }
+            }
+            else
+            {
+                super.processLimitAndOffset( processor, builder, first, second );
+            }
         }
     }
 

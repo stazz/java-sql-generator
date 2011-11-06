@@ -40,4 +40,20 @@ public class PostgreSQLQueryTest extends AbstractQueryTest
         super.query5();
     }
 
+    @Test
+    public void pgQuery6()
+        throws Exception
+    {
+        ((PostgreSQLVendor) this.getVendor()).setLegacyOffsetAndLimit( true );
+        super.query6();
+    }
+
+    @Test
+    public void pgQuery7()
+        throws Exception
+    {
+        ((PostgreSQLVendor) this.getVendor()).setLegacyOffsetAndLimit( true );
+        super.query7();
+    }
+
 }

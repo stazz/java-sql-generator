@@ -184,8 +184,10 @@ public class QueryProcessing
                 second = query.getOffsetSpecification();
             }
 
-            QueryProcessing.processOptional( processor, builder, first, SQLConstants.NEWLINE, null );
-            QueryProcessing.processOptional( processor, builder, second, SQLConstants.NEWLINE, null );
+            if( first != null || second != null )
+            {
+                this.processLimitAndOffset( processor, builder, first, second );
+            }
 
             if( query.getOrderBy() == null
                 && (query.getOffsetSpecification() != null || query.getLimitSpecification() != null) )
@@ -200,6 +202,13 @@ public class QueryProcessing
         protected boolean isOffsetBeforeLimit( SQLProcessorAggregator processor )
         {
             return true;
+        }
+
+        protected void processLimitAndOffset( SQLProcessorAggregator processor, StringBuilder builder,
+            Typeable<?> first, Typeable<?> second )
+        {
+            QueryProcessing.processOptional( processor, builder, first, SQLConstants.NEWLINE, null );
+            QueryProcessing.processOptional( processor, builder, second, SQLConstants.NEWLINE, null );
         }
 
     }

@@ -24,7 +24,7 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
  * 
  * @author Stanislav Muhametsin
  */
-public class MySQLTableProcessing
+public class TableProcessing
 {
     public static class MySQLTableNameDirectProcessor extends TableNameDirectProcessor
     {

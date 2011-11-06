@@ -36,9 +36,23 @@ public class MySQLVendorImpl extends DefaultVendor
         }
     };
 
+    private boolean _legacyLimit;
+
     public MySQLVendorImpl()
     {
         super( MYSQL_PROCESSOR );
+
+        this._legacyLimit = false;
+    }
+
+    public boolean legacyLimit()
+    {
+        return this._legacyLimit;
+    }
+
+    public void setLegacyLimit( boolean useLegacyLimit )
+    {
+        this._legacyLimit = useLegacyLimit;
     }
 
 }

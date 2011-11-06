@@ -282,8 +282,8 @@ public abstract class AbstractQueryTest extends AbstractSQLSyntaxTest
           FROM table
           WHERE table.value = ?
           ORDER BY 1 ASC
-          LIMIT 6
-          OFFSET 3
+          OFFSET 3 ROWS
+          FETCH FIRST 6 ROWS ONLY
         */
 
         SQLVendor vendor = this.getVendor();
@@ -302,6 +302,65 @@ public abstract class AbstractQueryTest extends AbstractSQLSyntaxTest
         // @formatter:on
 
         this.logQuery( vendor, query );
+    }
 
+    @Test
+    public void query6()
+        throws Exception
+    {
+        // @formatter:off
+        /*
+          SELECT *
+          FROM table
+          WHERE table.value = ?
+          ORDER BY 1 ASC
+          OFFSET 3 ROWS
+        */
+
+        SQLVendor vendor = this.getVendor();
+
+        BooleanFactory b = vendor.getBooleanFactory();
+        ColumnsFactory c = vendor.getColumnsFactory();
+        
+        QueryExpression query = vendor.getQueryFactory().simpleQueryBuilder()
+            .selectAllColumns()
+            .from( vendor.getTableReferenceFactory().tableName( "table" ) )
+            .where( b.eq( c.colName( "table", "value" ), vendor.getLiteralFactory().param() ) )
+            .orderByAsc( "1" )
+            .offset( 3 )
+            .createExpression();
+        // @formatter:on
+
+        this.logQuery( vendor, query );
+    }
+
+    @Test
+    public void query7()
+        throws Exception
+    {
+        // @formatter:off
+        /*
+          SELECT *
+          FROM table
+          WHERE table.value = ?
+          ORDER BY 1 ASC
+          FETCH FIRST 6 ROWS ONLY
+        */
+
+        SQLVendor vendor = this.getVendor();
+
+        BooleanFactory b = vendor.getBooleanFactory();
+        ColumnsFactory c = vendor.getColumnsFactory();
+        
+        QueryExpression query = vendor.getQueryFactory().simpleQueryBuilder()
+            .selectAllColumns()
+            .from( vendor.getTableReferenceFactory().tableName( "table" ) )
+            .where( b.eq( c.colName( "table", "value" ), vendor.getLiteralFactory().param() ) )
+            .orderByAsc( "1" )
+            .limit( 6 )
+            .createExpression();
+        // @formatter:on
+
+        this.logQuery( vendor, query );
     }
 }

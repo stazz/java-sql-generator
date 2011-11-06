@@ -14,6 +14,7 @@
 
 package org.sql.generation.implementation;
 
+import org.junit.Test;
 import org.sql.generation.api.vendor.MySQLVendor;
 import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.api.vendor.SQLVendorProvider;
@@ -30,5 +31,29 @@ public class MySQLQueryTest extends AbstractQueryTest
         throws Exception
     {
         return SQLVendorProvider.createVendor( MySQLVendor.class );
+    }
+
+    @Test
+    public void mySQLQuery5()
+        throws Exception
+    {
+        ((MySQLVendor) this.getVendor()).setLegacyLimit( true );
+        super.query5();
+    }
+
+    @Test
+    public void mySQLQuery6()
+        throws Exception
+    {
+        ((MySQLVendor) this.getVendor()).setLegacyLimit( true );
+        super.query6();
+    }
+
+    @Test
+    public void mySQLQuery7()
+        throws Exception
+    {
+        ((MySQLVendor) this.getVendor()).setLegacyLimit( true );
+        super.query7();
     }
 }

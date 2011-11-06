@@ -42,9 +42,9 @@ public interface PostgreSQLVendor
     public PgSQLManipulationFactory getManipulationFactory();
 
     /**
-     * Are the legacy (pre-8.4) OFFSET/LIMIT expressions used instead of the OFFSET/FETCH defined in the SQL 2008
-     * standard. For more information, see http://www.postgresql.org/docs/8.3/static/sql-select.html#SQL-LIMIT . This
-     * method is not thread-safe.
+     * Returns whether the legacy (pre-8.4) OFFSET/LIMIT expressions are used instead of the OFFSET/FETCH defined in the
+     * SQL 2008 standard. For more information, see http://www.postgresql.org/docs/8.3/static/sql-select.html#SQL-LIMIT
+     * . This method is not thread-safe.
      * 
      * @return {@code true} if the legacy OFFSET/LIMIT expressions are used; {@code false} otherwise.
      */

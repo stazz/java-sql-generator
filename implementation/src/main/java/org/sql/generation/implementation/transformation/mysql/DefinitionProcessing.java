@@ -22,7 +22,7 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
  * 
  * @author Stanislav Muhametsin
  */
-public class MySQLDefinitionProcessing
+public class DefinitionProcessing
 {
 
     public static class MySQLSchemaDefinitionProcessor extends SchemaDefinitionProcessor
