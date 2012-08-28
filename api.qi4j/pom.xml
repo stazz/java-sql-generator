@@ -9,7 +9,7 @@
   </parent>
   
   <properties>
-    <version.qi4j>1.4-SNAPSHOT</version.qi4j>
+    <version.qi4j>2.0-beta-1</version.qi4j>
   </properties>
 
   <artifactId>org.java-sql-generator.api.qi4j</artifactId>

@@ -14,9 +14,11 @@
 
 package org.sql.generation.api.qi4j;
 
+import org.qi4j.api.injection.scope.Structure;
 import org.qi4j.api.injection.scope.This;
 import org.qi4j.api.mixin.Mixins;
 import org.qi4j.api.service.ServiceComposite;
+import org.qi4j.spi.Qi4jSPI;
 import org.sql.generation.api.vendor.SQLVendor;
 
 @Mixins(
@@ -30,8 +32,11 @@ public interface SQLVendorServiceComposite
         implements SQLVendorService
     {
 
-        @This
-        private ServiceComposite _meAsService;
+    	@This
+    	private ServiceComposite _meAsService;
+    	
+    	@Structure
+    	private Qi4jSPI _qi4j;
 
         /*
          * (non-Javadoc)
@@ -40,7 +45,7 @@ public interface SQLVendorServiceComposite
          */
         public SQLVendor getSQLVendor()
         {
-            return this._meAsService.metaInfo( SQLVendor.class );
+            return this._qi4j.getServiceDescriptor(this._meAsService).metaInfo( SQLVendor.class );
         }
 
     }
