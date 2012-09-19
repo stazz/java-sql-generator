@@ -15,6 +15,8 @@
 package org.sql.generation.implementation.transformation.mysql;
 
 import org.sql.generation.api.grammar.definition.schema.SchemaDefinition;
+import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
+import org.sql.generation.implementation.transformation.DefinitionProcessing.ColumnDefinitionProcessor;
 import org.sql.generation.implementation.transformation.DefinitionProcessing.SchemaDefinitionProcessor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
@@ -35,5 +37,15 @@ public class DefinitionProcessing
             this.processSchemaElements( aggregator, object, builder );
         }
 
+    }
+
+    public static class MySQLColumnDefinitionProcessor extends ColumnDefinitionProcessor
+    {
+        @Override
+        protected void processAutoGenerationPolicy( ColumnDefinition object, StringBuilder builder )
+        {
+            // MySQL combines both ALWAYS and BY DEFAULT policies.
+            builder.append( " AUTO_INCREMENT" );
+        }
     }
 }

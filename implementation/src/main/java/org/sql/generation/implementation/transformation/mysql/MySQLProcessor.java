@@ -21,6 +21,7 @@ import org.atp.api.Typeable;
 import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.common.TableNameFunction;
 import org.sql.generation.api.grammar.definition.schema.SchemaDefinition;
+import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
 import org.sql.generation.api.grammar.manipulation.DropSchemaStatement;
 import org.sql.generation.api.grammar.query.LimitSpecification;
 import org.sql.generation.api.grammar.query.OffsetSpecification;
@@ -28,12 +29,13 @@ import org.sql.generation.api.grammar.query.QuerySpecification;
 import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.transformation.DefaultSQLProcessor;
 import org.sql.generation.implementation.transformation.NoOpProcessor;
+import org.sql.generation.implementation.transformation.mysql.DefinitionProcessing.MySQLColumnDefinitionProcessor;
 import org.sql.generation.implementation.transformation.mysql.DefinitionProcessing.MySQLSchemaDefinitionProcessor;
-import org.sql.generation.implementation.transformation.mysql.TableProcessing.MySQLTableNameDirectProcessor;
-import org.sql.generation.implementation.transformation.mysql.TableProcessing.MySQLTableNameFunctionProcessor;
 import org.sql.generation.implementation.transformation.mysql.QueryProcessing.MySQLLimitSpecificationProcessor;
 import org.sql.generation.implementation.transformation.mysql.QueryProcessing.MySQLOffsetSpecificationProcessor;
 import org.sql.generation.implementation.transformation.mysql.QueryProcessing.MySQLQuerySpecificationProcessor;
+import org.sql.generation.implementation.transformation.mysql.TableProcessing.MySQLTableNameDirectProcessor;
+import org.sql.generation.implementation.transformation.mysql.TableProcessing.MySQLTableNameFunctionProcessor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessor;
 
 /**
@@ -57,6 +59,9 @@ public class MySQLProcessor extends DefaultSQLProcessor
         // Only process schema elements from schema definition, and ignore drop schema statements
         processors.put( SchemaDefinition.class, new MySQLSchemaDefinitionProcessor() );
         processors.put( DropSchemaStatement.class, new NoOpProcessor() );
+
+        // Override default column definition support
+        processors.put( ColumnDefinition.class, new MySQLColumnDefinitionProcessor() );
 
         // Different syntax for OFFSET/FETCH
         processors.put( QuerySpecification.class, new MySQLQuerySpecificationProcessor() );

@@ -23,6 +23,7 @@ import org.sql.generation.api.grammar.builders.definition.UniqueConstraintBuilde
 import org.sql.generation.api.grammar.builders.definition.ViewDefinitionBuilder;
 import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.common.datatypes.SQLDataType;
+import org.sql.generation.api.grammar.definition.table.AutoGenerationPolicy;
 import org.sql.generation.api.grammar.definition.table.CheckConstraint;
 import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
 import org.sql.generation.api.grammar.definition.table.ConstraintCharacteristics;
@@ -70,10 +71,12 @@ public class DefaultDefinitionFactory extends AbstractDefinitionFactory
         return new TableElementListBuilderImpl( this.getProcessor() );
     }
 
-    public ColumnDefinition createColumnDefinition( String columnName, SQLDataType columnDataType,
-        String columnDefault, Boolean mayBeNull )
+    @Override
+    protected ColumnDefinition createColumnDefinition( String columnName, SQLDataType columnDataType,
+        String columnDefault, Boolean mayBeNull, AutoGenerationPolicy autoGenerationPolicy )
     {
-        return new ColumnDefinitionImpl( this.getProcessor(), columnName, columnDataType, columnDefault, mayBeNull );
+        return new ColumnDefinitionImpl( this.getProcessor(), columnName, columnDataType, columnDefault, mayBeNull,
+            autoGenerationPolicy );
     }
 
     public LikeClause createLikeClause( TableNameDirect tableName )

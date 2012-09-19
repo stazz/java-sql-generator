@@ -55,4 +55,12 @@ public interface ColumnDefinition
      */
     public Boolean mayBeNull();
 
+    /**
+     * Returns the auto generation policy for this column. May be {@code null} if no auto generation policy exists for
+     * this column.
+     * 
+     * @return Auto generation policy for this column, or {@code null} if the column is not auto-generated.
+     */
+    public AutoGenerationPolicy getAutoGenerationPolicy();
+
 }

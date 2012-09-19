@@ -15,6 +15,7 @@
 package org.sql.generation.implementation.grammar.factories;
 
 import org.sql.generation.api.grammar.common.datatypes.SQLDataType;
+import org.sql.generation.api.grammar.definition.table.AutoGenerationPolicy;
 import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
 import org.sql.generation.api.grammar.definition.table.ConstraintCharacteristics;
 import org.sql.generation.api.grammar.definition.table.TableConstraint;
@@ -52,6 +53,18 @@ public abstract class AbstractDefinitionFactory extends SQLFactoryBase
         return this.createColumnDefinition( columnName, columnDataType, columnDefault, true );
     }
 
+    public ColumnDefinition createColumnDefinition( String columnName, SQLDataType columnDataType,
+        String columnDefault, Boolean mayBeNull )
+    {
+        return this.createColumnDefinition( columnName, columnDataType, columnDefault, mayBeNull, null );
+    }
+
+    public ColumnDefinition createColumnDefinition( String columnName, SQLDataType columnDataType, Boolean mayBeNull,
+        AutoGenerationPolicy autoGenerationPolicy )
+    {
+        return this.createColumnDefinition( columnName, columnDataType, null, mayBeNull, autoGenerationPolicy );
+    }
+
     public TableConstraintDefinition createTableConstraintDefinition( String name, TableConstraint constraint )
     {
         return this.createTableConstraintDefinition( name, constraint, null );
@@ -67,5 +80,8 @@ public abstract class AbstractDefinitionFactory extends SQLFactoryBase
     {
         return this.createTableConstraintDefinition( null, constraint, characteristics );
     }
+
+    protected abstract ColumnDefinition createColumnDefinition( String columnName, SQLDataType columnDataType,
+        String columnDefault, Boolean mayBeNull, AutoGenerationPolicy autoGenerationPolicy );
 
 }

@@ -14,6 +14,7 @@
 
 package org.sql.generation.implementation.transformation.pgsql;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +22,11 @@ import org.atp.api.Typeable;
 import org.sql.generation.api.grammar.booleans.BinaryPredicate;
 import org.sql.generation.api.grammar.booleans.NotRegexpPredicate;
 import org.sql.generation.api.grammar.booleans.RegexpPredicate;
+import org.sql.generation.api.grammar.common.datatypes.BigInt;
+import org.sql.generation.api.grammar.common.datatypes.SQLInteger;
+import org.sql.generation.api.grammar.common.datatypes.SmallInt;
 import org.sql.generation.api.grammar.common.datatypes.pgsql.Text;
+import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
 import org.sql.generation.api.grammar.definition.table.TableCommitAction;
 import org.sql.generation.api.grammar.definition.table.TableDefinition;
 import org.sql.generation.api.grammar.definition.table.pgsql.PgSQLTableCommitAction;
@@ -35,6 +40,7 @@ import org.sql.generation.implementation.transformation.BooleanExpressionProcess
 import org.sql.generation.implementation.transformation.ConstantProcessor;
 import org.sql.generation.implementation.transformation.DefaultSQLProcessor;
 import org.sql.generation.implementation.transformation.DefinitionProcessing.TableDefinitionProcessor;
+import org.sql.generation.implementation.transformation.pgsql.DefinitionProcessing.PGColumnDefinitionProcessor;
 import org.sql.generation.implementation.transformation.pgsql.LiteralExpressionProcessing.PGDateTimeLiteralProcessor;
 import org.sql.generation.implementation.transformation.pgsql.ManipulationProcessing.PgSQLDropTableOrViewStatementProcessor;
 import org.sql.generation.implementation.transformation.pgsql.QueryProcessing.PgSQLLimitSpecificationProcessor;
@@ -66,6 +72,14 @@ public class PostgreSQLProcessor extends DefaultSQLProcessor
 
         // Override default processor for date-time
         processors.put( TimestampTimeLiteral.class, new PGDateTimeLiteralProcessor() );
+
+        // Override default processor for column definition
+        Map<Class<?>, String> dataTypeSerials = new HashMap<Class<?>, String>();
+        dataTypeSerials.put( BigInt.class, "BIGSERIAL" );
+        dataTypeSerials.put( SQLInteger.class, "SERIAL" );
+        dataTypeSerials.put( SmallInt.class, "SMALLSERIAL" );
+        processors.put( ColumnDefinition.class,
+            new PGColumnDefinitionProcessor( Collections.unmodifiableMap( dataTypeSerials ) ) );
 
         // Add support for regexp comparing
         processors.put( RegexpPredicate.class,

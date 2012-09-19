@@ -22,6 +22,7 @@ import java.util.Map;
 import org.sql.generation.api.grammar.common.SQLConstants;
 import org.sql.generation.api.grammar.definition.schema.SchemaDefinition;
 import org.sql.generation.api.grammar.definition.schema.SchemaElement;
+import org.sql.generation.api.grammar.definition.table.AutoGenerationPolicy;
 import org.sql.generation.api.grammar.definition.table.CheckConstraint;
 import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
 import org.sql.generation.api.grammar.definition.table.ConstraintCharacteristics;
@@ -189,7 +190,7 @@ public class DefinitionProcessing
         {
             builder.append( object.getColumnName() ).append( SQLConstants.TOKEN_SEPARATOR );
 
-            aggregator.process( object.getDataType(), builder );
+            this.processDataType( aggregator, object, builder );
 
             if( object.getDefault() != null )
             {
@@ -201,6 +202,36 @@ public class DefinitionProcessing
             {
                 builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "NOT NULL" );
             }
+
+            if( object.getAutoGenerationPolicy() != null )
+            {
+                this.processAutoGenerationPolicy( object, builder );
+            }
+        }
+
+        protected void processDataType( SQLProcessorAggregator aggregator, ColumnDefinition object,
+            StringBuilder builder )
+        {
+            aggregator.process( object.getDataType(), builder );
+        }
+
+        protected void processAutoGenerationPolicy( ColumnDefinition object, StringBuilder builder )
+        {
+            builder.append( " GENERATED " );
+            if( AutoGenerationPolicy.ALWAYS.equals( object.getAutoGenerationPolicy() ) )
+            {
+                builder.append( "ALWAYS " );
+            }
+            else if( AutoGenerationPolicy.BY_DEFAULT.equals( object.getAutoGenerationPolicy() ) )
+            {
+                builder.append( "BY DEFAULT " );
+            }
+            else
+            {
+                throw new UnsupportedOperationException( "Unknown auto generation policy: "
+                    + object.getAutoGenerationPolicy() + "." );
+            }
+            builder.append( "AS IDENTITY" );
         }
     }
 

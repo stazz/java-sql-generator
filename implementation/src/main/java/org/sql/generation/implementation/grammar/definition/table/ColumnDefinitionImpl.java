@@ -17,6 +17,7 @@ package org.sql.generation.implementation.grammar.definition.table;
 import org.atp.spi.TypeableImpl;
 import org.sql.generation.api.common.NullArgumentException;
 import org.sql.generation.api.grammar.common.datatypes.SQLDataType;
+import org.sql.generation.api.grammar.definition.table.AutoGenerationPolicy;
 import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
 import org.sql.generation.api.grammar.definition.table.TableElement;
 import org.sql.generation.implementation.grammar.common.SQLSyntaxElementBase;
@@ -34,16 +35,17 @@ public class ColumnDefinitionImpl extends SQLSyntaxElementBase<TableElement, Col
     private final SQLDataType _dataType;
     private final String _default;
     private final Boolean _mayBeNull;
+    private final AutoGenerationPolicy _autoGenerationPolicy;
 
     public ColumnDefinitionImpl( SQLProcessorAggregator processor, String name, SQLDataType dataType,
-        String defaultStr, Boolean mayBeNull )
+        String defaultStr, Boolean mayBeNull, AutoGenerationPolicy autoGenerationPolicy )
     {
-        this( processor, ColumnDefinition.class, name, dataType, defaultStr, mayBeNull );
+        this( processor, ColumnDefinition.class, name, dataType, defaultStr, mayBeNull, autoGenerationPolicy );
     }
 
     protected ColumnDefinitionImpl( SQLProcessorAggregator processor,
         Class<? extends ColumnDefinition> realImplementingType, String name, SQLDataType dataType, String defaultStr,
-        Boolean mayBeNull )
+        Boolean mayBeNull, AutoGenerationPolicy autoGenerationPolicy )
     {
         super( processor, realImplementingType );
 
@@ -55,6 +57,7 @@ public class ColumnDefinitionImpl extends SQLSyntaxElementBase<TableElement, Col
         this._dataType = dataType;
         this._default = defaultStr;
         this._mayBeNull = mayBeNull;
+        this._autoGenerationPolicy = autoGenerationPolicy;
     }
 
     @Override
@@ -83,6 +86,11 @@ public class ColumnDefinitionImpl extends SQLSyntaxElementBase<TableElement, Col
     public Boolean mayBeNull()
     {
         return this._mayBeNull;
+    }
+
+    public AutoGenerationPolicy getAutoGenerationPolicy()
+    {
+        return this._autoGenerationPolicy;
     }
 
 }

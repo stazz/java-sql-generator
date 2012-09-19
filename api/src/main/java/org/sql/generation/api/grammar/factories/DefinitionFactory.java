@@ -23,6 +23,7 @@ import org.sql.generation.api.grammar.builders.definition.UniqueConstraintBuilde
 import org.sql.generation.api.grammar.builders.definition.ViewDefinitionBuilder;
 import org.sql.generation.api.grammar.common.TableNameDirect;
 import org.sql.generation.api.grammar.common.datatypes.SQLDataType;
+import org.sql.generation.api.grammar.definition.table.AutoGenerationPolicy;
 import org.sql.generation.api.grammar.definition.table.CheckConstraint;
 import org.sql.generation.api.grammar.definition.table.ColumnDefinition;
 import org.sql.generation.api.grammar.definition.table.ConstraintCharacteristics;
@@ -107,17 +108,39 @@ public interface DefinitionFactory
 
     /**
      * Creates a new definition of column with specified name, data type, default value, and {@code NULL} value policy.
+     * Invoking this method is equivalent to invoking
+     * {@link #createColumnDefinition(String, SQLDataType, String, Boolean, AutoGenerationPolicy)} and pass {@code null}
+     * as last parameter.
      * 
      * @param columnName The name of the column.
      * @param columnDataType The data type of the column.
      * @param columnDefault The default value of the column.
      * @param mayBeNull The {@code NULL} value policy for the column. Setting this to {@code false} is same as
      *            specifying {@code NOT NULL} in column definition in SQL.
+     * 
      * @return The syntax element for definition of column with specified name, data type, default value, and
      *         {@code NULL} value policy.
      */
     public ColumnDefinition createColumnDefinition( String columnName, SQLDataType columnDataType,
         String columnDefault, Boolean mayBeNull );
+
+    /**
+     * Creates a new definition of column with specified name, data type, {@code NULL} value policy, and auto generation
+     * policy.
+     * 
+     * @param columnName The name of the column.
+     * @param columnDataType The data type of the column.
+     * @param mayBeNull The {@code NULL} value policy for the column. Setting this to {@code false} is same as
+     *            specifying {@code NOT NULL} in column definition in SQL.
+     * @param autoGenerationPolicy The policy for auto generation for this column. Should be {@code null} if the column
+     *            should not be marked as automatically generated.
+     * 
+     * @return The syntax element for definition of column with specified name, data type, default value, {@code NULL}
+     *         value policy, and auto generation policy.
+     */
+
+    public ColumnDefinition createColumnDefinition( String columnName, SQLDataType columnDataType, Boolean mayBeNull,
+        AutoGenerationPolicy autoGenerationPolicy );
 
     /**
      * Creates a new {@code LIKE
