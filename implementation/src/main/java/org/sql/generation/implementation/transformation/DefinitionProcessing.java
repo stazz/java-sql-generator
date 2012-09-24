@@ -44,7 +44,7 @@ import org.sql.generation.api.grammar.definition.view.ViewDefinition;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
- * 
+ *
  * @author Stanislav Muhametsin
  */
 public class DefinitionProcessing
@@ -166,14 +166,19 @@ public class DefinitionProcessing
             builder.append( SQLConstants.OPEN_PARENTHESIS ).append( SQLConstants.NEWLINE );
             while( iter.hasNext() )
             {
-                aggregator.process( iter.next(), builder );
-                if( iter.hasNext() )
-                {
-                    builder.append( SQLConstants.COMMA );
-                }
+                this.processTableElement( aggregator, iter.next(), builder, iter.hasNext() );
                 builder.append( SQLConstants.NEWLINE );
             }
             builder.append( SQLConstants.CLOSE_PARENTHESIS );
+        }
+
+        protected void processTableElement( SQLProcessorAggregator aggregator, TableElement object, StringBuilder builder, boolean hasNext )
+        {
+            aggregator.process( object, builder );
+            if( hasNext )
+            {
+                builder.append( SQLConstants.COMMA );
+            }
         }
     }
 
@@ -198,14 +203,19 @@ public class DefinitionProcessing
                     .append( SQLConstants.TOKEN_SEPARATOR ).append( object.getDefault() );
             }
 
-            if( !object.mayBeNull() )
-            {
-                builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "NOT NULL" );
-            }
+            this.processMayBeNull( object, builder );
 
             if( object.getAutoGenerationPolicy() != null )
             {
                 this.processAutoGenerationPolicy( object, builder );
+            }
+        }
+
+        protected void processMayBeNull( ColumnDefinition object, StringBuilder builder )
+        {
+            if( !object.mayBeNull() )
+            {
+                builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "NOT NULL" );
             }
         }
 
@@ -346,6 +356,11 @@ public class DefinitionProcessing
 
         @Override
         protected void doProcess( SQLProcessorAggregator aggregator, UniqueConstraint object, StringBuilder builder )
+        {
+            this.processUniqueness( aggregator, object, builder );
+        }
+
+        protected void processUniqueness( SQLProcessorAggregator aggregator, UniqueConstraint object, StringBuilder builder )
         {
             builder.append( this._uniqueSpecs.get( object.getUniquenessKind() ) );
             aggregator.process( object.getColumnNameList(), builder );
