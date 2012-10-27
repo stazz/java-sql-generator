@@ -24,10 +24,6 @@ import org.sql.generation.api.grammar.common.ValueExpression;
  * statement.
  * </p>
  * 
- * <p>
- * TODO: affected table columns
- * </p>
- * 
  * @author Stanislav Muhametsin
  */
 public interface ColumnSourceByValues
@@ -39,4 +35,5 @@ public interface ColumnSourceByValues
      * @return The values to use as column source.
      */
     public List<ValueExpression> getValues();
+
 }
