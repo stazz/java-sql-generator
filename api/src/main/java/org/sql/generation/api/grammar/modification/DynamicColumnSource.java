@@ -22,11 +22,12 @@ import org.sql.generation.api.grammar.common.ColumnNameList;
  * @author Stanislav Muhametsin
  */
 public interface DynamicColumnSource
-    extends ColumnSource
+        extends ColumnSource
 {
 
     /**
-     * Returns the named columns of this column source. May be null if no column names are specified.
+     * Returns the named columns of this column source. May be null if no column names are
+     * specified.
      * 
      * @return The named columns of this column source.
      */

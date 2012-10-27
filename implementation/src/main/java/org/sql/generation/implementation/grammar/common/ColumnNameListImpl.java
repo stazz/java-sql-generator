@@ -28,8 +28,8 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
  * 
  * @author Stanislav Muhametsin
  */
-public class ColumnNameListImpl extends NonBooleanExpressionImpl<ColumnNameList>
-    implements ColumnNameList
+public class ColumnNameListImpl extends SQLSyntaxElementBase<ColumnNameList, ColumnNameList>
+        implements ColumnNameList
 {
 
     private final List<String> _columnNames;
@@ -39,8 +39,9 @@ public class ColumnNameListImpl extends NonBooleanExpressionImpl<ColumnNameList>
         this( processor, ColumnNameList.class, columnNames );
     }
 
-    protected ColumnNameListImpl( SQLProcessorAggregator processor, Class<? extends ColumnNameList> implClass,
-        Collection<String> columnNames )
+    protected ColumnNameListImpl( SQLProcessorAggregator processor,
+            Class<? extends ColumnNameList> implClass,
+            Collection<String> columnNames )
     {
         super( processor, implClass );
         NullArgumentException.validateNotNull( "column names", columnNames );
