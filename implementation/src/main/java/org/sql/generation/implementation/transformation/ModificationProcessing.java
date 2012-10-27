@@ -27,6 +27,7 @@ import org.sql.generation.api.grammar.modification.SetClause;
 import org.sql.generation.api.grammar.modification.TargetTable;
 import org.sql.generation.api.grammar.modification.UpdateBySearch;
 import org.sql.generation.api.grammar.modification.UpdateSourceByExpression;
+import org.sql.generation.api.grammar.query.QueryExpression;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
@@ -36,8 +37,9 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
 public class ModificationProcessing
 {
 
-    public static abstract class DynamicColumnSourceProcessor<SourceType extends DynamicColumnSource> extends
-        AbstractProcessor<SourceType>
+    public static abstract class DynamicColumnSourceProcessor<SourceType extends DynamicColumnSource>
+            extends
+            AbstractProcessor<SourceType>
     {
         public DynamicColumnSourceProcessor( Class<? extends SourceType> realType )
         {
@@ -45,7 +47,8 @@ public class ModificationProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator processor, SourceType object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, SourceType object,
+                StringBuilder builder )
         {
             if( object.getColumnNames() != null )
             {
@@ -54,12 +57,14 @@ public class ModificationProcessing
             this.doProcessColumnSource( processor, object, builder );
         }
 
-        protected abstract void doProcessColumnSource( SQLProcessorAggregator processor, SourceType object,
-            StringBuilder builder );
+        protected abstract void doProcessColumnSource( SQLProcessorAggregator processor,
+                SourceType object,
+                StringBuilder builder );
 
     }
 
-    public static class ColumnSourceByQueryProcessor extends DynamicColumnSourceProcessor<ColumnSourceByQuery>
+    public static class ColumnSourceByQueryProcessor extends
+            DynamicColumnSourceProcessor<ColumnSourceByQuery>
     {
 
         public ColumnSourceByQueryProcessor()
@@ -73,15 +78,17 @@ public class ModificationProcessing
         }
 
         @Override
-        protected void doProcessColumnSource( SQLProcessorAggregator processor, ColumnSourceByQuery object,
-            StringBuilder builder )
+        protected void doProcessColumnSource( SQLProcessorAggregator processor,
+                ColumnSourceByQuery object,
+                StringBuilder builder )
         {
             builder.append( SQLConstants.NEWLINE );
             processor.process( object.getQuery(), builder );
         }
     }
 
-    public static class ColumnSourceByValuesProcessor extends DynamicColumnSourceProcessor<ColumnSourceByValues>
+    public static class ColumnSourceByValuesProcessor extends
+            DynamicColumnSourceProcessor<ColumnSourceByValues>
     {
 
         public ColumnSourceByValuesProcessor()
@@ -95,14 +102,26 @@ public class ModificationProcessing
         }
 
         @Override
-        protected void doProcessColumnSource( SQLProcessorAggregator processor, ColumnSourceByValues object,
-            StringBuilder builder )
+        protected void doProcessColumnSource( SQLProcessorAggregator processor,
+                ColumnSourceByValues object,
+                StringBuilder builder )
         {
-            builder.append( SQLConstants.NEWLINE ).append( "VALUES" ).append( SQLConstants.OPEN_PARENTHESIS );
+            builder.append( SQLConstants.NEWLINE ).append( "VALUES" )
+                .append( SQLConstants.OPEN_PARENTHESIS );
             Iterator<ValueExpression> iter = object.getValues().iterator();
             while( iter.hasNext() )
             {
-                processor.process( iter.next(), builder );
+                ValueExpression next = iter.next();
+                boolean needParenthesis = next instanceof QueryExpression;
+                if( needParenthesis )
+                {
+                    builder.append( SQLConstants.OPEN_PARENTHESIS );
+                }
+                processor.process( next, builder );
+                if( needParenthesis )
+                {
+                    builder.append( SQLConstants.CLOSE_PARENTHESIS );
+                }
                 if( iter.hasNext() )
                 {
                     builder.append( SQLConstants.COMMA ).append( SQLConstants.TOKEN_SEPARATOR );
@@ -125,11 +144,13 @@ public class ModificationProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator processor, DeleteBySearch object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, DeleteBySearch object,
+                StringBuilder builder )
         {
             builder.append( "DELETE FROM" ).append( SQLConstants.TOKEN_SEPARATOR );
             processor.process( object.getTargetTable(), builder );
-            QueryProcessing.processOptionalBooleanExpression( processor, builder, object.getWhere(),
+            QueryProcessing.processOptionalBooleanExpression( processor, builder,
+                object.getWhere(),
                 SQLConstants.NEWLINE, SQLConstants.WHERE );
         }
 
@@ -148,7 +169,8 @@ public class ModificationProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator processor, InsertStatement object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, InsertStatement object,
+                StringBuilder builder )
         {
             builder.append( "INSERT INTO" ).append( SQLConstants.TOKEN_SEPARATOR );
             processor.process( object.getTableName(), builder );
@@ -170,9 +192,11 @@ public class ModificationProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator processor, SetClause object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, SetClause object,
+                StringBuilder builder )
         {
-            builder.append( object.getUpdateTarget() ).append( SQLConstants.TOKEN_SEPARATOR ).append( "=" )
+            builder.append( object.getUpdateTarget() ).append( SQLConstants.TOKEN_SEPARATOR )
+                .append( "=" )
                 .append( SQLConstants.TOKEN_SEPARATOR );
             processor.process( object.getUpdateSource(), builder );
         }
@@ -191,7 +215,8 @@ public class ModificationProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator processor, TargetTable object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, TargetTable object,
+                StringBuilder builder )
         {
             Boolean isOnly = object.isOnly();
             if( isOnly )
@@ -219,11 +244,13 @@ public class ModificationProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator processor, UpdateBySearch object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, UpdateBySearch object,
+                StringBuilder builder )
         {
             builder.append( "UPDATE" ).append( SQLConstants.TOKEN_SEPARATOR );
             processor.process( object.getTargetTable(), builder );
-            builder.append( SQLConstants.NEWLINE ).append( "SET" ).append( SQLConstants.TOKEN_SEPARATOR );
+            builder.append( SQLConstants.NEWLINE ).append( "SET" )
+                .append( SQLConstants.TOKEN_SEPARATOR );
             Iterator<SetClause> iter = object.getSetClauses().iterator();
             while( iter.hasNext() )
             {
@@ -233,12 +260,14 @@ public class ModificationProcessing
                     builder.append( SQLConstants.COMMA ).append( SQLConstants.TOKEN_SEPARATOR );
                 }
             }
-            QueryProcessing.processOptionalBooleanExpression( processor, builder, object.getWhere(),
+            QueryProcessing.processOptionalBooleanExpression( processor, builder,
+                object.getWhere(),
                 SQLConstants.NEWLINE, SQLConstants.WHERE );
         }
     }
 
-    public static class UpdateSourceByExpressionProcessor extends AbstractProcessor<UpdateSourceByExpression>
+    public static class UpdateSourceByExpressionProcessor extends
+            AbstractProcessor<UpdateSourceByExpression>
     {
         public UpdateSourceByExpressionProcessor()
         {
@@ -251,8 +280,9 @@ public class ModificationProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator processor, UpdateSourceByExpression object,
-            StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor,
+                UpdateSourceByExpression object,
+                StringBuilder builder )
         {
             processor.process( object.getValueExpression(), builder );
         }

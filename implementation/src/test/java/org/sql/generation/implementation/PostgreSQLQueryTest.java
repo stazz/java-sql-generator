@@ -36,7 +36,7 @@ public class PostgreSQLQueryTest extends AbstractQueryTest
     public void pgQuery5()
         throws Exception
     {
-        ((PostgreSQLVendor) this.getVendor()).setLegacyOffsetAndLimit( true );
+        ( (PostgreSQLVendor) this.getVendor() ).setLegacyOffsetAndLimit( true );
         super.query5();
     }
 
@@ -44,7 +44,7 @@ public class PostgreSQLQueryTest extends AbstractQueryTest
     public void pgQuery6()
         throws Exception
     {
-        ((PostgreSQLVendor) this.getVendor()).setLegacyOffsetAndLimit( true );
+        ( (PostgreSQLVendor) this.getVendor() ).setLegacyOffsetAndLimit( true );
         super.query6();
     }
 
@@ -52,8 +52,7 @@ public class PostgreSQLQueryTest extends AbstractQueryTest
     public void pgQuery7()
         throws Exception
     {
-        ((PostgreSQLVendor) this.getVendor()).setLegacyOffsetAndLimit( true );
+        ( (PostgreSQLVendor) this.getVendor() ).setLegacyOffsetAndLimit( true );
         super.query7();
     }
-
 }

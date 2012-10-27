@@ -59,8 +59,9 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
 public class QueryProcessing
 {
 
-    public static void processOptionalBooleanExpression( SQLProcessorAggregator processor, StringBuilder builder,
-        BooleanExpression expression, String prefix, String name )
+    public static void processOptionalBooleanExpression( SQLProcessorAggregator processor,
+            StringBuilder builder,
+            BooleanExpression expression, String prefix, String name )
     {
         if( expression != null && !BooleanUtils.isEmpty( expression ) )
         {
@@ -68,8 +69,9 @@ public class QueryProcessing
         }
     }
 
-    public static void processOptional( SQLProcessorAggregator processor, StringBuilder builder, Typeable<?> element,
-        String prefix, String name )
+    public static void processOptional( SQLProcessorAggregator processor, StringBuilder builder,
+            Typeable<?> element,
+            String prefix, String name )
     {
         if( element != null )
         {
@@ -82,7 +84,8 @@ public class QueryProcessing
         }
     }
 
-    public static class QueryExpressionBinaryProcessor extends AbstractProcessor<QueryExpressionBodyBinary>
+    public static class QueryExpressionBinaryProcessor extends
+            AbstractProcessor<QueryExpressionBodyBinary>
     {
         private static final Map<SetOperation, String> _defaultSetOperations;
 
@@ -112,9 +115,10 @@ public class QueryProcessing
 
         @Override
         protected void doProcess( SQLProcessorAggregator processor, QueryExpressionBodyBinary body,
-            StringBuilder builder )
+                StringBuilder builder )
         {
-            Boolean leftIsNotEmpty = body.getLeft() != QueryExpressionBody.EmptyQueryExpressionBody.INSTANCE;
+            Boolean leftIsNotEmpty =
+                body.getLeft() != QueryExpressionBody.EmptyQueryExpressionBody.INSTANCE;
             if( leftIsNotEmpty )
             {
                 builder.append( SQLConstants.OPEN_PARENTHESIS );
@@ -161,14 +165,20 @@ public class QueryProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator processor, QuerySpecification query, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, QuerySpecification query,
+                StringBuilder builder )
         {
+            builder.append( SQLConstants.SELECT ).append( SQLConstants.TOKEN_SEPARATOR );
+            ProcessorUtils.processSetQuantifier( query.getColumns().getSetQuantifier(), builder );
+            builder.append( SQLConstants.TOKEN_SEPARATOR );
+
             processor.process( query.getColumns(), builder );
             processor.process( query.getFrom(), builder );
             QueryProcessing.processOptionalBooleanExpression( processor, builder, query.getWhere(),
                 SQLConstants.NEWLINE, SQLConstants.WHERE );
             processor.process( query.getGroupBy(), builder );
-            QueryProcessing.processOptionalBooleanExpression( processor, builder, query.getHaving(),
+            QueryProcessing.processOptionalBooleanExpression( processor, builder,
+                query.getHaving(),
                 SQLConstants.NEWLINE, SQLConstants.HAVING );
             processor.process( query.getOrderBy(), builder );
             Typeable<?> first = null;
@@ -190,12 +200,14 @@ public class QueryProcessing
             }
 
             if( query.getOrderBy() == null
-                && (query.getOffsetSpecification() != null || query.getLimitSpecification() != null) )
+                    && ( query.getOffsetSpecification() != null || query.getLimitSpecification() != null ) )
             {
                 LoggerFactory.getLogger( this.getClass().getName() ).warn(
-                    "Spotted query with " + SQLConstants.OFFSET_PREFIX + " and/or " + SQLConstants.LIMIT_PREFIX
-                        + " clause, but without ORDER BY. The result will be unpredictable!" + "\n" + "Query: "
-                        + builder.toString() );
+                    "Spotted query with " + SQLConstants.OFFSET_PREFIX + " and/or "
+                            + SQLConstants.LIMIT_PREFIX
+                            + " clause, but without ORDER BY. The result will be unpredictable!"
+                            + "\n" + "Query: "
+                            + builder.toString() );
             }
         }
 
@@ -204,11 +216,13 @@ public class QueryProcessing
             return true;
         }
 
-        protected void processLimitAndOffset( SQLProcessorAggregator processor, StringBuilder builder,
-            Typeable<?> first, Typeable<?> second )
+        protected void processLimitAndOffset( SQLProcessorAggregator processor,
+                StringBuilder builder,
+                Typeable<?> first, Typeable<?> second )
         {
             QueryProcessing.processOptional( processor, builder, first, SQLConstants.NEWLINE, null );
-            QueryProcessing.processOptional( processor, builder, second, SQLConstants.NEWLINE, null );
+            QueryProcessing
+                .processOptional( processor, builder, second, SQLConstants.NEWLINE, null );
         }
 
     }
@@ -221,15 +235,13 @@ public class QueryProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator aggregator, SelectColumnClause select, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator aggregator, SelectColumnClause select,
+                StringBuilder builder )
         {
-            builder.append( SQLConstants.SELECT ).append( SQLConstants.TOKEN_SEPARATOR );
-            ProcessorUtils.processSetQuantifier( select.getSetQuantifier(), builder );
-            builder.append( SQLConstants.TOKEN_SEPARATOR );
-
             if( select instanceof ColumnReferences )
             {
-                Iterator<ColumnReferenceInfo> iter = ((ColumnReferences) select).getColumns().iterator();
+                Iterator<ColumnReferenceInfo> iter =
+                    ( (ColumnReferences) select ).getColumns().iterator();
                 while( iter.hasNext() )
                 {
                     ColumnReferenceInfo info = iter.next();
@@ -237,7 +249,8 @@ public class QueryProcessing
                     String alias = info.getAlias();
                     if( ProcessorUtils.notNullAndNotEmpty( alias ) )
                     {
-                        builder.append( SQLConstants.TOKEN_SEPARATOR ).append( SQLConstants.ALIAS_DEFINER )
+                        builder.append( SQLConstants.TOKEN_SEPARATOR )
+                            .append( SQLConstants.ALIAS_DEFINER )
                             .append( SQLConstants.TOKEN_SEPARATOR ).append( alias );
                     }
 
@@ -262,7 +275,8 @@ public class QueryProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator aggregator, FromClause from, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator aggregator, FromClause from,
+                StringBuilder builder )
         {
             if( !from.getTableReferences().isEmpty() )
             {
@@ -289,7 +303,8 @@ public class QueryProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator processor, QueryExpression object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, QueryExpression object,
+                StringBuilder builder )
         {
             processor.process( object.getQueryExpressionBody(), builder );
         }
@@ -303,12 +318,14 @@ public class QueryProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator processor, CorrespondingSpec object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, CorrespondingSpec object,
+                StringBuilder builder )
         {
             builder.append( "CORRESPONDING" );
             if( object.getColumnList() != null )
             {
-                builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "BY" ).append( SQLConstants.TOKEN_SEPARATOR );
+                builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "BY" )
+                    .append( SQLConstants.TOKEN_SEPARATOR );
                 processor.process( object.getColumnList(), builder );
             }
         }
@@ -341,7 +358,8 @@ public class QueryProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator processor, SortSpecification object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, SortSpecification object,
+                StringBuilder builder )
         {
             processor.process( object.getValueExpression(), builder );
             builder.append( SQLConstants.TOKEN_SEPARATOR ).append(
@@ -357,7 +375,8 @@ public class QueryProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator processor, OrdinaryGroupingSet object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, OrdinaryGroupingSet object,
+                StringBuilder builder )
         {
             Iterator<NonBooleanExpression> iter = object.getColumns().iterator();
             while( iter.hasNext() )
@@ -379,7 +398,8 @@ public class QueryProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator aggregator, GroupByClause groupBy, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator aggregator, GroupByClause groupBy,
+                StringBuilder builder )
         {
             if( !groupBy.getGroupingElements().isEmpty() )
             {
@@ -406,7 +426,8 @@ public class QueryProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator aggregator, OrderByClause orderBy, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator aggregator, OrderByClause orderBy,
+                StringBuilder builder )
         {
             if( !orderBy.getOrderingColumns().isEmpty() )
             {
@@ -425,7 +446,8 @@ public class QueryProcessing
         }
     }
 
-    public static class TableValueConstructorProcessor extends AbstractProcessor<TableValueConstructor>
+    public static class TableValueConstructorProcessor extends
+            AbstractProcessor<TableValueConstructor>
     {
         public TableValueConstructorProcessor()
         {
@@ -433,7 +455,8 @@ public class QueryProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator aggregator, TableValueConstructor object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator aggregator, TableValueConstructor object,
+                StringBuilder builder )
         {
             builder.append( "VALUES" ).append( SQLConstants.TOKEN_SEPARATOR );
             Iterator<RowValueConstructor> iter = object.getRows().iterator();
@@ -456,7 +479,8 @@ public class QueryProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator aggregator, RowSubQuery object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator aggregator, RowSubQuery object,
+                StringBuilder builder )
         {
             builder.append( SQLConstants.OPEN_PARENTHESIS );
             aggregator.process( object.getQueryExpression(), builder );
@@ -472,7 +496,8 @@ public class QueryProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator aggregator, RowDefinition object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator aggregator, RowDefinition object,
+                StringBuilder builder )
         {
             builder.append( SQLConstants.OPEN_PARENTHESIS );
             Iterator<ValueExpression> vals = object.getRowElements().iterator();
@@ -497,7 +522,8 @@ public class QueryProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator aggregator, OffsetSpecification object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator aggregator, OffsetSpecification object,
+                StringBuilder builder )
         {
             String prefix = this.getPrefix( aggregator );
             if( prefix != null )
@@ -505,7 +531,7 @@ public class QueryProcessing
                 builder.append( prefix ).append( SQLConstants.TOKEN_SEPARATOR );
             }
             NonBooleanExpression skip = object.getSkip();
-            boolean isComplex = !(skip instanceof LiteralExpression);
+            boolean isComplex = !( skip instanceof LiteralExpression );
             if( isComplex )
             {
                 builder.append( SQLConstants.OPEN_PARENTHESIS ).append( SQLConstants.NEWLINE );
@@ -541,7 +567,8 @@ public class QueryProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator aggregator, LimitSpecification object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator aggregator, LimitSpecification object,
+                StringBuilder builder )
         {
             NonBooleanExpression count = this.getRealCount( object.getCount() );
             if( count != null )
@@ -551,7 +578,7 @@ public class QueryProcessing
                 {
                     builder.append( prefix ).append( SQLConstants.TOKEN_SEPARATOR );
                 }
-                boolean isComplex = !(count instanceof LiteralExpression);
+                boolean isComplex = !( count instanceof LiteralExpression );
                 if( isComplex )
                 {
                     builder.append( SQLConstants.OPEN_PARENTHESIS ).append( SQLConstants.NEWLINE );

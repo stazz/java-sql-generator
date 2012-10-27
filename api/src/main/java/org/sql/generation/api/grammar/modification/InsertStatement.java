@@ -24,7 +24,7 @@ import org.sql.generation.api.grammar.common.TableNameDirect;
  * @author Stanislav Muhametsin
  */
 public interface InsertStatement
-    extends SQLStatement, Typeable<InsertStatement>
+        extends SQLStatement, Typeable<InsertStatement>
 {
 
     /**

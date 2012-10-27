@@ -15,23 +15,25 @@
 package org.sql.generation.api.grammar.modification;
 
 import org.atp.api.Typeable;
+import org.sql.generation.api.grammar.common.ValueExpression;
 
 /**
- * This syntax element represents the data source for column in {@code SET} clause of {@code UPDATE} statement.
+ * This syntax element represents the data source for column in {@code SET} clause of {@code UPDATE}
+ * statement.
  * 
  * @author Stanislav Muhametsin
  */
 public interface UpdateSource
-    extends Typeable<UpdateSource>
+        extends Typeable<UpdateSource>
 {
     /**
-     * This syntax element represents the {@code DEFAULT} keyword as data source for column, meaning to use the default
-     * value for the column.
+     * This syntax element represents the {@code DEFAULT} keyword as data source for column, meaning
+     * to use the default value for the column.
      * 
      * @author Stanislav Muhametsin
      */
     public static final class Default
-        implements UpdateSource
+            implements ValueExpression
     {
         private Default()
         {
@@ -41,7 +43,7 @@ public interface UpdateSource
         /**
          * Returns {@link Default}.
          */
-        public Class<? extends UpdateSource> getImplementedType()
+        public Class<? extends ValueExpression> getImplementedType()
         {
             return Default.class;
         }
@@ -53,13 +55,13 @@ public interface UpdateSource
     }
 
     /**
-     * This syntax element represents the {@code NULL} keyword as data source for column, meaning to use the
-     * {@code NULL} value for the column.
+     * This syntax element represents the {@code NULL} keyword as data source for column, meaning to
+     * use the {@code NULL} value for the column.
      * 
      * @author Stanislav Muhametsin
      */
     public static final class Null
-        implements UpdateSource
+            implements ValueExpression
     {
         private Null()
         {
@@ -69,7 +71,7 @@ public interface UpdateSource
         /**
          * Returns {@link Null}.
          */
-        public Class<? extends UpdateSource> getImplementedType()
+        public Class<? extends ValueExpression> getImplementedType()
         {
             return Null.class;
         }

@@ -32,6 +32,7 @@ import org.sql.generation.api.grammar.definition.table.TableDefinition;
 import org.sql.generation.api.grammar.definition.table.pgsql.PgSQLTableCommitAction;
 import org.sql.generation.api.grammar.literals.TimestampTimeLiteral;
 import org.sql.generation.api.grammar.manipulation.pgsql.PgSQLDropTableOrViewStatement;
+import org.sql.generation.api.grammar.modification.pgsql.PgSQLInsertStatement;
 import org.sql.generation.api.grammar.query.LimitSpecification;
 import org.sql.generation.api.grammar.query.OffsetSpecification;
 import org.sql.generation.api.grammar.query.QuerySpecification;
@@ -43,6 +44,7 @@ import org.sql.generation.implementation.transformation.DefinitionProcessing.Tab
 import org.sql.generation.implementation.transformation.pgsql.DefinitionProcessing.PGColumnDefinitionProcessor;
 import org.sql.generation.implementation.transformation.pgsql.LiteralExpressionProcessing.PGDateTimeLiteralProcessor;
 import org.sql.generation.implementation.transformation.pgsql.ManipulationProcessing.PgSQLDropTableOrViewStatementProcessor;
+import org.sql.generation.implementation.transformation.pgsql.ModificationProcessing.PgSQLInsertStatementProcessor;
 import org.sql.generation.implementation.transformation.pgsql.QueryProcessing.PgSQLLimitSpecificationProcessor;
 import org.sql.generation.implementation.transformation.pgsql.QueryProcessing.PgSQLOffsetSpecificationProcessor;
 import org.sql.generation.implementation.transformation.pgsql.QueryProcessing.PgSQLQuerySpecificationProcessor;
@@ -61,14 +63,16 @@ public class PostgreSQLProcessor extends DefaultSQLProcessor
 
     static
     {
-        Map<Class<? extends BinaryPredicate>, String> binaryOperators = new HashMap<Class<? extends BinaryPredicate>, String>(
-            DefaultSQLProcessor.getDefaultBinaryOperators() );
+        Map<Class<? extends BinaryPredicate>, String> binaryOperators =
+            new HashMap<Class<? extends BinaryPredicate>, String>(
+                DefaultSQLProcessor.getDefaultBinaryOperators() );
         binaryOperators.put( RegexpPredicate.class, "~" );
         binaryOperators.put( NotRegexpPredicate.class, "!~" );
         _defaultPgSQLBinaryOperators = binaryOperators;
 
-        Map<Class<? extends Typeable<?>>, SQLProcessor> processors = new HashMap<Class<? extends Typeable<?>>, SQLProcessor>(
-            DefaultSQLProcessor.getDefaultProcessors() );
+        Map<Class<? extends Typeable<?>>, SQLProcessor> processors =
+            new HashMap<Class<? extends Typeable<?>>, SQLProcessor>(
+                DefaultSQLProcessor.getDefaultProcessors() );
 
         // Override default processor for date-time
         processors.put( TimestampTimeLiteral.class, new PGDateTimeLiteralProcessor() );
@@ -82,10 +86,15 @@ public class PostgreSQLProcessor extends DefaultSQLProcessor
             new PGColumnDefinitionProcessor( Collections.unmodifiableMap( dataTypeSerials ) ) );
 
         // Add support for regexp comparing
-        processors.put( RegexpPredicate.class,
-            new BinaryPredicateProcessor( _defaultPgSQLBinaryOperators.get( RegexpPredicate.class ) ) );
-        processors.put( NotRegexpPredicate.class,
-            new BinaryPredicateProcessor( _defaultPgSQLBinaryOperators.get( NotRegexpPredicate.class ) ) );
+        processors
+            .put(
+                RegexpPredicate.class,
+                new BinaryPredicateProcessor( _defaultPgSQLBinaryOperators
+                    .get( RegexpPredicate.class ) ) );
+        processors.put(
+            NotRegexpPredicate.class,
+            new BinaryPredicateProcessor( _defaultPgSQLBinaryOperators
+                .get( NotRegexpPredicate.class ) ) );
 
         // Add support for PostgreSQL legacy LIMIT/OFFSET
         processors.put( QuerySpecification.class, new PgSQLQuerySpecificationProcessor() );
@@ -100,10 +109,15 @@ public class PostgreSQLProcessor extends DefaultSQLProcessor
             TableDefinitionProcessor.getDefaultCommitActions() );
         commitActions.put( PgSQLTableCommitAction.DROP, "DROP" );
         processors.put( TableDefinition.class,
-            new TableDefinitionProcessor( TableDefinitionProcessor.getDefaultTableScopes(), commitActions ) );
+            new TableDefinitionProcessor( TableDefinitionProcessor.getDefaultTableScopes(),
+                commitActions ) );
 
         // Add "IF EXISTS" functionality to DROP TABLE/VIEW statements
-        processors.put( PgSQLDropTableOrViewStatement.class, new PgSQLDropTableOrViewStatementProcessor() );
+        processors.put( PgSQLDropTableOrViewStatement.class,
+            new PgSQLDropTableOrViewStatementProcessor() );
+
+        // Add support for PostgreSQL-specific INSTERT statement RETURNING clause
+        processors.put( PgSQLInsertStatement.class, new PgSQLInsertStatementProcessor() );
 
         _defaultProcessors = processors;
     }

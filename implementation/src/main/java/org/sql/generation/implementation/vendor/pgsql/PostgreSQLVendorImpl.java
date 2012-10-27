@@ -14,12 +14,14 @@
 
 package org.sql.generation.implementation.vendor.pgsql;
 
+import org.sql.generation.api.grammar.factories.ModificationFactory;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLDataTypeFactory;
 import org.sql.generation.api.grammar.factories.pgsql.PgSQLManipulationFactory;
 import org.sql.generation.api.vendor.PostgreSQLVendor;
 import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.implementation.grammar.factories.pgsql.PgSQLDataTypeFactoryImpl;
 import org.sql.generation.implementation.grammar.factories.pgsql.PgSQLManipulationFactoryImpl;
+import org.sql.generation.implementation.grammar.factories.pgsql.PgSQLModificationFactoryImpl;
 import org.sql.generation.implementation.transformation.pgsql.PostgreSQLProcessor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 import org.sql.generation.implementation.vendor.DefaultVendor;
@@ -29,23 +31,35 @@ import org.sql.generation.implementation.vendor.DefaultVendor;
  * @author Stanislav Muhametsin
  */
 public class PostgreSQLVendorImpl extends DefaultVendor
-    implements PostgreSQLVendor
+        implements PostgreSQLVendor
 {
-    protected static final Callback<PgSQLDataTypeFactory> PG_DATA_TYPE_FACTORY = new Callback<PgSQLDataTypeFactory>()
-    {
-        public PgSQLDataTypeFactory get( SQLVendor vendor, SQLProcessorAggregator processor )
+    protected static final Callback<PgSQLDataTypeFactory> PG_DATA_TYPE_FACTORY =
+        new Callback<PgSQLDataTypeFactory>()
         {
-            return new PgSQLDataTypeFactoryImpl( (PostgreSQLVendor) vendor, processor );
-        }
-    };
+            public PgSQLDataTypeFactory get( SQLVendor vendor, SQLProcessorAggregator processor )
+            {
+                return new PgSQLDataTypeFactoryImpl( (PostgreSQLVendor) vendor, processor );
+            }
+        };
 
-    protected static final Callback<PgSQLManipulationFactory> PG_MANIPULATION_FACTORY = new Callback<PgSQLManipulationFactory>()
-    {
-        public PgSQLManipulationFactory get( SQLVendor vendor, SQLProcessorAggregator processor )
+    protected static final Callback<PgSQLManipulationFactory> PG_MANIPULATION_FACTORY =
+        new Callback<PgSQLManipulationFactory>()
         {
-            return new PgSQLManipulationFactoryImpl( (PostgreSQLVendor) vendor, processor );
-        }
-    };
+            public PgSQLManipulationFactory
+                get( SQLVendor vendor, SQLProcessorAggregator processor )
+            {
+                return new PgSQLManipulationFactoryImpl( (PostgreSQLVendor) vendor, processor );
+            }
+        };
+
+    protected static final Callback<ModificationFactory> PG_MODIFICATION_FACTORY =
+        new Callback<ModificationFactory>()
+        {
+            public ModificationFactory get( SQLVendor vendor, SQLProcessorAggregator processor )
+            {
+                return new PgSQLModificationFactoryImpl( (PostgreSQLVendor) vendor, processor );
+            }
+        };
 
     protected static final ProcessorCallback PG_PROCESSOR = new ProcessorCallback()
     {
@@ -59,8 +73,10 @@ public class PostgreSQLVendorImpl extends DefaultVendor
 
     public PostgreSQLVendorImpl()
     {
-        super( PG_PROCESSOR, BOOLEAN_FACTORY, COLUMNS_FACTORY, LITERAL_FACTORY, MODIFICATION_FACTORY, QUERY_FACTORY,
-            TABLE_REFERENCE_FACTORY, DEFINITION_FACTORY, PG_MANIPULATION_FACTORY, PG_DATA_TYPE_FACTORY );
+        super( PG_PROCESSOR, BOOLEAN_FACTORY, COLUMNS_FACTORY, LITERAL_FACTORY,
+            PG_MODIFICATION_FACTORY, QUERY_FACTORY,
+            TABLE_REFERENCE_FACTORY, DEFINITION_FACTORY, PG_MANIPULATION_FACTORY,
+            PG_DATA_TYPE_FACTORY );
         this._legacyOffsetAndLimit = false;
     }
 
