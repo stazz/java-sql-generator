@@ -22,7 +22,7 @@ import org.sql.generation.api.grammar.factories.ModificationFactory;
 import org.sql.generation.api.grammar.factories.QueryFactory;
 import org.sql.generation.api.grammar.factories.TableReferenceFactory;
 import org.sql.generation.api.grammar.modification.InsertStatement;
-import org.sql.generation.api.grammar.modification.UpdateSource;
+import org.sql.generation.api.grammar.modification.ValueSource;
 import org.sql.generation.api.vendor.PostgreSQLVendor;
 import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.api.vendor.SQLVendorProvider;
@@ -58,7 +58,7 @@ public class PostgreSQLModificationTest extends AbstractModificationTest
                 .setTableName( t.tableName( "some_schema", "some_table" ) )
                 .setColumnSource(
                     m.columnSourceByValues()
-                        .addValues( UpdateSource.Default.INSTANCE, l.s( "SomeString" ) )
+                        .addValues( ValueSource.Default.INSTANCE, l.s( "SomeString" ) )
                         .createExpression()
                 ).createExpression();
 

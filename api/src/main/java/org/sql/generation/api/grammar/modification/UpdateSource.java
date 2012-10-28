@@ -15,7 +15,6 @@
 package org.sql.generation.api.grammar.modification;
 
 import org.atp.api.Typeable;
-import org.sql.generation.api.grammar.common.ValueExpression;
 
 /**
  * This syntax element represents the data source for column in {@code SET} clause of {@code UPDATE}
@@ -26,59 +25,4 @@ import org.sql.generation.api.grammar.common.ValueExpression;
 public interface UpdateSource
         extends Typeable<UpdateSource>
 {
-    /**
-     * This syntax element represents the {@code DEFAULT} keyword as data source for column, meaning
-     * to use the default value for the column.
-     * 
-     * @author Stanislav Muhametsin
-     */
-    public static final class Default
-            implements ValueExpression
-    {
-        private Default()
-        {
-
-        }
-
-        /**
-         * Returns {@link Default}.
-         */
-        public Class<? extends ValueExpression> getImplementedType()
-        {
-            return Default.class;
-        }
-
-        /**
-         * Singleton instance of {@link Default}.
-         */
-        public static final Default INSTANCE = new Default();
-    }
-
-    /**
-     * This syntax element represents the {@code NULL} keyword as data source for column, meaning to
-     * use the {@code NULL} value for the column.
-     * 
-     * @author Stanislav Muhametsin
-     */
-    public static final class Null
-            implements ValueExpression
-    {
-        private Null()
-        {
-
-        }
-
-        /**
-         * Returns {@link Null}.
-         */
-        public Class<? extends ValueExpression> getImplementedType()
-        {
-            return Null.class;
-        }
-
-        /**
-         * The singleton instance of {@link Null}.
-         */
-        public static final Null INSTANCE = new Null();
-    }
 }

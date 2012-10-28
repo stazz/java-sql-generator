@@ -20,7 +20,6 @@ import org.sql.generation.api.grammar.query.LimitSpecification;
 import org.sql.generation.api.grammar.query.OffsetSpecification;
 import org.sql.generation.implementation.grammar.common.SQLBuilderBase;
 import org.sql.generation.implementation.grammar.query.LimitSpecificationImpl;
-import org.sql.generation.implementation.grammar.query.OffsetSpecificationImpl;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
@@ -28,7 +27,7 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
  * @author 2011 Stanislav Muhametsin
  */
 public abstract class AbstractQueryFactoryImpl<ExpressionType> extends SQLBuilderBase
-    implements AbstractQueryBuilder<ExpressionType>
+        implements AbstractQueryBuilder<ExpressionType>
 {
 
     private LimitSpecification _limit;
@@ -52,7 +51,8 @@ public abstract class AbstractQueryFactoryImpl<ExpressionType> extends SQLBuilde
 
     public AbstractQueryBuilder<ExpressionType> limit( NonBooleanExpression max )
     {
-        this._limit = (max == null ? null : this.getProcessor().getVendor().getQueryFactory().limit( max ));
+        this._limit =
+            ( max == null ? null : this.getProcessor().getVendor().getQueryFactory().limit( max ) );
         return this;
     }
 
@@ -63,7 +63,8 @@ public abstract class AbstractQueryFactoryImpl<ExpressionType> extends SQLBuilde
 
     public AbstractQueryBuilder<ExpressionType> offset( NonBooleanExpression skip )
     {
-        this._offset = (skip == null ? null : this.getProcessor().getVendor().getQueryFactory().offset( skip ));
+        this._offset =
+            ( skip == null ? null : this.getProcessor().getVendor().getQueryFactory().offset( skip ) );
         return this;
     }
 

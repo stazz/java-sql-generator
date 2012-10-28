@@ -99,9 +99,8 @@ import org.sql.generation.api.grammar.modification.InsertStatement;
 import org.sql.generation.api.grammar.modification.SetClause;
 import org.sql.generation.api.grammar.modification.TargetTable;
 import org.sql.generation.api.grammar.modification.UpdateBySearch;
-import org.sql.generation.api.grammar.modification.UpdateSource.Default;
-import org.sql.generation.api.grammar.modification.UpdateSource.Null;
 import org.sql.generation.api.grammar.modification.UpdateSourceByExpression;
+import org.sql.generation.api.grammar.modification.ValueSource;
 import org.sql.generation.api.grammar.query.AsteriskSelect;
 import org.sql.generation.api.grammar.query.ColumnReferenceByExpression;
 import org.sql.generation.api.grammar.query.ColumnReferenceByName;
@@ -214,14 +213,14 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessor;
 import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregator;
 
 /**
- * This is base class for processing the SQL syntax elements defined in API. It contains the default processors for
- * nearly all default syntax elements, and a way to easily extend this class in order to add custom processors, or
- * replace default processors with custom ones.
+ * This is base class for processing the SQL syntax elements defined in API. It contains the default
+ * processors for nearly all default syntax elements, and a way to easily extend this class in order
+ * to add custom processors, or replace default processors with custom ones.
  * 
  * @author Stanislav Muhametsin
  */
 public class DefaultSQLProcessor
-    implements SQLProcessorAggregator
+        implements SQLProcessorAggregator
 {
 
     private static final Map<Class<? extends Typeable<?>>, SQLProcessor> _defaultProcessors;
@@ -240,21 +239,24 @@ public class DefaultSQLProcessor
 
     static
     {
-        Map<Class<? extends UnaryPredicate>, UnaryOperatorOrientation> unaryOrientations = new HashMap<Class<? extends UnaryPredicate>, UnaryOperatorOrientation>();
+        Map<Class<? extends UnaryPredicate>, UnaryOperatorOrientation> unaryOrientations =
+            new HashMap<Class<? extends UnaryPredicate>, UnaryOperatorOrientation>();
         unaryOrientations.put( IsNullPredicate.class, UnaryOperatorOrientation.AFTER_EXPRESSION );
         unaryOrientations.put( IsNotNullPredicate.class, UnaryOperatorOrientation.AFTER_EXPRESSION );
         unaryOrientations.put( ExistsPredicate.class, UnaryOperatorOrientation.BEFORE_EXPRESSION );
         unaryOrientations.put( UniquePredicate.class, UnaryOperatorOrientation.BEFORE_EXPRESSION );
         _defaultUnaryOrientations = Collections.unmodifiableMap( unaryOrientations );
 
-        Map<Class<? extends UnaryPredicate>, String> unaryOperators = new HashMap<Class<? extends UnaryPredicate>, String>();
+        Map<Class<? extends UnaryPredicate>, String> unaryOperators =
+            new HashMap<Class<? extends UnaryPredicate>, String>();
         unaryOperators.put( IsNullPredicate.class, "IS NULL" );
         unaryOperators.put( IsNotNullPredicate.class, "IS NOT NULL" );
         unaryOperators.put( ExistsPredicate.class, "EXISTS" );
         unaryOperators.put( UniquePredicate.class, "UNIQUE" );
         _defaultUnaryOperators = Collections.unmodifiableMap( unaryOperators );
 
-        Map<Class<? extends BinaryPredicate>, String> binaryOperators = new HashMap<Class<? extends BinaryPredicate>, String>();
+        Map<Class<? extends BinaryPredicate>, String> binaryOperators =
+            new HashMap<Class<? extends BinaryPredicate>, String>();
         binaryOperators.put( EqualsPredicate.class, "=" );
         binaryOperators.put( NotEqualsPredicate.class, "<>" );
         binaryOperators.put( GreaterOrEqualPredicate.class, ">=" );
@@ -265,28 +267,32 @@ public class DefaultSQLProcessor
         binaryOperators.put( NotLikePredicate.class, "NOT LIKE" );
         _defaultBinaryOperators = Collections.unmodifiableMap( binaryOperators );
 
-        Map<Class<? extends MultiPredicate>, String> multiOperators = new HashMap<Class<? extends MultiPredicate>, String>();
+        Map<Class<? extends MultiPredicate>, String> multiOperators =
+            new HashMap<Class<? extends MultiPredicate>, String>();
         multiOperators.put( BetweenPredicate.class, "BETWEEN" );
         multiOperators.put( InPredicate.class, "IN" );
         multiOperators.put( NotBetweenPredicate.class, "NOT BETWEEN" );
         multiOperators.put( NotInPredicate.class, "NOT IN" );
         _defaultMultiOperators = Collections.unmodifiableMap( multiOperators );
 
-        Map<Class<? extends MultiPredicate>, String> multiSeparators = new HashMap<Class<? extends MultiPredicate>, String>();
+        Map<Class<? extends MultiPredicate>, String> multiSeparators =
+            new HashMap<Class<? extends MultiPredicate>, String>();
         multiSeparators.put( BetweenPredicate.class, " AND " );
         multiSeparators.put( InPredicate.class, ", " );
         multiSeparators.put( NotBetweenPredicate.class, " AND " );
         multiSeparators.put( NotInPredicate.class, ", " );
         _defaultMultiSeparators = Collections.unmodifiableMap( multiSeparators );
 
-        Map<Class<? extends MultiPredicate>, Boolean> parenthesisPolicies = new HashMap<Class<? extends MultiPredicate>, Boolean>();
+        Map<Class<? extends MultiPredicate>, Boolean> parenthesisPolicies =
+            new HashMap<Class<? extends MultiPredicate>, Boolean>();
         parenthesisPolicies.put( BetweenPredicate.class, false );
         parenthesisPolicies.put( InPredicate.class, true );
         parenthesisPolicies.put( NotBetweenPredicate.class, false );
         parenthesisPolicies.put( NotInPredicate.class, true );
         _defaultParenthesisPolicies = parenthesisPolicies;
 
-        Map<Class<? extends Typeable<?>>, SQLProcessor> processors = new HashMap<Class<? extends Typeable<?>>, SQLProcessor>();
+        Map<Class<? extends Typeable<?>>, SQLProcessor> processors =
+            new HashMap<Class<? extends Typeable<?>>, SQLProcessor>();
 
         // Boolean expressions
         // Constants
@@ -295,30 +301,44 @@ public class DefaultSQLProcessor
         // Unary
         processors.put(
             IsNullPredicate.class,
-            new UnaryPredicateProcessor( _defaultUnaryOrientations.get( IsNullPredicate.class ), _defaultUnaryOperators
-                .get( IsNullPredicate.class ) ) );
+            new UnaryPredicateProcessor( _defaultUnaryOrientations.get( IsNullPredicate.class ),
+                _defaultUnaryOperators
+                    .get( IsNullPredicate.class ) ) );
         processors.put( IsNotNullPredicate.class,
             new UnaryPredicateProcessor( _defaultUnaryOrientations.get( IsNotNullPredicate.class ),
                 _defaultUnaryOperators.get( IsNotNullPredicate.class ) ) );
         processors.put(
             ExistsPredicate.class,
-            new UnaryPredicateProcessor( _defaultUnaryOrientations.get( ExistsPredicate.class ), _defaultUnaryOperators
-                .get( ExistsPredicate.class ) ) );
+            new UnaryPredicateProcessor( _defaultUnaryOrientations.get( ExistsPredicate.class ),
+                _defaultUnaryOperators
+                    .get( ExistsPredicate.class ) ) );
         processors.put(
             UniquePredicate.class,
-            new UnaryPredicateProcessor( _defaultUnaryOrientations.get( UniquePredicate.class ), _defaultUnaryOperators
-                .get( UniquePredicate.class ) ) );
+            new UnaryPredicateProcessor( _defaultUnaryOrientations.get( UniquePredicate.class ),
+                _defaultUnaryOperators
+                    .get( UniquePredicate.class ) ) );
         // Binary
         processors.put( EqualsPredicate.class,
             new BinaryPredicateProcessor( _defaultBinaryOperators.get( EqualsPredicate.class ) ) );
-        processors.put( NotEqualsPredicate.class,
-            new BinaryPredicateProcessor( _defaultBinaryOperators.get( NotEqualsPredicate.class ) ) );
-        processors.put( GreaterOrEqualPredicate.class,
-            new BinaryPredicateProcessor( _defaultBinaryOperators.get( GreaterOrEqualPredicate.class ) ) );
-        processors.put( GreaterThanPredicate.class,
-            new BinaryPredicateProcessor( _defaultBinaryOperators.get( GreaterThanPredicate.class ) ) );
-        processors.put( LessOrEqualPredicate.class,
-            new BinaryPredicateProcessor( _defaultBinaryOperators.get( LessOrEqualPredicate.class ) ) );
+        processors
+            .put(
+                NotEqualsPredicate.class,
+                new BinaryPredicateProcessor( _defaultBinaryOperators
+                    .get( NotEqualsPredicate.class ) ) );
+        processors.put(
+            GreaterOrEqualPredicate.class,
+            new BinaryPredicateProcessor( _defaultBinaryOperators
+                .get( GreaterOrEqualPredicate.class ) ) );
+        processors
+            .put(
+                GreaterThanPredicate.class,
+                new BinaryPredicateProcessor( _defaultBinaryOperators
+                    .get( GreaterThanPredicate.class ) ) );
+        processors
+            .put(
+                LessOrEqualPredicate.class,
+                new BinaryPredicateProcessor( _defaultBinaryOperators
+                    .get( LessOrEqualPredicate.class ) ) );
         processors.put( LessThanPredicate.class,
             new BinaryPredicateProcessor( _defaultBinaryOperators.get( LessThanPredicate.class ) ) );
         processors.put( LikePredicate.class,
@@ -328,20 +348,28 @@ public class DefaultSQLProcessor
         // Multi
         processors.put(
             BetweenPredicate.class,
-            new MultiPredicateProcessor( _defaultMultiOperators.get( BetweenPredicate.class ), _defaultMultiSeparators
-                .get( BetweenPredicate.class ), _defaultParenthesisPolicies.get( BetweenPredicate.class ) ) );
-        processors.put( InPredicate.class, new MultiPredicateProcessor(
-            _defaultMultiOperators.get( InPredicate.class ), _defaultMultiSeparators.get( InPredicate.class ),
-            _defaultParenthesisPolicies.get( InPredicate.class ) ) );
+            new MultiPredicateProcessor( _defaultMultiOperators.get( BetweenPredicate.class ),
+                _defaultMultiSeparators
+                    .get( BetweenPredicate.class ), _defaultParenthesisPolicies
+                    .get( BetweenPredicate.class ) ) );
+        processors.put(
+            InPredicate.class,
+            new MultiPredicateProcessor(
+                _defaultMultiOperators.get( InPredicate.class ), _defaultMultiSeparators
+                    .get( InPredicate.class ),
+                _defaultParenthesisPolicies.get( InPredicate.class ) ) );
         processors.put(
             NotBetweenPredicate.class,
             new MultiPredicateProcessor( _defaultMultiOperators.get( NotBetweenPredicate.class ),
-                _defaultMultiSeparators.get( NotBetweenPredicate.class ), _defaultParenthesisPolicies
+                _defaultMultiSeparators.get( NotBetweenPredicate.class ),
+                _defaultParenthesisPolicies
                     .get( NotBetweenPredicate.class ) ) );
         processors.put(
             NotInPredicate.class,
-            new MultiPredicateProcessor( _defaultMultiOperators.get( NotInPredicate.class ), _defaultMultiSeparators
-                .get( NotInPredicate.class ), _defaultParenthesisPolicies.get( NotInPredicate.class ) ) );
+            new MultiPredicateProcessor( _defaultMultiOperators.get( NotInPredicate.class ),
+                _defaultMultiSeparators
+                    .get( NotInPredicate.class ), _defaultParenthesisPolicies
+                    .get( NotInPredicate.class ) ) );
         // Composed
         processors.put( Conjunction.class, new ConjunctionProcessor() );
         processors.put( Disjunction.class, new DisjunctionProcessor() );
@@ -352,7 +380,8 @@ public class DefaultSQLProcessor
 
         // Column references
         processors.put( ColumnReferenceByName.class, new ColumnReferenceByNameProcessor() );
-        processors.put( ColumnReferenceByExpression.class, new ColumnReferenceByExpressionProcessor() );
+        processors.put( ColumnReferenceByExpression.class,
+            new ColumnReferenceByExpressionProcessor() );
         processors.put( ColumnNameList.class, new ColumnNamesProcessor() );
 
         // Literals
@@ -369,7 +398,7 @@ public class DefaultSQLProcessor
         processors.put( EmptyQueryExpressionBody.class, new NoOpProcessor() );
         processors.put( CorrespondingSpec.class, new CorrespondingSpecProcessor() );
         processors.put( GrandTotal.class, new ConstantProcessor( SQLConstants.OPEN_PARENTHESIS
-            + SQLConstants.CLOSE_PARENTHESIS ) );
+                + SQLConstants.CLOSE_PARENTHESIS ) );
         processors.put( OrdinaryGroupingSet.class, new OrdinaryGroupingSetProcessor() );
         processors.put( SortSpecification.class, new SortSpecificationProcessor() );
         processors.put( GroupByClause.class, new GroupByProcessor() );
@@ -388,7 +417,8 @@ public class DefaultSQLProcessor
         processors.put( TableNameDirect.class, new TableNameDirectProcessor() );
         processors.put( TableNameFunction.class, new TableNameFunctionProcessor() );
         processors.put( TableReferenceByName.class, new TableReferenceByNameProcessor() );
-        processors.put( TableReferenceByExpression.class, new TableReferenceByExpressionProcessor() );
+        processors
+            .put( TableReferenceByExpression.class, new TableReferenceByExpressionProcessor() );
         processors.put( CrossJoinedTable.class, new CrossJoinedTableProcessor() );
         processors.put( NaturalJoinedTable.class, new NaturalJoinedTableProcessor() );
         processors.put( QualifiedJoinedTable.class, new QualifiedJoinedTableProcessor() );
@@ -405,9 +435,10 @@ public class DefaultSQLProcessor
         processors.put( TargetTable.class, new TargetTableProcessor() );
         processors.put( UpdateBySearch.class, new UpdateBySearchProcessor() );
         processors.put( UpdateSourceByExpression.class, new UpdateSourceByExpressionProcessor() );
-        processors.put( Null.class, new ConstantProcessor( "NULL" ) );
-        processors.put( Default.class, new ConstantProcessor( "DEFAULT" ) );
-        processors.put( Defaults.class, new ConstantProcessor( SQLConstants.TOKEN_SEPARATOR + "DEFAULT VALUES" ) );
+        processors.put( ValueSource.Null.class, new ConstantProcessor( "NULL" ) );
+        processors.put( ValueSource.Default.class, new ConstantProcessor( "DEFAULT" ) );
+        processors.put( Defaults.class, new ConstantProcessor( SQLConstants.TOKEN_SEPARATOR
+                + "DEFAULT VALUES" ) );
 
         // Data definition
         // First data types
@@ -442,12 +473,14 @@ public class DefaultSQLProcessor
         // Data manipulation
         processors.put( AlterTableStatement.class, new AlterTableStatementProcessor() );
         processors.put( AddColumnDefinition.class, new AddColumnDefinitionProcessor() );
-        processors.put( AddTableConstraintDefinition.class, new AddTableConstraintDefinitionProcessor() );
+        processors.put( AddTableConstraintDefinition.class,
+            new AddTableConstraintDefinitionProcessor() );
         processors.put( AlterColumnDefinition.class, new AlterColumnDefinitionProcessor() );
         processors.put( DropDefault.class, new DropColumnDefaultProcessor() );
         processors.put( SetColumnDefault.class, new SetColumnDefaultProcessor() );
         processors.put( DropColumnDefinition.class, new DropColumnDefinitionProcessor() );
-        processors.put( DropTableConstraintDefinition.class, new DropTableConstraintDefinitionProcessor() );
+        processors.put( DropTableConstraintDefinition.class,
+            new DropTableConstraintDefinitionProcessor() );
         processors.put( DropSchemaStatement.class, new DropSchemaStatementProcessor() );
         processors.put( DropTableOrViewStatement.class, new DropTableOrViewStatementProcessor() );
 
@@ -462,7 +495,8 @@ public class DefaultSQLProcessor
         this( vendor, _defaultProcessors );
     }
 
-    public DefaultSQLProcessor( SQLVendor vendor, Map<Class<? extends Typeable<?>>, SQLProcessor> processors )
+    public DefaultSQLProcessor( SQLVendor vendor,
+            Map<Class<? extends Typeable<?>>, SQLProcessor> processors )
     {
         NullArgumentException.validateNotNull( "Vendor", vendor );
         NullArgumentException.validateNotNull( "Processors", processors );
@@ -481,7 +515,8 @@ public class DefaultSQLProcessor
         else
         {
             throw new UnsupportedElementException( "The vendor " + this.getClass()
-                + " does not know how to handle element of type " + object.getImplementedType() + ".", object );
+                    + " does not know how to handle element of type " + object.getImplementedType()
+                    + ".", object );
         }
     }
 
@@ -525,7 +560,8 @@ public class DefaultSQLProcessor
         return _defaultUnaryOperators;
     }
 
-    public static Map<Class<? extends UnaryPredicate>, UnaryOperatorOrientation> getDefaultUnaryOrientations()
+    public static Map<Class<? extends UnaryPredicate>, UnaryOperatorOrientation>
+        getDefaultUnaryOrientations()
     {
         return _defaultUnaryOrientations;
     }
