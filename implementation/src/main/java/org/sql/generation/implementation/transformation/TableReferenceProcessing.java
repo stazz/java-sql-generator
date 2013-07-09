@@ -41,8 +41,9 @@ import org.sql.generation.implementation.transformation.spi.SQLProcessorAggregat
 public class TableReferenceProcessing
 {
 
-    public static abstract class AbstractTableNameProcessor<TableNameType extends TableName> extends
-        AbstractProcessor<TableNameType>
+    public static abstract class AbstractTableNameProcessor<TableNameType extends TableName>
+            extends
+            AbstractProcessor<TableNameType>
     {
 
         protected AbstractTableNameProcessor( Class<? extends TableNameType> realType )
@@ -51,7 +52,8 @@ public class TableReferenceProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator processor, TableNameType object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, TableNameType object,
+                StringBuilder builder )
         {
             String schemaName = object.getSchemaName();
             if( ProcessorUtils.notNullAndNotEmpty( schemaName ) )
@@ -61,12 +63,14 @@ public class TableReferenceProcessing
             this.doProcessTableName( processor, object, builder );
         }
 
-        protected abstract void doProcessTableName( SQLProcessorAggregator processor, TableNameType object,
-            StringBuilder builder );
+        protected abstract void doProcessTableName( SQLProcessorAggregator processor,
+                TableNameType object,
+                StringBuilder builder );
 
     }
 
-    public static class TableNameFunctionProcessor extends AbstractTableNameProcessor<TableNameFunction>
+    public static class TableNameFunctionProcessor extends
+            AbstractTableNameProcessor<TableNameFunction>
     {
 
         public TableNameFunctionProcessor()
@@ -80,15 +84,17 @@ public class TableReferenceProcessing
         }
 
         @Override
-        protected void doProcessTableName( SQLProcessorAggregator processor, TableNameFunction object,
-            StringBuilder builder )
+        protected void doProcessTableName( SQLProcessorAggregator processor,
+                TableNameFunction object,
+                StringBuilder builder )
         {
             processor.process( object.getFunction(), builder );
         }
 
     }
 
-    public static class TableNameDirectProcessor extends AbstractTableNameProcessor<TableNameDirect>
+    public static class TableNameDirectProcessor extends
+            AbstractTableNameProcessor<TableNameDirect>
     {
 
         public TableNameDirectProcessor()
@@ -102,8 +108,9 @@ public class TableReferenceProcessing
         }
 
         @Override
-        protected void doProcessTableName( SQLProcessorAggregator processor, TableNameDirect object,
-            StringBuilder builder )
+        protected void doProcessTableName( SQLProcessorAggregator processor,
+                TableNameDirect object,
+                StringBuilder builder )
         {
             builder.append( object.getTableName() );
         }
@@ -111,14 +118,15 @@ public class TableReferenceProcessing
     }
 
     public static abstract class TableReferencePrimaryProcessor<TableReferenceType extends TableReferencePrimary>
-        extends AbstractProcessor<TableReferenceType>
+            extends AbstractProcessor<TableReferenceType>
     {
         public TableReferencePrimaryProcessor( Class<TableReferenceType> realType )
         {
             super( realType );
         }
 
-        protected void doProcess( SQLProcessorAggregator processor, TableReferenceType object, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, TableReferenceType object,
+                StringBuilder builder )
         {
             this.doProcessTablePrimary( processor, object, builder );
             if( object.getTableAlias() != null )
@@ -127,10 +135,12 @@ public class TableReferenceProcessing
             }
         }
 
-        protected abstract void doProcessTablePrimary( SQLProcessorAggregator processor, TableReferenceType object,
-            StringBuilder builder );
+        protected abstract void doProcessTablePrimary( SQLProcessorAggregator processor,
+                TableReferenceType object,
+                StringBuilder builder );
 
-        protected void processTableAlias( SQLProcessorAggregator processor, TableAlias tableAlias, StringBuilder builder )
+        protected void processTableAlias( SQLProcessorAggregator processor, TableAlias tableAlias,
+                StringBuilder builder )
         {
             String alias = tableAlias.getTableAlias();
             if( ProcessorUtils.notNullAndNotEmpty( alias ) )
@@ -146,7 +156,8 @@ public class TableReferenceProcessing
         }
     }
 
-    public static class TableReferenceByNameProcessor extends TableReferencePrimaryProcessor<TableReferenceByName>
+    public static class TableReferenceByNameProcessor extends
+            TableReferencePrimaryProcessor<TableReferenceByName>
     {
         public TableReferenceByNameProcessor()
         {
@@ -154,15 +165,16 @@ public class TableReferenceProcessing
         }
 
         @Override
-        protected void doProcessTablePrimary( SQLProcessorAggregator processor, TableReferenceByName object,
-            StringBuilder builder )
+        protected void doProcessTablePrimary( SQLProcessorAggregator processor,
+                TableReferenceByName object,
+                StringBuilder builder )
         {
             processor.process( object.getTableName(), builder );
         }
     }
 
     public static class TableReferenceByExpressionProcessor extends
-        TableReferencePrimaryProcessor<TableReferenceByExpression>
+            TableReferencePrimaryProcessor<TableReferenceByExpression>
     {
         public TableReferenceByExpressionProcessor()
         {
@@ -170,8 +182,9 @@ public class TableReferenceProcessing
         }
 
         @Override
-        protected void doProcessTablePrimary( SQLProcessorAggregator processor, TableReferenceByExpression tableRef,
-            StringBuilder builder )
+        protected void doProcessTablePrimary( SQLProcessorAggregator processor,
+                TableReferenceByExpression tableRef,
+                StringBuilder builder )
         {
             builder.append( SQLConstants.OPEN_PARENTHESIS );
             processor.process( tableRef.getQuery(), builder );
@@ -180,7 +193,7 @@ public class TableReferenceProcessing
     }
 
     public static abstract class JoinedTableProcessor<JoinedTableType extends JoinedTable> extends
-        AbstractProcessor<JoinedTableType>
+            AbstractProcessor<JoinedTableType>
     {
 
         public JoinedTableProcessor( Class<JoinedTableType> realType )
@@ -188,15 +201,17 @@ public class TableReferenceProcessing
             super( realType );
         }
 
-        protected void doProcess( SQLProcessorAggregator processor, JoinedTableType table, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, JoinedTableType table,
+                StringBuilder builder )
         {
             processor.process( table.getLeft().asTypeable(), builder );
             builder.append( SQLConstants.NEWLINE );
             this.doProcessJoinedTable( processor, table, builder );
         }
 
-        protected abstract void doProcessJoinedTable( SQLProcessorAggregator processor, JoinedTableType table,
-            StringBuilder builder );
+        protected abstract void doProcessJoinedTable( SQLProcessorAggregator processor,
+                JoinedTableType table,
+                StringBuilder builder );
 
         protected void processJoinType( JoinType joinType, StringBuilder builder )
         {
@@ -212,7 +227,7 @@ public class TableReferenceProcessing
                     {
                         builder.append( "FULL " );
                     }
-                    if( joinType == JoinType.LEFT_OUTER )
+                    else if( joinType == JoinType.LEFT_OUTER )
                     {
                         builder.append( "LEFT " );
                     }
@@ -235,15 +250,18 @@ public class TableReferenceProcessing
         }
 
         @Override
-        protected void doProcessJoinedTable( SQLProcessorAggregator processor, CrossJoinedTable table,
-            StringBuilder builder )
+        protected void doProcessJoinedTable( SQLProcessorAggregator processor,
+                CrossJoinedTable table,
+                StringBuilder builder )
         {
-            builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "CROSS JOIN" ).append( SQLConstants.TOKEN_SEPARATOR );
+            builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "CROSS JOIN" )
+                .append( SQLConstants.TOKEN_SEPARATOR );
             processor.process( table.getRight().asTypeable(), builder );
         }
     }
 
-    public static class NaturalJoinedTableProcessor extends JoinedTableProcessor<NaturalJoinedTable>
+    public static class NaturalJoinedTableProcessor extends
+            JoinedTableProcessor<NaturalJoinedTable>
     {
         public NaturalJoinedTableProcessor()
         {
@@ -251,17 +269,20 @@ public class TableReferenceProcessing
         }
 
         @Override
-        protected void doProcessJoinedTable( SQLProcessorAggregator processor, NaturalJoinedTable table,
-            StringBuilder builder )
+        protected void doProcessJoinedTable( SQLProcessorAggregator processor,
+                NaturalJoinedTable table,
+                StringBuilder builder )
         {
-            builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "NATURAL" ).append( SQLConstants.TOKEN_SEPARATOR );
+            builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "NATURAL" )
+                .append( SQLConstants.TOKEN_SEPARATOR );
             this.processJoinType( table.getJoinType(), builder );
             builder.append( SQLConstants.TOKEN_SEPARATOR );
             processor.process( table.getRight().asTypeable(), builder );
         }
     }
 
-    public static class QualifiedJoinedTableProcessor extends JoinedTableProcessor<QualifiedJoinedTable>
+    public static class QualifiedJoinedTableProcessor extends
+            JoinedTableProcessor<QualifiedJoinedTable>
     {
         public QualifiedJoinedTableProcessor()
         {
@@ -269,8 +290,9 @@ public class TableReferenceProcessing
         }
 
         @Override
-        protected void doProcessJoinedTable( SQLProcessorAggregator processor, QualifiedJoinedTable table,
-            StringBuilder builder )
+        protected void doProcessJoinedTable( SQLProcessorAggregator processor,
+                QualifiedJoinedTable table,
+                StringBuilder builder )
         {
             this.processJoinType( table.getJoinType(), builder );
             processor.process( table.getRight().asTypeable(), builder );
@@ -286,10 +308,12 @@ public class TableReferenceProcessing
         }
 
         @Override
-        protected void doProcessJoinedTable( SQLProcessorAggregator processor, UnionJoinedTable table,
-            StringBuilder builder )
+        protected void doProcessJoinedTable( SQLProcessorAggregator processor,
+                UnionJoinedTable table,
+                StringBuilder builder )
         {
-            builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "UNION JOIN" ).append( SQLConstants.TOKEN_SEPARATOR );
+            builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "UNION JOIN" )
+                .append( SQLConstants.TOKEN_SEPARATOR );
             processor.process( table.getRight().asTypeable(), builder );
         }
     }
@@ -302,9 +326,11 @@ public class TableReferenceProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator processor, JoinCondition condition, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, JoinCondition condition,
+                StringBuilder builder )
         {
-            builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "ON" ).append( SQLConstants.TOKEN_SEPARATOR );
+            builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "ON" )
+                .append( SQLConstants.TOKEN_SEPARATOR );
             processor.process( condition.getSearchConidition(), builder );
         }
     }
@@ -317,9 +343,11 @@ public class TableReferenceProcessing
         }
 
         @Override
-        protected void doProcess( SQLProcessorAggregator processor, NamedColumnsJoin join, StringBuilder builder )
+        protected void doProcess( SQLProcessorAggregator processor, NamedColumnsJoin join,
+                StringBuilder builder )
         {
-            builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "USING" ).append( SQLConstants.TOKEN_SEPARATOR );
+            builder.append( SQLConstants.TOKEN_SEPARATOR ).append( "USING" )
+                .append( SQLConstants.TOKEN_SEPARATOR );
 
             processor.process( join.getColumnNames(), builder );
         }
