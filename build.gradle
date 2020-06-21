@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+group 'org.sql.generation'
+version 'v1.0.0a'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile(group: 'org.api-typeable-pojos', name: 'atp-api', version: '0.6.1')
+    compile(group: 'org.api-typeable-pojos', name: 'atp-spi', version: '0.6.1')
+
+    compile(group: 'org.qi4j.core', name: 'org.qi4j.core.api', version: '2.1')
+    compile(group: 'org.qi4j.core', name: 'org.qi4j.core.bootstrap', version: '2.1')
+
+    compile(group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0-alpha1')
+
+    testCompile(group: 'junit', name: 'junit', version: '4.12')
+}
