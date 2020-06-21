@@ -1,4 +1,4 @@
-# 
+#  Updated-java-sql-generator
 
 ## An updated version from the [java-sql-generator](https://github.com/stazz/java-sql-generator). Full credit to [Stanislav Muhametsin](https://github.com/stazz)!
 
