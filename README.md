@@ -11,7 +11,7 @@ Please notice that this framework depends on API Typeable POJOs (ATP) project ( 
 Currently there is support for data querying (SELECT), modification (INSERT, UPDATE, DELETE), data definition (CREATE), data manipulation (ALTER).
 
 Please see the tests of the implementation project on how to use the java-sql-generator framework. Typical usecase for simple queries would be:
-
+```java
 // Create or acquire vendor
 SQLVendor vendor = SQLVendorProvider.createVendor( MyVendorClass.class );
 SQLVendor vendor = ...;
@@ -39,3 +39,4 @@ QueryExpression query = vendor.getQueryFactory().simpleQueryBuilder()
 // The following two statements produce equivalent SQL statement string
 String sqlString = vendor.toString( query );
 String sqlStirng2 = query.toString( );
+```
