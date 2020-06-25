@@ -22,8 +22,6 @@ import org.sql.generation.api.qi4j.SQLVendorServiceComposite;
 import org.sql.generation.api.vendor.SQLVendor;
 import org.sql.generation.api.vendor.SQLVendorProvider;
 
-import java.io.IOException;
-
 /**
  * @author 2011 Stanislav Muhametsin
  */
@@ -48,12 +46,17 @@ public class SQLVendorAssembler
     @Override
     public void assemble(final ModuleAssembly module)
             throws AssemblyException {
-        try {
+//        try {
+        final SQLVendor sqlVendor = SQLVendorProvider.createVendor(this._vendorClass);
+        if (sqlVendor != null) {
             module.services(SQLVendorServiceComposite.class).visibleIn(this._visibility)
-                    .setMetaInfo(SQLVendorProvider.createVendor(this._vendorClass));
-        } catch (final IOException ioe) {
-            throw new AssemblyException(ioe);
+                    .setMetaInfo(sqlVendor);
+        } else {
+            throw new AssemblyException();
         }
+//        } catch (final IOException ioe) {
+//
+//        }
     }
 
 }

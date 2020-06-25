@@ -35,10 +35,11 @@ public class SQLVendorProvider {
      * @param <VendorType> The type of the vendor.
      * @param vendorClass  The class of the vendor.
      * @return The vendor of a given class.
-     * //     * @throws IOException If {@link ServiceLoader} throws {@link IOException}. now catching local
+     * //     * @throws IOException If {@link ServiceLoader} throws {@link IOException}.
      * @see ServiceLoader
      */
-    public static <VendorType extends SQLVendor> VendorType createVendor(final Class<VendorType> vendorClass) {
+    public static <VendorType extends SQLVendor> VendorType createVendor(final Class<VendorType> vendorClass)
+    /*throws IOException*/ {
         try {
             return new ServiceLoader().firstProvider(vendorClass);
         } catch (final IOException exception) {
