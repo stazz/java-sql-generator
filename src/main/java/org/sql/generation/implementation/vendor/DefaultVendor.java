@@ -37,74 +37,25 @@ public class DefaultVendor
         T get(SQLVendor vendor, SQLProcessorAggregator processor);
     }
 
-    protected static final Callback<BooleanFactory> BOOLEAN_FACTORY = new Callback<BooleanFactory>() {
-        @Override
-        public BooleanFactory get(final SQLVendor vendor, final SQLProcessorAggregator processor) {
-            return new DefaultBooleanFactory(vendor, processor);
-        }
-    };
+    protected static final Callback<BooleanFactory> BOOLEAN_FACTORY = DefaultBooleanFactory::new;
 
-    protected static final Callback<ColumnsFactory> COLUMNS_FACTORY = new Callback<ColumnsFactory>() {
-        @Override
-        public ColumnsFactory get(final SQLVendor vendor, final SQLProcessorAggregator processor) {
-            return new DefaultColumnsFactory(vendor, processor);
-        }
-    };
-    protected static final Callback<LiteralFactory> LITERAL_FACTORY = new Callback<LiteralFactory>() {
-        @Override
-        public LiteralFactory get(final SQLVendor vendor, final SQLProcessorAggregator processor) {
-            return new DefaultLiteralFactory(vendor, processor);
-        }
-    };
+    protected static final Callback<ColumnsFactory> COLUMNS_FACTORY = DefaultColumnsFactory::new;
+    
+    protected static final Callback<LiteralFactory> LITERAL_FACTORY = DefaultLiteralFactory::new;
 
-    protected static final Callback<ModificationFactory> MODIFICATION_FACTORY = new Callback<ModificationFactory>() {
-        @Override
-        public ModificationFactory get(final SQLVendor vendor, final SQLProcessorAggregator processor) {
-            return new DefaultModificationFactory(vendor, processor);
-        }
-    };
+    protected static final Callback<ModificationFactory> MODIFICATION_FACTORY = DefaultModificationFactory::new;
 
-    protected static final Callback<QueryFactory> QUERY_FACTORY = new Callback<QueryFactory>() {
-        @Override
-        public QueryFactory get(final SQLVendor vendor, final SQLProcessorAggregator processor) {
-            return new DefaultQueryFactory(vendor, processor);
-        }
-    };
+    protected static final Callback<QueryFactory> QUERY_FACTORY = DefaultQueryFactory::new;
 
-    protected static final Callback<TableReferenceFactory> TABLE_REFERENCE_FACTORY = new Callback<TableReferenceFactory>() {
-        @Override
-        public TableReferenceFactory get(final SQLVendor vendor, final SQLProcessorAggregator processor) {
-            return new DefaultTableRefFactory(vendor, processor);
-        }
-    };
+    protected static final Callback<TableReferenceFactory> TABLE_REFERENCE_FACTORY = DefaultTableRefFactory::new;
 
-    protected static final Callback<DefinitionFactory> DEFINITION_FACTORY = new Callback<DefinitionFactory>() {
-        @Override
-        public DefinitionFactory get(final SQLVendor vendor, final SQLProcessorAggregator processor) {
-            return new DefaultDefinitionFactory(vendor, processor);
-        }
-    };
+    protected static final Callback<DefinitionFactory> DEFINITION_FACTORY = DefaultDefinitionFactory::new;
 
-    protected static final Callback<ManipulationFactory> MANIPULATION_FACTORY = new Callback<ManipulationFactory>() {
-        @Override
-        public ManipulationFactory get(final SQLVendor vendor, final SQLProcessorAggregator processor) {
-            return new DefaultManipulationFactory(vendor, processor);
-        }
-    };
+    protected static final Callback<ManipulationFactory> MANIPULATION_FACTORY = DefaultManipulationFactory::new;
 
-    protected static final Callback<DataTypeFactory> DATA_TYPE_FACTORY = new Callback<DataTypeFactory>() {
-        @Override
-        public DataTypeFactory get(final SQLVendor vendor, final SQLProcessorAggregator processor) {
-            return new DefaultDataTypeFactory(vendor, processor);
-        }
-    };
+    protected static final Callback<DataTypeFactory> DATA_TYPE_FACTORY = DefaultDataTypeFactory::new;
 
-    protected static final ProcessorCallback DEFAULT_PROCESSOR = new ProcessorCallback() {
-        @Override
-        public SQLProcessorAggregator get(final SQLVendor vendor) {
-            return new DefaultSQLProcessor(vendor);
-        }
-    };
+    protected static final ProcessorCallback DEFAULT_PROCESSOR = DefaultSQLProcessor::new;
 
     private final QueryFactory _queryFactory;
 
